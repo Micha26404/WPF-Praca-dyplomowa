@@ -8,7 +8,7 @@
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [DB];
+USE [E:\UNIVERSITY\WYPOZYCZALNIA WPF\WPF\DB.MDF];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -21,7 +21,6 @@ GO
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
-
 
 -- --------------------------------------------------
 -- Creating all tables

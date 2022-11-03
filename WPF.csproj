@@ -126,6 +126,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>movies.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="movies.edmx.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
