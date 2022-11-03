@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="DBModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="movies1" EntityType="DBModel.movies" />
+          <EntitySet Name="clients" EntityType="DBModel.clients" />
+          <EntitySet Name="authors1" EntityType="DBModel.authors" />
+          <EntitySet Name="roles" EntityType="DBModel.roles" />
+          <EntitySet Name="orders" EntityType="DBModel.orders" />
+          <EntitySet Name="genres1" EntityType="DBModel.genres" />
+          <EntitySet Name="copies" EntityType="DBModel.copies" />
+          <AssociationSet Name="moviesproduct" Association="DBModel.moviesproduct">
+            <End Role="movies" EntitySet="movies1" />
+            <End Role="product" EntitySet="copies" />
+          </AssociationSet>
+          <AssociationSet Name="authorwork" Association="DBModel.authorwork">
+            <End Role="author" EntitySet="authors1" />
+            <End Role="work" EntitySet="roles" />
+          </AssociationSet>
+          <AssociationSet Name="moviesauthors" Association="DBModel.moviesauthors">
+            <End Role="movies" EntitySet="movies1" />
+            <End Role="authors" EntitySet="authors1" />
+          </AssociationSet>
+          <AssociationSet Name="clientsorders" Association="DBModel.clientsorders">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <EntitySet Name="publishers" EntityType="DBModel.publishers" />
+          <AssociationSet Name="publishermovies" Association="DBModel.publishermovies">
+            <End Role="publisher" EntitySet="publishers" />
+            <End Role="movies" EntitySet="movies1" />
+          </AssociationSet>
+          <AssociationSet Name="orderscopies" Association="DBModel.orderscopies">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="copies" EntitySet="copies" />
+          </AssociationSet>
+          <EntitySet Name="langs" EntityType="DBModel.langs" />
+          <EntitySet Name="countries" EntityType="DBModel.countries" />
+          <AssociationSet Name="countrieslangs" Association="DBModel.countrieslangs">
+            <End Role="countries" EntitySet="countries" />
+            <End Role="langs" EntitySet="langs" />
+          </AssociationSet>
+          <AssociationSet Name="movieslangs" Association="DBModel.movieslangs">
+            <End Role="movies" EntitySet="movies1" />
+            <End Role="langs" EntitySet="langs" />
+          </AssociationSet>
+          <AssociationSet Name="moviesgenres" Association="DBModel.moviesgenres">
+            <End Role="movies" EntitySet="movies1" />
+            <End Role="genres" EntitySet="genres1" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="movies">
+          <Key>
+            <PropertyRef Name="movie_id" />
+          </Key>
+          <Property Name="movie_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="200" />
+          <Property Name="year" Type="String" Nullable="false" MaxLength="4" DefaultValue="2012" />
+          <Property Name="duration" Type="Byte" Nullable="false" DefaultValue="120" />
+          <Property Name="price" Type="Decimal" Nullable="false" DefaultValue="10" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="500" />
+          <NavigationProperty Name="products" Relationship="DBModel.moviesproduct" FromRole="movies" ToRole="product" />
+          <Property Name="min_age" Type="Byte" Nullable="false" DefaultValue="13" />
+          <NavigationProperty Name="authors" Relationship="DBModel.moviesauthors" FromRole="movies" ToRole="authors" />
+          <NavigationProperty Name="publisher" Relationship="DBModel.publishermovies" FromRole="movies" ToRole="publisher" />
+          <NavigationProperty Name="langs" Relationship="DBModel.movieslangs" FromRole="movies" ToRole="langs" />
+          <NavigationProperty Name="genres" Relationship="DBModel.moviesgenres" FromRole="movies" ToRole="genres" />
+        </EntityType>
+        <EntityType Name="clients">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="12" />
+          <Property Name="email" Type="String" Nullable="true" MaxLength="250" />
+          <Property Name="first_name" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="last_name" Type="String" Nullable="false" MaxLength="100" />
+          <NavigationProperty Name="orders" Relationship="DBModel.clientsorders" FromRole="clients" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="authors">
+          <Key>
+            <PropertyRef Name="author_Id" />
+          </Key>
+          <Property Name="author_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="roles" Relationship="DBModel.authorwork" FromRole="author" ToRole="work" />
+          <NavigationProperty Name="movies" Relationship="DBModel.moviesauthors" FromRole="authors" ToRole="movies" />
+          <Property Name="first_name" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="last_name" Type="String" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="work_Id" />
+          </Key>
+          <Property Name="work_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="author" Relationship="DBModel.authorwork" FromRole="work" ToRole="author" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="copies">
+          <Key>
+            <PropertyRef Name="copy_id" />
+          </Key>
+          <Property Name="copy_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="movies" Relationship="DBModel.moviesproduct" FromRole="product" ToRole="movies" />
+          <NavigationProperty Name="order" Relationship="DBModel.orderscopies" FromRole="copies" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="client" Relationship="DBModel.clientsorders" FromRole="orders" ToRole="clients" />
+          <Property Name="quantity" Type="Byte" Nullable="false" DefaultValue="1" />
+          <Property Name="draw_date" Type="String" Nullable="false" />
+          <NavigationProperty Name="copies" Relationship="DBModel.orderscopies" FromRole="orders" ToRole="copies" />
+          <Property Name="due_date" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="genres">
+          <Key>
+            <PropertyRef Name="genre_id" />
+          </Key>
+          <Property Name="genre_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" />
+          <NavigationProperty Name="movies" Relationship="DBModel.moviesgenres" FromRole="genres" ToRole="movies" />
+        </EntityType>
+        <Association Name="moviesproduct">
+          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
+          <End Type="DBModel.copies" Role="product" Multiplicity="*" />
+        </Association>
+        <Association Name="authorwork">
+          <End Type="DBModel.authors" Role="author" Multiplicity="1" />
+          <End Type="DBModel.roles" Role="work" Multiplicity="*" />
+        </Association>
+        <Association Name="moviesauthors">
+          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
+          <End Type="DBModel.authors" Role="authors" Multiplicity="*" />
+        </Association>
+        <Association Name="clientsorders">
+          <End Type="DBModel.clients" Role="clients" Multiplicity="1" />
+          <End Type="DBModel.orders" Role="orders" Multiplicity="*" />
+        </Association>
+        <EntityType Name="publishers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" />
+          <NavigationProperty Name="movies" Relationship="DBModel.publishermovies" FromRole="publisher" ToRole="movies" />
+        </EntityType>
+        <Association Name="publishermovies">
+          <End Type="DBModel.publishers" Role="publisher" Multiplicity="1" />
+          <End Type="DBModel.movies" Role="movies" Multiplicity="*" />
+        </Association>
+        <Association Name="orderscopies">
+          <End Type="DBModel.orders" Role="orders" Multiplicity="1" />
+          <End Type="DBModel.copies" Role="copies" Multiplicity="*" />
+        </Association>
+        <EntityType Name="langs">
+          <Key>
+            <PropertyRef Name="lang_id" />
+          </Key>
+          <Property Name="lang_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" />
+          <NavigationProperty Name="country" Relationship="DBModel.countrieslangs" FromRole="langs" ToRole="countries" />
+          <NavigationProperty Name="movies" Relationship="DBModel.movieslangs" FromRole="langs" ToRole="movies" />
+        </EntityType>
+        <EntityType Name="countries">
+          <Key>
+            <PropertyRef Name="country_id" />
+          </Key>
+          <Property Name="country_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" />
+          <NavigationProperty Name="langs" Relationship="DBModel.countrieslangs" FromRole="countries" ToRole="langs" />
+        </EntityType>
+        <Association Name="countrieslangs">
+          <End Type="DBModel.countries" Role="countries" Multiplicity="1" />
+          <End Type="DBModel.langs" Role="langs" Multiplicity="*" />
+        </Association>
+        <Association Name="movieslangs">
+          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
+          <End Type="DBModel.langs" Role="langs" Multiplicity="*" />
+        </Association>
+        <Association Name="moviesgenres">
+          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
+          <End Type="DBModel.genres" Role="genres" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="DBEntities" />
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
