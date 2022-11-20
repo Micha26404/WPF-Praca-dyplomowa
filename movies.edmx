@@ -8,49 +8,39 @@
   <EntityContainer Name="DBModelStoreContainer">
     <EntitySet Name="movies1" EntityType="DBModel.Store.movies1" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="clients" EntityType="DBModel.Store.clients" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="authors1" EntityType="DBModel.Store.authors1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="actors" EntityType="DBModel.Store.actors" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="roles" EntityType="DBModel.Store.roles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="orders" EntityType="DBModel.Store.orders" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="genres1" EntityType="DBModel.Store.genres1" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="copies" EntityType="DBModel.Store.copies" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="publishers" EntityType="DBModel.Store.publishers" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="langs" EntityType="DBModel.Store.langs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="languages" EntityType="DBModel.Store.languages" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="countries" EntityType="DBModel.Store.countries" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="moviesproduct" Association="DBModel.Store.moviesproduct">
-      <End Role="movies" EntitySet="movies1" />
-      <End Role="product" EntitySet="copies" />
-    </AssociationSet>
     <AssociationSet Name="authorwork" Association="DBModel.Store.authorwork">
-      <End Role="author" EntitySet="authors1" />
+      <End Role="author" EntitySet="actors" />
       <End Role="work" EntitySet="roles" />
-    </AssociationSet>
-    <AssociationSet Name="moviesauthors" Association="DBModel.Store.moviesauthors">
-      <End Role="movies" EntitySet="movies1" />
-      <End Role="authors" EntitySet="authors1" />
     </AssociationSet>
     <AssociationSet Name="clientsorders" Association="DBModel.Store.clientsorders">
       <End Role="clients" EntitySet="clients" />
       <End Role="orders" EntitySet="orders" />
     </AssociationSet>
-    <AssociationSet Name="publishermovies" Association="DBModel.Store.publishermovies">
-      <End Role="publisher" EntitySet="publishers" />
-      <End Role="movies" EntitySet="movies1" />
-    </AssociationSet>
-    <AssociationSet Name="orderscopies" Association="DBModel.Store.orderscopies">
-      <End Role="orders" EntitySet="orders" />
-      <End Role="copies" EntitySet="copies" />
-    </AssociationSet>
-    <AssociationSet Name="countrieslangs" Association="DBModel.Store.countrieslangs">
-      <End Role="countries" EntitySet="countries" />
-      <End Role="langs" EntitySet="langs" />
-    </AssociationSet>
     <AssociationSet Name="movieslangs" Association="DBModel.Store.movieslangs">
       <End Role="movies" EntitySet="movies1" />
-      <End Role="langs" EntitySet="langs" />
+      <End Role="langs" EntitySet="languages" />
     </AssociationSet>
     <AssociationSet Name="moviesgenres" Association="DBModel.Store.moviesgenres">
       <End Role="movies" EntitySet="movies1" />
       <End Role="genres" EntitySet="genres1" />
+    </AssociationSet>
+    <AssociationSet Name="moviesorders" Association="DBModel.Store.moviesorders">
+      <End Role="movies" EntitySet="movies1" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="moviescountries" Association="DBModel.Store.moviescountries">
+      <End Role="movies" EntitySet="movies1" />
+      <End Role="countries" EntitySet="countries" />
+    </AssociationSet>
+    <AssociationSet Name="moviesroles" Association="DBModel.Store.moviesroles">
+      <End Role="movies" EntitySet="movies1" />
+      <End Role="roles" EntitySet="roles" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="movies1">
@@ -63,118 +53,82 @@
     <Property Name="duration" Type="tinyint" Nullable="false" DefaultValue="120" />
     <Property Name="price" Type="decimal" Nullable="false" DefaultValue="10" />
     <Property Name="description" Type="nvarchar" Nullable="false" MaxLength="500" />
-    <Property Name="min_age" Type="tinyint" Nullable="false" DefaultValue="13" />
-    <Property Name="publisher_Id" Type="int" Nullable="false" />
+    <Property Name="age" Type="tinyint" Nullable="false" DefaultValue="13" />
   </EntityType>
   <EntityType Name="clients">
     <Key>
-      <PropertyRef Name="client_id" />
+      <PropertyRef Name="id" />
     </Key>
-    <Property Name="client_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="phone" Type="nvarchar" Nullable="false" MaxLength="12" />
     <Property Name="email" Type="nvarchar" Nullable="true" MaxLength="250" />
     <Property Name="first_name" Type="nvarchar" Nullable="false" MaxLength="100" />
     <Property Name="last_name" Type="nvarchar" Nullable="false" MaxLength="100" />
   </EntityType>
-  <EntityType Name="authors1">
-    <Key>
-      <PropertyRef Name="author_Id" />
-    </Key>
-    <Property Name="author_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="first_name" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="last_name" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="movies_movie_id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="roles">
-    <Key>
-      <PropertyRef Name="work_Id" />
-    </Key>
-    <Property Name="work_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="150" />
-    <Property Name="author_author_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="orders">
-    <Key>
-      <PropertyRef Name="order_id" />
-    </Key>
-    <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="quantity" Type="tinyint" Nullable="false" DefaultValue="1" />
-    <Property Name="draw_date" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="due_date" Type="datetime" Nullable="false" />
-    <Property Name="client_client_id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="genres1">
-    <Key>
-      <PropertyRef Name="genre_id" />
-    </Key>
-    <Property Name="genre_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="movies_movie_id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="copies">
-    <Key>
-      <PropertyRef Name="copy_id" />
-    </Key>
-    <Property Name="copy_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="movies_movie_id" Type="int" Nullable="false" />
-    <Property Name="order_order_id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="publishers">
+  <EntityType Name="actors">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="first_name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="last_name" Type="nvarchar" Nullable="false" MaxLength="100" />
   </EntityType>
-  <EntityType Name="langs">
+  <EntityType Name="roles">
     <Key>
-      <PropertyRef Name="lang_id" />
+      <PropertyRef Name="id" />
     </Key>
-    <Property Name="lang_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="author_Id" Type="int" Nullable="false" />
+    <Property Name="movie_movie_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="quantity" Type="tinyint" Nullable="false" DefaultValue="1" />
+    <Property Name="rent_date" Type="datetime" Nullable="false" />
+    <Property Name="due_date" Type="datetime" Nullable="false" />
+    <Property Name="movie_id" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="return_date" Type="datetime" Nullable="false" />
+    <Property Name="client_id" Type="int" Nullable="false" />
+    <Property Name="movie_movie_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="genres1">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="country_country_id" Type="int" Nullable="false" />
-    <Property Name="movies_movie_id" Type="int" Nullable="false" />
+    <Property Name="movie_id" Type="int" Nullable="false" />
+    <Property Name="movie_movie_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="languages">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="movie_movie_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="countries">
     <Key>
-      <PropertyRef Name="country_id" />
+      <PropertyRef Name="id" />
     </Key>
-    <Property Name="country_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="movie_movie_id" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="moviesproduct">
-    <End Role="movies" Type="DBModel.Store.movies1" Multiplicity="1" />
-    <End Role="product" Type="DBModel.Store.copies" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="movies">
-        <PropertyRef Name="movie_id" />
-      </Principal>
-      <Dependent Role="product">
-        <PropertyRef Name="movies_movie_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="authorwork">
-    <End Role="author" Type="DBModel.Store.authors1" Multiplicity="1" />
+    <End Role="author" Type="DBModel.Store.actors" Multiplicity="1" />
     <End Role="work" Type="DBModel.Store.roles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="author">
-        <PropertyRef Name="author_Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="work">
-        <PropertyRef Name="author_author_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="moviesauthors">
-    <End Role="movies" Type="DBModel.Store.movies1" Multiplicity="1" />
-    <End Role="authors" Type="DBModel.Store.authors1" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="movies">
-        <PropertyRef Name="movie_id" />
-      </Principal>
-      <Dependent Role="authors">
-        <PropertyRef Name="movies_movie_id" />
+        <PropertyRef Name="author_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -183,58 +137,22 @@
     <End Role="orders" Type="DBModel.Store.orders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="clients">
-        <PropertyRef Name="client_id" />
+        <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="orders">
-        <PropertyRef Name="client_client_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="publishermovies">
-    <End Role="publisher" Type="DBModel.Store.publishers" Multiplicity="1" />
-    <End Role="movies" Type="DBModel.Store.movies1" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="publisher">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="movies">
-        <PropertyRef Name="publisher_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="orderscopies">
-    <End Role="orders" Type="DBModel.Store.orders" Multiplicity="1" />
-    <End Role="copies" Type="DBModel.Store.copies" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="orders">
-        <PropertyRef Name="order_id" />
-      </Principal>
-      <Dependent Role="copies">
-        <PropertyRef Name="order_order_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="countrieslangs">
-    <End Role="countries" Type="DBModel.Store.countries" Multiplicity="1" />
-    <End Role="langs" Type="DBModel.Store.langs" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="countries">
-        <PropertyRef Name="country_id" />
-      </Principal>
-      <Dependent Role="langs">
-        <PropertyRef Name="country_country_id" />
+        <PropertyRef Name="client_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="movieslangs">
     <End Role="movies" Type="DBModel.Store.movies1" Multiplicity="1" />
-    <End Role="langs" Type="DBModel.Store.langs" Multiplicity="*" />
+    <End Role="langs" Type="DBModel.Store.languages" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="movies">
         <PropertyRef Name="movie_id" />
       </Principal>
       <Dependent Role="langs">
-        <PropertyRef Name="movies_movie_id" />
+        <PropertyRef Name="movie_movie_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -246,7 +164,43 @@
         <PropertyRef Name="movie_id" />
       </Principal>
       <Dependent Role="genres">
-        <PropertyRef Name="movies_movie_id" />
+        <PropertyRef Name="movie_movie_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="moviesorders">
+    <End Role="movies" Type="DBModel.Store.movies1" Multiplicity="1" />
+    <End Role="orders" Type="DBModel.Store.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movies">
+        <PropertyRef Name="movie_id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="movie_movie_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="moviescountries">
+    <End Role="movies" Type="DBModel.Store.movies1" Multiplicity="1" />
+    <End Role="countries" Type="DBModel.Store.countries" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movies">
+        <PropertyRef Name="movie_id" />
+      </Principal>
+      <Dependent Role="countries">
+        <PropertyRef Name="movie_movie_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="moviesroles">
+    <End Role="movies" Type="DBModel.Store.movies1" Multiplicity="1" />
+    <End Role="roles" Type="DBModel.Store.roles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movies">
+        <PropertyRef Name="movie_id" />
+      </Principal>
+      <Dependent Role="roles">
+        <PropertyRef Name="movie_movie_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -257,49 +211,44 @@
         <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true" >
           <EntitySet Name="movies1" EntityType="DBModel.movies" />
           <EntitySet Name="clients" EntityType="DBModel.clients" />
-          <EntitySet Name="authors1" EntityType="DBModel.authors" />
-          <EntitySet Name="roles" EntityType="DBModel.roles" />
+          <EntitySet Name="actors" EntityType="DBModel.actors" />
+          <EntitySet Name="acts" EntityType="DBModel.acts" />
           <EntitySet Name="orders" EntityType="DBModel.orders" />
           <EntitySet Name="genres1" EntityType="DBModel.genres" />
-          <EntitySet Name="copies" EntityType="DBModel.copies" />
-          <AssociationSet Name="moviesproduct" Association="DBModel.moviesproduct">
-            <End Role="movies" EntitySet="movies1" />
-            <End Role="product" EntitySet="copies" />
-          </AssociationSet>
           <AssociationSet Name="authorwork" Association="DBModel.authorwork">
-            <End Role="author" EntitySet="authors1" />
-            <End Role="work" EntitySet="roles" />
-          </AssociationSet>
-          <AssociationSet Name="moviesauthors" Association="DBModel.moviesauthors">
-            <End Role="movies" EntitySet="movies1" />
-            <End Role="authors" EntitySet="authors1" />
+            <End Role="author" EntitySet="actors" />
+            <End Role="work" EntitySet="acts" />
           </AssociationSet>
           <AssociationSet Name="clientsorders" Association="DBModel.clientsorders">
             <End Role="clients" EntitySet="clients" />
             <End Role="orders" EntitySet="orders" />
           </AssociationSet>
-          <EntitySet Name="publishers" EntityType="DBModel.publishers" />
-          <AssociationSet Name="publishermovies" Association="DBModel.publishermovies">
-            <End Role="publisher" EntitySet="publishers" />
-            <End Role="movies" EntitySet="movies1" />
-          </AssociationSet>
-          <AssociationSet Name="orderscopies" Association="DBModel.orderscopies">
-            <End Role="orders" EntitySet="orders" />
-            <End Role="copies" EntitySet="copies" />
-          </AssociationSet>
-          <EntitySet Name="langs" EntityType="DBModel.langs" />
+          <EntitySet Name="languages" EntityType="DBModel.languages" />
           <EntitySet Name="countries" EntityType="DBModel.countries" />
-          <AssociationSet Name="countrieslangs" Association="DBModel.countrieslangs">
-            <End Role="countries" EntitySet="countries" />
-            <End Role="langs" EntitySet="langs" />
-          </AssociationSet>
           <AssociationSet Name="movieslangs" Association="DBModel.movieslangs">
             <End Role="movies" EntitySet="movies1" />
-            <End Role="langs" EntitySet="langs" />
+            <End Role="langs" EntitySet="languages" />
           </AssociationSet>
           <AssociationSet Name="moviesgenres" Association="DBModel.moviesgenres">
             <End Role="movies" EntitySet="movies1" />
             <End Role="genres" EntitySet="genres1" />
+          </AssociationSet>
+          <AssociationSet Name="moviesorders" Association="DBModel.moviesorders">
+            <End Role="movies" EntitySet="movies1" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="moviescountries" Association="DBModel.moviescountries">
+            <End Role="movies" EntitySet="movies1" />
+            <End Role="countries" EntitySet="countries" />
+          </AssociationSet>
+          <AssociationSet Name="moviesroles" Association="DBModel.moviesroles">
+            <End Role="movies" EntitySet="movies1" />
+            <End Role="roles" EntitySet="acts" />
+          </AssociationSet>
+          <EntitySet Name="formats" EntityType="DBModel.formats" />
+          <AssociationSet Name="moviesformats" Association="DBModel.moviesformats">
+            <End Role="movies" EntitySet="movies1" />
+            <End Role="formats" EntitySet="formats" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="movies">
@@ -312,129 +261,121 @@
           <Property Name="duration" Type="Byte" Nullable="false" DefaultValue="120" />
           <Property Name="price" Type="Decimal" Nullable="false" DefaultValue="10" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="500" />
-          <NavigationProperty Name="products" Relationship="DBModel.moviesproduct" FromRole="movies" ToRole="product" />
-          <Property Name="min_age" Type="Byte" Nullable="false" DefaultValue="13" />
-          <NavigationProperty Name="authors" Relationship="DBModel.moviesauthors" FromRole="movies" ToRole="authors" />
-          <NavigationProperty Name="publisher" Relationship="DBModel.publishermovies" FromRole="movies" ToRole="publisher" />
-          <NavigationProperty Name="langs" Relationship="DBModel.movieslangs" FromRole="movies" ToRole="langs" />
+          <Property Name="age" Type="Byte" Nullable="false" DefaultValue="13" />
+          <NavigationProperty Name="languages" Relationship="DBModel.movieslangs" FromRole="movies" ToRole="langs" />
           <NavigationProperty Name="genres" Relationship="DBModel.moviesgenres" FromRole="movies" ToRole="genres" />
+          <NavigationProperty Name="orders" Relationship="DBModel.moviesorders" FromRole="movies" ToRole="orders" />
+          <NavigationProperty Name="countries" Relationship="DBModel.moviescountries" FromRole="movies" ToRole="countries" />
+          <NavigationProperty Name="roles" Relationship="DBModel.moviesroles" FromRole="movies" ToRole="roles" />
+          <NavigationProperty Name="formats" Relationship="DBModel.moviesformats" FromRole="movies" ToRole="formats" />
         </EntityType>
         <EntityType Name="clients">
           <Key>
-            <PropertyRef Name="client_id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="phone" Type="String" Nullable="false" MaxLength="12" />
-          <Property Name="email" Type="String" Nullable="true" MaxLength="250" />
-          <Property Name="first_name" Type="String" Nullable="false" MaxLength="100" />
-          <Property Name="last_name" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="12" Unicode="true" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="true" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="first_name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="last_name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="orders" Relationship="DBModel.clientsorders" FromRole="clients" ToRole="orders" />
         </EntityType>
-        <EntityType Name="authors">
+        <EntityType Name="actors">
           <Key>
-            <PropertyRef Name="author_Id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="author_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="roles" Relationship="DBModel.authorwork" FromRole="author" ToRole="work" />
-          <NavigationProperty Name="movies" Relationship="DBModel.moviesauthors" FromRole="authors" ToRole="movies" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="acts" Relationship="DBModel.authorwork" FromRole="author" ToRole="work" />
           <Property Name="first_name" Type="String" Nullable="false" MaxLength="100" />
           <Property Name="last_name" Type="String" Nullable="false" MaxLength="100" />
         </EntityType>
-        <EntityType Name="roles">
+        <EntityType Name="acts">
           <Key>
-            <PropertyRef Name="work_Id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="work_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="author" Relationship="DBModel.authorwork" FromRole="work" ToRole="author" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="150" />
-        </EntityType>
-        <EntityType Name="copies">
-          <Key>
-            <PropertyRef Name="copy_id" />
-          </Key>
-          <Property Name="copy_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="movies" Relationship="DBModel.moviesproduct" FromRole="product" ToRole="movies" />
-          <NavigationProperty Name="order" Relationship="DBModel.orderscopies" FromRole="copies" ToRole="orders" />
+          <Property Name="actor_id" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="movie" Relationship="DBModel.moviesroles" FromRole="roles" ToRole="movies" />
+          <Property Name="movie_id" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="orders">
           <Key>
-            <PropertyRef Name="order_id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="client" Relationship="DBModel.clientsorders" FromRole="orders" ToRole="clients" />
           <Property Name="quantity" Type="Byte" Nullable="false" DefaultValue="1" />
-          <Property Name="draw_date" Type="String" Nullable="false" />
-          <NavigationProperty Name="copies" Relationship="DBModel.orderscopies" FromRole="orders" ToRole="copies" />
-          <Property Name="due_date" Type="DateTime" Nullable="false" />
+          <Property Name="rent_date" Type="DateTime" Nullable="false" />
+          <Property Name="due_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="movie_id" Type="String" Nullable="false" />
+          <Property Name="return_date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="movie" Relationship="DBModel.moviesorders" FromRole="orders" ToRole="movies" />
         </EntityType>
         <EntityType Name="genres">
           <Key>
-            <PropertyRef Name="genre_id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="genre_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="100" />
-          <NavigationProperty Name="movies" Relationship="DBModel.moviesgenres" FromRole="genres" ToRole="movies" />
+          <NavigationProperty Name="movie" Relationship="DBModel.moviesgenres" FromRole="genres" ToRole="movies" />
+          <Property Name="movie_id" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="moviesproduct">
-          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
-          <End Type="DBModel.copies" Role="product" Multiplicity="*" />
-        </Association>
         <Association Name="authorwork">
-          <End Type="DBModel.authors" Role="author" Multiplicity="1" />
-          <End Type="DBModel.roles" Role="work" Multiplicity="*" />
-        </Association>
-        <Association Name="moviesauthors">
-          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
-          <End Type="DBModel.authors" Role="authors" Multiplicity="*" />
+          <End Type="DBModel.actors" Role="author" Multiplicity="1" />
+          <End Type="DBModel.acts" Role="work" Multiplicity="*" />
         </Association>
         <Association Name="clientsorders">
           <End Type="DBModel.clients" Role="clients" Multiplicity="1" />
           <End Type="DBModel.orders" Role="orders" Multiplicity="*" />
         </Association>
-        <EntityType Name="publishers">
+        <EntityType Name="languages">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="150" />
-          <NavigationProperty Name="movies" Relationship="DBModel.publishermovies" FromRole="publisher" ToRole="movies" />
-        </EntityType>
-        <Association Name="publishermovies">
-          <End Type="DBModel.publishers" Role="publisher" Multiplicity="1" />
-          <End Type="DBModel.movies" Role="movies" Multiplicity="*" />
-        </Association>
-        <Association Name="orderscopies">
-          <End Type="DBModel.orders" Role="orders" Multiplicity="1" />
-          <End Type="DBModel.copies" Role="copies" Multiplicity="*" />
-        </Association>
-        <EntityType Name="langs">
-          <Key>
-            <PropertyRef Name="lang_id" />
-          </Key>
-          <Property Name="lang_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="100" />
-          <NavigationProperty Name="country" Relationship="DBModel.countrieslangs" FromRole="langs" ToRole="countries" />
-          <NavigationProperty Name="movies" Relationship="DBModel.movieslangs" FromRole="langs" ToRole="movies" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="movie" Relationship="DBModel.movieslangs" FromRole="langs" ToRole="movies" />
         </EntityType>
         <EntityType Name="countries">
           <Key>
-            <PropertyRef Name="country_id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="country_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="200" />
-          <NavigationProperty Name="langs" Relationship="DBModel.countrieslangs" FromRole="countries" ToRole="langs" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="movie" Relationship="DBModel.moviescountries" FromRole="countries" ToRole="movies" />
         </EntityType>
-        <Association Name="countrieslangs">
-          <End Type="DBModel.countries" Role="countries" Multiplicity="1" />
-          <End Type="DBModel.langs" Role="langs" Multiplicity="*" />
-        </Association>
         <Association Name="movieslangs">
           <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
-          <End Type="DBModel.langs" Role="langs" Multiplicity="*" />
+          <End Type="DBModel.languages" Role="langs" Multiplicity="*" />
         </Association>
         <Association Name="moviesgenres">
           <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
           <End Type="DBModel.genres" Role="genres" Multiplicity="*" />
+        </Association>
+        <Association Name="moviesorders">
+          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
+          <End Type="DBModel.orders" Role="orders" Multiplicity="*" />
+        </Association>
+        <Association Name="moviescountries">
+          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
+          <End Type="DBModel.countries" Role="countries" Multiplicity="*" />
+        </Association>
+        <Association Name="moviesroles">
+          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
+          <End Type="DBModel.acts" Role="roles" Multiplicity="*" />
+        </Association>
+        <EntityType Name="formats">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <NavigationProperty Name="movie" Relationship="DBModel.moviesformats" FromRole="formats" ToRole="movies" />
+        </EntityType>
+        <Association Name="moviesformats">
+          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
+          <End Type="DBModel.formats" Role="formats" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -451,14 +392,14 @@
           <ScalarProperty Name="duration" ColumnName="duration" />
           <ScalarProperty Name="price" ColumnName="price" />
           <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="min_age" ColumnName="min_age" />
+          <ScalarProperty Name="age" ColumnName="age" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="clients">
       <EntityTypeMapping TypeName="IsTypeOf(DBModel.clients)">
         <MappingFragment StoreEntitySet="clients">
-          <ScalarProperty Name="client_id" ColumnName="client_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="phone" ColumnName="phone" />
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="first_name" ColumnName="first_name" />
@@ -466,60 +407,48 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="authors1">
-      <EntityTypeMapping TypeName="IsTypeOf(DBModel.authors)">
-        <MappingFragment StoreEntitySet="authors1">
-          <ScalarProperty Name="author_Id" ColumnName="author_Id" />
+    <EntitySetMapping Name="actors">
+      <EntityTypeMapping TypeName="IsTypeOf(DBModel.actors)">
+        <MappingFragment StoreEntitySet="actors">
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="first_name" ColumnName="first_name" />
           <ScalarProperty Name="last_name" ColumnName="last_name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="roles">
-      <EntityTypeMapping TypeName="IsTypeOf(DBModel.roles)">
+    <EntitySetMapping Name="acts">
+      <EntityTypeMapping TypeName="IsTypeOf(DBModel.acts)">
         <MappingFragment StoreEntitySet="roles">
-          <ScalarProperty Name="work_Id" ColumnName="work_Id" />
-          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="actor_id" ColumnName="name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="orders">
       <EntityTypeMapping TypeName="IsTypeOf(DBModel.orders)">
         <MappingFragment StoreEntitySet="orders">
-          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="quantity" ColumnName="quantity" />
-          <ScalarProperty Name="draw_date" ColumnName="draw_date" />
+          <ScalarProperty Name="rent_date" ColumnName="rent_date" />
           <ScalarProperty Name="due_date" ColumnName="due_date" />
+          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+          <ScalarProperty Name="return_date" ColumnName="return_date" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="genres1">
       <EntityTypeMapping TypeName="IsTypeOf(DBModel.genres)">
         <MappingFragment StoreEntitySet="genres1">
-          <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="copies">
-      <EntityTypeMapping TypeName="IsTypeOf(DBModel.copies)">
-        <MappingFragment StoreEntitySet="copies">
-          <ScalarProperty Name="copy_id" ColumnName="copy_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="publishers">
-      <EntityTypeMapping TypeName="IsTypeOf(DBModel.publishers)">
-        <MappingFragment StoreEntitySet="publishers">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="langs">
-      <EntityTypeMapping TypeName="IsTypeOf(DBModel.langs)">
-        <MappingFragment StoreEntitySet="langs">
-          <ScalarProperty Name="lang_id" ColumnName="lang_id" />
+    <EntitySetMapping Name="languages">
+      <EntityTypeMapping TypeName="IsTypeOf(DBModel.languages)">
+        <MappingFragment StoreEntitySet="languages">
+          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -527,81 +456,65 @@
     <EntitySetMapping Name="countries">
       <EntityTypeMapping TypeName="IsTypeOf(DBModel.countries)">
         <MappingFragment StoreEntitySet="countries">
-          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="moviesproduct" TypeName="DBModel.moviesproduct" StoreEntitySet="copies">
-      <EndProperty Name="movies">
-        <ScalarProperty Name="movie_id" ColumnName="movies_movie_id" />
-      </EndProperty>
-      <EndProperty Name="product">
-        <ScalarProperty Name="copy_id" ColumnName="copy_id" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="authorwork" TypeName="DBModel.authorwork" StoreEntitySet="roles">
       <EndProperty Name="author">
-        <ScalarProperty Name="author_Id" ColumnName="author_author_Id" />
+        <ScalarProperty Name="Id" ColumnName="author_Id" />
       </EndProperty>
       <EndProperty Name="work">
-        <ScalarProperty Name="work_Id" ColumnName="work_Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="moviesauthors" TypeName="DBModel.moviesauthors" StoreEntitySet="authors1">
-      <EndProperty Name="movies">
-        <ScalarProperty Name="movie_id" ColumnName="movies_movie_id" />
-      </EndProperty>
-      <EndProperty Name="authors">
-        <ScalarProperty Name="author_Id" ColumnName="author_Id" />
+        <ScalarProperty Name="id" ColumnName="id" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="clientsorders" TypeName="DBModel.clientsorders" StoreEntitySet="orders">
       <EndProperty Name="clients">
-        <ScalarProperty Name="client_id" ColumnName="client_client_id" />
+        <ScalarProperty Name="id" ColumnName="client_id" />
       </EndProperty>
       <EndProperty Name="orders">
-        <ScalarProperty Name="order_id" ColumnName="order_id" />
+        <ScalarProperty Name="id" ColumnName="id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="publishermovies" TypeName="DBModel.publishermovies" StoreEntitySet="movies1">
-      <EndProperty Name="publisher">
-        <ScalarProperty Name="Id" ColumnName="publisher_Id" />
-      </EndProperty>
+    <AssociationSetMapping Name="movieslangs" TypeName="DBModel.movieslangs" StoreEntitySet="languages">
       <EndProperty Name="movies">
-        <ScalarProperty Name="movie_id" ColumnName="movie_id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="orderscopies" TypeName="DBModel.orderscopies" StoreEntitySet="copies">
-      <EndProperty Name="orders">
-        <ScalarProperty Name="order_id" ColumnName="order_order_id" />
-      </EndProperty>
-      <EndProperty Name="copies">
-        <ScalarProperty Name="copy_id" ColumnName="copy_id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="countrieslangs" TypeName="DBModel.countrieslangs" StoreEntitySet="langs">
-      <EndProperty Name="countries">
-        <ScalarProperty Name="country_id" ColumnName="country_country_id" />
+        <ScalarProperty Name="movie_id" ColumnName="movie_movie_id" />
       </EndProperty>
       <EndProperty Name="langs">
-        <ScalarProperty Name="lang_id" ColumnName="lang_id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="movieslangs" TypeName="DBModel.movieslangs" StoreEntitySet="langs">
-      <EndProperty Name="movies">
-        <ScalarProperty Name="movie_id" ColumnName="movies_movie_id" />
-      </EndProperty>
-      <EndProperty Name="langs">
-        <ScalarProperty Name="lang_id" ColumnName="lang_id" />
+        <ScalarProperty Name="id" ColumnName="id" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="moviesgenres" TypeName="DBModel.moviesgenres" StoreEntitySet="genres1">
       <EndProperty Name="movies">
-        <ScalarProperty Name="movie_id" ColumnName="movies_movie_id" />
+        <ScalarProperty Name="movie_id" ColumnName="movie_movie_id" />
       </EndProperty>
       <EndProperty Name="genres">
-        <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+        <ScalarProperty Name="id" ColumnName="id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="moviesorders" TypeName="DBModel.moviesorders" StoreEntitySet="orders">
+      <EndProperty Name="movies">
+        <ScalarProperty Name="movie_id" ColumnName="movie_movie_id" />
+      </EndProperty>
+      <EndProperty Name="orders">
+        <ScalarProperty Name="id" ColumnName="id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="moviescountries" TypeName="DBModel.moviescountries" StoreEntitySet="countries">
+      <EndProperty Name="movies">
+        <ScalarProperty Name="movie_id" ColumnName="movie_movie_id" />
+      </EndProperty>
+      <EndProperty Name="countries">
+        <ScalarProperty Name="id" ColumnName="id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="moviesroles" TypeName="DBModel.moviesroles" StoreEntitySet="roles">
+      <EndProperty Name="movies">
+        <ScalarProperty Name="movie_id" ColumnName="movie_movie_id" />
+      </EndProperty>
+      <EndProperty Name="roles">
+        <ScalarProperty Name="id" ColumnName="id" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
