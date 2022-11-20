@@ -12,11 +12,11 @@ namespace WPF
     using System;
     using System.Collections.Generic;
     
-    public partial class copies
+    public partial class roles
     {
-        public int copy_id { get; set; }
-    
-        public virtual movies movies { get; set; }
-        public virtual orders order { get; set; }
-    }
+        public int id { get; set; }
+        public string name { get; set; }
+        public virtual actors actor { get; set; }
+		public virtual movies movie { get; set; }
+	}
 }

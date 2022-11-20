@@ -7,6 +7,5 @@ namespace WPF
     {
         public int genre_id { get; set; }
         public string name { get; set; }
-        public virtual movies movie { get; set; }
     }
 }

@@ -10,6 +10,5 @@ namespace WPF
 	{
 		public int id { get; set; }
 		public string name { get; set; }
-		public virtual movies movie { get; set; }
 	}
 }
