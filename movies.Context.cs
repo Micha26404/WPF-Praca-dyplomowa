@@ -25,12 +25,12 @@ namespace WPF
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<movies> movies1 { get; set; }
+        public virtual DbSet<movies> movies { get; set; }
         public virtual DbSet<clients> clients { get; set; }
         public virtual DbSet<actors> actors { get; set; }
-        public virtual DbSet<acts> acts { get; set; }
+        public virtual DbSet<roles> roles { get; set; }
         public virtual DbSet<orders> orders { get; set; }
-        public virtual DbSet<genres> genres1 { get; set; }
+        public virtual DbSet<genres> genres { get; set; }
         public virtual DbSet<languages> languages { get; set; }
         public virtual DbSet<countries> countries { get; set; }
         public virtual DbSet<formats> formats { get; set; }
