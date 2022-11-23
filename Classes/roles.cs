@@ -15,7 +15,7 @@ namespace WPF
     public partial class roles
     {
         public int id { get; set; }
-        public string name { get; set; }
+        public Boolean is_director { get; set; }
         public virtual actors actor { get; set; }
 		public virtual movies movie { get; set; }
 	}
