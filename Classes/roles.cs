@@ -13,10 +13,14 @@ namespace WPF
     using System.Collections.Generic;
     
     public partial class roles
-    {
-        public int id { get; set; }
+	{
+        public roles()
+		{
+			this.movie_id = new HashSet<movies>();
+		}
+		public int id { get; set; }
         public string name { get; set; }
-        public virtual actors actor { get; set; }
-		public virtual movies movie { get; set; }
+        public virtual actors actor_id { get; set; }
+		public virtual ICollection<movies> movie_id { get; set; }
 	}
 }
