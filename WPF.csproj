@@ -59,6 +59,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -184,11 +187,29 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="klienci.png" />
+    <Resource Include="movie-icon-15157.png" />
+    <Resource Include="movie-icon-15142.png" />
+    <Resource Include="add-icon-png-2486.png" />
+    <Resource Include="cart-icon-28337.png" />
+    <Resource Include="milky-way-%282kpx%29.jpg" />
+    <Resource Include="galaxy-sky-atmosphere-purple-astronomical-object-night-1438039-pxhere.com %282kpx%29.jpg" />
+    <Resource Include="landscape-wing-cloud-sky-technology-star-603469-pxhere.com %282kpx%29.jpg" />
+    <Resource Include="black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" />
     <Content Include="movies.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>movies.Context.cs</LastGenOutput>
     </Content>
     <Content Include="movies.edmx.sql" />
+    <Resource Include="person-icon-1675.png" />
+    <Resource Include="person-icon-1675-yellow.png" />
+    <Resource Include="person-icon-1697.jpg" />
+    <Resource Include="people.png" />
+    <Resource Include="reel.png" />
+    <Resource Include="museum-icon-12883.png" />
+    <Resource Include="sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
+    <Resource Include="sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" />
+    <Resource Include="sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" />
     <Content Include="WPF_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

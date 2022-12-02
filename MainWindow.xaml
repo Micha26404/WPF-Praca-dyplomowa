@@ -1,198 +1,81 @@
-﻿
-<Window x:Class="WPF.MainWindow"
+﻿<Window x:Class="WPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF"
         mc:Ignorable="d"
-		Background="PapayaWhip"
-        Title="MainWindow" Width="900" Height="700">
-	<Window.Resources>
-		<Style TargetType="{x:Type Control}" x:Key="controlStyle">
-			<Setter Property="FontSize" Value="18" />
-		</Style>
-		<Style TargetType="{x:Type Button}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type Label}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type ListView}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type Window}" x:Key="windowStyle">
-			<Setter Property="FontSize" Value="18" />
-		</Style>
-		<Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type ToolBar}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type StatusBar}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type local:MainWindow}" BasedOn="{StaticResource controlStyle}"></Style>
-	</Window.Resources>
-	<Grid>
-		<TabControl>
-			<TabItem Header="Movies catalog">
-				<Grid Background="AntiqueWhite">
-					<ToolBar VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="SeaShell">
-						<Button Content="Add Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Edit Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Delete Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Year" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Duration" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top"/>
-					</ToolBar>
-					<DataGrid d:ItemsSource="{d:SampleData ItemCount=10}" MaxColumnWidth="300" AlternatingRowBackground="SeaShell" AlternationCount="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35"/>
-				</Grid>
-			</TabItem>
-			<TabItem Header="Current Rents">
-				<Grid Background="Azure">
-					<ToolBar VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="SeaShell">
-						<Button Content="Add Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Edit Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Delete Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Year" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Duration" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top"/>
-					</ToolBar>
-					<DataGrid d:ItemsSource="{d:SampleData ItemCount=10}" MaxColumnWidth="300" AlternatingRowBackground="AliceBlue" AlternationCount="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35"/>
-				</Grid>
-			</TabItem>
-			<TabItem Header="All Rents">
-				<Grid Background="AliceBlue">
-					<ToolBar VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="SeaShell">
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Year" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Duration" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top"/>
-					</ToolBar>
-					<DataGrid d:ItemsSource="{d:SampleData ItemCount=10}" MaxColumnWidth="300" AlternatingRowBackground="AliceBlue" AlternationCount="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35"/>
-				</Grid>
-			</TabItem>
-			<TabItem Header="View Clients">
-				<Grid Background="PowderBlue">
-					<ToolBar VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="SeaShell">
-						<Button Content="Add Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Edit Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Delete Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="First Name" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Last Name" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Phone" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="E-mail" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Rents" VerticalAlignment="Top"/>
-					</ToolBar>
-					<DataGrid d:ItemsSource="{d:SampleData ItemCount=10}" MaxColumnWidth="300" AlternatingRowBackground="AliceBlue" AlternationCount="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35"/>
-				</Grid>
-			</TabItem>
-			<TabItem Header="View Genres">
-				<Grid Background="LemonChiffon">
-					<ToolBar VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="SeaShell">
-						<Button Content="Add Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Edit Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Delete Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Rents" VerticalAlignment="Top"/>
-					</ToolBar>
-					<DataGrid d:ItemsSource="{d:SampleData ItemCount=6}" MaxColumnWidth="300" AlternatingRowBackground="AliceBlue" AlternationCount="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35"/>
-				</Grid>
-			</TabItem>
-			<TabItem Header="View Languages">
-				<Grid Background="PeachPuff">
-					<ToolBar VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="SeaShell">
-						<Button Content="Add Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Edit Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Delete Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Rents" VerticalAlignment="Top"/>
-					</ToolBar>
-					<DataGrid d:ItemsSource="{d:SampleData ItemCount=10}" MaxColumnWidth="300" AlternatingRowBackground="AliceBlue" AlternationCount="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35"/>
-				</Grid>
-			</TabItem>
-			<TabItem Header="View Actors">
-				<Grid Background="AliceBlue">
-					<ToolBar VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="SeaShell">
-						<Button Content="Add Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Edit Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Delete Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="First Name" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Last Name" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Rents" VerticalAlignment="Top"/>
-					</ToolBar>
-					<DataGrid d:ItemsSource="{d:SampleData ItemCount=10}" MaxColumnWidth="300" AlternatingRowBackground="AliceBlue" AlternationCount="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35"/>
-				</Grid>
-			</TabItem>
-			<TabItem Header="View Countries">
-				<Grid Background="Snow">
-					<ToolBar VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="SeaShell">
-						<Button Content="Add Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Edit Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Delete Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Rents" VerticalAlignment="Top"/>
-					</ToolBar>
-					<DataGrid d:ItemsSource="{d:SampleData ItemCount=10}" MaxColumnWidth="300" AlternatingRowBackground="AliceBlue" AlternationCount="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35"/>
-				</Grid>
-			</TabItem>
-			<TabItem Header="View Formats">
-				<Grid Background="Snow">
-					<ToolBar VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="SeaShell">
-						<Button Content="Add Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Edit Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<Button Content="Delete Record" />
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
-						<Separator Width="20" Background="SeaShell"></Separator>
-						<TextBox  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Rents" VerticalAlignment="Top"/>
-					</ToolBar>
-					<DataGrid d:ItemsSource="{d:SampleData ItemCount=3}" MaxColumnWidth="300" AlternatingRowBackground="AliceBlue" AlternationCount="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35"/>
-				</Grid>
-			</TabItem>
-		</TabControl>
-	</Grid>
+		Background="#000000"
+        Title="Movie Rental Software" Width="600" Height="600">
+    <Window.Resources>
+        <Style TargetType="{x:Type Control}" x:Key="controlStyle">
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource controlStyle}"></Style>
+        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource controlStyle}"></Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource controlStyle}"></Style>
+        <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource controlStyle}"></Style>
+        <Style TargetType="{x:Type ToolBar}" BasedOn="{StaticResource controlStyle}"></Style>
+        <Style TargetType="{x:Type StatusBar}" BasedOn="{StaticResource controlStyle}"></Style>
+        <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource controlStyle}"></Style>
+    </Window.Resources>
+    <Grid>
+
+        <StackPanel>
+            <UniformGrid Height="50" Rows="1">
+                <UniformGrid.Background>
+                    <ImageBrush ImageSource="/black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" Stretch="UniformToFill"/>
+                </UniformGrid.Background>
+                <Button Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Width="50" Height="50">
+                    <Button.Background>
+                        <ImageBrush Stretch="Uniform" ImageSource="/movie-icon-15157.png"/>
+                    </Button.Background>
+                </Button>
+
+                <Button Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Rents" Width="50" Height="50">
+                    <Button.Background>
+                        <ImageBrush Stretch="Uniform" ImageSource="/movie-icon-15142.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Clients" Width="50" Height="50">
+                    <Button.Background>
+                        <ImageBrush Stretch="Uniform" ImageSource="/people.png"/>
+                    </Button.Background>
+                </Button>
+            </UniformGrid>
+        </StackPanel>
+        <UniformGrid Columns="3">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,50,0,0">
+                <Button MaxHeight="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" MinWidth="50" MinHeight="50" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" Padding="1,1,1,1" UseLayoutRounding="True" Foreground="#FF4AFF66" ToolTipService.ToolTip="Clients">
+                    <Button.Background>
+                        <ImageBrush Stretch="Uniform" ImageSource="/add-icon-png-2486.png"/>
+                    </Button.Background>
+                </Button>
+                <ScrollViewer.Background>
+                    <ImageBrush ImageSource="/sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" Stretch="UniformToFill"/>
+                </ScrollViewer.Background>
+            </ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,50,0,0">
+                <Button MaxHeight="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" MinWidth="50" MinHeight="50" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" Padding="1,1,1,1" UseLayoutRounding="True" Foreground="#FF4AFF66" ToolTipService.ToolTip="Clients">
+                    <Button.Background>
+                        <ImageBrush Stretch="Uniform" ImageSource="/add-icon-png-2486.png"/>
+                    </Button.Background>
+                </Button>
+                <ScrollViewer.Background>
+                    <ImageBrush ImageSource="/sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" Stretch="UniformToFill"/>
+                </ScrollViewer.Background>
+            </ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,52,0,0">
+                <Button MaxHeight="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" MinWidth="50" MinHeight="50" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" Padding="1,1,1,1" UseLayoutRounding="True" Foreground="#FF4AFF66" ToolTipService.ToolTip="Clients">
+                    <Button.Background>
+                        <ImageBrush Stretch="Uniform" ImageSource="/add-icon-png-2486.png"/>
+                    </Button.Background>
+                </Button>
+                <ScrollViewer.Background>
+                    <ImageBrush ImageSource="/sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" Stretch="UniformToFill"/>
+                </ScrollViewer.Background>
+            </ScrollViewer>
+        </UniformGrid>
+
+    </Grid>
 </Window>

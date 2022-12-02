@@ -34,6 +34,5 @@ namespace WPF
         public virtual DbSet<languages> languages { get; set; }
         public virtual DbSet<countries> countries { get; set; }
         public virtual DbSet<formats> formats { get; set; }
-        public virtual DbSet<acts> acts { get; set; }
     }
 }

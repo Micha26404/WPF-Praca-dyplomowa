@@ -22,7 +22,6 @@
         <AssociationConnector Association="DBModel.moviesroles" />
         <EntityTypeShape EntityType="DBModel.formats" Width="1.5" PointX="1.25" PointY="7.125" />
         <AssociationConnector Association="DBModel.moviesformats" />
-        <EntityTypeShape EntityType="DBModel.acts" Width="1.5" PointX="1.25" PointY="2.75" />
         <AssociationConnector Association="DBModel.actorsEntity1" />
         <AssociationConnector Association="DBModel.moviesEntity1" />
       </Diagram>
