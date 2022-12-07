@@ -16,6 +16,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -30,8 +32,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -87,12 +87,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="classes\roles.cs" />
-    <Compile Include="WPF_DBDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -109,13 +103,19 @@
     <Compile Include="classes\languages.cs" />
     <Compile Include="classes\movies.cs" />
     <Compile Include="classes\orders.cs" />
-    <Compile Include="DBDataSet1.cs">
-      <DependentUpon>DBDataSet1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DBDataSet1.Designer.cs">
+    <Compile Include="WPF_DB_context.cs" />
+    <Compile Include="database\WPF_DB_diagram.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBDataSet1.xsd</DependentUpon>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="database\WPF_DBDataSet.cs">
+      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="database\WPF_DBDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -123,15 +123,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="movies.Context.cs">
+    <Compile Include="WPF_DB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>movies.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="movies.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>movies.edmx</DependentUpon>
+      <DependentUpon>WPF_DB.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -150,39 +145,28 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="movies.edmx">
+    <EntityDeploy Include="database\WPF_DB_diagram.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>movies.Designer.cs</LastGenOutput>
+      <LastGenOutput>WPF_DB_diagram.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DBDataSet1.xsc">
-      <DependentUpon>DBDataSet1.xsd</DependentUpon>
+    <None Include="database\WPF_DB_diagram.edmx.diagram">
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
     </None>
-    <None Include="DBDataSet1.xsd">
+    <None Include="database\WPF_DBDataSet.xsc">
+      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="database\WPF_DBDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DBDataSet1.Designer.cs</LastGenOutput>
+      <LastGenOutput>WPF_DBDataSet1.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="DBDataSet1.xss">
-      <DependentUpon>DBDataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="movies.edmx.diagram">
-      <DependentUpon>movies.edmx</DependentUpon>
+    <None Include="database\WPF_DBDataSet.xss">
+      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="WPF_DBDataSet.xsc">
-      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="WPF_DBDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>WPF_DBDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="WPF_DBDataSet.xss">
-      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -198,11 +182,17 @@
     <Resource Include="graphics\galaxy-sky-atmosphere-purple-astronomical-object-night-1438039-pxhere.com %282kpx%29.jpg" />
     <Resource Include="graphics\landscape-wing-cloud-sky-technology-star-603469-pxhere.com %282kpx%29.jpg" />
     <Resource Include="graphics\black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" />
-    <Content Include="movies.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>movies.Context.cs</LastGenOutput>
+    <Content Include="database\WPF_DB.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="movies.edmx.sql" />
+    <Content Include="database\WPF_DB_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>WPF_DB.mdf</DependentUpon>
+    </Content>
+    <Content Include="WPF_DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WPF_DB.Context.cs</LastGenOutput>
+    </Content>
     <Resource Include="graphics\person-icon-1675.png" />
     <Resource Include="graphics\person-icon-1675-yellow.png" />
     <Resource Include="graphics\person-icon-1697.jpg" />
@@ -211,13 +201,6 @@
     <Resource Include="graphics\sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
     <Resource Include="graphics\sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" />
     <Resource Include="graphics\sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" />
-    <Content Include="WPF_DB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WPF_DB_log.ldf">
-      <DependentUpon>WPF_DB.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -234,9 +217,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="database\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
