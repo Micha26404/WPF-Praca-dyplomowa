@@ -24,7 +24,7 @@
         <StackPanel>
             <UniformGrid Height="50" Rows="1">
                 <UniformGrid.Background>
-                    <ImageBrush ImageSource="/black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" Stretch="UniformToFill"/>
+					<ImageBrush ImageSource="/graphics/milky-way-(2kpx).jpg" Stretch="UniformToFill"/>
                 </UniformGrid.Background>
                 <Button Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Width="50" Height="50">
                     <Button.Background>
@@ -34,7 +34,7 @@
 
                 <Button Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Rents" Width="50" Height="50">
                     <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/movie-icon-15142.png"/>
+                        <ImageBrush Stretch="Uniform" ImageSource="/cart-icon-28337.png"/>
                     </Button.Background>
                 </Button>
                 <Button Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Clients" Width="50" Height="50">
@@ -52,7 +52,7 @@
                     </Button.Background>
                 </Button>
                 <ScrollViewer.Background>
-                    <ImageBrush ImageSource="/sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="/graphics/sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" Stretch="UniformToFill"/>
                 </ScrollViewer.Background>
             </ScrollViewer>
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,50,0,0">
@@ -62,7 +62,7 @@
                     </Button.Background>
                 </Button>
                 <ScrollViewer.Background>
-                    <ImageBrush ImageSource="/sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="/graphics/sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" Stretch="UniformToFill"/>
                 </ScrollViewer.Background>
             </ScrollViewer>
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,52,0,0">
@@ -72,7 +72,7 @@
                     </Button.Background>
                 </Button>
                 <ScrollViewer.Background>
-                    <ImageBrush ImageSource="/sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="/graphics/sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" Stretch="UniformToFill"/>
                 </ScrollViewer.Background>
             </ScrollViewer>
         </UniformGrid>

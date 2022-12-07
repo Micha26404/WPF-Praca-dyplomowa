@@ -2,7 +2,7 @@
 {
 }
 
-namespace WPF
+namespace WPF.database
 {
 
 

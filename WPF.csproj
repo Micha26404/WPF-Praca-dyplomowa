@@ -62,7 +62,9 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -85,7 +87,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\roles.cs" />
+    <Compile Include="classes\roles.cs" />
     <Compile Include="WPF_DBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,14 +101,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\actors.cs" />
-    <Compile Include="Classes\clients.cs" />
-    <Compile Include="Classes\countries.cs" />
-    <Compile Include="Classes\formats.cs" />
-    <Compile Include="Classes\genres.cs" />
-    <Compile Include="Classes\languages.cs" />
-    <Compile Include="Classes\movies.cs" />
-    <Compile Include="Classes\orders.cs" />
+    <Compile Include="classes\actors.cs" />
+    <Compile Include="classes\clients.cs" />
+    <Compile Include="classes\countries.cs" />
+    <Compile Include="classes\formats.cs" />
+    <Compile Include="classes\genres.cs" />
+    <Compile Include="classes\languages.cs" />
+    <Compile Include="classes\movies.cs" />
+    <Compile Include="classes\orders.cs" />
     <Compile Include="DBDataSet1.cs">
       <DependentUpon>DBDataSet1.xsd</DependentUpon>
     </Compile>
@@ -187,29 +189,28 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="klienci.png" />
-    <Resource Include="movie-icon-15157.png" />
-    <Resource Include="movie-icon-15142.png" />
-    <Resource Include="add-icon-png-2486.png" />
-    <Resource Include="cart-icon-28337.png" />
-    <Resource Include="milky-way-%282kpx%29.jpg" />
-    <Resource Include="galaxy-sky-atmosphere-purple-astronomical-object-night-1438039-pxhere.com %282kpx%29.jpg" />
-    <Resource Include="landscape-wing-cloud-sky-technology-star-603469-pxhere.com %282kpx%29.jpg" />
-    <Resource Include="black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" />
+    <Resource Include="graphics\klienci.png" />
+    <Resource Include="graphics\movie-icon-15157.png" />
+    <Resource Include="graphics\movie-icon-15142.png" />
+    <Resource Include="graphics\add-icon-png-2486.png" />
+    <Resource Include="graphics\cart-icon-28337.png" />
+    <Resource Include="graphics\milky-way-%282kpx%29.jpg" />
+    <Resource Include="graphics\galaxy-sky-atmosphere-purple-astronomical-object-night-1438039-pxhere.com %282kpx%29.jpg" />
+    <Resource Include="graphics\landscape-wing-cloud-sky-technology-star-603469-pxhere.com %282kpx%29.jpg" />
+    <Resource Include="graphics\black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" />
     <Content Include="movies.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>movies.Context.cs</LastGenOutput>
     </Content>
     <Content Include="movies.edmx.sql" />
-    <Resource Include="person-icon-1675.png" />
-    <Resource Include="person-icon-1675-yellow.png" />
-    <Resource Include="person-icon-1697.jpg" />
-    <Resource Include="people.png" />
-    <Resource Include="reel.png" />
-    <Resource Include="museum-icon-12883.png" />
-    <Resource Include="sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
-    <Resource Include="sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" />
-    <Resource Include="sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" />
+    <Resource Include="graphics\person-icon-1675.png" />
+    <Resource Include="graphics\person-icon-1675-yellow.png" />
+    <Resource Include="graphics\person-icon-1697.jpg" />
+    <Resource Include="graphics\people.png" />
+    <Resource Include="graphics\reel.png" />
+    <Resource Include="graphics\sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
+    <Resource Include="graphics\sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" />
+    <Resource Include="graphics\sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" />
     <Content Include="WPF_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -232,6 +233,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="database\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

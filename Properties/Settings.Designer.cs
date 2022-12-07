@@ -37,8 +37,8 @@ namespace WPF.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\WPF_DB.mdf;In" +
-            "tegrated Security=True;Connect Timeout=30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\database\\WPF_" +
+            "DB.mdf;Integrated Security=True;Connect Timeout=30")]
         public string WPF_DBConnectionString {
             get {
                 return ((string)(this["WPF_DBConnectionString"]));
