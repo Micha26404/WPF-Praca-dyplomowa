@@ -62,7 +62,9 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -196,6 +198,13 @@
     <Resource Include="galaxy-sky-atmosphere-purple-astronomical-object-night-1438039-pxhere.com %282kpx%29.jpg" />
     <Resource Include="landscape-wing-cloud-sky-technology-star-603469-pxhere.com %282kpx%29.jpg" />
     <Resource Include="black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" />
+    <Resource Include="Earth-From-Space-Space-1080x1920.jpg" />
+    <Resource Include="human-icon-png-1889.png" />
+    <Resource Include="movie-icon-15140.png" />
+    <Resource Include="movie-icon-15150.png" />
+    <Resource Include="Movie Reel.png" />
+    <Resource Include="Movie Reel 2.png" />
+    <Resource Include="Movie 3D Popcorn Drink.png" />
     <Content Include="movies.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>movies.Context.cs</LastGenOutput>
@@ -210,6 +219,10 @@
     <Resource Include="sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
     <Resource Include="sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" />
     <Resource Include="sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" />
+    <Resource Include="NASA 220.jpg" />
+    <Resource Include="ticket-Icon.png" />
+    <Resource Include="Planet People.png" />
+    <Resource Include="Ticket heart.png" />
     <Content Include="WPF_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

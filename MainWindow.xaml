@@ -3,10 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF"
         mc:Ignorable="d"
-		Background="#000000"
-        Title="Movie Rental Software" Width="600" Height="600">
+        Title="Movie Rental Software" Width="600" Height="600" Background="Black">
     <Window.Resources>
         <Style TargetType="{x:Type Control}" x:Key="controlStyle">
             <Setter Property="FontSize" Value="16" />
@@ -20,62 +18,77 @@
         <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource controlStyle}"></Style>
     </Window.Resources>
     <Grid>
-
-        <StackPanel>
-            <UniformGrid Height="50" Rows="1">
-                <UniformGrid.Background>
-                    <ImageBrush ImageSource="/black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" Stretch="UniformToFill"/>
-                </UniformGrid.Background>
-                <Button Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Width="50" Height="50">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Earth-From-Space-Space-1080x1920.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="30*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30*" />
+            </Grid.RowDefinitions>
+        </Grid>
+        <UniformGrid Grid.Column="1" Grid.Row="0" MinHeight="40" Rows="1" VerticalAlignment="Top">
+                
+                <Button x:Name="Movies" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
                     <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/movie-icon-15157.png"/>
+                        <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
 
-                <Button Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Rents" Width="50" Height="50">
+                <Button x:Name="Rents" Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Rents">
                     <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/movie-icon-15142.png"/>
+                        <ImageBrush Stretch="Uniform" ImageSource="/Ticket heart.png" TileMode="None"/>
                     </Button.Background>
                 </Button>
-                <Button Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Clients" Width="50" Height="50">
+                <Button x:Name="Clients" Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Clients">
                     <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/people.png"/>
+                        <ImageBrush Stretch="Uniform" ImageSource="/Planet People.png"/>
                     </Button.Background>
                 </Button>
             </UniformGrid>
-        </StackPanel>
-        <UniformGrid Columns="3">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,50,0,0">
-                <Button MaxHeight="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" MinWidth="50" MinHeight="50" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" Padding="1,1,1,1" UseLayoutRounding="True" Foreground="#FF4AFF66" ToolTipService.ToolTip="Clients">
-                    <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/add-icon-png-2486.png"/>
-                    </Button.Background>
-                </Button>
-                <ScrollViewer.Background>
-                    <ImageBrush ImageSource="/sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" Stretch="UniformToFill"/>
-                </ScrollViewer.Background>
-            </ScrollViewer>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,50,0,0">
-                <Button MaxHeight="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" MinWidth="50" MinHeight="50" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" Padding="1,1,1,1" UseLayoutRounding="True" Foreground="#FF4AFF66" ToolTipService.ToolTip="Clients">
-                    <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/add-icon-png-2486.png"/>
-                    </Button.Background>
-                </Button>
-                <ScrollViewer.Background>
-                    <ImageBrush ImageSource="/sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" Stretch="UniformToFill"/>
-                </ScrollViewer.Background>
-            </ScrollViewer>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,52,0,0">
-                <Button MaxHeight="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" MinWidth="50" MinHeight="50" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" Padding="1,1,1,1" UseLayoutRounding="True" Foreground="#FF4AFF66" ToolTipService.ToolTip="Clients">
-                    <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/add-icon-png-2486.png"/>
-                    </Button.Background>
-                </Button>
-                <ScrollViewer.Background>
-                    <ImageBrush ImageSource="/sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" Stretch="UniformToFill"/>
-                </ScrollViewer.Background>
-            </ScrollViewer>
-        </UniformGrid>
 
+        <DataGrid Grid.Column="1" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=10}" RowBackground="#7F75C9EE" AlternatingRowBackground="#7FED7184" FontSize="16" HeadersVisibility="Column" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+
+        <UniformGrid Grid.Column="3" Background="#6675C9EE" MinWidth="30" Columns="1">
+                    <Button x:Name="Trailer" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="Rent" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="Return" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                </UniformGrid>
+
+        <UniformGrid Grid.Column="0" Background="#6BE94E65" MinWidth="30" Columns="1">
+                <Button x:Name="Add" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="Edit" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="Remove" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+            </UniformGrid>
+        
     </Grid>
 </Window>
