@@ -226,13 +226,7 @@
     <Resource Include="backgrounds\Earth-From-Space-Space-1080x1920.jpg" />
     <Resource Include="backgrounds\NASA 220.jpg" />
     <Resource Include="backgrounds\sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
-    <Resource Include="icons\1426404.png" />
-    <Resource Include="icons\2808469.png" />
-    <Resource Include="icons\2855977.png" />
-    <Resource Include="icons\3384289.png" />
     <Resource Include="icons\3571805.png" />
-    <Resource Include="icons\5013811.png" />
-    <Resource Include="icons\7788377.png" />
     <Resource Include="icons\8734555.png" />
     <Resource Include="icons\Movie 3D Popcorn Drink.png" />
     <Resource Include="icons\Movie Reel 2.png" />
@@ -242,6 +236,10 @@
     <Resource Include="icons\Rent.png" />
     <Resource Include="icons\Ticket heart.png" />
     <Resource Include="icons\ticket-Icon.png" />
+    <Resource Include="icons\Edit.png" />
+    <Resource Include="icons\Add.png" />
+    <Resource Include="icons\Delete.png" />
+    <Resource Include="icons\Return.png" />
     <Content Include="WPF_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>WPF_DB.mdf</DependentUpon>
