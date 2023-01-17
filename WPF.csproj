@@ -173,40 +173,75 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="klienci.png" />
-    <Resource Include="movie-icon-15157.png" />
-    <Resource Include="movie-icon-15142.png" />
-    <Resource Include="add-icon-png-2486.png" />
-    <Resource Include="cart-icon-28337.png" />
-    <Resource Include="milky-way-%282kpx%29.jpg" />
-    <Resource Include="galaxy-sky-atmosphere-purple-astronomical-object-night-1438039-pxhere.com %282kpx%29.jpg" />
-    <Resource Include="landscape-wing-cloud-sky-technology-star-603469-pxhere.com %282kpx%29.jpg" />
-    <Resource Include="black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" />
-    <Resource Include="Earth-From-Space-Space-1080x1920.jpg" />
-    <Resource Include="human-icon-png-1889.png" />
-    <Resource Include="movie-icon-15140.png" />
-    <Resource Include="movie-icon-15150.png" />
-    <Resource Include="Movie Reel.png" />
-    <Resource Include="Movie Reel 2.png" />
-    <Resource Include="Movie 3D Popcorn Drink.png" />
-    <Content Include="movies.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>movies.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="movies.edmx.sql" />
-    <Resource Include="person-icon-1675.png" />
-    <Resource Include="person-icon-1675-yellow.png" />
-    <Resource Include="person-icon-1697.jpg" />
-    <Resource Include="people.png" />
-    <Resource Include="reel.png" />
-    <Resource Include="museum-icon-12883.png" />
-    <Resource Include="sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
-    <Resource Include="sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" />
-    <Resource Include="sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" />
-    <Resource Include="NASA 220.jpg" />
-    <Resource Include="ticket-Icon.png" />
-    <Resource Include="Planet People.png" />
-    <Resource Include="Ticket heart.png" />
+    <Resource Include="animations\activity.gif" />
+    <Resource Include="animations\add-to-collection.gif" />
+    <Resource Include="animations\add-to-favorites.gif" />
+    <Resource Include="animations\add.gif" />
+    <Resource Include="animations\bookmark.gif" />
+    <Resource Include="animations\broken-link.gif" />
+    <Resource Include="animations\calendar-tear.gif" />
+    <Resource Include="animations\check-all.gif" />
+    <Resource Include="animations\check-circle.gif" />
+    <Resource Include="animations\check-circled.gif" />
+    <Resource Include="animations\checkmark-ok.gif" />
+    <Resource Include="animations\clear-filter.gif" />
+    <Resource Include="animations\clear-symbol.gif" />
+    <Resource Include="animations\cross.gif" />
+    <Resource Include="animations\down-arrow.gif" />
+    <Resource Include="animations\edit.gif" />
+    <Resource Include="animations\expand-window.gif" />
+    <Resource Include="animations\eye.gif" />
+    <Resource Include="animations\favorite-folder.gif" />
+    <Resource Include="animations\fullscreen.gif" />
+    <Resource Include="animations\graph.gif" />
+    <Resource Include="animations\heart.gif" />
+    <Resource Include="animations\icon-list-view.gif" />
+    <Resource Include="animations\information.gif" />
+    <Resource Include="animations\left-right.gif" />
+    <Resource Include="animations\list.gif" />
+    <Resource Include="animations\money.gif" />
+    <Resource Include="animations\movie.gif" />
+    <Resource Include="animations\numerical-sorting.gif" />
+    <Resource Include="animations\ok.gif" />
+    <Resource Include="animations\photo-gallery.gif" />
+    <Resource Include="animations\play-load.gif" />
+    <Resource Include="animations\refresh-wait.gif" />
+    <Resource Include="animations\save-changes.gif" />
+    <Resource Include="animations\search.gif" />
+    <Resource Include="animations\star.gif" />
+    <Resource Include="animations\stocks.gif" />
+    <Resource Include="animations\tags.gif" />
+    <Resource Include="animations\tap.gif" />
+    <Resource Include="animations\tick-box.gif" />
+    <Resource Include="animations\toggle.gif" />
+    <Resource Include="animations\trash.gif" />
+    <Resource Include="animations\up-down.gif" />
+    <Resource Include="animations\waste.gif" />
+    <Resource Include="animations\wrench.gif" />
+    <Resource Include="backgrounds\assets\galaxy-sky-atmosphere-purple-astronomical-object-night-1438039-pxhere.com %282kpx%29.jpg" />
+    <Resource Include="backgrounds\assets\milky-way-%282kpx%29.jpg" />
+    <Resource Include="backgrounds\assets\sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" />
+    <Resource Include="backgrounds\assets\sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" />
+    <Resource Include="backgrounds\black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" />
+    <Resource Include="backgrounds\Earth-From-Space-Space-1080x1920.jpg" />
+    <Resource Include="backgrounds\NASA 220.jpg" />
+    <Resource Include="backgrounds\sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
+    <Resource Include="icons\1426404.png" />
+    <Resource Include="icons\2808469.png" />
+    <Resource Include="icons\2855977.png" />
+    <Resource Include="icons\3384289.png" />
+    <Resource Include="icons\3571805.png" />
+    <Resource Include="icons\5013811.png" />
+    <Resource Include="icons\7788377.png" />
+    <Resource Include="icons\8734555.png" />
+    <Resource Include="icons\Movie 3D Popcorn Drink.png" />
+    <Resource Include="icons\Movie Reel 2.png" />
+    <Resource Include="icons\Planet People.png" />
+    <Resource Include="icons\Play Trailer.png" />
+    <Resource Include="icons\Popcorn Ticket.png" />
+    <Resource Include="icons\Rent.png" />
+    <Resource Include="icons\Ticket heart.png" />
+    <Resource Include="icons\ticket-Icon.png" />
     <Content Include="WPF_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>WPF_DB.mdf</DependentUpon>
@@ -215,14 +250,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WPF_DB.Context.cs</LastGenOutput>
     </Content>
-    <Resource Include="graphics\person-icon-1675.png" />
-    <Resource Include="graphics\person-icon-1675-yellow.png" />
-    <Resource Include="graphics\person-icon-1697.jpg" />
-    <Resource Include="graphics\people.png" />
-    <Resource Include="graphics\reel.png" />
-    <Resource Include="graphics\sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
-    <Resource Include="graphics\sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" />
-    <Resource Include="graphics\sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

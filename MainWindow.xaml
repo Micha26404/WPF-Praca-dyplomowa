@@ -19,7 +19,7 @@
     </Window.Resources>
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/Earth-From-Space-Space-1080x1920.jpg" Stretch="UniformToFill"/>
+            <ImageBrush ImageSource="backgrounds/Earth-From-Space-Space-1080x1920.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         
             <Grid>
@@ -27,24 +27,23 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="30*" />
                 </Grid.RowDefinitions>
-            
 		
-            <UniformGrid Grid.Row="0" MinHeight="30" Rows="1" VerticalAlignment="Top">
+            <UniformGrid Grid.Row="0" MinHeight="40" Rows="1" VerticalAlignment="Top">
                 
                 <Button x:Name="Movies" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
                     <Button.Background>
-                        <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="iconsicons/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
 
                 <Button x:Name="Rents" Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Rents">
                     <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/Ticket heart.png" TileMode="None"/>
+                        <ImageBrush Stretch="Uniform" ImageSource="icons/Ticket heart.png" TileMode="None"/>
                     </Button.Background>
                 </Button>
                 <Button x:Name="Clients" Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Clients">
                     <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/Planet People.png"/>
+                        <ImageBrush Stretch="Uniform" ImageSource="icons/Planet People.png"/>
                     </Button.Background>
                 </Button>
             </UniformGrid>
@@ -61,17 +60,17 @@
 			<UniformGrid Grid.Column="0" Background="#6BE94E65" MinWidth="30" Columns="1">
 				<Button x:Name="Add" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
 					<Button.Background>
-						<ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+						<ImageBrush ImageSource="icons/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
 					</Button.Background>
 				</Button>
 				<Button x:Name="Edit" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
 					<Button.Background>
-						<ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+						<ImageBrush ImageSource="icons/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
 					</Button.Background>
 				</Button>
 				<Button x:Name="Remove" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
 					<Button.Background>
-						<ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+						<ImageBrush ImageSource="icons/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
 					</Button.Background>
 				</Button>
 			</UniformGrid>
@@ -79,17 +78,17 @@
 			<UniformGrid Grid.Column="2" Background="#6675C9EE" MinWidth="30" Columns="1">
                     <Button x:Name="Trailer" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
                         <Button.Background>
-                            <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                            <ImageBrush ImageSource="icons/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
                     <Button x:Name="Rent" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
                         <Button.Background>
-                            <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                            <ImageBrush ImageSource="icons/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
                     <Button x:Name="Return" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
                         <Button.Background>
-                            <ImageBrush ImageSource="/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                            <ImageBrush ImageSource="icons/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
                 </UniformGrid>
