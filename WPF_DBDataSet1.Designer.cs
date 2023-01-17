@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace WPF.database {
+namespace WPF {
     
     
     /// <summary>
@@ -3581,7 +3581,7 @@ namespace WPF.database {
         }
     }
 }
-namespace WPF.database.WPF_DBDataSetTableAdapters {
+namespace WPF.WPF_DBDataSetTableAdapters {
     
     
     /// <summary>

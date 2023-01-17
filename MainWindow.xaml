@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+		Loaded="Window_Loaded"
         Title="Movie Rental Software" Width="600" Height="600" Background="Black">
     <Window.Resources>
         <Style TargetType="{x:Type Control}" x:Key="controlStyle">
@@ -25,14 +26,14 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="30*" />
+                    <RowDefinition Height="20*" />
                 </Grid.RowDefinitions>
 		
-            <UniformGrid Grid.Row="0" MinHeight="40" Rows="1" VerticalAlignment="Top">
+            <UniformGrid Grid.Row="0" MinHeight="60" Rows="1" VerticalAlignment="Top">
                 
                 <Button x:Name="Movies" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
                     <Button.Background>
-                        <ImageBrush ImageSource="iconsicons/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="icons/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
 
@@ -55,7 +56,7 @@
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
-			    <DataGrid Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=10}" RowBackground="#7F75C9EE" AlternatingRowBackground="#7FED7184" FontSize="16" HeadersVisibility="Column" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+			    <DataGrid Name="Table" Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=10}" RowBackground="#7F75C9EE" AlternatingRowBackground="#7FED7184" FontSize="16" HeadersVisibility="Column" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
 
 			<UniformGrid Grid.Column="0" Background="#6BE94E65" MinWidth="30" Columns="1">
 				<Button x:Name="Add" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">

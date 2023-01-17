@@ -104,15 +104,15 @@
     <Compile Include="classes\movies.cs" />
     <Compile Include="classes\orders.cs" />
     <Compile Include="WPF_DB_context.cs" />
-    <Compile Include="database\WPF_DB_diagram.Designer.cs">
+    <Compile Include="WPF_DB_diagram.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
     </Compile>
-    <Compile Include="database\WPF_DBDataSet.cs">
+    <Compile Include="WPF_DBDataSet.cs">
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="database\WPF_DBDataSet1.Designer.cs">
+    <Compile Include="WPF_DBDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
@@ -145,22 +145,22 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="database\WPF_DB_diagram.edmx">
+    <EntityDeploy Include="WPF_DB_diagram.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>WPF_DB_diagram.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="database\WPF_DB_diagram.edmx.diagram">
+    <None Include="WPF_DB_diagram.edmx.diagram">
       <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
     </None>
-    <None Include="database\WPF_DBDataSet.xsc">
+    <None Include="WPF_DBDataSet.xsc">
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </None>
-    <None Include="database\WPF_DBDataSet.xsd">
+    <None Include="WPF_DBDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>WPF_DBDataSet1.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="database\WPF_DBDataSet.xss">
+    <None Include="WPF_DBDataSet.xss">
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />

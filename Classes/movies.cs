@@ -11,24 +11,22 @@ namespace WPF.database
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class movies
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public movies()
         {
-            this.year = "2012";
+            this.year = "2023";
             this.duration = 120;
-            this.price = 10m;
-            this.age = 13;
+            this.price = 10;
+            this.age = 16;
             this.languages = new HashSet<languages>();
             this.genres = new HashSet<genres>();
             this.countries = new HashSet<countries>();
-            this.roles = new HashSet<roles>();
             this.formats = new HashSet<formats>();
-            this.Entity1 = new HashSet<acts>();
         }
-    
+
         public int id { get; set; }
         public string title { get; set; }
         public string year { get; set; }
@@ -36,7 +34,7 @@ namespace WPF.database
         public decimal price { get; set; }
         public string description { get; set; }
         public byte age { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<languages> languages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -44,11 +42,7 @@ namespace WPF.database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<countries> countries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<roles> roles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<formats> formats { get; set; }
         public virtual orders order { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<acts> Entity1 { get; set; }
     }
 }
