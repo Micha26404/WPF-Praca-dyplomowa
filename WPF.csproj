@@ -173,6 +173,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="WPF_DB_diagram.edmx.sql" />
     <Resource Include="animations\activity.gif" />
     <Resource Include="animations\add-to-collection.gif" />
     <Resource Include="animations\add-to-favorites.gif" />

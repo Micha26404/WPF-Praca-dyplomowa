@@ -5,22 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="373f3201908e4c1ea66dc0fbfe656ca8" Name="Diagram1" ZoomLevel="110" >
-        <EntityTypeShape EntityType="DBModel.movies" Width="1.5" PointX="3.375" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.clients" Width="1.5" PointX="7.25" PointY="4.875" />
-        <EntityTypeShape EntityType="DBModel.actors" Width="1.5" PointX="1.25" PointY="5.125" />
-        <EntityTypeShape EntityType="DBModel.orders" Width="1.5" PointX="5.375" PointY="4.875" />
-        <EntityTypeShape EntityType="DBModel.genres" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="DBModel.movies" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.clients" Width="1.5" PointX="6.125" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.lead_roles" Width="1.5" PointX="0.5" PointY="4" />
+        <EntityTypeShape EntityType="DBModel.orders" Width="1.5" PointX="4.25" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.genres" Width="1.5" PointX="2.375" PointY="3.75" />
         <AssociationConnector Association="DBModel.authorwork" />
         <AssociationConnector Association="DBModel.clientsorders" />
-        <EntityTypeShape EntityType="DBModel.languages" Width="1.5" PointX="3.375" PointY="9" />
-        <EntityTypeShape EntityType="DBModel.countries" Width="1.5" PointX="3.375" PointY="2.75" />
-        <AssociationConnector Association="DBModel.movieslangs" />
-        <AssociationConnector Association="DBModel.moviesgenres" />
-        <AssociationConnector Association="DBModel.moviesorders" />
-        <AssociationConnector Association="DBModel.moviescountries" />
+        <EntityTypeShape EntityType="DBModel.countries" Width="1.5" PointX="2.375" PointY="0.5" />
         <AssociationConnector Association="DBModel.moviesroles" />
-        <EntityTypeShape EntityType="DBModel.formats" Width="1.5" PointX="1.25" PointY="7.125" />
-        <AssociationConnector Association="DBModel.moviesformats" />
+        <EntityTypeShape EntityType="DBModel.formats" Width="1.5" PointX="2.375" PointY="2.125" />
+        <EntityTypeShape EntityType="DBModel.directors" Width="1.5" PointX="4.25" PointY="3.125" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
