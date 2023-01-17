@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPF
+namespace WPF.database
 {
     using System;
     using System.Data.Entity;
@@ -28,7 +28,6 @@ namespace WPF
         public virtual DbSet<movies> movies { get; set; }
         public virtual DbSet<clients> clients { get; set; }
         public virtual DbSet<actors> actors { get; set; }
-        public virtual DbSet<roles> roles { get; set; }
         public virtual DbSet<orders> orders { get; set; }
         public virtual DbSet<genres> genres { get; set; }
         public virtual DbSet<languages> languages { get; set; }

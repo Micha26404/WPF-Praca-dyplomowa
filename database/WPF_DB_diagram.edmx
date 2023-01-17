@@ -272,16 +272,7 @@
             <End Role="orders" EntitySet="orders" />
             <End Role="movies" EntitySet="movies" />
           </AssociationSet>
-          <EntitySet Name="acts" EntityType="DBModel.acts" />
-          <AssociationSet Name="actorsEntity1" Association="DBModel.actorsEntity1">
-            <End Role="actors" EntitySet="actors" />
-            <End Role="Entity1" EntitySet="acts" />
-          </AssociationSet>
-          <AssociationSet Name="moviesEntity1" Association="DBModel.moviesEntity1">
-            <End Role="movies" EntitySet="movies" />
-            <End Role="Entity1" EntitySet="acts" />
-          </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="movies">
           <Key>
             <PropertyRef Name="id" />
@@ -299,7 +290,6 @@
           <NavigationProperty Name="roles" Relationship="DBModel.moviesroles" FromRole="movies" ToRole="roles" />
           <NavigationProperty Name="formats" Relationship="DBModel.moviesformats" FromRole="movies" ToRole="formats" />
           <NavigationProperty Name="order" Relationship="DBModel.ordersmovies" FromRole="movies" ToRole="orders" />
-          <NavigationProperty Name="Entity1" Relationship="DBModel.moviesEntity1" FromRole="movies" ToRole="Entity1" />
         </EntityType>
         <EntityType Name="clients">
           <Key>
@@ -319,7 +309,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="first_name" Type="String" Nullable="false" MaxLength="100" />
           <Property Name="last_name" Type="String" Nullable="false" MaxLength="100" />
-          <NavigationProperty Name="acts" Relationship="DBModel.actorsEntity1" FromRole="actors" ToRole="Entity1" />
         </EntityType>
         <EntityType Name="roles">
           <Key>
@@ -405,24 +394,7 @@
           <End Type="DBModel.orders" Role="orders" Multiplicity="1" />
           <End Type="DBModel.movies" Role="movies" Multiplicity="*" />
         </Association>
-        <EntityType Name="acts">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="actor" Relationship="DBModel.actorsEntity1" FromRole="Entity1" ToRole="actors" />
-          <NavigationProperty Name="movie" Relationship="DBModel.moviesEntity1" FromRole="Entity1" ToRole="movies" />
-          <Property Name="is_director" Type="Boolean" Nullable="true" DefaultValue="False" />
-        </EntityType>
-        <Association Name="actorsEntity1">
-          <End Type="DBModel.actors" Role="actors" Multiplicity="1" />
-          <End Type="DBModel.acts" Role="Entity1" Multiplicity="*" />
-        </Association>
-        <Association Name="moviesEntity1">
-          <End Type="DBModel.movies" Role="movies" Multiplicity="1" />
-          <End Type="DBModel.acts" Role="Entity1" Multiplicity="*" />
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
