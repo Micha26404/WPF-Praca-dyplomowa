@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
 		Loaded="Window_Loaded"
-        Title="Movie Rental Software" Width="600" Height="600" Background="Black">
+        Title="Movie Rental" Width="600" Height="600">
     <Window.Resources>
         <Style TargetType="{x:Type Control}" x:Key="controlStyle">
             <Setter Property="FontSize" Value="16" />
         </Style>
-        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource controlStyle}"></Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource controlStyle}">
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
         <Style TargetType="{x:Type Label}" BasedOn="{StaticResource controlStyle}"></Style>
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource controlStyle}"></Style>
         <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource controlStyle}"></Style>
@@ -18,82 +20,85 @@
         <Style TargetType="{x:Type StatusBar}" BasedOn="{StaticResource controlStyle}"></Style>
         <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource controlStyle}"></Style>
     </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="White"/>
+            <GradientStop Color="#FF56D4FF" Offset="0.995"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="backgrounds/Earth-From-Space-Space-1080x1920.jpg" Stretch="UniformToFill"/>
-        </Grid.Background>
-        
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="20*" />
-                </Grid.RowDefinitions>
-		
-            <UniformGrid Grid.Row="0" MinHeight="60" Rows="1" VerticalAlignment="Top">
-                
-                <Button x:Name="Movies" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
-                    <Button.Background>
-                        <ImageBrush ImageSource="icons/Movie 3D Popcorn Drink.png" Stretch="Uniform"/>
-                    </Button.Background>
-                </Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="80*" />
+            <ColumnDefinition Width="10*" />
+        </Grid.ColumnDefinitions>
+        <UniformGrid Columns="1">
+            <UniformGrid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFC7E4FF" Offset="0.019"/>
+                    <GradientStop Color="#FF69ACE0" Offset="1"/>
+                </LinearGradientBrush>
+            </UniformGrid.Background>
 
-                <Button x:Name="Rents" Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Rents">
-                    <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="icons/Ticket heart.png" TileMode="None"/>
-                    </Button.Background>
-                </Button>
-                <Button x:Name="Clients" Cursor="Hand" BorderBrush="{x:Null}" ToolTipService.ToolTip="Clients">
-                    <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="icons/Planet People.png"/>
-                    </Button.Background>
-                </Button>
-            </UniformGrid>
-		
-		    <Grid Grid.Row="1">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="30*" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
+            <Button x:Name="Movies" ToolTipService.ToolTip="Movies" Foreground="{x:Null}" FontSize="20">
+                <Button.Background>
+                    <ImageBrush ImageSource="icons/icons8-movies-folder-64.png" Stretch="Uniform" TileMode="None"/>
+                </Button.Background>
+            </Button>
 
-			    <DataGrid Name="Table" Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=10}" RowBackground="#7F75C9EE" AlternatingRowBackground="#7FED7184" FontSize="16" HeadersVisibility="Column" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+            <Button x:Name="Rents" ToolTipService.ToolTip="Rents">
+                <Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="icons/icons8-combi-ticket-64.png" TileMode="None"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="Clients" ToolTipService.ToolTip="Clients">
+                <Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="icons/Planet People.png"/>
+                </Button.Background>
+            </Button>
+        </UniformGrid>
 
-			<UniformGrid Grid.Column="0" Background="#6BE94E65" MinWidth="30" Columns="1">
-				<Button x:Name="Add" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
-					<Button.Background>
-						<ImageBrush ImageSource="icons/Add.png" Stretch="Uniform"/>
-					</Button.Background>
-				</Button>
-				<Button x:Name="Edit" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
-					<Button.Background>
-						<ImageBrush ImageSource="icons/Edit.png" Stretch="Uniform"/>
-					</Button.Background>
-				</Button>
-				<Button x:Name="Remove" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
-					<Button.Background>
-						<ImageBrush ImageSource="icons/Delete.png" Stretch="Uniform"/>
-					</Button.Background>
-				</Button>
-			</UniformGrid>
+        <DataGrid Name="Table" Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=10}" RowBackground="#7F75C9EE" AlternatingRowBackground="#7F8DDFF5" FontSize="16" HeadersVisibility="Column" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
 
-			<UniformGrid Grid.Column="2" Background="#6675C9EE" MinWidth="30" Columns="1">
-                    <Button x:Name="Trailer" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Watch trailer" Foreground="{x:Null}">
-                        <Button.Background>
-                            <ImageBrush ImageSource="icons/Play Trailer.png" Stretch="Uniform"/>
-                        </Button.Background>
-                    </Button>
-                    <Button x:Name="Rent" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Rent movie" Foreground="{x:Null}">
-                        <Button.Background>
-                            <ImageBrush ImageSource="icons/Rent.png" Stretch="Uniform"/>
-                        </Button.Background>
-                    </Button>
-                    <Button x:Name="Return" Cursor="Hand" BorderBrush="{x:Null}" Padding="1,1,1,0" ToolTipService.ToolTip="Return movie" Foreground="{x:Null}">
-                        <Button.Background>
-                            <ImageBrush ImageSource="icons/Return.png" Stretch="Uniform"/>
-                        </Button.Background>
-                    </Button>
-                </UniformGrid>
-			</Grid>
-		</Grid>
-	</Grid>
+        <UniformGrid Grid.Column="2" MinWidth="30" Columns="1">
+            <UniformGrid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFC563CA"/>
+                    <GradientStop Color="#FF82148E" Offset="1"/>
+                </LinearGradientBrush>
+            </UniformGrid.Background>
+            <Button x:Name="Trailer" Padding="1,1,1,0" ToolTipService.ToolTip="Watch trailer" Foreground="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="icons/icons8-movie-projector-64.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="Rent" Padding="1,1,1,0" ToolTipService.ToolTip="Rent movie" Foreground="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="icons/icons8-movie-ticket-64.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="Return" Padding="1,1,1,0" ToolTipService.ToolTip="Return movie" Foreground="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="icons/icons8-return-64.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="Add" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="icons/icons8-add-file-64.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="Edit" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="icons/icons8-edit-file-64.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="Remove" Padding="1,1,1,0" ToolTipService.ToolTip="Movies" Foreground="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="icons/icons8-delete-file-64.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+        </UniformGrid>
+
+
+    </Grid>
 </Window>
