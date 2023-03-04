@@ -6,13 +6,69 @@
         mc:Ignorable="d"
 		Loaded="Window_Loaded"
         Title="Movie Rental" Width="600" Height="600">
+    <Window.Background>
+        <LinearGradientBrush Opacity="0.95" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="White"/>
+            <GradientStop Color="#FF56D4FF" Offset="0.995"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Window.Clip>
+        <RectangleGeometry Rect="0,0,600,600" RadiusX="25" RadiusY="25"/>
+    </Window.Clip>
     <Window.Resources>
+        <Style TargetType="Window" x:Key="TransparentWindowStyle">
+            <Setter Property="WindowStyle" Value="None"/>
+            <Setter Property="AllowsTransparency" Value="True"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
         <Style TargetType="{x:Type Control}" x:Key="controlStyle">
             <Setter Property="FontSize" Value="16" />
         </Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource controlStyle}">
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="MinHeight" Value="50"/>
+            <Setter Property="MinWidth" Value="50"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border" CornerRadius="2" BorderThickness="1"
+                    BorderBrush="#404040">
+                            <ContentPresenter Margin="2" 
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter TargetName="Border" 
+                                    Property="BorderBrush" Value="lightblue" />
+                            </Trigger>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter TargetName="Border" 
+                                    Property="BorderBrush" Value="#EEEEEE" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Border" 
+                                    Property="Background" Value="lightblue" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="Border" 
+                                    Property="Background" Value="lightblue" />
+                                <Setter TargetName="Border" 
+                                    Property="BorderBrush" Value="lightblue" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Border" 
+                                    Property="Background" Value="#EEEEEE" />
+                                <Setter TargetName="Border" 
+                                    Property="BorderBrush" Value="#EEEEEE" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+
         <Style TargetType="{x:Type Label}" BasedOn="{StaticResource controlStyle}"></Style>
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource controlStyle}"></Style>
         <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource controlStyle}"></Style>
@@ -20,12 +76,6 @@
         <Style TargetType="{x:Type StatusBar}" BasedOn="{StaticResource controlStyle}"></Style>
         <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource controlStyle}"></Style>
     </Window.Resources>
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="White"/>
-            <GradientStop Color="#FF56D4FF" Offset="0.995"/>
-        </LinearGradientBrush>
-    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*" />
@@ -98,7 +148,5 @@
                 </Button.Background>
             </Button>
         </UniformGrid>
-
-
     </Grid>
 </Window>

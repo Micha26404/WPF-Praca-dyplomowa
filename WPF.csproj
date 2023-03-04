@@ -176,21 +176,8 @@
     <Resource Include="icons\Movies.png" />
     <Resource Include="icons\icons8-combo-chart-40.png" />
     <Resource Include="icons\icons8-contacts-100.png" />
-    <Resource Include="icons\icons8-contacts-80.png" />
-    <Resource Include="icons\icons8-done-48.png" />
-    <Resource Include="icons\icons8-filter-50.png" />
-    <Resource Include="icons\icons8-goal-48.png" />
-    <Resource Include="icons\icons8-mail-50.png" />
     <Resource Include="icons\icons8-phone-100.png" />
-    <Resource Include="icons\icons8-play-50.png" />
     <Resource Include="icons\icons8-plus-48.png" />
-    <Resource Include="icons\icons8-trash-50.png" />
-    <Resource Include="icons\icons8-user-groups-50.png" />
-    <Resource Include="icons\icons8-video-64.png" />
-    <Resource Include="icons8-plus-48.png" />
-    <Resource Include="icons\icons8-add-new-80.png" />
-    <Resource Include="icons\icons8-create-100.png" />
-    <Resource Include="icons\icons8-edit-property-96.png" />
     <Resource Include="icons\icons8-add-file-64.png" />
     <Resource Include="icons\icons8-delete-file-64.png" />
     <Resource Include="icons\icons8-edit-file-64.png" />
@@ -253,18 +240,9 @@
     <Resource Include="backgrounds\Earth-From-Space-Space-1080x1920.jpg" />
     <Resource Include="backgrounds\NASA 220.jpg" />
     <Resource Include="backgrounds\sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
-    <Resource Include="icons\Movie 3D Popcorn Drink.png" />
     <Resource Include="icons\Movie Reel 2.png" />
     <Resource Include="icons\Planet People.png" />
     <Resource Include="icons\Play Trailer.png" />
-    <Resource Include="icons\Popcorn Ticket.png" />
-    <Resource Include="icons\Rent.png" />
-    <Resource Include="icons\Ticket heart.png" />
-    <Resource Include="icons\ticket-Icon.png" />
-    <Resource Include="icons\Edit.png" />
-    <Resource Include="icons\Add.png" />
-    <Resource Include="icons\Delete.png" />
-    <Resource Include="icons\Return.png" />
     <Content Include="WPF_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>WPF_DB.mdf</DependentUpon>
