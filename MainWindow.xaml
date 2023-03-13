@@ -71,7 +71,6 @@
 
 			<GradientStop Color="#FF730000" Offset="0.95"/>
 			<GradientStop Color="#FF730000" Offset="1"/>
-
 		</RadialGradientBrush>
 	</Window.Background>
 	<Window.Resources>
@@ -80,7 +79,6 @@
 		</Style>
 		<Style TargetType="{x:Type Button}" BasedOn="{StaticResource controlStyle}">
 			<Setter Property="Cursor" Value="Hand"/>
-			<Setter Property="OverridesDefaultStyle" Value="false"/>
 			<Setter Property="MinWidth" Value="64"/>
 			<Setter Property="MinHeight" Value="64"/>
 			<Setter Property="Template">
@@ -104,7 +102,6 @@
 								<DropShadowEffect Direction="270" ShadowDepth="7" Color="Black"/>
 							</Border.Effect>
 							<ContentPresenter/>
-
 						</Border>
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsMouseOver" Value="true">
@@ -113,7 +110,7 @@
 							</Trigger>
 							<Trigger Property="IsPressed" Value="true">
 								<Setter TargetName="Border" 
-                                    Property="Background" Value="lightgreen" />
+                                    Property="Background" Value="red" />
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -149,25 +146,19 @@
 
 			<Viewbox  VerticalAlignment="Top">
 				<Button x:Name="Movies" ToolTipService.ToolTip="Browse movies" MaxHeight="64">
-					<Button.Foreground>
-						<ImageBrush Stretch="Fill" ImageSource="/icons/icons8-movies-folder-64.png" TileMode="None"/>
-					</Button.Foreground>
+					<Image Source="\icons\icons8-movies-folder-64.png"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Center">
 				<Button x:Name="Rents" ToolTipService.ToolTip="Browse rents" MaxHeight="64">
-					<Button.Foreground>
-						<ImageBrush Stretch="Uniform" ImageSource="icons/icons8-combi-ticket-64.png"/>
-					</Button.Foreground>
+					<Image Source="icons/icons8-combi-ticket-64.png"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Bottom">
 				<Button x:Name="Clients" ToolTipService.ToolTip="Browse clients" MaxHeight="64">
-					<Button.Foreground>
-						<ImageBrush Stretch="Uniform" ImageSource="icons/Planet People.png"/>
-					</Button.Foreground>
+					<Image Source="icons/Planet People.png"/>
 				</Button>
 			</Viewbox>
 		</UniformGrid>
@@ -190,49 +181,37 @@
 
 			<Viewbox  VerticalAlignment="Top">
 				<Button x:Name="Trailer" ToolTipService.ToolTip="Watch a trailer for this movie">
-					<Button.Foreground>
-						<ImageBrush ImageSource="icons/icons8-movie-projector-64.png" Stretch="Uniform"/>
-					</Button.Foreground>
+					<Image Source="icons/icons8-movie-projector-64.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Top">
 				<Button x:Name="Rent" ToolTipService.ToolTip="Rent a copy of this movie">
-					<Button.Foreground>
-						<ImageBrush ImageSource="icons/icons8-movie-ticket-64.png" Stretch="Uniform"/>
-					</Button.Foreground>
+					<Image Source="icons/icons8-movie-ticket-64.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Top">
 				<Button x:Name="Return" ToolTipService.ToolTip="Return a copy of this movie">
-					<Button.Foreground>
-						<ImageBrush ImageSource="icons/icons8-return-64.png" Stretch="Uniform"/>
-					</Button.Foreground>
+					<Image Source="icons/icons8-return-64.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Bottom">
 				<Button x:Name="Add" ToolTipService.ToolTip="Add a new entry">
-					<Button.Foreground>
-						<ImageBrush ImageSource="icons/icons8-add-file-64.png" Stretch="Uniform"/>
-					</Button.Foreground>
+					<Image Source="icons/icons8-add-file-64.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Bottom">
 				<Button x:Name="Edit" ToolTipService.ToolTip="Edit this entry">
-					<Button.Foreground>
-						<ImageBrush ImageSource="icons/icons8-edit-file-64.png" Stretch="Uniform"/>
-					</Button.Foreground>
+					<Image Source="icons/icons8-edit-file-64.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Bottom">
 				<Button x:Name="Remove" ToolTipService.ToolTip="Remove this entry">
-					<Button.Foreground>
-						<ImageBrush ImageSource="icons/icons8-delete-file-64.png" Stretch="Uniform"/>
-					</Button.Foreground>
+					<Image Source="icons/icons8-delete-file-64.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
