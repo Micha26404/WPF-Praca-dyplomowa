@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Data.Entity.Core.Objects;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -16,24 +19,15 @@ using WPF.database;
 
 namespace WPF
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
 	public partial class MainWindow : Window
 	{
-		WPF_DBDataSet dataEntities = new WPF_DBDataSet();
+		//WPF_DBDataSet dataEntities = new WPF_DBDataSet();
 		public MainWindow()
 		{
 			InitializeComponent();
 		}
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-			var query =
-			from movie in dataEntities.movies
-			orderby movie.duration
-			select new { movie.title, movie.duration, movie.age, movie.year, movie.price, movie.description};
 
-			Table.ItemsSource = query.ToList();
+		public class Window_Loaded(object sender, RoutedEventArgs e)
+		{
 		}
-    }
-}
+	}

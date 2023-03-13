@@ -95,14 +95,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="classes\person.cs" />
+    <Compile Include="classes\directors.cs" />
     <Compile Include="classes\actors.cs" />
     <Compile Include="classes\clients.cs" />
     <Compile Include="classes\countries.cs" />
     <Compile Include="classes\formats.cs" />
     <Compile Include="classes\genres.cs" />
-    <Compile Include="classes\languages.cs" />
+    <Compile Include="classes\langs.cs" />
     <Compile Include="classes\movies.cs" />
     <Compile Include="classes\orders.cs" />
+    <Compile Include="WPF_DBDataSet11.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="WPF_DB_context.cs" />
     <Compile Include="WPF_DB_diagram.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -149,6 +156,17 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>WPF_DB_diagram.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="WPF_DBDataSet1.xsc">
+      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="WPF_DBDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>WPF_DBDataSet11.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="WPF_DBDataSet1.xss">
+      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
+    </None>
     <None Include="WPF_DB_diagram.edmx.diagram">
       <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
     </None>

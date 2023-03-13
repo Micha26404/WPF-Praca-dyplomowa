@@ -12,7 +12,7 @@ namespace WPF.database
     using System;
     using System.Collections.Generic;
     
-    public partial class languages
+    public partial class langs
     {
         public int id { get; set; }
         public string name { get; set; }

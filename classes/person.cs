@@ -12,19 +12,14 @@ namespace WPF.database
     using System;
     using System.Collections.Generic;
     
-    public partial class orders
+    public partial class person
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public orders()
-        {
-            this.quantity = 1;
-        }
-        public int id { get; set; }
-		public int movie_id { get; set; }
-		public int client_id { get; set; }
-		public byte quantity { get; set; }
-        public System.DateTime rent_date { get; set; }
-        public System.DateTime due_date { get; set; }
-        public System.DateTime return_date { get; set; }
+        public person()
+        { }
+        public int person_id { get; set; }
+        public string name { get; set; }
+        public string last_name { get; set; }
+		public string gender { get; set; }
     }
 }

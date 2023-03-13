@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
 		Loaded="Window_Loaded"
-		BorderThickness="0,0,1,2"
+	    BorderThickness="0,0,1,2"
 		Padding="6"
 		ResizeMode="CanResizeWithGrip"
 		Title="Rent-A-Movie" Width="1280" Height="720">
@@ -109,7 +109,7 @@
             </Button>
         </UniformGrid>
 
-        <DataGrid Name="Data" Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=10}" FontSize="16" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="#FF868686">
+        <DataGrid Name="dTable" Grid.Column="1" d:ItemsSource="{Binding}" FontSize="16" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="#FF868686">
             <DataGrid.Background>
                 <RadialGradientBrush>
                     <GradientStop Color="#FF380404" Offset="1"/>

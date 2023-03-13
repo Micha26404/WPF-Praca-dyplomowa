@@ -30,7 +30,7 @@ namespace WPF.database
         public virtual DbSet<actors> actors { get; set; }
         public virtual DbSet<orders> orders { get; set; }
         public virtual DbSet<genres> genres { get; set; }
-        public virtual DbSet<languages> languages { get; set; }
+        public virtual DbSet<langs> languages { get; set; }
         public virtual DbSet<countries> countries { get; set; }
         public virtual DbSet<formats> formats { get; set; }
     }

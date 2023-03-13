@@ -4,18 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="373f3201908e4c1ea66dc0fbfe656ca8" Name="Diagram1" ZoomLevel="110" >
-        <EntityTypeShape EntityType="DBModel.movies" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.clients" Width="1.5" PointX="6.125" PointY="0.5" />
-        <EntityTypeShape EntityType="DBModel.lead_roles" Width="1.5" PointX="0.5" PointY="4" />
-        <EntityTypeShape EntityType="DBModel.orders" Width="1.5" PointX="4.25" PointY="0.5" />
-        <EntityTypeShape EntityType="DBModel.genres" Width="1.5" PointX="2.375" PointY="3.75" />
-        <AssociationConnector Association="DBModel.authorwork" />
+      <Diagram DiagramId="373f3201908e4c1ea66dc0fbfe656ca8" Name="Diagram1" ZoomLevel="108" >
+        <EntityTypeShape EntityType="DBModel.movies" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.directors" Width="1.5" PointX="4" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.actors" Width="1.5" PointX="7.75" PointY="0.625" />
+        <EntityTypeShape EntityType="DBModel.clients" Width="1.5" PointX="5.75" PointY="2.625" />
+        <EntityTypeShape EntityType="DBModel.orders" Width="1.5" PointX="5.75" PointY="4.875" />
+        <EntityTypeShape EntityType="DBModel.langs" Width="1.5" PointX="2.25" PointY="2.125" />
+        <EntityTypeShape EntityType="DBModel.formats" Width="1.5" PointX="2.25" PointY="3.75" />
+        <EntityTypeShape EntityType="DBModel.countries" Width="1.5" PointX="2.25" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.person" Width="1.5" PointX="5.75" PointY="0.5" />
+        <InheritanceConnector EntityType="DBModel.actors" />
+        <InheritanceConnector EntityType="DBModel.clients" />
+        <InheritanceConnector EntityType="DBModel.directors" />
         <AssociationConnector Association="DBModel.clientsorders" />
-        <EntityTypeShape EntityType="DBModel.countries" Width="1.5" PointX="2.375" PointY="0.5" />
-        <AssociationConnector Association="DBModel.moviesroles" />
-        <EntityTypeShape EntityType="DBModel.formats" Width="1.5" PointX="2.375" PointY="2.125" />
-        <EntityTypeShape EntityType="DBModel.directors" Width="1.5" PointX="4.25" PointY="3.125" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
