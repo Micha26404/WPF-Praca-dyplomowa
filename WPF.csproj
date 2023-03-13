@@ -204,6 +204,13 @@
     <Resource Include="icons\icons8-combi-ticket-64.png" />
     <Resource Include="icons\icons8-movie-projector-64.png" />
     <Resource Include="icons\icons8-movies-folder-64.png" />
+    <Content Include="WPF_DB.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WPF_DB_log.ldf">
+      <DependentUpon>WPF_DB.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WPF_DB_diagram.edmx.sql" />
     <Resource Include="animations\activity.gif" />
     <Resource Include="animations\add-to-collection.gif" />

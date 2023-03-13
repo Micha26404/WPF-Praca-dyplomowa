@@ -26,8 +26,5 @@ namespace WPF
 		{
 			InitializeComponent();
 		}
-
-		public class Window_Loaded(object sender, RoutedEventArgs e)
-		{
-		}
 	}
+}

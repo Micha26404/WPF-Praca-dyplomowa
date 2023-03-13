@@ -4,35 +4,74 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-		Loaded="Window_Loaded"
 	    BorderThickness="0,0,1,2"
 		Padding="6"
 		ResizeMode="CanResizeWithGrip"
-		Title="Rent-A-Movie" Width="1920" Height="1080" >
+		Title="Rent-A-Movie" Width="1280" Height="800" >
 	<Window.Background>
 		<RadialGradientBrush SpreadMethod="Reflect">
-			<GradientStop Color="Black" Offset="1"/>
-			<GradientStop Color="#FF730000" Offset="0.862"/>
-			<GradientStop Color="Black"/>
-			<GradientStop Color="Black" Offset="0.116"/>
-			<GradientStop Color="#FF821515"/>
-			<GradientStop Color="#FF6F0000"/>
-			<GradientStop Color="Black" Offset="0.461"/>
-			<GradientStop Color="Black"/>
-			<GradientStop Color="#FF290505" Offset="0.264"/>
-			<GradientStop Color="#FF730000" Offset="0.249"/>
-			<GradientStop Color="#FF6B0000" Offset="0.323"/>
-			<GradientStop Color="#FF730000" Offset="0.727"/>
-			<GradientStop Color="#FF730000" Offset="0.443"/>
-			<GradientStop Color="#FF1F0505" Offset="0.574"/>
-			<GradientStop Color="#FF730000" Offset="0.565"/>
-			<GradientStop Color="#FF370707" Offset="0.738"/>
-			<GradientStop Color="Black" Offset="0.186"/>
-			<GradientStop Color="Black" Offset="0.878"/>
-			<GradientStop Color="#FF730000" Offset="0.103"/>
-			<GradientStop Color="#FF730000" Offset="0.175"/>
-			<GradientStop Color="Black" Offset="0.336"/>
-			<GradientStop Color="#FF730000" Offset="0.937"/>
+			<GradientStop Color="black" Offset="0.01"/>
+			<GradientStop Color="#FF730000" Offset="0.02"/>
+			<GradientStop Color="#FF050000" Offset="0.05"/>
+
+			<GradientStop Color="#FF730000" Offset="0.05"/>
+			<GradientStop Color="#FF730000" Offset="0.1"/>
+
+			<GradientStop Color="#FF100000" Offset="0.1"/>
+			<GradientStop Color="#FF100000" Offset="0.15"/>
+
+			<GradientStop Color="#FF730000" Offset="0.15"/>
+			<GradientStop Color="#FF730000" Offset="0.2"/>
+
+			<GradientStop Color="#FF150000" Offset="0.2"/>
+			<GradientStop Color="#FF150000" Offset="0.25"/>
+
+			<GradientStop Color="#FF730000" Offset="0.25"/>
+			<GradientStop Color="#FF730000" Offset="0.3"/>
+
+			<GradientStop Color="#FF200000" Offset="0.3"/>
+			<GradientStop Color="#FF200000" Offset="0.35"/>
+
+			<GradientStop Color="#FF730000" Offset="0.35"/>
+			<GradientStop Color="#FF730000" Offset="0.4"/>
+
+
+			<GradientStop Color="#FF250000" Offset="0.4"/>
+			<GradientStop Color="#FF250000" Offset="0.45"/>
+
+			<GradientStop Color="#FF730000" Offset="0.45"/>
+			<GradientStop Color="#FF730000" Offset="0.5"/>
+
+			<GradientStop Color="#FF300000" Offset="0.5"/>
+			<GradientStop Color="#FF300000" Offset="0.55"/>
+
+			<GradientStop Color="#FF730000" Offset="0.55"/>
+			<GradientStop Color="#FF730000" Offset="0.6"/>
+
+			<GradientStop Color="#FF350000" Offset="0.6"/>
+			<GradientStop Color="#FF350000" Offset="0.65"/>
+
+			<GradientStop Color="#FF730000" Offset="0.65"/>
+			<GradientStop Color="#FF730000" Offset="0.7"/>
+
+			<GradientStop Color="#FF400000" Offset="0.7"/>
+			<GradientStop Color="#FF400000" Offset="0.75"/>
+
+			<GradientStop Color="#FF730000" Offset="0.75"/>
+			<GradientStop Color="#FF730000" Offset="0.8"/>
+
+			<GradientStop Color="#FF450000" Offset="0.8"/>
+			<GradientStop Color="#FF450000" Offset="0.85"/>
+
+			<GradientStop Color="#FF730000" Offset="0.85"/>
+			<GradientStop Color="#FF730000" Offset="0.9"/>
+
+			<GradientStop Color="#FF500000" Offset="0.9"/>
+			<GradientStop Color="#FF500000" Offset="0.95"/>
+
+			<GradientStop Color="#FF730000" Offset="0.95"/>
+			<GradientStop Color="#FF730000" Offset="1"/>
+
 		</RadialGradientBrush>
 	</Window.Background>
 	<Window.Resources>
@@ -70,7 +109,7 @@
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsMouseOver" Value="true">
 								<Setter TargetName="Border" 
-                                    Property="Background" Value="white"/>
+                                    Property="Background" Value="transparent"/>
 							</Trigger>
 							<Trigger Property="IsPressed" Value="true">
 								<Setter TargetName="Border" 
@@ -96,38 +135,24 @@
 		</Grid.ColumnDefinitions>
 		<UniformGrid Columns="1">
 			<UniformGrid.Background>
-				<RadialGradientBrush SpreadMethod="Reflect" Opacity="0.8">
+				<RadialGradientBrush SpreadMethod="Reflect">
 					<GradientStop Color="Black" Offset="1"/>
-					<GradientStop Color="#FF730000" Offset="0.862"/>
+					<GradientStop Color="#FF730000" Offset="0.884"/>
 					<GradientStop Color="Black"/>
-					<GradientStop Color="Black" Offset="0.116"/>
 					<GradientStop Color="#FF821515"/>
 					<GradientStop Color="#FF6F0000"/>
-					<GradientStop Color="Black" Offset="0.461"/>
-					<GradientStop Color="Black"/>
-					<GradientStop Color="#FF290505" Offset="0.264"/>
-					<GradientStop Color="#FF730000" Offset="0.249"/>
-					<GradientStop Color="#FF6B0000" Offset="0.323"/>
-					<GradientStop Color="#FF730000" Offset="0.727"/>
-					<GradientStop Color="#FF730000" Offset="0.443"/>
-					<GradientStop Color="#FF1F0505" Offset="0.574"/>
-					<GradientStop Color="#FF730000" Offset="0.565"/>
-					<GradientStop Color="#FF370707" Offset="0.738"/>
-					<GradientStop Color="Black" Offset="0.186"/>
+					<GradientStop Color="#00670000"/>
 					<GradientStop Color="Black" Offset="0.878"/>
-					<GradientStop Color="#FF730000" Offset="0.103"/>
-					<GradientStop Color="#FF730000" Offset="0.175"/>
-					<GradientStop Color="Black" Offset="0.336"/>
-					<GradientStop Color="#FF730000" Offset="0.937"/>
+					<GradientStop Color="#FF730000" Offset="0.98"/>
 				</RadialGradientBrush>
 			</UniformGrid.Background>
 
 			<Viewbox  VerticalAlignment="Top">
-			<Button x:Name="Movies" ToolTipService.ToolTip="Browse movies" MaxHeight="64">
-				<Button.Foreground>
-					<ImageBrush Stretch="Uniform" ImageSource="/icons/icons8-movies-folder-64.png"/>
-				</Button.Foreground>
-			</Button>
+				<Button x:Name="Movies" ToolTipService.ToolTip="Browse movies" MaxHeight="64">
+					<Button.Foreground>
+						<ImageBrush Stretch="Fill" ImageSource="/icons/icons8-movies-folder-64.png" TileMode="None"/>
+					</Button.Foreground>
+				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Center">
@@ -151,29 +176,15 @@
 
 		<UniformGrid Grid.Column="2" MinWidth="30" Columns="1">
 			<UniformGrid.Background>
-				<RadialGradientBrush SpreadMethod="Reflect" Opacity="0.8">
+				<RadialGradientBrush SpreadMethod="Reflect">
 					<GradientStop Color="Black" Offset="1"/>
-					<GradientStop Color="#FF730000" Offset="0.862"/>
+					<GradientStop Color="#FF730000" Offset="0.884"/>
 					<GradientStop Color="Black"/>
-					<GradientStop Color="Black" Offset="0.116"/>
 					<GradientStop Color="#FF821515"/>
 					<GradientStop Color="#FF6F0000"/>
-					<GradientStop Color="Black" Offset="0.461"/>
-					<GradientStop Color="Black"/>
-					<GradientStop Color="#FF290505" Offset="0.264"/>
-					<GradientStop Color="#FF730000" Offset="0.249"/>
-					<GradientStop Color="#FF6B0000" Offset="0.323"/>
-					<GradientStop Color="#FF730000" Offset="0.727"/>
-					<GradientStop Color="#FF730000" Offset="0.443"/>
-					<GradientStop Color="#FF1F0505" Offset="0.574"/>
-					<GradientStop Color="#FF730000" Offset="0.565"/>
-					<GradientStop Color="#FF370707" Offset="0.738"/>
-					<GradientStop Color="Black" Offset="0.186"/>
+					<GradientStop Color="#00670000"/>
 					<GradientStop Color="Black" Offset="0.878"/>
-					<GradientStop Color="#FF730000" Offset="0.103"/>
-					<GradientStop Color="#FF730000" Offset="0.175"/>
-					<GradientStop Color="Black" Offset="0.336"/>
-					<GradientStop Color="#FF730000" Offset="0.937"/>
+					<GradientStop Color="#FF730000" Offset="0.98"/>
 				</RadialGradientBrush>
 			</UniformGrid.Background>
 
@@ -224,7 +235,7 @@
 					</Button.Foreground>
 				</Button>
 			</Viewbox>
-				
+
 		</UniformGrid>
 	</Grid>
 </Window>
