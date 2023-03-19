@@ -145,20 +145,20 @@
 			</UniformGrid.Background>
 
 			<Viewbox  VerticalAlignment="Top">
-				<Button x:Name="Movies" ToolTipService.ToolTip="Browse movies" MaxHeight="64">
-					<Image Source="\icons\icons8-movies-folder-64.png"/>
+				<Button x:Name="Movies" ToolTipService.ToolTip="Movies">
+					<Image Source="\icons\around-the-globe.png"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Center">
-				<Button x:Name="Rents" ToolTipService.ToolTip="Browse rents" MaxHeight="64">
-					<Image Source="icons/icons8-combi-ticket-64.png"/>
+				<Button x:Name="Rents" ToolTipService.ToolTip="Rents">
+					<Image Source="icons/two-tickets.png"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Bottom">
-				<Button x:Name="Clients" ToolTipService.ToolTip="Browse clients" MaxHeight="64">
-					<Image Source="icons/Planet People.png"/>
+				<Button x:Name="Clients" ToolTipService.ToolTip="Clients">
+					<Image Source="icons/street-view.png"/>
 				</Button>
 			</Viewbox>
 		</UniformGrid>
@@ -180,38 +180,38 @@
 			</UniformGrid.Background>
 
 			<Viewbox  VerticalAlignment="Top">
-				<Button x:Name="Trailer" ToolTipService.ToolTip="Watch a trailer for this movie">
-					<Image Source="icons/icons8-movie-projector-64.png" Stretch="Uniform"/>
+				<Button x:Name="Trailer" ToolTipService.ToolTip="Trailer">
+					<Image Source="icons/preview-pane.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Top">
-				<Button x:Name="Rent" ToolTipService.ToolTip="Rent a copy of this movie">
-					<Image Source="icons/icons8-movie-ticket-64.png" Stretch="Uniform"/>
+				<Button x:Name="Rent" ToolTipService.ToolTip="Rent">
+					<Image Source="icons/starred-ticket.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Top">
-				<Button x:Name="Return" ToolTipService.ToolTip="Return a copy of this movie">
-					<Image Source="icons/icons8-return-64.png" Stretch="Uniform"/>
+				<Button x:Name="Return" ToolTipService.ToolTip="Return">
+					<Image Source="icons/circled-left-2.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Bottom">
-				<Button x:Name="Add" ToolTipService.ToolTip="Add a new entry">
-					<Image Source="icons/icons8-add-file-64.png" Stretch="Uniform"/>
+				<Button x:Name="Add" ToolTipService.ToolTip="Add">
+					<Image Source="icons/add.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Bottom">
-				<Button x:Name="Edit" ToolTipService.ToolTip="Edit this entry">
-					<Image Source="icons/icons8-edit-file-64.png" Stretch="Uniform"/>
+				<Button x:Name="Edit" ToolTipService.ToolTip="Edit">
+					<Image Source="icons/edit.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Bottom">
-				<Button x:Name="Remove" ToolTipService.ToolTip="Remove this entry">
-					<Image Source="icons/icons8-delete-file-64.png" Stretch="Uniform"/>
+				<Button x:Name="Remove" ToolTipService.ToolTip="Remove">
+					<Image Source="icons/minus.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 

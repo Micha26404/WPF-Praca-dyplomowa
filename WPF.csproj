@@ -204,6 +204,30 @@
     <Resource Include="icons\icons8-combi-ticket-64.png" />
     <Resource Include="icons\icons8-movie-projector-64.png" />
     <Resource Include="icons\icons8-movies-folder-64.png" />
+    <Resource Include="icons\around-the-globe.png" />
+    <Resource Include="icons\add-ticket.png" />
+    <Resource Include="icons\delete-ticket.png" />
+    <Resource Include="icons\short.png" />
+    <Resource Include="icons\two-tickets.png" />
+    <Resource Include="icons\starred-ticket.png" />
+    <Resource Include="icons\visual-effects.png" />
+    <Resource Include="icons\edit.png" />
+    <Resource Include="icons\user-male-circle.png" />
+    <Resource Include="icons\return.png" />
+    <Resource Include="icons\edit-property--v2.png" />
+    <Resource Include="icons\street-view.png" />
+    <Resource Include="icons\preview-pane.png" />
+    <Resource Include="icons\borrow-book.png" />
+    <Resource Include="icons\circled-left-2.png" />
+    <Resource Include="icons\new--v2.png" />
+    <Resource Include="icons\add.png" />
+    <Resource Include="icons\clear-symbol.png" />
+    <Resource Include="icons\create-new.png" />
+    <Resource Include="icons\create-order.png" />
+    <Resource Include="icons\delete-property.png" />
+    <Resource Include="icons\delete-receipt.png" />
+    <Resource Include="icons\minus.png" />
+    <Resource Include="icons\new-contact.png" />
     <Content Include="WPF_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
