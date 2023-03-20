@@ -21,10 +21,25 @@ namespace WPF
 {
 	public partial class MainWindow : Window
 	{
-		//WPF_DBDataSet dataEntities = new WPF_DBDataSet();
 		public MainWindow()
 		{
 			InitializeComponent();
+		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			String strConnection = Properties.Settings.Default.WPF_DBConnectionString;
+			SqlConnection con = new SqlConnection(strConnection);
+
+			SqlCommand sqlCmd = new SqlCommand();
+			sqlCmd.Connection = con;
+			sqlCmd.CommandType = CommandType.Text;
+			sqlCmd.CommandText = "Select * from movies";
+			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
+
+			DataTable dtRecord = new DataTable();
+			sqlDataAdap.Fill(dtRecord);
+			dataGrid.ItemsSource = dtRecord.DefaultView;
 		}
 	}
 }

@@ -191,19 +191,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\Movies.png" />
-    <Resource Include="icons\icons8-combo-chart-40.png" />
-    <Resource Include="icons\icons8-contacts-100.png" />
-    <Resource Include="icons\icons8-phone-100.png" />
-    <Resource Include="icons\icons8-plus-48.png" />
-    <Resource Include="icons\icons8-add-file-64.png" />
-    <Resource Include="icons\icons8-delete-file-64.png" />
-    <Resource Include="icons\icons8-edit-file-64.png" />
-    <Resource Include="icons\icons8-return-64.png" />
-    <Resource Include="icons\icons8-movie-ticket-64.png" />
-    <Resource Include="icons\icons8-combi-ticket-64.png" />
-    <Resource Include="icons\icons8-movie-projector-64.png" />
-    <Resource Include="icons\icons8-movies-folder-64.png" />
+    <Resource Include="backgrounds\night-over-sasiq-sivash-lake-vf-1920x1080.jpg" />
+    <Resource Include="backgrounds\Outer_Space_Particles_Trails.jpg" />
+    <Resource Include="backgrounds\wp2293437-earth-from-space-wallpapers.jpg" />
+    <Content Include="WPF_DB_log.ldf">
+      <DependentUpon>WPF_DB.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="icons\around-the-globe.png" />
     <Resource Include="icons\add-ticket.png" />
     <Resource Include="icons\delete-ticket.png" />
@@ -212,14 +206,12 @@
     <Resource Include="icons\starred-ticket.png" />
     <Resource Include="icons\visual-effects.png" />
     <Resource Include="icons\edit.png" />
-    <Resource Include="icons\user-male-circle.png" />
     <Resource Include="icons\return.png" />
     <Resource Include="icons\edit-property--v2.png" />
     <Resource Include="icons\street-view.png" />
     <Resource Include="icons\preview-pane.png" />
     <Resource Include="icons\borrow-book.png" />
     <Resource Include="icons\circled-left-2.png" />
-    <Resource Include="icons\new--v2.png" />
     <Resource Include="icons\add.png" />
     <Resource Include="icons\clear-symbol.png" />
     <Resource Include="icons\create-new.png" />
@@ -281,15 +273,6 @@
     <Resource Include="animations\up-down.gif" />
     <Resource Include="animations\waste.gif" />
     <Resource Include="animations\wrench.gif" />
-    <Resource Include="backgrounds\assets\galaxy-sky-atmosphere-purple-astronomical-object-night-1438039-pxhere.com %282kpx%29.jpg" />
-    <Resource Include="backgrounds\assets\milky-way-%282kpx%29.jpg" />
-    <Resource Include="backgrounds\assets\sea-ocean-technology-cosmos-atmosphere-ice-1059405-pxhere.com.jpg" />
-    <Resource Include="backgrounds\assets\sky-atmosphere-vehicle-space-floating-moon-122544-pxhere.com.jpg" />
-    <Resource Include="backgrounds\black-and-white-space-moon-circle-earth-eclipse-643170-pxhere.com.jpg" />
-    <Resource Include="backgrounds\Earth-From-Space-Space-1080x1920.jpg" />
-    <Resource Include="backgrounds\NASA 220.jpg" />
-    <Resource Include="backgrounds\sky-night-atmosphere-aviation-space-night-sky-1262205-pxhere.com.jpg" />
-    <Resource Include="icons\Movie Reel 2.png" />
     <Resource Include="icons\Planet People.png" />
     <Resource Include="icons\Play Trailer.png" />
     <Content Include="WPF_DB.mdf">
@@ -316,7 +299,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="backgrounds\assets\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

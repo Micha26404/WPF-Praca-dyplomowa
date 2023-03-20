@@ -4,74 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+		Loaded="Window_Loaded"
 	    BorderThickness="0,0,1,2"
 		Padding="6"
 		ResizeMode="CanResizeWithGrip"
 		Title="Rent-A-Movie" Width="1280" Height="800" >
 	<Window.Background>
-		<RadialGradientBrush SpreadMethod="Reflect">
-			<GradientStop Color="black" Offset="0.01"/>
-			<GradientStop Color="#FF730000" Offset="0.02"/>
-			<GradientStop Color="#FF050000" Offset="0.05"/>
-
-			<GradientStop Color="#FF730000" Offset="0.05"/>
-			<GradientStop Color="#FF730000" Offset="0.1"/>
-
-			<GradientStop Color="#FF100000" Offset="0.1"/>
-			<GradientStop Color="#FF100000" Offset="0.15"/>
-
-			<GradientStop Color="#FF730000" Offset="0.15"/>
-			<GradientStop Color="#FF730000" Offset="0.2"/>
-
-			<GradientStop Color="#FF150000" Offset="0.2"/>
-			<GradientStop Color="#FF150000" Offset="0.25"/>
-
-			<GradientStop Color="#FF730000" Offset="0.25"/>
-			<GradientStop Color="#FF730000" Offset="0.3"/>
-
-			<GradientStop Color="#FF200000" Offset="0.3"/>
-			<GradientStop Color="#FF200000" Offset="0.35"/>
-
-			<GradientStop Color="#FF730000" Offset="0.35"/>
-			<GradientStop Color="#FF730000" Offset="0.4"/>
-
-
-			<GradientStop Color="#FF250000" Offset="0.4"/>
-			<GradientStop Color="#FF250000" Offset="0.45"/>
-
-			<GradientStop Color="#FF730000" Offset="0.45"/>
-			<GradientStop Color="#FF730000" Offset="0.5"/>
-
-			<GradientStop Color="#FF300000" Offset="0.5"/>
-			<GradientStop Color="#FF300000" Offset="0.55"/>
-
-			<GradientStop Color="#FF730000" Offset="0.55"/>
-			<GradientStop Color="#FF730000" Offset="0.6"/>
-
-			<GradientStop Color="#FF350000" Offset="0.6"/>
-			<GradientStop Color="#FF350000" Offset="0.65"/>
-
-			<GradientStop Color="#FF730000" Offset="0.65"/>
-			<GradientStop Color="#FF730000" Offset="0.7"/>
-
-			<GradientStop Color="#FF400000" Offset="0.7"/>
-			<GradientStop Color="#FF400000" Offset="0.75"/>
-
-			<GradientStop Color="#FF730000" Offset="0.75"/>
-			<GradientStop Color="#FF730000" Offset="0.8"/>
-
-			<GradientStop Color="#FF450000" Offset="0.8"/>
-			<GradientStop Color="#FF450000" Offset="0.85"/>
-
-			<GradientStop Color="#FF730000" Offset="0.85"/>
-			<GradientStop Color="#FF730000" Offset="0.9"/>
-
-			<GradientStop Color="#FF500000" Offset="0.9"/>
-			<GradientStop Color="#FF500000" Offset="0.95"/>
-
-			<GradientStop Color="#FF730000" Offset="0.95"/>
-			<GradientStop Color="#FF730000" Offset="1"/>
-		</RadialGradientBrush>
+		<ImageBrush ImageSource="/backgrounds/wp2293437-earth-from-space-wallpapers.jpg" Stretch="UniformToFill"/>
 	</Window.Background>
 	<Window.Resources>
 		<Style TargetType="{x:Type Control}" x:Key="controlStyle">
@@ -126,9 +65,9 @@
 	</Window.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="64" />
 			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="8*" />
-			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="64" />
 		</Grid.ColumnDefinitions>
 		<UniformGrid Columns="1">
 			<UniformGrid.Background>
@@ -163,9 +102,9 @@
 			</Viewbox>
 		</UniformGrid>
 
-		<DataGrid Name="dTable" Grid.Column="1" d:ItemsSource="{Binding}" FontSize="16" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="#FF868686" Background="{x:Null}"/>
+		<DataGrid Name="dataGrid" Grid.Column="1" ItemsSource="{Binding}" FontSize="16" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent"/>
 
-		<UniformGrid Grid.Column="2" MinWidth="30" Columns="1">
+		<UniformGrid Grid.Column="2" Width="64" Columns="1">
 			<UniformGrid.Background>
 				<RadialGradientBrush SpreadMethod="Reflect">
 					<GradientStop Color="Black" Offset="1"/>
