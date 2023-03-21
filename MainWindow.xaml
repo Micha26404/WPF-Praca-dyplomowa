@@ -84,19 +84,19 @@
 			</UniformGrid.Background>
 
 			<Viewbox  VerticalAlignment="Top">
-				<Button x:Name="Movies" ToolTipService.ToolTip="Movies">
+				<Button x:Name="Movies" ToolTipService.ToolTip="Movies" Click="Movies_Click">
 					<Image Source="\icons\around-the-globe.png"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Center">
-				<Button x:Name="Rents" ToolTipService.ToolTip="Rents">
+				<Button x:Name="Rents" ToolTipService.ToolTip="Rents" Click="Rents_Click">
 					<Image Source="icons/two-tickets.png"/>
 				</Button>
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Bottom">
-				<Button x:Name="Clients" ToolTipService.ToolTip="Clients">
+				<Button x:Name="Clients" ToolTipService.ToolTip="Clients" Click="Clients_Click">
 					<Image Source="icons/street-view.png"/>
 				</Button>
 			</Viewbox>
