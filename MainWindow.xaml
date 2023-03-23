@@ -10,7 +10,7 @@
 		ResizeMode="CanResizeWithGrip"
 		Title="Rent-A-Movie" Width="1280" Height="800" >
 	<Window.Background>
-		<ImageBrush ImageSource="/backgrounds/wp2293437-earth-from-space-wallpapers.jpg" Stretch="UniformToFill"/>
+		<ImageBrush ImageSource="/backgrounds/wallpapersden.com_milky-way-starry-sky-landscape_2499x1406.jpg" Stretch="UniformToFill"/>
 	</Window.Background>
 	<Window.Resources>
 		<Style TargetType="{x:Type Control}" x:Key="controlStyle">
@@ -102,7 +102,28 @@
 			</Viewbox>
 		</UniformGrid>
 
-		<DataGrid Name="dataGrid" Grid.Column="1" ItemsSource="{Binding}" FontSize="16" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent"/>
+		<DataGrid Name="dataGrid" Grid.Column="1" ItemsSource="{Binding}" FontSize="16" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000">
+			<DataGrid.AlternatingRowBackground>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#00000000" Offset="0.423"/>
+					<GradientStop Color="#FF3E0000" Offset="1"/>
+					<GradientStop Color="#B2310000" Offset="0"/>
+				</LinearGradientBrush>
+			</DataGrid.AlternatingRowBackground>
+			<DataGrid.RowBackground>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#00000000" Offset="0.423"/>
+					<GradientStop Color="#FF3E0000" Offset="1"/>
+					<GradientStop Color="#B2310000" Offset="0"/>
+				</LinearGradientBrush>
+			</DataGrid.RowBackground>
+			<DataGrid.Resources>
+				<Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+					<Setter Property="Background" Value="#4C730000" />
+					<Setter Property="Foreground" Value="white" />
+				</Style>
+			</DataGrid.Resources>
+		</DataGrid>
 
 		<UniformGrid Grid.Column="2" Width="64" Columns="1">
 			<UniformGrid.Background>

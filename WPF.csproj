@@ -194,6 +194,7 @@
     <Resource Include="backgrounds\night-over-sasiq-sivash-lake-vf-1920x1080.jpg" />
     <Resource Include="backgrounds\Outer_Space_Particles_Trails.jpg" />
     <Resource Include="backgrounds\wp2293437-earth-from-space-wallpapers.jpg" />
+    <Resource Include="backgrounds\wallpapersden.com_milky-way-starry-sky-landscape_2499x1406.jpg" />
     <Content Include="WPF_DB_log.ldf">
       <DependentUpon>WPF_DB.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
