@@ -195,6 +195,12 @@
     <Resource Include="backgrounds\Outer_Space_Particles_Trails.jpg" />
     <Resource Include="backgrounds\wp2293437-earth-from-space-wallpapers.jpg" />
     <Resource Include="backgrounds\wallpapersden.com_milky-way-starry-sky-landscape_2499x1406.jpg" />
+    <Resource Include="icons\circled-pause.png" />
+    <Resource Include="icons\circled-play.png" />
+    <Resource Include="icons\rewind-button-round.png" />
+    <Resource Include="icons\resume-button.png" />
+    <Resource Include="icons\skip-to-start.png" />
+    <Resource Include="icons\stop-circled.png" />
     <Content Include="WPF_DB_log.ldf">
       <DependentUpon>WPF_DB.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
