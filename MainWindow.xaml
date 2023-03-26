@@ -16,6 +16,7 @@
 			<Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
 			<Setter Property="VerticalContentAlignment" Value="Center"></Setter>
 			<Setter Property="Foreground" Value="White"></Setter>
+			<Setter Property="BorderBrush" Value="Maroon"></Setter>
 		</Style>
 		<Style TargetType="{x:Type TextBlock}">
 			<Setter Property="TextAlignment" Value="Justify"></Setter>
@@ -27,6 +28,8 @@
 			<Setter Property="VerticalContentAlignment" Value="Center"></Setter>
 			<Setter Property="Foreground" Value="White"></Setter>
 			<Setter Property="Background" Value="maroon"></Setter>
+			<Setter Property="BorderBrush" Value="Maroon"></Setter>
+			<Setter Property="SelectionBrush" Value="White"></Setter>
 		</Style>
 		<Style TargetType="ListBox">
 			<Setter Property="Foreground" Value="White"></Setter>
@@ -125,27 +128,20 @@
 				<TextBox InputScope="Number" ToolTip="Movie identification number" Background="#4C800000">Movie id</TextBox>
 				<TextBox ToolTip="Movie title" Background="#4C800000">Title</TextBox>
 				<TextBox InputScope="Number" ToolTip="Year of production" Background="#4C800000">Year of production</TextBox>
-				<ComboBox ToolTip="Country of origin">
-					<ComboBox.Background>
-						<LinearGradientBrush EndPoint="0,1">
-							<GradientStop Color="#FFF0F0F0"/>
-							<GradientStop Color="#4C800000" Offset="1"/>
-						</LinearGradientBrush>
-					</ComboBox.Background>
-				</ComboBox>
 				<TextBox InputScope="Number" ToolTip="Movie duration in minutes" Background="#4C800000">Duration in minutes</TextBox>
 				<TextBox InputScope="Number" ToolTip="Age restriction" Background="#4C800000">Age restriction</TextBox>
 				<TextBox InputScope="Number" ToolTip="Rental price" Background="#4C800000">Rental price</TextBox>
 				<TextBox InputScope="Number" ToolTip="All copies" Background="#4C800000">All copies</TextBox>
 				<TextBox InputScope="Number" ToolTip="Remaining copies" Background="#4C800000">Remaining copies</TextBox>
+				<ComboBox Name="CountrySelector" ToolTip="Country of origin" Background="#4C800000"></ComboBox>
 				<ComboBox Name="DirectorSelector" ToolTip="Movie director" Background="#4C800000"></ComboBox>
 				<ComboBox Name="ActorSelector" ToolTip="Movie lead actor" Background="#4C800000"></ComboBox>
 				
 
 			</UniformGrid>
-			<ListBox SelectionMode="Multiple" Name="GenreSelector" ToolTip="Movie genre" Background="#4C800000">Action</ListBox>
-			<ListBox SelectionMode="Multiple" Name="LangSelector" ToolTip="Languages available in this movie" Background="#4C800000">Languages</ListBox>
-			<ListBox SelectionMode="Multiple" Name="FormatSelector" ToolTip="Available medium formats" Background="#4C800000">Bluray</ListBox>
+			<ListBox SelectionMode="Multiple" Name="GenreSelector" ToolTip="Movie genre" Background="#4C800000" BorderBrush="Maroon">Action</ListBox>
+			<ListBox SelectionMode="Multiple" Name="LangSelector" ToolTip="Languages available in this movie" Background="#4C800000" BorderBrush="Maroon">Languages</ListBox>
+			<ListBox SelectionMode="Multiple" Name="FormatSelector" ToolTip="Available medium formats" Background="#4C800000" BorderBrush="Maroon">Medium format</ListBox>
 			<TextBlock ToolTip="Movie plot premise" Background="#4C800000">Movie premise</TextBlock>
 		</UniformGrid>
 
