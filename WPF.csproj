@@ -201,6 +201,7 @@
     <Resource Include="icons\resume-button.png" />
     <Resource Include="icons\skip-to-start.png" />
     <Resource Include="icons\stop-circled.png" />
+    <Resource Include="icons\showing-video-frames.png" />
     <Content Include="WPF_DB_log.ldf">
       <DependentUpon>WPF_DB.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

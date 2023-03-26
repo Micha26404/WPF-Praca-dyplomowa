@@ -89,5 +89,10 @@ namespace WPF
 			sqlDataAdap.Fill(dtRecord);
 			dataGrid.ItemsSource = dtRecord.DefaultView;
 		}
-	}
+
+		private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+
+        }
+    }
 }

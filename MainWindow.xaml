@@ -5,17 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
 		Loaded="Window_Loaded"
-	    BorderThickness="0,0,1,2"
+	    BorderThickness="1,1,1,1"
 		Padding="6"
-		Title="Rent-A-Movie" Width="1280" Height="800" >
+		Title="Perspective" Width="1280" Height="800" FontSize="16" Icon="/icons/showing-video-frames.png" UseLayoutRounding="False">
 	<Window.Background>
 		<ImageBrush ImageSource="/backgrounds/wallpapersden.com_milky-way-starry-sky-landscape_2499x1406.jpg" Stretch="UniformToFill"/>
 	</Window.Background>
 	<Window.Resources>
-		<Style TargetType="{x:Type Control}" x:Key="controlStyle">
-			<Setter Property="FontSize" Value="16" />
+		<Style TargetType="RadioButton">
+			<Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+			<Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+			<Setter Property="Foreground" Value="White"></Setter>
 		</Style>
-		<Style TargetType="{x:Type Button}" BasedOn="{StaticResource controlStyle}">
+		<Style TargetType="{x:Type TextBlock}">
+			<Setter Property="TextAlignment" Value="Justify"></Setter>
+			<Setter Property="Foreground" Value="White"></Setter>
+			<Setter Property="Background" Value="maroon"/>
+		</Style>
+		<Style TargetType="TextBox">
+			<Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+			<Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+			<Setter Property="Foreground" Value="White"></Setter>
+			<Setter Property="Background" Value="maroon"></Setter>
+		</Style>
+		<Style TargetType="ListBox">
+			<Setter Property="Foreground" Value="White"></Setter>
+			<Setter Property="Background" Value="maroon"></Setter>
+		</Style>
+		<Style TargetType="{x:Type Button}">
 			<Setter Property="Cursor" Value="Hand"/>
 			<Setter Property="MinWidth" Value="64"/>
 			<Setter Property="MinHeight" Value="64"/>
@@ -55,12 +72,6 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-		<Style TargetType="{x:Type Label}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type ListView}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type ToolBar}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type StatusBar}" BasedOn="{StaticResource controlStyle}"></Style>
-		<Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource controlStyle}"></Style>
 	</Window.Resources>
 
 	<Grid>
@@ -69,7 +80,7 @@
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="64" />
 		</Grid.ColumnDefinitions>
-	
+
 		<UniformGrid Columns="1">
 			<UniformGrid.Background>
 				<RadialGradientBrush SpreadMethod="Reflect">
@@ -103,36 +114,95 @@
 			</Viewbox>
 		</UniformGrid>
 
+		<UniformGrid Grid.Column="1" VerticalAlignment="Center" Columns="6">
+				<UniformGrid Grid.Column="2" Columns="1">
+					<TextBox Background="#4C800000">Mode of operation</TextBox>
+					<RadioButton GroupName="AddEditDelete" ToolTip="Add movie" Background="#4C800000">Add</RadioButton>
+					<RadioButton GroupName="AddEditDelete" ToolTip="Edit movie" Background="#4C800000">Edit</RadioButton>
+					<RadioButton GroupName="AddEditDelete" ToolTip="Delete movie" Background="#4C800000">Delete</RadioButton>
+			</UniformGrid>
+			<UniformGrid Columns="1" VerticalAlignment="Center">
+				<TextBox InputScope="Number" ToolTip="Movie identification number" Background="#4C800000">Movie id</TextBox>
+				<TextBox ToolTip="Movie title" Background="#4C800000">Title</TextBox>
+				<TextBox InputScope="Number" ToolTip="Year of production" Background="#4C800000">Year of production</TextBox>
+				<ComboBox ToolTip="Country of origin">
+					<ComboBox.Background>
+						<LinearGradientBrush EndPoint="0,1">
+							<GradientStop Color="#FFF0F0F0"/>
+							<GradientStop Color="#4C800000" Offset="1"/>
+						</LinearGradientBrush>
+					</ComboBox.Background>
+				</ComboBox>
+				<TextBox InputScope="Number" ToolTip="Movie duration in minutes" Background="#4C800000">Duration in minutes</TextBox>
+				<TextBox InputScope="Number" ToolTip="Age restriction" Background="#4C800000">Age restriction</TextBox>
+				<TextBox InputScope="Number" ToolTip="Rental price" Background="#4C800000">Rental price</TextBox>
+				<TextBox InputScope="Number" ToolTip="All copies" Background="#4C800000">All copies</TextBox>
+				<TextBox InputScope="Number" ToolTip="Remaining copies" Background="#4C800000">Remaining copies</TextBox>
+				<ComboBox Name="DirectorSelector" ToolTip="Movie director" Background="#4C800000"></ComboBox>
+				<ComboBox Name="ActorSelector" ToolTip="Movie lead actor" Background="#4C800000"></ComboBox>
+				
+
+			</UniformGrid>
+			<ListBox SelectionMode="Multiple" Name="GenreSelector" ToolTip="Movie genre" Background="#4C800000">Action</ListBox>
+			<ListBox SelectionMode="Multiple" Name="LangSelector" ToolTip="Languages available in this movie" Background="#4C800000">Languages</ListBox>
+			<ListBox SelectionMode="Multiple" Name="FormatSelector" ToolTip="Available medium formats" Background="#4C800000">Bluray</ListBox>
+			<TextBlock ToolTip="Movie plot premise" Background="#4C800000">Movie premise</TextBlock>
+		</UniformGrid>
+
 		<Viewbox Grid.Column="1" Visibility="Hidden" Stretch="Uniform">
-			<Image></Image>
+			<Image Source="icons\add.png" MouseLeftButtonDown="Poster_MouseLeftButtonDown" ToolTip="Return to movies"/>
 		</Viewbox>
 
 		<StackPanel Grid.Column="1" Background="Transparent" Visibility="Hidden">
-
 			<!-- To interactively stop, pause, and play the media, the LoadedBehavior 
            property of the MediaElement must be set to "Manual". -->
-			<MediaElement Source="animations\activity.gif" Name="Trailer"
+			<MediaElement Source="animations\activity.gif" Name="Media"
 				LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform" 
 				MediaOpened="Element_MediaOpened" MediaEnded="Element_MediaEnded"/>
 
-			<StackPanel HorizontalAlignment="Center" Width="450" Orientation="Horizontal">
-				<!-- Play button. -->
-				<Image Source="animations\play-load.gif" MouseDown="OnMouseDownPlayMedia" Margin="5" />
-				<!-- Pause button. -->
-				<Image Source="animations\play-load.gif" MouseDown="OnMouseDownPauseMedia" Margin="5" />
-				<!-- Stop button. -->
-				<Image Source="animations\play-load.gif" MouseDown="OnMouseDownStopMedia" Margin="5" />
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+				<StackPanel.Background>
+					<RadialGradientBrush SpreadMethod="Reflect">
+						<GradientStop Color="Black" Offset="1"/>
+						<GradientStop Color="#FF730000" Offset="0.884"/>
+						<GradientStop Color="Black"/>
+						<GradientStop Color="#FF821515"/>
+						<GradientStop Color="#FF6F0000"/>
+						<GradientStop Color="#00670000"/>
+						<GradientStop Color="Black" Offset="0.878"/>
+						<GradientStop Color="#FF730000" Offset="0.98"/>
+					</RadialGradientBrush>
+				</StackPanel.Background>
+
 				<!-- Volume slider. This slider allows a Volume range between 0 and 1. -->
 				<TextBlock Foreground="White" VerticalAlignment="Center" Margin="5"  >Volume</TextBlock>
 				<Slider Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
-       Minimum="0" Maximum="1" Value="0.5" Width="70"/>
-				<!-- Volume slider. This slider allows you to change the speed of the media playback. -->
-				<TextBlock Foreground="White" Margin="5"  VerticalAlignment="Center">Speed</TextBlock>
-				<Slider Name="speedRatioSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaSpeedRatio" 
-       Value="1" Width="70" />
+				Minimum="0" Maximum="1" Value="0.5" MinWidth="64"/>
+
+				<!-- Play button. -->
+				<Viewbox MaxWidth="32" Margin="5" ToolTip="Play">
+					<Button Click="OnMouseDownPlayMedia">
+						<Image Source="icons\circled-play.png"/>
+					</Button>
+				</Viewbox>
+
+				<!-- Pause button. -->
+				<Viewbox MaxWidth="32" Margin="5" ToolTip="Pause">
+					<Button Click="OnMouseDownPauseMedia">
+						<Image Source="icons\circled-pause.png"/>
+					</Button>
+				</Viewbox>
+
+				<!-- Stop button. -->
+				<Viewbox MaxWidth="32" Margin="5" ToolTip="Beginning">
+					<Button Click="OnMouseDownStopMedia">
+						<Image Source="icons\stop-circled.png"/>
+					</Button>
+				</Viewbox>
+
 				<!-- Seek to slider. Ths slider allows you to jump to different parts of the media playback. -->
-				<TextBlock Foreground="White" Margin="5"  VerticalAlignment="Center">Seek To</TextBlock>
-				<Slider Name="timelineSlider" Margin="5" ValueChanged="SeekToMediaPosition" Width="70"/>
+				<TextBlock Foreground="White" Margin="5"  VerticalAlignment="Center">Position</TextBlock>
+				<Slider Name="timelineSlider" Margin="5" ValueChanged="SeekToMediaPosition" VerticalAlignment="Center" MinWidth="300"/>
 			</StackPanel>
 		</StackPanel>
 
@@ -204,7 +274,7 @@
 			</Viewbox>
 
 			<Viewbox VerticalAlignment="Bottom">
-				<Button x:Name="Remove" ToolTipService.ToolTip="Remove">
+				<Button x:Name="Delete" ToolTipService.ToolTip="Delete">
 					<Image Source="icons/minus.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
