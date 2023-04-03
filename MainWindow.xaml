@@ -117,7 +117,7 @@
 			</Viewbox>
 		</UniformGrid>
 
-		<UniformGrid Grid.Column="1" VerticalAlignment="Center" Columns="6">
+		<UniformGrid Grid.Column="1" VerticalAlignment="Center" Columns="6" Visibility="Hidden">
 				<UniformGrid Grid.Column="2" Columns="1">
 					<TextBox Background="#4C800000">Mode of operation</TextBox>
 					<RadioButton GroupName="AddEditDelete" ToolTip="Add movie" Background="#4C800000">Add</RadioButton>
@@ -135,9 +135,8 @@
 				<TextBox InputScope="Number" ToolTip="Remaining copies" Background="#4C800000">Remaining copies</TextBox>
 				<ComboBox Name="CountrySelector" ToolTip="Country of origin" Background="#4C800000"></ComboBox>
 				<ComboBox Name="DirectorSelector" ToolTip="Movie director" Background="#4C800000"></ComboBox>
-				<ComboBox Name="ActorSelector" ToolTip="Movie lead actor" Background="#4C800000"></ComboBox>
-				
-
+				<ComboBox Name="Actor1Selector" ToolTip="Movie lead actor 1" Background="#4C800000"></ComboBox>
+				<ComboBox Name="Actor2Selector" ToolTip="Movie lead actor 2" Background="#4C800000"></ComboBox>
 			</UniformGrid>
 			<ListBox SelectionMode="Multiple" Name="GenreSelector" ToolTip="Movie genre" Background="#4C800000" BorderBrush="Maroon">Action</ListBox>
 			<ListBox SelectionMode="Multiple" Name="LangSelector" ToolTip="Languages available in this movie" Background="#4C800000" BorderBrush="Maroon">Languages</ListBox>
@@ -202,7 +201,66 @@
 			</StackPanel>
 		</StackPanel>
 
-		<DataGrid Name="dataGrid" Grid.Column="3" ItemsSource="{Binding}" FontSize="16" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000">
+		<Grid Grid.Column="1" VerticalAlignment="Top">
+			<Grid.RowDefinitions>
+				<RowDefinition></RowDefinition>
+				<RowDefinition></RowDefinition>
+			</Grid.RowDefinitions>
+			<UniformGrid Grid.Row="1" Rows="1" Height="100" VerticalAlignment="Top">
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterTitle_MouseDoubleClick">Title</TextBox>
+					<TextBox Name="FilterTitle">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterYear_MouseDoubleClick">Year</TextBox>
+					<TextBox Name="FilterYear">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="Duration_MouseDoubleClick">Duration</TextBox>
+					<TextBox Name="FilterDuration">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterAge_MouseDoubleClick">Age restriction</TextBox>
+					<TextBox Name="FilterAge">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterPremise_MouseDoubleClick">Premise</TextBox>
+					<TextBox Name="FilterPremise">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterPrice_MouseDoubleClick">Price</TextBox>
+					<TextBox Name="FilterPrice">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterDirectors_MouseDoubleClick">Directors</TextBox>
+					<TextBox Name="FilterDirectors">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterLeadActors_MouseDoubleClick">Lead actors</TextBox>
+					<TextBox Name="FilterLeadActors">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterFormats_MouseDoubleClick">Formats</TextBox>
+					<TextBox Name="FilterFormats">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterLanguages_MouseDoubleClick">Languages</TextBox>
+					<TextBox Name="FilterLanguages">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterCountries_MouseDoubleClick">Countries</TextBox>
+					<TextBox Name="FilterCountries">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterCopies_left_MouseDoubleClick">Copies left</TextBox>
+					<TextBox Name="FilterCopies_left">filter</TextBox>
+				</UniformGrid>
+				<UniformGrid Columns="1">
+					<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterCopies_total_MouseDoubleClick">Copies total</TextBox>
+					<TextBox Name="FilterCopies_total">filter</TextBox>
+				</UniformGrid>
+			</UniformGrid>
+		<DataGrid Name="dataGrid" Grid.Row="2" ItemsSource="{Binding}" VerticalAlignment="Stretch" FontSize="16" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000">
 			<DataGrid.AlternatingRowBackground>
 				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 					<GradientStop Color="#00000000" Offset="0.423"/>
@@ -224,7 +282,9 @@
 				</Style>
 			</DataGrid.Resources>
 		</DataGrid>
-
+		
+		</Grid>
+	
 		<UniformGrid Grid.Column="4" Width="64" Columns="1">
 			<UniformGrid.Background>
 				<RadialGradientBrush SpreadMethod="Reflect">

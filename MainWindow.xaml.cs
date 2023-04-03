@@ -94,5 +94,10 @@ namespace WPF
 		{
 
         }
-    }
+
+		private void TextBox_MouseDoubleClick()
+		{
+
+		}
+	}
 }
