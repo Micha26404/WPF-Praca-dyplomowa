@@ -28,18 +28,9 @@ namespace WPF
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
-			SqlConnection con = new SqlConnection(strConnection);
-
-			SqlCommand sqlCmd = new SqlCommand();
-			sqlCmd.Connection = con;
-			sqlCmd.CommandType = CommandType.Text;
-			sqlCmd.CommandText = "Select * from movies";
-			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
-
-			DataTable dtRecord = new DataTable();
-			sqlDataAdap.Fill(dtRecord);
-			dataGrid.ItemsSource = dtRecord.DefaultView;
+			Movies_Click(sender,e);
+			Clients_Click(sender, e);
+			Orders_Click(sender, e);
 		}
 
 		private void Movies_Click(object sender, RoutedEventArgs e)
@@ -55,10 +46,10 @@ namespace WPF
 
 			DataTable dtRecord = new DataTable();
 			sqlDataAdap.Fill(dtRecord);
-			dataGrid.ItemsSource = dtRecord.DefaultView;
+			MoviesCatalog.ItemsSource = dtRecord.DefaultView;
 		}
 
-		private void Rents_Click(object sender, RoutedEventArgs e)
+		private void Orders_Click(object sender, RoutedEventArgs e)
 		{
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
 			SqlConnection con = new SqlConnection(strConnection);
@@ -71,7 +62,7 @@ namespace WPF
 
 			DataTable dtRecord = new DataTable();
 			sqlDataAdap.Fill(dtRecord);
-			dataGrid.ItemsSource = dtRecord.DefaultView;
+			OrdersCatalog.ItemsSource = dtRecord.DefaultView;
 		}
 
 		private void Clients_Click(object sender, RoutedEventArgs e)
@@ -87,7 +78,7 @@ namespace WPF
 
 			DataTable dtRecord = new DataTable();
 			sqlDataAdap.Fill(dtRecord);
-			dataGrid.ItemsSource = dtRecord.DefaultView;
+			ClientsCatalog.ItemsSource = dtRecord.DefaultView;
 		}
 		private void Poster_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
