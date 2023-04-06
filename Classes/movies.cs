@@ -11,44 +11,43 @@ namespace WPF.database
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class movies
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public movies()
         {
-            this.year = "2012";
-            this.duration = 120;
-            this.price = 10m;
-            this.age = 13;
-            this.languages = new HashSet<languages>();
+            this.left_count=1;
+			this.total_count = 1;
+			this.langs = new HashSet<langs>();
             this.genres = new HashSet<genres>();
             this.countries = new HashSet<countries>();
-            this.roles = new HashSet<roles>();
             this.formats = new HashSet<formats>();
-            this.Entity1 = new HashSet<acts>();
-        }
-    
+			this.directors = new HashSet<directors>();
+		}
         public int id { get; set; }
-        public string title { get; set; }
-        public string year { get; set; }
-        public byte duration { get; set; }
+        public string name { get; set; }
+        public Int16 year { get; set; }
+        public Int16 duration { get; set; }
         public decimal price { get; set; }
-        public string description { get; set; }
+        public string plot { get; set; }
         public byte age { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<languages> languages { get; set; }
+		public byte left_count{ get; set; }
+		public byte total_count { get; set; }
+		public int lang_id { get; set; }
+		public byte format_id { get; set; }
+		public int director_id { get; set; }
+		public int country_id { get; set; }
+		public int actor_id { get; set; }
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<langs> langs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<genres> genres { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<countries> countries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<roles> roles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<formats> formats { get; set; }
-        public virtual orders order { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<acts> Entity1 { get; set; }
-    }
+		public virtual ICollection<directors> directors { get; set; }
+	}
 }
