@@ -80,10 +80,6 @@ namespace WPF
 			sqlDataAdap.Fill(dtRecord);
 			ClientsCatalog.ItemsSource = dtRecord.DefaultView;
 		}
-		private void Poster_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-			Poster.Visibility = Visibility.Hidden;
-        }
 		private void FilterTitle_MouseDoubleClick(object sender,MouseButtonEventArgs e)
 		{
 			FilterTitle.Text = "filter";
@@ -219,6 +215,41 @@ namespace WPF
 		}
 
 		private void FilterRentDate_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void RemovePoster(object sender, RoutedEventArgs e)
+		{
+
+        }
+
+		private void ChangePoster(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void AddPoster(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void AdjustVolume(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+
+		}
+
+		private void PlayTrailer(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void ResetTrailer(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void SeekTrailer(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 
 		}

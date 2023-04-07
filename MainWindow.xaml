@@ -6,9 +6,12 @@
         mc:Ignorable="d"
 		Loaded="Window_Loaded"
 		Padding="6"
-		Title="Perspective" Width="1280" Height="800" FontSize="16" Icon="/icons/showing-video-frames.png" UseLayoutRounding="False">
+		Title="Movie rental manager"
+		Width="1280" Height="800"
+		FontSize="16"
+		Icon="/icons/showing-video-frames.png">
 	<Window.Background>
-		<ImageBrush ImageSource="/backgrounds/wallpapersden.com_milky-way-starry-sky-landscape_2499x1406.jpg" Stretch="UniformToFill"/>
+		<ImageBrush ImageSource="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" Stretch="UniformToFill"/>
 	</Window.Background>
 	<Window.Resources>
 		<Style TargetType="RadioButton">
@@ -43,6 +46,11 @@
 				<Trigger Property="IsSelected" Value="True">
 					<Setter Property="BorderBrush" Value="Maroon"></Setter>
 					<Setter Property="Background" Value="Maroon"></Setter>
+				</Trigger>
+				<Trigger Property="IsEnabled" Value="False">
+					<Setter Property="BorderBrush" Value="Transparent"></Setter>
+					<Setter Property="Background" Value="Transparent"></Setter>
+					<Setter Property="ToolTip" Value="Not available for selected item"></Setter>
 				</Trigger>
 				<Trigger Property="IsMouseOver" Value="True">
 					<Setter Property="BorderBrush" Value="Maroon"></Setter>
@@ -127,7 +135,8 @@
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="64" />
-			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="343*" />
+			<ColumnDefinition Width="233*"/>
 			<ColumnDefinition Width="64" />
 		</Grid.ColumnDefinitions>
 
@@ -144,7 +153,7 @@
 
 		</UniformGrid>
 
-		<UniformGrid Name="AddEdit" Grid.Column="1" VerticalAlignment="Center" Columns="6" Visibility="Hidden" Panel.ZIndex="5">
+		<UniformGrid Name="AddEdit" Grid.Column="1" VerticalAlignment="Center" Columns="6" Visibility="Hidden" Panel.ZIndex="5" Grid.ColumnSpan="2">
 			<UniformGrid Grid.Column="2" Columns="1">
 				<TextBox Background="#4C800000">Select action on submit</TextBox>
 				<RadioButton GroupName="AddEdit" ToolTip="Add movie" Background="#4C800000">Add</RadioButton>
@@ -170,61 +179,11 @@
 			<TextBlock ToolTip="Movie plot premise" Background="#4C800000">Movie premise</TextBlock>
 		</UniformGrid>
 
-		<Viewbox Name="Poster"  Grid.Column="1" Visibility="Hidden" Stretch="Uniform" MouseLeftButtonDown="Poster_MouseLeftButtonDown" Panel.ZIndex="9">
-			<Image Source="icons\add.png" ToolTip="Return to movies"/>
-		</Viewbox>
+		<TabControl Grid.Column="1" Background="Transparent" TabStripPlacement="Left" Panel.ZIndex="1" Grid.ColumnSpan="2">
 
-		<StackPanel Grid.Column="1" Background="Transparent" Visibility="Hidden" Panel.ZIndex="10">
-			<MediaElement Source="animations\activity.gif" Name="Media"
-				LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform" 
-				MediaOpened="Element_MediaOpened" MediaEnded="Element_MediaEnded"/>
-
-			<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
-				<StackPanel.Background>
-					<RadialGradientBrush SpreadMethod="Reflect">
-						<GradientStop Color="Black" Offset="1"/>
-						<GradientStop Color="#FF730000" Offset="0.884"/>
-						<GradientStop Color="Black"/>
-						<GradientStop Color="#FF821515"/>
-						<GradientStop Color="#FF6F0000"/>
-						<GradientStop Color="#00670000"/>
-						<GradientStop Color="Black" Offset="0.878"/>
-						<GradientStop Color="#FF730000" Offset="0.98"/>
-					</RadialGradientBrush>
-				</StackPanel.Background>
-
-				<TextBlock Foreground="White" VerticalAlignment="Center" Margin="5"  >Volume</TextBlock>
-				<Slider Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
-				Minimum="0" Maximum="1" Value="0.5" MinWidth="64"/>
-
-				<Viewbox MaxWidth="32" Margin="5" ToolTip="Play">
-					<Button Click="OnMouseDownPlayMedia">
-						<Image Source="icons\circled-play.png"/>
-					</Button>
-				</Viewbox>
-
-				<Viewbox MaxWidth="32" Margin="5" ToolTip="Pause">
-					<Button Click="OnMouseDownPauseMedia">
-						<Image Source="icons\circled-pause.png"/>
-					</Button>
-				</Viewbox>
-
-				<Viewbox MaxWidth="32" Margin="5" ToolTip="Beginning">
-					<Button Click="OnMouseDownStopMedia">
-						<Image Source="icons\stop-circled.png"/>
-					</Button>
-				</Viewbox>
-
-				<TextBlock Foreground="White" Margin="5"  VerticalAlignment="Center">Position</TextBlock>
-				<Slider Name="timelineSlider" Margin="5" ValueChanged="SeekToMediaPosition" VerticalAlignment="Center" MinWidth="300"/>
-			</StackPanel>
-		</StackPanel>
-
-		<TabControl Grid.Column="1" Background="Transparent" TabStripPlacement="Left" Panel.ZIndex="1">
-
-			<TabItem Width="64" MinHeight="256" ToolTip="Movies">
+			<TabItem Width="64" MinHeight="128" ToolTip="Movies">
 				<TabItem.Header>
-					<Image Source="\icons\around-the-globe.png"/>
+					<Image Source="\icons\cinema.png" ToolTip="Movies"/>
 				</TabItem.Header>
 				<Grid>
 					<Grid.RowDefinitions>
@@ -312,9 +271,9 @@
 					</DataGrid>
 				</Grid>
 			</TabItem>
-			<TabItem Width="64" MinHeight="256" ToolTip="Clients" Foreground="White">
+			<TabItem Width="64" MinHeight="128" ToolTip="Clients" Foreground="White">
 				<TabItem.Header>
-					<Image Source="icons/two-tickets.png"/>
+					<Image Source="icons/user-group-woman-woman.png" ToolTip="Clients"/>
 				</TabItem.Header>
 				<Grid>
 					<Grid.RowDefinitions>
@@ -366,9 +325,9 @@
 					</DataGrid>
 				</Grid>
 			</TabItem>
-			<TabItem Width="64" MinHeight="256" ToolTip="Orders" Foreground="White">
+			<TabItem Width="64" MinHeight="128" ToolTip="Orders" Foreground="White">
 				<TabItem.Header>
-					<Image Source="icons/street-view.png"/>
+					<Image Source="icons/two-tickets.png" ToolTip="Orders"/>
 				</TabItem.Header>
 				<Grid>
 					<Grid.RowDefinitions>
@@ -423,9 +382,113 @@
 					</DataGrid>
 				</Grid>
 			</TabItem>
+
+			<TabItem Width="64" MinHeight="128" ToolTip="Trailer" Foreground="White" IsEnabled="False">
+				<TabItem.Header>
+					<Image Source="icons/preview-pane.png" ToolTip="Trailer"/>
+				</TabItem.Header>
+
+				<Grid Background="Transparent">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="auto" MaxHeight="256"/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+
+					<UniformGrid Rows="1" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+						<UniformGrid.Background>
+							<RadialGradientBrush SpreadMethod="Reflect">
+								<GradientStop Color="Black" Offset="1"/>
+								<GradientStop Color="#FF730000" Offset="0.884"/>
+								<GradientStop Color="Black"/>
+								<GradientStop Color="#FF821515"/>
+								<GradientStop Color="#FF6F0000"/>
+								<GradientStop Color="#00670000"/>
+								<GradientStop Color="Black" Offset="0.878"/>
+								<GradientStop Color="#FF730000" Offset="0.98"/>
+							</RadialGradientBrush>
+						</UniformGrid.Background>
+
+						<UniformGrid Rows="2">
+							<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" IsManipulationEnabled="False">Title</TextBox>
+							<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" IsManipulationEnabled="False">Year</TextBox>
+						</UniformGrid>
+						
+						<UniformGrid Rows="2">
+							<TextBox Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">Volume</TextBox>
+							<Slider Name="VolumeSlider" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="AdjustVolume" 
+							Minimum="0" Maximum="1" Value="0.5" MinWidth="64"/>
+						</UniformGrid>
+
+						<Viewbox MaxWidth="64" Margin="5" ToolTip="Play">
+							<Button Click="PlayTrailer">
+								<Image Source="icons\circled-play.png"/>
+							</Button>
+						</Viewbox>
+
+						<Viewbox MaxWidth="64" Margin="5" ToolTip="Reset">
+							<Button Click="ResetTrailer">
+								<Image Source="icons\stop-circled.png"/>
+							</Button>
+						</Viewbox>
+
+						<UniformGrid Rows="2">
+							<TextBox Foreground="White" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">Position</TextBox>
+							<Slider Name="SeekSlider" Margin="5" ValueChanged="SeekTrailer" VerticalAlignment="Center" MinWidth="300"/>
+						</UniformGrid>
+					</UniformGrid>
+
+					<MediaElement Grid.Row="2" Source="animations\activity.gif" Name="Trailer"
+					LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform" 
+					MediaOpened="Element_MediaOpened" MediaEnded="Element_MediaEnded"/>
+				</Grid>
+			</TabItem>
+
+			<TabItem Width="64" MinHeight="128" ToolTip="Poster" Foreground="White" IsEnabled="False">
+				<TabItem.Header>
+					<Image Source="icons/easel.png" ToolTip="Poster"/>
+				</TabItem.Header>
+
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="auto" MaxHeight="256"/>
+						<RowDefinition />
+					</Grid.RowDefinitions>
+				<UniformGrid Grid.Row="0" Rows="1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+					<UniformGrid.Background>
+						<RadialGradientBrush SpreadMethod="Reflect">
+							<GradientStop Color="Black" Offset="1"/>
+							<GradientStop Color="#FF730000" Offset="0.884"/>
+							<GradientStop Color="Black"/>
+							<GradientStop Color="#FF821515"/>
+							<GradientStop Color="#FF6F0000"/>
+							<GradientStop Color="#00670000"/>
+							<GradientStop Color="Black" Offset="0.878"/>
+							<GradientStop Color="#FF730000" Offset="0.98"/>
+						</RadialGradientBrush>
+					</UniformGrid.Background>
+
+						<UniformGrid Rows="2">
+							<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" IsManipulationEnabled="False">Title</TextBox>
+							<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" IsManipulationEnabled="False">Year</TextBox>
+						</UniformGrid>
+					
+					<Viewbox MaxWidth="64" Margin="5" ToolTip="Add or change poster">
+						<Image Source="icons\link.png"/>
+					</Viewbox>
+
+					<Viewbox MaxWidth="64" Margin="5" ToolTip="Remove poster">
+							<Image Source="icons\delete-link.png"/>
+					</Viewbox>
+				</UniformGrid>
+
+				<Viewbox Grid.Row="1" Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="Uniform" MaxHeight="256">
+					<Image Source="icons\broken-link.png" ToolTip="Placeholder for poster"/>
+				</Viewbox>
+				</Grid>
+			</TabItem>
 		</TabControl>
 
-		<UniformGrid Grid.Column="4" Width="64" Columns="1">
+		<UniformGrid Grid.Column="3" Width="64" Columns="1">
 			<UniformGrid.Background>
 				<RadialGradientBrush SpreadMethod="Reflect">
 					<GradientStop Color="Black"/>
@@ -436,39 +499,15 @@
 				</RadialGradientBrush>
 			</UniformGrid.Background>
 
-			<Viewbox  VerticalAlignment="Top">
-				<Button x:Name="Trailer" ToolTipService.ToolTip="Trailer">
-					<Image Source="icons/preview-pane.png" Stretch="Uniform"/>
-				</Button>
-			</Viewbox>
-
-			<Viewbox VerticalAlignment="Top">
-				<Button x:Name="Rent" ToolTipService.ToolTip="Rent">
-					<Image Source="icons/starred-ticket.png" Stretch="Uniform"/>
-				</Button>
-			</Viewbox>
-
-			<Viewbox VerticalAlignment="Top">
-				<Button x:Name="Return" ToolTipService.ToolTip="Return">
-					<Image Source="icons/circled-left-2.png" Stretch="Uniform"/>
-				</Button>
-			</Viewbox>
-
-			<Viewbox VerticalAlignment="Bottom">
+			<Viewbox VerticalAlignment="Center"  Margin="5">
 				<Button x:Name="Add" ToolTipService.ToolTip="Add">
 					<Image Source="icons/add.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
-			<Viewbox VerticalAlignment="Bottom">
+			<Viewbox VerticalAlignment="Top"  Margin="5">
 				<Button x:Name="Edit" ToolTipService.ToolTip="Edit">
 					<Image Source="icons/edit.png" Stretch="Uniform"/>
-				</Button>
-			</Viewbox>
-
-			<Viewbox VerticalAlignment="Bottom">
-				<Button x:Name="Delete" ToolTipService.ToolTip="Delete">
-					<Image Source="icons/minus.png" Stretch="Uniform"/>
 				</Button>
 			</Viewbox>
 
