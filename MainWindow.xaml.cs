@@ -253,5 +253,35 @@ namespace WPF
 		{
 
 		}
+
+		private void Trailer_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+		{
+
+		}
+
+		private void Trailer_MediaFailed_1(object sender, ExceptionRoutedEventArgs e)
+		{
+
+		}
+
+		private void TrailerFailed(object sender, ExceptionRoutedEventArgs e)
+		{
+
+		}
+
+		private void TrailerFile(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void ClickEditMode(object sender, MouseButtonEventArgs e)
+		{
+
+        }
+
+		private void ClickAddMode(object sender, MouseButtonEventArgs e)
+		{
+
+		}
 	}
 }

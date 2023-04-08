@@ -195,53 +195,39 @@
     <Resource Include="backgrounds\wallpapersden.com_milky-way-starry-sky-landscape_2499x1406.jpg" />
     <Resource Include="icons\media\circled-pause.png" />
     <Resource Include="icons\media\circled-play.png" />
-    <Resource Include="icons\rewind-button-round.png" />
+    <Resource Include="icons\media\rewind-button-round.png" />
     <Resource Include="icons\media\resume-button.png" />
-    <Resource Include="icons\skip-to-start.png" />
-    <Resource Include="icons\stop-circled.png" />
-    <Resource Include="icons\showing-video-frames.png" />
-    <Resource Include="icons\keep-dry.png" />
-    <Resource Include="icons\lost-and-found.png" />
+    <Resource Include="icons\media\skip-to-start.png" />
+    <Resource Include="icons\media\stop-circled.png" />
     <Resource Include="icons\user-group-woman-woman.png" />
-    <Resource Include="icons\color-wheel-2.png" />
     <Resource Include="icons\media\add-link.png" />
     <Resource Include="icons\media\broken-link.png" />
-    <Resource Include="icons\delete-link.png" />
-    <Resource Include="icons\edit-link.png" />
-    <Resource Include="icons\link.png" />
-    <Resource Include="icons\souvenir-from-vacation.png" />
-    <Resource Include="icons\airport-building.png" />
+    <Resource Include="icons\media\delete-link.png" />
+    <Resource Include="icons\media\edit-link.png" />
+    <Resource Include="icons\media\link.png" />
     <Resource Include="backgrounds\treeonthelonelyisland.jpg" />
     <Resource Include="backgrounds\Arizona-storm.jpg" />
     <Resource Include="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" />
-    <Resource Include="icons\cinema.png" />
-    <Resource Include="icons\easel.png" />
+    <Resource Include="icons\cinema\cinema.png" />
+    <Resource Include="icons\media\easel.png" />
     <Content Include="WPF_DB_log.ldf">
       <DependentUpon>WPF_DB.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="icons\around-the-globe.png" />
-    <Resource Include="icons\add-ticket.png" />
-    <Resource Include="icons\delete-ticket.png" />
+    <Resource Include="icons\cinema\add-ticket.png" />
+    <Resource Include="icons\cinema\delete-ticket.png" />
     <Resource Include="icons\short.png" />
-    <Resource Include="icons\two-tickets.png" />
-    <Resource Include="icons\starred-ticket.png" />
-    <Resource Include="icons\visual-effects.png" />
+    <Resource Include="icons\cinema\two-tickets.png" />
+    <Resource Include="icons\cinema\starred-ticket.png" />
     <Resource Include="icons\edit.png" />
     <Resource Include="icons\return.png" />
-    <Resource Include="icons\edit-property--v2.png" />
-    <Resource Include="icons\street-view.png" />
     <Resource Include="icons\media\preview-pane.png" />
     <Resource Include="icons\borrow-book.png" />
     <Resource Include="icons\circled-left-2.png" />
     <Resource Include="icons\add.png" />
     <Resource Include="icons\clear-symbol.png" />
-    <Resource Include="icons\create-new.png" />
-    <Resource Include="icons\create-order.png" />
-    <Resource Include="icons\delete-property.png" />
-    <Resource Include="icons\delete-receipt.png" />
     <Resource Include="icons\minus.png" />
-    <Resource Include="icons\new-contact.png" />
     <Content Include="WPF_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -295,8 +281,6 @@
     <Resource Include="animations\up-down.gif" />
     <Resource Include="animations\waste.gif" />
     <Resource Include="animations\wrench.gif" />
-    <Resource Include="icons\Planet People.png" />
-    <Resource Include="icons\Play Trailer.png" />
     <Content Include="WPF_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>WPF_DB.mdf</DependentUpon>
