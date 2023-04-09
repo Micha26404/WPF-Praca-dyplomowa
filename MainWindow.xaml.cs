@@ -25,60 +25,50 @@ namespace WPF
 		{
 			InitializeComponent();
 		}
-
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			Movies_Click(sender,e);
 			Clients_Click(sender, e);
 			Orders_Click(sender, e);
 		}
+		public void query(DataGrid grid, String query) 
+		{
+			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
+			SqlConnection con = new SqlConnection(strConnection);
 
+			SqlCommand sqlCmd = new SqlCommand();
+			sqlCmd.Connection = con;
+			sqlCmd.CommandType = CommandType.Text;
+			sqlCmd.CommandText = query;
+			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
+
+			DataTable dtRecord = new DataTable();
+			sqlDataAdap.Fill(dtRecord);
+			grid.ItemsSource = dtRecord.DefaultView;
+		}
 		private void Movies_Click(object sender, RoutedEventArgs e)
 		{
-			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
-			SqlConnection con = new SqlConnection(strConnection);
-
-			SqlCommand sqlCmd = new SqlCommand();
-			sqlCmd.Connection = con;
-			sqlCmd.CommandType = CommandType.Text;
-			sqlCmd.CommandText = "Select * from movies";
-			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
-
-			DataTable dtRecord = new DataTable();
-			sqlDataAdap.Fill(dtRecord);
-			MoviesCatalog.ItemsSource = dtRecord.DefaultView;
+			query(MoviesCatalog,
+				"Select movies.name as title, movies.year, movies.duration, movies.age as 'age category', movies.price,"+
+				"movies.plot as premise,"+
+				"formats.name as formats,"+
+				"directors.first_name + ' ' + directors.first_name as directors,"+
+				"actors.last_name + ' ' + actors.first_name as actors,"+
+				"countries.name as countries, langs.name as languages "+
+				"from movies "+
+				"join actors on actors.id = movies.actor_id "+
+				"join countries on countries.id = movies.country_id "+
+				"join langs on langs.id = movies.lang_id "+
+				"join directors on directors.id = movies.director_id "+
+				"join formats on formats.id = movies.format_id");
 		}
-
-		private void Orders_Click(object sender, RoutedEventArgs e)
-		{
-			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
-			SqlConnection con = new SqlConnection(strConnection);
-
-			SqlCommand sqlCmd = new SqlCommand();
-			sqlCmd.Connection = con;
-			sqlCmd.CommandType = CommandType.Text;
-			sqlCmd.CommandText = "Select * from orders";
-			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
-
-			DataTable dtRecord = new DataTable();
-			sqlDataAdap.Fill(dtRecord);
-			OrdersCatalog.ItemsSource = dtRecord.DefaultView;
-		}
-
 		private void Clients_Click(object sender, RoutedEventArgs e)
 		{
-			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
-			SqlConnection con = new SqlConnection(strConnection);
-
-			SqlCommand sqlCmd = new SqlCommand();
-			sqlCmd.Connection = con;
-			sqlCmd.CommandType = CommandType.Text;
-			sqlCmd.CommandText = "Select * from clients";
-			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
-
-			DataTable dtRecord = new DataTable();
-			sqlDataAdap.Fill(dtRecord);
-			ClientsCatalog.ItemsSource = dtRecord.DefaultView;
+			query(ClientsCatalog, "Select * from clients");
+		}
+		private void Orders_Click(object sender, RoutedEventArgs e)
+		{
+			query(OrdersCatalog, "Select * from orders");
 		}
 		private void FilterTitle_MouseDoubleClick(object sender,MouseButtonEventArgs e)
 		{

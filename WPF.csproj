@@ -105,6 +105,9 @@
     <Compile Include="classes\langs.cs" />
     <Compile Include="classes\movies.cs" />
     <Compile Include="classes\orders.cs" />
+    <Compile Include="WPF_DBDataSet1.cs">
+      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="WPF_DBDataSet11.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

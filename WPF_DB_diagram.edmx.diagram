@@ -6,18 +6,20 @@
     <edmx:Diagrams>
       <Diagram DiagramId="373f3201908e4c1ea66dc0fbfe656ca8" Name="Diagram1" ZoomLevel="108" >
         <EntityTypeShape EntityType="DBModel.movies" Width="1.5" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="DBModel.directors" Width="1.5" PointX="4" PointY="0.5" />
-        <EntityTypeShape EntityType="DBModel.actors" Width="1.5" PointX="7.75" PointY="0.625" />
-        <EntityTypeShape EntityType="DBModel.clients" Width="1.5" PointX="5.75" PointY="2.625" />
-        <EntityTypeShape EntityType="DBModel.orders" Width="1.5" PointX="5.75" PointY="4.875" />
-        <EntityTypeShape EntityType="DBModel.langs" Width="1.5" PointX="2.25" PointY="2.125" />
-        <EntityTypeShape EntityType="DBModel.formats" Width="1.5" PointX="2.25" PointY="3.75" />
-        <EntityTypeShape EntityType="DBModel.countries" Width="1.5" PointX="2.25" PointY="0.5" />
-        <EntityTypeShape EntityType="DBModel.person" Width="1.5" PointX="5.75" PointY="0.5" />
-        <InheritanceConnector EntityType="DBModel.actors" />
-        <InheritanceConnector EntityType="DBModel.clients" />
-        <InheritanceConnector EntityType="DBModel.directors" />
+        <EntityTypeShape EntityType="DBModel.directors" Width="1.5" PointX="3.875" PointY="2.5" />
+        <EntityTypeShape EntityType="DBModel.actors" Width="1.5" PointX="3.875" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.clients" Width="1.5" PointX="6" PointY="1.125" />
+        <EntityTypeShape EntityType="DBModel.orders" Width="1.5" PointX="6" PointY="3.875" />
+        <EntityTypeShape EntityType="DBModel.langs" Width="1.5" PointX="3.875" PointY="4.625" />
+        <EntityTypeShape EntityType="DBModel.formats" Width="1.5" PointX="2.5" PointY="6.375" />
+        <EntityTypeShape EntityType="DBModel.countries" Width="1.5" PointX="0.5" PointY="6.375" />
+        <AssociationConnector Association="DBModel.moviescountries" />
+        <AssociationConnector Association="DBModel.movieslangs" />
+        <AssociationConnector Association="DBModel.moviesformats" ></AssociationConnector>
+        <AssociationConnector Association="DBModel.moviesdirectors" />
+        <AssociationConnector Association="DBModel.moviesactors" />
         <AssociationConnector Association="DBModel.clientsorders" />
+        <AssociationConnector Association="DBModel.moviesorders" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

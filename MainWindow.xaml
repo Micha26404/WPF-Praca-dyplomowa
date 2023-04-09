@@ -14,7 +14,13 @@
 		<ImageBrush ImageSource="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" Stretch="UniformToFill"/>
 	</Window.Background>
 	<Window.Resources>
-		<Style TargetType="ComboBox">
+		<Style TargetType="DataGridColumnHeader">
+			<Setter Property="Padding" Value="5"></Setter>
+		</Style>
+		<Style TargetType="DataGridCell">
+			<Setter Property="BorderBrush" Value="Maroon"></Setter>
+		</Style>
+			<Style TargetType="ComboBox">
 			<Setter Property="BorderBrush" Value="Transparent"></Setter>
 		</Style>
 		<Style TargetType="ComboBoxItem">
@@ -139,37 +145,33 @@
 			</Setter>
 		</Style>
 	</Window.Resources>
-
+	<!--end of styles-->
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="auto" />
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="auto" />
 		</Grid.ColumnDefinitions>
 
-		<UniformGrid Columns="1" Width="20">
-			<UniformGrid.Background>
-				<RadialGradientBrush SpreadMethod="Reflect">
-					<GradientStop Color="Black"/>
-					<GradientStop Color="#FF821515"/>
-					<GradientStop Color="#FF6F0000"/>
-					<GradientStop Color="#00670000"/>
-					<GradientStop Color="#FF730000" Offset="1"/>
-				</RadialGradientBrush>
-			</UniformGrid.Background>
-		</UniformGrid>
+		<!--main grid -->
+		<Grid Grid.Column="0">
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
+		<TabControl Grid.Column="1" Grid.Row="0" Background="Transparent" TabStripPlacement="Left" BorderBrush="Maroon">
 
-		<TabControl Grid.Column="1" Background="Transparent" TabStripPlacement="Left" Panel.ZIndex="1" Grid.ColumnSpan="2">
-
-			<TabItem Width="64" MinHeight="128" ToolTip="Movies">
-				<TabItem.Header>
-					<Image Source="\icons\cinema\cinema.png" ToolTip="Movies"/>
-				</TabItem.Header>
+				<TabItem Width="64" MinHeight="128" ToolTip="Movies">
+					<TabItem.Header>
+						<UniformGrid Columns="1">
+							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" IsManipulationEnabled="False">Movies</TextBlock>
+							<Image Source="\icons\cinema\cinema.png" ToolTip="Movies"/>
+						</UniformGrid>
+					</TabItem.Header>
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="auto"/>
-						<RowDefinition Height="7*"/>
-						<RowDefinition Height="45*"/>
+						<RowDefinition Height="auto"/>
+						<RowDefinition Height="auto"/>
 					</Grid.RowDefinitions>
 
 					<UniformGrid Name="MoviesFilters" Rows="1" Height="100" VerticalAlignment="Center">
@@ -227,7 +229,7 @@
 						</UniformGrid>
 					</UniformGrid>
 
-					<DataGrid Name="MoviesCatalog" Grid.Row="1" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000" Grid.RowSpan="2">
+					<DataGrid Name="MoviesCatalog" Grid.Row="1" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000">
 						<DataGrid.AlternatingRowBackground>
 							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 								<GradientStop Color="#00000000" Offset="0.423"/>
@@ -253,8 +255,11 @@
 			</TabItem>
 			<TabItem Width="64" MinHeight="128" ToolTip="Clients" Foreground="White">
 				<TabItem.Header>
-					<Image Source="icons/user-group-woman-woman.png" ToolTip="Clients"/>
-				</TabItem.Header>
+						<UniformGrid Columns="1">
+							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" IsManipulationEnabled="False">Clients</TextBlock>
+							<Image Source="icons/user-group-woman-woman.png" ToolTip="Clients"/>
+						</UniformGrid>
+					</TabItem.Header>
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="auto"/>
@@ -307,8 +312,11 @@
 			</TabItem>
 			<TabItem Width="64" MinHeight="128" ToolTip="Orders" Foreground="White">
 				<TabItem.Header>
-					<Image Source="icons/two-tickets.png" ToolTip="Orders"/>
-				</TabItem.Header>
+						<UniformGrid Columns="1">
+							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" IsManipulationEnabled="False">Orders</TextBlock>
+							<Image Source="icons/cinema/two-tickets.png" ToolTip="Orders"/>
+						</UniformGrid>
+					</TabItem.Header>
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="auto"/>
@@ -363,10 +371,13 @@
 				</Grid>
 			</TabItem>
 
-			<TabItem Width="64" MinHeight="128" ToolTip="Trailer" IsEnabled="False">
+			<TabItem Width="64" MinHeight="128" ToolTip="Trailer">
 				<TabItem.Header>
-					<Image Source="icons/media/preview-pane.png" ToolTip="Trailer"/>
-				</TabItem.Header>
+						<UniformGrid Columns="1">
+							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" IsManipulationEnabled="False">Trailer</TextBlock>
+							<Image Source="icons/media/preview-pane.png" ToolTip="Trailer"/>
+						</UniformGrid>
+					</TabItem.Header>
 
 				<Grid Background="Transparent">
 					<Grid.RowDefinitions>
@@ -417,17 +428,19 @@
 						</UniformGrid>
 					</UniformGrid>
 
-					<MediaElement Grid.Row="2" Source="animations\activity.gif" Name="Trailer"
+					<MediaElement Grid.Row="2" Name="Trailer"
 					LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform" 
-					MediaOpened="TrailerFile" MediaFailed="TrailerFailed" />
+					MediaOpened="TrailerFile"/>
 				</Grid>
 			</TabItem>
 
-			<TabItem Width="64" MinHeight="128" ToolTip="Poster" IsEnabled="False">
+			<TabItem Width="64" MinHeight="128" ToolTip="Poster">
 				<TabItem.Header>
-					<Image Source="icons/media/easel.png" ToolTip="Poster"/>
-				</TabItem.Header>
-
+						<UniformGrid Columns="1">
+							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" IsManipulationEnabled="False">Poster</TextBlock>
+							<Image Source="icons/media/easel.png" ToolTip="Poster"/>
+						</UniformGrid>
+					</TabItem.Header>
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="auto" MaxHeight="256"/>
@@ -469,8 +482,11 @@
 
 			<TabItem Width="64" MinHeight="128">
 				<TabItem.Header>
-					<Image Source="icons/edit.png" ToolTip="Poster"/>
-				</TabItem.Header>
+						<UniformGrid Columns="1">
+							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" IsManipulationEnabled="False">Admin</TextBlock>
+							<Image Source="icons/edit.png" ToolTip="Add or edit entries"/>
+						</UniformGrid>
+					</TabItem.Header>
 				<UniformGrid Name="AddEdit" Rows="1">
 					<UniformGrid Columns="1">
 						<UniformGrid.Background>
@@ -483,7 +499,7 @@
 							</RadialGradientBrush>
 						</UniformGrid.Background>
 						<UniformGrid Rows="1" MouseDown="ClickAddMode">
-							<Viewbox VerticalAlignment="Center"  Margin="5" MaxWidth="256">
+							<Viewbox VerticalAlignment="Center"  Margin="5" MaxWidth="90">
 								<Button x:Name="AddMode" ToolTipService.ToolTip="Add mode" MouseDown="ClickAddMode">
 									<Image Source="icons/add.png" Stretch="Uniform"/>
 								</Button>
@@ -502,13 +518,13 @@
 									<GradientStop Color="#FF730000" Offset="1"/>
 								</RadialGradientBrush>
 							</UniformGrid.Background>
-							<Viewbox VerticalAlignment="Center" Margin="5" MaxWidth="256">
+							<Viewbox VerticalAlignment="Center" Margin="5" MaxWidth="90">
 								<Button x:Name="EditMode" ToolTipService.ToolTip="Edit mode" MouseDown="ClickEditMode">
 									<Image Source="icons/edit.png" Stretch="Uniform"/>
 								</Button>
 							</Viewbox>
 
-							<RadioButton GroupName="AddEdit" ToolTip="Edit movie" Background="#4C800000">Edit mode</RadioButton>
+							<RadioButton GroupName="AddEdit" ToolTip="Update movie" Background="#4C800000">Update mode</RadioButton>
 						</UniformGrid>
 
 					</UniformGrid>
@@ -543,14 +559,14 @@
 							<TextBox InputScope="Number"></TextBox>
 						</UniformGrid>
 
-						<UniformGrid Rows="1">
-							<TextBox ToolTip="All copies" Background="#4C800000">All copies</TextBox>
-							<TextBox InputScope="Number"></TextBox>
-						</UniformGrid>
+							<UniformGrid Rows="1">
+								<TextBox ToolTip="Remaining available copies for rental" Background="#4C800000">Copies left</TextBox>
+								<TextBox InputScope="Number" ></TextBox>
+							</UniformGrid>
 
 						<UniformGrid Rows="1">
-							<TextBox ToolTip="Remaining copies" Background="#4C800000">Remaining copies</TextBox>
-							<TextBox InputScope="Number" ></TextBox>
+							<TextBox ToolTip="Total number of copies for rental" Background="#4C800000">All copies</TextBox>
+							<TextBox InputScope="Number"></TextBox>
 						</UniformGrid>
 
 						<UniformGrid Rows="1">
@@ -594,7 +610,22 @@
 			</TabItem>
 		</TabControl>
 
-		<UniformGrid Grid.Column="3" Width="20" Columns="1">
+			<!--bottom decor -->
+			<UniformGrid Grid.Row="2" Height="10">
+				<UniformGrid.Background>
+					<RadialGradientBrush SpreadMethod="Reflect">
+						<GradientStop Color="Black"/>
+						<GradientStop Color="#FF821515"/>
+						<GradientStop Color="#FF6F0000"/>
+						<GradientStop Color="#00670000"/>
+						<GradientStop Color="#FF730000" Offset="1"/>
+					</RadialGradientBrush>
+				</UniformGrid.Background>
+			</UniformGrid>
+		</Grid>
+
+		<!--right decor -->
+		<UniformGrid Grid.Column="2" Width="10">
 			<UniformGrid.Background>
 				<RadialGradientBrush SpreadMethod="Reflect">
 					<GradientStop Color="Black"/>

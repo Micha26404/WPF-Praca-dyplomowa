@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/12/2023 16:38:50
+-- Date Created: 04/09/2023 10:10:03
 -- Generated from EDMX file: E:\university\WPF\WPF_DB_diagram.edmx
 -- --------------------------------------------------
 
@@ -81,7 +81,9 @@ CREATE TABLE [dbo].[movies] (
     [lang_id] int  NOT NULL,
     [actor_id] int  NOT NULL,
     [director_id] int  NOT NULL,
-    [format_id] int  NOT NULL
+    [format_id] int  NOT NULL,
+    [poster_path] nvarchar(max)  NULL,
+    [trailer_path] nvarchar(max)  NULL
 );
 GO
 
