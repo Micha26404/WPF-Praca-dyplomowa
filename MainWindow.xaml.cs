@@ -264,14 +264,15 @@ namespace WPF
 
 		}
 
-		private void ClickEditMode(object sender, MouseButtonEventArgs e)
+		private void EditMode(object sender, MouseButtonEventArgs e)
 		{
 
         }
 
-		private void ClickAddMode(object sender, MouseButtonEventArgs e)
+		private void AddMode(object sender, MouseButtonEventArgs e)
 		{
 
 		}
+
 	}
 }

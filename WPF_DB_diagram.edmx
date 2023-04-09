@@ -154,14 +154,14 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="true" Unicode="true" />
           <Property Name="year" Type="Int16" Nullable="true" />
           <Property Name="country_id" Type="Int32" Nullable="false" />
-          <Property Name="duration" Type="Int16" Nullable="false" DefaultValue="120" />
+          <Property Name="duration" Type="Int16" Nullable="true" DefaultValue="120" />
           <Property Name="age" Type="Byte" Nullable="true" DefaultValue="13" />
-          <Property Name="total_count" Type="Byte" Nullable="false" DefaultValue="1" />
-          <Property Name="price" Type="Decimal" Nullable="false" DefaultValue="10" />
-          <Property Name="left_count" Type="Byte" Nullable="false" DefaultValue="1" />
+          <Property Name="total_count" Type="Byte" Nullable="true" DefaultValue="1" />
+          <Property Name="price" Type="Decimal" Nullable="true" DefaultValue="10" />
+          <Property Name="left_count" Type="Byte" Nullable="true" DefaultValue="1" />
           <Property Name="plot" Type="String" Nullable="true" DefaultValue="Null" Unicode="true" />
           <Property Name="lang_id" Type="Int32" Nullable="false" />
           <Property Name="actor_id" Type="Int32" Nullable="false" />
@@ -181,8 +181,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" Nullable="false" Unicode="true" />
-          <Property Name="last_name" Type="String" Nullable="false" Unicode="true" />
+          <Property Name="first_name" Type="String" Nullable="true" Unicode="true" />
+          <Property Name="last_name" Type="String" Nullable="true" Unicode="true" />
           <NavigationProperty Name="movie" Relationship="DBModel.moviesdirectors" FromRole="directors" ToRole="movies" />
         </EntityType>
         <EntityType Name="actors">
@@ -190,8 +190,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" Nullable="false" Unicode="true" />
-          <Property Name="last_name" Type="String" Nullable="false" Unicode="true" />
+          <Property Name="first_name" Type="String" Nullable="true" Unicode="true" />
+          <Property Name="last_name" Type="String" Nullable="true" Unicode="true" />
           <NavigationProperty Name="movie" Relationship="DBModel.moviesactors" FromRole="actors" ToRole="movies" />
         </EntityType>
         <EntityType Name="clients">
@@ -201,8 +201,8 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="phone" Type="String" Nullable="true" />
           <Property Name="email" Type="String" Nullable="true" DefaultValue="Null" />
-          <Property Name="first_name" Type="String" Nullable="false" Unicode="true" />
-          <Property Name="last_name" Type="String" Nullable="false" Unicode="true" />
+          <Property Name="first_name" Type="String" Nullable="true" Unicode="true" />
+          <Property Name="last_name" Type="String" Nullable="true" Unicode="true" />
           <NavigationProperty Name="orders" Relationship="DBModel.clientsorders" FromRole="clients" ToRole="orders" />
         </EntityType>
         <EntityType Name="orders">
@@ -223,7 +223,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="true" Unicode="true" />
           <NavigationProperty Name="movie" Relationship="DBModel.movieslangs" FromRole="langs" ToRole="movies" />
         </EntityType>
         <EntityType Name="formats">
