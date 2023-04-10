@@ -95,7 +95,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="classes\person.cs" />
     <Compile Include="classes\directors.cs" />
     <Compile Include="classes\actors.cs" />
     <Compile Include="classes\clients.cs" />

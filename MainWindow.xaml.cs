@@ -70,141 +70,13 @@ namespace WPF
 		{
 			query(OrdersCatalog, "Select * from orders");
 		}
-		private void FilterTitle_MouseDoubleClick(object sender,MouseButtonEventArgs e)
-		{
-			FilterTitle.Text = "filter";
-		}
-		private void FilterYear_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterYear.Text = "filter";
-		}
-		private void FilterAge_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterAge.Text = "filter";
-		}
-		private void FilterDuration_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterDuration.Text = "filter";
-		}
-		private void FilterLanguages_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterLanguages.Text = "filter";
-		}
-		private void FilterDirectors_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterDirectors.Text = "filter";
-		}
-		private void FilterFormats_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterFormats.Text = "filter";
-		}
-		private void FilterPrice_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterPrice.Text = "filter";
-		}
-		private void FilterCountries_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterCountries.Text = "filter";
-		}
-		private void FilterLeadActors_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterLeadActors.Text = "filter";
-		}
-		private void FilterCopiesLeft_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterCopiesLeft.Text = "filter";
-		}
-		private void FilterCopiesTotal_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			FilterCopiesTotal.Text = "filter";
-		}
-
+	
 		private void Element_MediaEnded(object sender, RoutedEventArgs e)
 		{
 
         }
 
 		private void Element_MediaOpened(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-
-		}
-
-		private void OnMouseDownPlayMedia(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void OnMouseDownPauseMedia(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void OnMouseDownStopMedia(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void SeekToMediaPosition(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-
-		}
-
-		private void Duration_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void FilterPremise_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void FilterLastName_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void FilterFirstName_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void FilterEmail_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void FilterPhone_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void FilterLName_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void FilterFName_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void FilterDueDate_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void FilterReturnDate_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void FilterRentDate_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
 
 		}
@@ -244,16 +116,6 @@ namespace WPF
 
 		}
 
-		private void Trailer_MediaFailed(object sender, ExceptionRoutedEventArgs e)
-		{
-
-		}
-
-		private void Trailer_MediaFailed_1(object sender, ExceptionRoutedEventArgs e)
-		{
-
-		}
-
 		private void TrailerFailed(object sender, ExceptionRoutedEventArgs e)
 		{
 
@@ -274,5 +136,114 @@ namespace WPF
 
 		}
 
+		private void SetTrailer(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void DeleteTrailer(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void SetPoster(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void DeletePoster(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterPrice(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterAge(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterDuration(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterYear(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterTitle(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterCopiesTotal(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterCopiesLeft(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterCountries(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterLanguages(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterFormats(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterDirectors(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterLeadActors(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterLastName(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterFirstName(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterEmail(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void FilterPhone(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+
+		}
+
+		private void FilterLName(object sender, MouseButtonEventArgs e)
+		{
+
+		}
 	}
 }
