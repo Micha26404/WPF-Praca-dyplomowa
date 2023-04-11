@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF.database;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WPF
 {
@@ -70,180 +71,200 @@ namespace WPF
 		{
 			query(OrdersCatalog, "Select * from orders");
 		}
-	
-		private void Element_MediaEnded(object sender, RoutedEventArgs e)
+		//Trailer panel
+		public double Volume { get; set; }
+		private void MediaOpened(object sender, RoutedEventArgs e)
 		{
-
-        }
-
-		private void Element_MediaOpened(object sender, RoutedEventArgs e)
-		{
-
+			//seek slider init
+			SeekSlider.Maximum = Trailer.NaturalDuration.TimeSpan.TotalMilliseconds;
 		}
-
-		private void RemovePoster(object sender, RoutedEventArgs e)
-		{
-
-        }
-
-		private void ChangePoster(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void AddPoster(object sender, RoutedEventArgs e)
-		{
-
-		}
-
 		private void AdjustVolume(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
-
+			Trailer.Volume = (double)VolumeSlider.Value;
 		}
-
 		private void PlayTrailer(object sender, RoutedEventArgs e)
 		{
-
+			Trailer.Play();
+			Trailer.Volume = (double)VolumeSlider.Value;
 		}
-
-		private void ResetTrailer(object sender, RoutedEventArgs e)
+		private void PauseTrailer(object sender, MouseButtonEventArgs e)
 		{
-
+			Trailer.Pause();
 		}
-
+		private void StopTrailer(object sender, RoutedEventArgs e)
+		{
+			Trailer.Stop();
+		}
 		private void SeekTrailer(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
+			int SliderValue = (int)SeekSlider.Value;
 
+			// Overloaded constructor takes the arguments days, hours, minutes, seconds, milliseconds.
+			// Create a TimeSpan with miliseconds equal to the slider value.
+			TimeSpan ts = new TimeSpan(0, 0, 0, 0, SliderValue);
+			Trailer.Position = ts;
 		}
-
-		private void TrailerFailed(object sender, ExceptionRoutedEventArgs e)
+		private void TrailerFile(object sender, RoutedEventArgs e)//Trailer file path
 		{
 
 		}
-
-		private void TrailerFile(object sender, RoutedEventArgs e)
+		private void SetTrailer(object sender, MouseButtonEventArgs e)//Set trailer file path
 		{
 
 		}
-
-		private void EditMode(object sender, MouseButtonEventArgs e)
-		{
-
-        }
-
-		private void AddMode(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
-		private void SetTrailer(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
 		private void DeleteTrailer(object sender, MouseButtonEventArgs e)
 		{
 
 		}
+		//Poster panel
+		private void RemovePoster(object sender, RoutedEventArgs e)
+		{
 
+        }
+		private void ChangePoster(object sender, RoutedEventArgs e)
+		{
+
+		}
+		private void AddPoster(object sender, RoutedEventArgs e)
+		{
+
+		}
 		private void SetPoster(object sender, MouseButtonEventArgs e)
 		{
 
 		}
-
 		private void DeletePoster(object sender, MouseButtonEventArgs e)
 		{
 
 		}
+		//Admin panel
+		private void EditMode(object sender, MouseButtonEventArgs e)
+		{
 
-		private void FilterPrice(object sender, MouseButtonEventArgs e)
+        }
+		private void AddMode(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		//Filter movies  
+		private void FilterPrice_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterAge_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterDuration_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterYear_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterTitle_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterCopiesTotal_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterCopiesLeft_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterCountries_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterLanguages_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterFormats_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterDirectors_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		private void FilterLeadActors_Click(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+		//Filter clients
+		private void FilterLastName_Click(object sender, MouseButtonEventArgs e)
 		{
 
 		}
 
-		private void FilterAge(object sender, MouseButtonEventArgs e)
+		private void FilterFirstName_Click(object sender, MouseButtonEventArgs e)
 		{
 
 		}
-
-		private void FilterDuration(object sender, MouseButtonEventArgs e)
+		private void FilterEmail_Click(object sender, MouseButtonEventArgs e)
 		{
 
 		}
-
-		private void FilterYear(object sender, MouseButtonEventArgs e)
+		private void FilterPhone_Click(object sender, MouseButtonEventArgs e)
 		{
 
 		}
-
-		private void FilterTitle(object sender, MouseButtonEventArgs e)
+		private void FilterLName_Click(object sender, MouseButtonEventArgs e)
 		{
 
 		}
-
-		private void FilterCopiesTotal(object sender, MouseButtonEventArgs e)
+		private void OrderItem_return(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterCopiesLeft(object sender, MouseButtonEventArgs e)
+		private void OrderItem_edit(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterCountries(object sender, MouseButtonEventArgs e)
+		private void ClientItem_add(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterLanguages(object sender, MouseButtonEventArgs e)
+		private void ClientItem_edit(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterFormats(object sender, MouseButtonEventArgs e)
+		private void OrderItem_add(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterDirectors(object sender, MouseButtonEventArgs e)
+		private void MovieItem_rent(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterLeadActors(object sender, MouseButtonEventArgs e)
+		private void MovieItem_add(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterLastName(object sender, MouseButtonEventArgs e)
+		private void MovieItem_edit(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterFirstName(object sender, MouseButtonEventArgs e)
+		private void MovieItem_delete(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterEmail(object sender, MouseButtonEventArgs e)
+		private void MovieItem_poster(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterPhone(object sender, MouseButtonEventArgs e)
+		private void MovieItem_trailer(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+		private void OrderItem_delete(object sender, RoutedEventArgs e)
 		{
 
 		}
-
-		private void FilterLName(object sender, MouseButtonEventArgs e)
-		{
-
-		}
+		
 	}
 }
