@@ -212,6 +212,7 @@
     <Resource Include="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" />
     <Resource Include="icons\cinema\cinema.png" />
     <Resource Include="icons\media\easel.png" />
+    <Resource Include="blu-ray.png" />
     <Content Include="WPF_DB_log.ldf">
       <DependentUpon>WPF_DB.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

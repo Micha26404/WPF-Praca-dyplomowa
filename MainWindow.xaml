@@ -456,8 +456,8 @@
 									<MenuItem Header="Add" Click="MovieItem_add" />
 									<MenuItem Header="Edit" Click="MovieItem_edit" />
 									<MenuItem Header="Delete" Click="MovieItem_delete" />
-									<MenuItem Header="Edit" Click="MovieItem_poster" />
-									<MenuItem Header="Edit" Click="MovieItem_trailer" />
+									<MenuItem Header="Load poster to tab" Click="MovieItem_poster" />
+									<MenuItem Header="Load trailer to tab" Click="LoadTrailer" />
 								</ContextMenu>
 							</DataGrid.ContextMenu>
 						</DataGrid>
@@ -801,20 +801,16 @@
 
 						</UniformGrid>
 
-						<MediaElement Grid.Row="2" Name="Trailer"
+						<MediaElement Grid.Row="2" Name="Trailer" 
 							LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform" 
-							MediaOpened="TrailerFile" MediaEnded="StopTrailer"/>
-
-						<Viewbox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Height="128">
-							<Image Source="icons\media\broken-link.png" ToolTip="trailer not found"/>
-						</Viewbox>
+							MediaOpened="TrailerInit" MediaEnded="StopTrailer" Source="/blu-ray.png"/>
 					</Grid>
 				</TabItem>
 
 				<TabItem Width="64" Height="100">
 					<TabItem.Header>
 						<UniformGrid Columns="1">
-							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Poster</TextBlock>
+							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">Poster</TextBlock>
 							<Image VerticalAlignment="Top" Source="icons/media/easel.png">
 								<Image.Clip>
 									<EllipseGeometry Center="25,23" RadiusX="20" RadiusY="15" />
@@ -850,7 +846,7 @@
 								</Button>
 							</Viewbox>
 
-							<Viewbox ToolTip="Remove poster" MouseDown="DeletePoster" Cursor="Hand">
+							<Viewbox ToolTip="Remove poster" MouseDown="RemovePoster" Cursor="Hand">
 								<Button>
 									<Image Source="icons\media\delete-link.png"/>
 									<Button.Clip>
@@ -865,8 +861,8 @@
 							</UniformGrid>
 						</UniformGrid>
 
-						<Viewbox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Height="128">
-							<Image Source="icons\media\broken-link.png" ToolTip="Poster not found"/>
+						<Viewbox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="Uniform">
+							<Image Name="Poster"/>
 						</Viewbox>
 					</Grid>
 				</TabItem>
@@ -886,61 +882,37 @@
 							<ColumnDefinition Width="auto"/>
 						</Grid.ColumnDefinitions>
 						<!--Mode selection panel-->
-						<UniformGrid Columns="1" Rows="3" Width="60" ToolTip="Mode selection">
-
+						<UniformGrid Columns="1" Width="60" ToolTip="Mode selection">
 							<Border BorderBrush="Black" BorderThickness="2">
-								<UniformGrid Columns="1" Cursor="Hand" MouseDown="AddMode">
-									<UniformGrid.Background>
-										<RadialGradientBrush SpreadMethod="Pad">
-											<GradientStop Color="Maroon" Offset="0.9"/>
-											<GradientStop Offset="1"/>
-										</RadialGradientBrush>
-									</UniformGrid.Background>
-
-									<TextBox VerticalAlignment="Bottom" HorizontalAlignment="Center">Create mode</TextBox>
-									<Viewbox VerticalAlignment="Top">
-										<Button>
-											<Image Source="icons/add.png" Cursor="Hand"/>
-											<Button.Clip>
-												<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
-											</Button.Clip>
-										</Button>
+								<Grid MouseDown="SelectAddMode">
+									<TextBlock>Add mode</TextBlock>
+									<Viewbox VerticalAlignment="Center">
+										<Image Source="icons/add.png" Cursor="Hand"/>
 									</Viewbox>
-								</UniformGrid>
+								</Grid>
 							</Border>
 
 							<Border BorderBrush="Black" BorderThickness="2">
-								<TextBox AcceptsReturn="True"
+								<TextBlock Name="ModeSelected"
 								Text="Select mode
 									Fill form
 									Submit">
-									<TextBox.Background>
+									<TextBlock.Background>
 										<RadialGradientBrush SpreadMethod="Pad">
 											<GradientStop Color="DarkRed" Offset="0.9"/>
 											<GradientStop Offset="1" Color="Black"/>
 										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+									</TextBlock.Background>
+								</TextBlock>
 							</Border>
 
-							<Border BorderBrush="Black" BorderThickness="2">
-								<UniformGrid Columns="1" MouseDown="EditMode" Cursor="Hand">
-									<UniformGrid.Background>
-										<RadialGradientBrush SpreadMethod="Pad">
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Offset="0.9" Color="Maroon"/>
-										</RadialGradientBrush>
-									</UniformGrid.Background>
-									<TextBox VerticalAlignment="Bottom" HorizontalAlignment="Center">Update mode</TextBox>
-									<Viewbox VerticalAlignment="Top">
-										<Button>
-											<Image Source="icons/edit.png" Cursor="Hand"/>
-											<Button.Clip>
-												<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
-											</Button.Clip>
-										</Button>
+							<Border BorderBrush="Black" BorderThickness="2" Background="Black">
+								<Grid MouseDown="SelectEditMode">
+									<TextBlock>Update mode</TextBlock>
+									<Viewbox>
+										<Image Source="icons/edit.png" Cursor="Hand"/>
 									</Viewbox>
-								</UniformGrid>
+								</Grid>
 							</Border>
 						</UniformGrid>
 						<!--Current dataset indicator-->
@@ -956,7 +928,7 @@
 											<GradientStop Color="#00000000" Offset="1"/>
 										</RadialGradientBrush>
 									</UniformGrid.Background>
-									<TextBox VerticalAlignment="Bottom" HorizontalAlignment="Center" >Movie form</TextBox>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Movie form</TextBlock>
 									<Image VerticalAlignment="Top" Source="\icons\cinema\cinema.png">
 										<Image.Clip>
 											<EllipseGeometry Center="30,30" RadiusX="20" RadiusY="20" />
@@ -974,7 +946,7 @@
 											<GradientStop Color="#FD000000" Offset="1"/>
 										</RadialGradientBrush>
 									</UniformGrid.Background>
-									<TextBox VerticalAlignment="Bottom" HorizontalAlignment="Center" >Client form</TextBox>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Client form</TextBlock>
 									<Image VerticalAlignment="Top" Source="icons/user-group-woman-woman.png">
 										<Image.Clip>
 											<EllipseGeometry Center="30,30" RadiusX="20" RadiusY="20" />
@@ -992,7 +964,7 @@
 											<GradientStop Color="Black" Offset="1"/>
 										</RadialGradientBrush>
 									</UniformGrid.Background>
-									<TextBox VerticalAlignment="Bottom" HorizontalAlignment="Center" >Order form</TextBox>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Order form</TextBlock>
 									<Image VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
 										<Image.Clip>
 											<EllipseGeometry Center="30,30" RadiusX="25" RadiusY="25" />
@@ -1336,7 +1308,7 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit movie</TextBlock>
 									<Viewbox>
-										<Button>
+										<Button MouseDown="SubmitAdd">
 											<Image VerticalAlignment="Top" Source="\icons\cinema\cinema.png" ToolTip="Movies">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
@@ -1384,7 +1356,7 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit order</TextBlock>
 									<Viewbox>
-										<Button>
+										<Button MouseDown="SubmitEdit">
 											<Image VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
