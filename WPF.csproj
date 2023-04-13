@@ -104,27 +104,16 @@
     <Compile Include="classes\langs.cs" />
     <Compile Include="classes\movies.cs" />
     <Compile Include="classes\orders.cs" />
-    <Compile Include="WPF_DBDataSet1.cs">
-      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="WPF_DBDataSet11.Designer.cs">
+    <Compile Include="WPF_DBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
+      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="WPF_DB_context.cs" />
     <Compile Include="WPF_DB_diagram.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="WPF_DBDataSet.cs">
-      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="WPF_DBDataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -158,30 +147,19 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>WPF_DB_diagram.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="WPF_DBDataSet1.xsc">
-      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="WPF_DBDataSet1.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>WPF_DBDataSet11.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="WPF_DBDataSet1.xss">
-      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="WPF_DB_diagram.edmx.diagram">
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </None>
     <None Include="WPF_DBDataSet.xsc">
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </None>
     <None Include="WPF_DBDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>WPF_DBDataSet1.Designer.cs</LastGenOutput>
+      <LastGenOutput>WPF_DBDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
     <None Include="WPF_DBDataSet.xss">
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="WPF_DB_diagram.edmx.diagram">
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -212,7 +190,7 @@
     <Resource Include="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" />
     <Resource Include="icons\cinema\cinema.png" />
     <Resource Include="icons\media\easel.png" />
-    <Resource Include="blu-ray.png" />
+    <Resource Include="icons\media\blu-ray.png" />
     <Content Include="WPF_DB_log.ldf">
       <DependentUpon>WPF_DB.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -239,51 +217,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WPF_DB_diagram.edmx.sql" />
-    <Resource Include="animations\activity.gif" />
-    <Resource Include="animations\add-to-collection.gif" />
-    <Resource Include="animations\add-to-favorites.gif" />
-    <Resource Include="animations\add.gif" />
-    <Resource Include="animations\bookmark.gif" />
-    <Resource Include="animations\broken-link.gif" />
-    <Resource Include="animations\calendar-tear.gif" />
-    <Resource Include="animations\check-all.gif" />
-    <Resource Include="animations\check-circle.gif" />
-    <Resource Include="animations\check-circled.gif" />
-    <Resource Include="animations\checkmark-ok.gif" />
-    <Resource Include="animations\clear-filter.gif" />
-    <Resource Include="animations\clear-symbol.gif" />
-    <Resource Include="animations\cross.gif" />
-    <Resource Include="animations\down-arrow.gif" />
-    <Resource Include="animations\edit.gif" />
-    <Resource Include="animations\expand-window.gif" />
-    <Resource Include="animations\eye.gif" />
-    <Resource Include="animations\favorite-folder.gif" />
-    <Resource Include="animations\fullscreen.gif" />
-    <Resource Include="animations\graph.gif" />
-    <Resource Include="animations\heart.gif" />
-    <Resource Include="animations\icon-list-view.gif" />
-    <Resource Include="animations\information.gif" />
-    <Resource Include="animations\left-right.gif" />
-    <Resource Include="animations\list.gif" />
-    <Resource Include="animations\money.gif" />
-    <Resource Include="animations\movie.gif" />
-    <Resource Include="animations\numerical-sorting.gif" />
-    <Resource Include="animations\ok.gif" />
-    <Resource Include="animations\photo-gallery.gif" />
-    <Resource Include="animations\play-load.gif" />
-    <Resource Include="animations\refresh-wait.gif" />
-    <Resource Include="animations\save-changes.gif" />
-    <Resource Include="animations\search.gif" />
-    <Resource Include="animations\star.gif" />
-    <Resource Include="animations\stocks.gif" />
-    <Resource Include="animations\tags.gif" />
-    <Resource Include="animations\tap.gif" />
-    <Resource Include="animations\tick-box.gif" />
-    <Resource Include="animations\toggle.gif" />
-    <Resource Include="animations\trash.gif" />
-    <Resource Include="animations\up-down.gif" />
-    <Resource Include="animations\waste.gif" />
-    <Resource Include="animations\wrench.gif" />
     <Content Include="WPF_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>WPF_DB.mdf</DependentUpon>

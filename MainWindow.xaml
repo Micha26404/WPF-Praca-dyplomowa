@@ -24,7 +24,17 @@
 			<Setter Property="IsTodayHighlighted" Value="True"></Setter>
 			<Setter Property="SelectedDateFormat" Value="Short"></Setter>
 			<Setter Property="Foreground" Value="Black"></Setter>
-			<Setter Property="Background" Value="Transparent"></Setter>
+			<Setter Property="Background">
+				<Setter.Value>
+					<RadialGradientBrush SpreadMethod="Reflect">
+						<GradientStop Color="#00670000" Offset="1"/>
+						<GradientStop Color="#FF6F0000" Offset="1"/>
+						<GradientStop Color="#FF821515" Offset="1"/>
+						<GradientStop Color="Black" Offset="1"/>
+						<GradientStop Color="#FF730000" Offset="0"/>
+					</RadialGradientBrush>
+				</Setter.Value>
+			</Setter>
 		</Style>
 		<Style TargetType="DataGridColumnHeader">
 			<Setter Property="Padding" Value="5"></Setter>
@@ -149,9 +159,11 @@
 			<Setter Property="Background">
 				<Setter.Value>
 					<RadialGradientBrush SpreadMethod="Reflect">
-						<GradientStop Color="Transparent"/>
-						<GradientStop Color="DarkRed"/>
-						<GradientStop Color="Transparent" Offset="1"/>
+						<GradientStop Color="#00670000" Offset="1"/>
+						<GradientStop Color="#FF6F0000" Offset="1"/>
+						<GradientStop Color="#FF821515" Offset="1"/>
+						<GradientStop Color="Black" Offset="1"/>
+						<GradientStop Color="#FF730000" Offset="0"/>
 					</RadialGradientBrush>
 				</Setter.Value>
 			</Setter>
@@ -228,8 +240,7 @@
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="auto" />
 		</Grid.ColumnDefinitions>
-
-		<!--main grid -->
+		<!--tab contents grid -->
 		<Grid Grid.Column="0">
 			<Grid.RowDefinitions>
 				<RowDefinition/>
@@ -239,7 +250,7 @@
 				<TabItem Width="64" Height="100">
 					<TabItem.Header>
 						<UniformGrid Columns="1">
-							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Movies</TextBlock>
+							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">Movies</TextBlock>
 							<Image VerticalAlignment="Top" Source="\icons\cinema\cinema.png">
 								<Image.Clip>
 									<EllipseGeometry Center="25,25" RadiusX="20" RadiusY="20" />
@@ -257,175 +268,55 @@
 							<RowDefinition Height="auto"/>
 							<RowDefinition Height="auto"/>
 						</Grid.RowDefinitions>
-
-						<UniformGrid Name="MoviesFilters" ToolTip="Filter panel" Rows="1" Height="100" VerticalAlignment="Center" Grid.ColumnSpan="2">
+						<!--Movie filter panel-->
+						<UniformGrid ToolTip="Type text and press enter to filter movies" Rows="1" Height="100" VerticalAlignment="Center" Grid.ColumnSpan="2">
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterTitle_Click">Title</TextBlock>
-								<TextBox Name="FilterTitle">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Title</TextBlock>
+								<TextBox Name="FilterMovieTitleText" KeyDown="FilterMovieTitle"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterYear_Click">Year</TextBlock>
-								<TextBox Name="FilterYear">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Year</TextBlock>
+								<TextBox Name="FilterMovieYearText" KeyDown="FilterMovieYear"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterDuration_Click">Duration</TextBlock>
-								<TextBox Name="FilterDuration">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Duration</TextBlock>
+								<TextBox Name="FilterMovieDurationText" KeyDown="FilterMovieDuration"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterAge_Click">Age rating</TextBlock>
-								<TextBox Name="FilterAge">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Age rating</TextBlock>
+								<TextBox Name="FilterMovieAgeText" KeyDown="FilterMovieAge"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterPrice_Click">Price</TextBlock>
-								<TextBox Name="FilterPrice">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Price</TextBlock>
+								<TextBox Name="FilterMoivePriceText" KeyDown="FilterMoviePrice"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterLeadActors_Click">Lead actor</TextBlock>
-								<TextBox Name="FilterLeadActors">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Lead actor</TextBlock>
+								<TextBox Name="FilterMovieActorText" KeyDown="FilterMovieActor"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterDirectors_Click">Director</TextBlock>
-								<TextBox Name="FilterDirector">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Director</TextBlock>
+								<TextBox Name="FilterMovieDirectorText" KeyDown="FilterMovieDirector"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterFormats_Click">Formats</TextBlock>
-								<TextBox Name="FilterFormats">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Formats</TextBlock>
+								<TextBox Name="FilterMovieFormatText" KeyDown="FilterMovieFormat"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterLanguages_Click">Languages</TextBlock>
-								<TextBox Name="FilterLanguages">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Languages</TextBlock>
+								<TextBox Name="FilterMovieLangText" KeyDown="FilterMovieLang"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterCountries_Click">Countries</TextBlock>
-								<TextBox Name="FilterCountries">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Countries</TextBlock>
+								<TextBox Name="FilterMovieCountryText" KeyDown="FilterMovieCountry"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterCopiesLeft_Click">Copies left</TextBlock>
-								<TextBox Name="FilterCopiesLeft">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Copies left</TextBlock>
+								<TextBox Name="FilterMovieCopiesLeftText" KeyDown="FilterMovieCopiesLeft"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterCopiesTotal_Click">Copies total</TextBlock>
-								<TextBox Name="FilterCopiesTotal">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Copies total</TextBlock>
+								<TextBox Name="FilterMovieCopiesTotalText" KeyDown="FilterMovieCopiesTotal"/>
 							</UniformGrid>
 						</UniformGrid>
 
@@ -453,7 +344,6 @@
 							<DataGrid.ContextMenu>
 								<ContextMenu>
 									<MenuItem Header="Return" Click="MovieItem_rent" />
-									<MenuItem Header="Add" Click="MovieItem_add" />
 									<MenuItem Header="Edit" Click="MovieItem_edit" />
 									<MenuItem Header="Delete" Click="MovieItem_delete" />
 									<MenuItem Header="Load poster to tab" Click="MovieItem_poster" />
@@ -474,69 +364,30 @@
 							</Image>
 						</UniformGrid>
 					</TabItem.Header>
+					<!--tab contents grid -->
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="auto"/>
 							<RowDefinition Height="59*"/>
 							<RowDefinition Height="110*"/>
 						</Grid.RowDefinitions>
-
-						<UniformGrid Name="ClientsFilters" Rows="1" Height="100" ToolTip="Filter panel" VerticalAlignment="Center">
+						<!--Client filter panel-->
+						<UniformGrid Rows="1" Height="100" ToolTip="Type text and press enter to filter clients" VerticalAlignment="Center">
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterLastName_Click">Last Name</TextBlock>
-								<TextBox Name="FilterLastName">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Last Name</TextBlock>
+								<TextBox Name="FilterClientLastNameText" KeyDown="FilterClientLastName"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterFirstName_Click">First name</TextBlock>
-								<TextBox Name="FilterFirstName">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>First name</TextBlock>
+								<TextBox Name="FilterClientFirstNameText" KeyDown="FilterClientFirstName"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterEmail_Click">E-mail</TextBlock>
-								<TextBox Name="FilterEmail">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>E-mail</TextBlock>
+								<TextBox Name="FilterClientEmailText" KeyDown="FilterClientEmail"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterPhone_Click">Phone</TextBlock>
-								<TextBox Name="FilterPhone">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Phone</TextBlock>
+								<TextBox Name="FilterClientPhoneText" KeyDown="FilterClientPhone"/>
 							</UniformGrid>
 						</UniformGrid>
 
@@ -563,7 +414,6 @@
 							</DataGrid.Resources>
 							<DataGrid.ContextMenu>
 								<ContextMenu>
-									<MenuItem Header="Add" Click="ClientItem_add" />
 									<MenuItem Header="Edit" Click="ClientItem_edit" />
 								</ContextMenu>
 							</DataGrid.ContextMenu>
@@ -581,96 +431,37 @@
 							</Image>
 						</UniformGrid>
 					</TabItem.Header>
+					<!--tab contents grid -->
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="auto"/>
 							<RowDefinition/>
 						</Grid.RowDefinitions>
-
-						<UniformGrid Name="OrdersFilters" Rows="1" Height="100" ToolTip="Filter panel" VerticalAlignment="Top">
+						<!--Orders filter panel-->
+						<UniformGrid Rows="1" Height="100" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top">
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterOrderMovie_Click">Movie</TextBlock>
-								<TextBox Name="FilterOMovie">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Movie</TextBlock>
+								<TextBox KeyDown="FilterOrderMovie" Name="FilterOrderMovieText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterLName_Click">Last Name</TextBlock>
-								<TextBox Name="FilterLName">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>Last Name</TextBlock>
+								<TextBox KeyDown="FilterOrderLastName" Name="FilterOrderLastNameText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterFName_Click">First Name</TextBlock>
-								<TextBox Name="FilterFName">
-									<TextBox.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</TextBox.Background>
-								</TextBox>
+								<TextBlock>First Name</TextBlock>
+								<TextBox KeyDown="FilterOrderFirstName" Name="FilterOrderFirstNameText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterRentDate_Click">Rent date</TextBlock>
-								<DatePicker Name="FilterRentDate">
-									<DatePicker.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</DatePicker.Background>
-								</DatePicker>
+								<TextBlock>Rent date</TextBlock>
+								<DatePicker KeyDown="FilterOrderRentDate" Name="FilterOrderRentDateText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterDueDate_Click">Due date</TextBlock>
-								<DatePicker Name="FilterDueDate">
-									<DatePicker.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</DatePicker.Background>
-								</DatePicker>
+								<TextBlock>Due date</TextBlock>
+								<DatePicker KeyDown="FilterOrderDueDate" Name="FilterOrderDueDateText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock MouseDown="FilterReturnDate_Click">Return date</TextBlock>
-								<DatePicker Name="FilterReturnDate">
-									<DatePicker.Background>
-										<RadialGradientBrush SpreadMethod="Reflect">
-											<GradientStop Color="#00670000" Offset="1"/>
-											<GradientStop Color="#FF6F0000" Offset="1"/>
-											<GradientStop Color="#FF821515" Offset="1"/>
-											<GradientStop Color="Black" Offset="1"/>
-											<GradientStop Color="#FF730000" Offset="0"/>
-										</RadialGradientBrush>
-									</DatePicker.Background>
-								</DatePicker>
+								<TextBlock>Return date</TextBlock>
+								<DatePicker KeyDown="FilterOrderReturnDate" Name="FilterOrderReturnDateText"/>
 							</UniformGrid>
 						</UniformGrid>
 
@@ -698,7 +489,6 @@
 							<DataGrid.ContextMenu>
 								<ContextMenu>
 									<MenuItem Header="Return" Click="OrderItem_return" />
-									<MenuItem Header="Add" Click="OrderItem_add" />
 									<MenuItem Header="Edit" Click="OrderItem_edit" />
 									<MenuItem Header="Delete" Click="OrderItem_delete" />
 								</ContextMenu>
@@ -870,7 +660,7 @@
 				<TabItem Width="64" Height="100">
 					<TabItem.Header>
 						<UniformGrid Columns="1">
-							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Admin panel</TextBlock>
+							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">Admin panel</TextBlock>
 							<Image VerticalAlignment="Top" Source="icons/edit.png"/>
 						</UniformGrid>
 					</TabItem.Header>
@@ -993,122 +783,42 @@
 										</UniformGrid.Background>
 										<UniformGrid Rows="1">
 											<TextBlock ToolTip="Database movie ID" Background="#4C800000">Movie ID</TextBlock>
-											<TextBox InputScope="Number">
-												<TextBox.Background>
-													<RadialGradientBrush SpreadMethod="Reflect">
-														<GradientStop Color="#00670000" Offset="1"/>
-														<GradientStop Color="#FF6F0000" Offset="1"/>
-														<GradientStop Color="#FF821515" Offset="1"/>
-														<GradientStop Color="Black" Offset="1"/>
-														<GradientStop Color="#FF730000" Offset="0"/>
-													</RadialGradientBrush>
-												</TextBox.Background>
-											</TextBox>
+											<TextBox InputScope="Number" Name="MovieFormID"/>
 										</UniformGrid>
 
 										<UniformGrid Rows="1">
 											<TextBlock ToolTip="Movie title" Background="#4C800000" >Title</TextBlock>
-											<TextBox>
-												<TextBox.Background>
-													<RadialGradientBrush SpreadMethod="Reflect">
-														<GradientStop Color="#00670000" Offset="1"/>
-														<GradientStop Color="#FF6F0000" Offset="1"/>
-														<GradientStop Color="#FF821515" Offset="1"/>
-														<GradientStop Color="Black" Offset="1"/>
-														<GradientStop Color="#FF730000" Offset="0"/>
-													</RadialGradientBrush>
-												</TextBox.Background>
-											</TextBox>
+											<TextBox Name="MovieFormTitle"/>
 										</UniformGrid>
 
 										<UniformGrid Rows="1">
-											<TextBlock Background="#4C800000" >Year of production</TextBlock>
-											<TextBox InputScope="Number">
-												<TextBox.Background>
-													<RadialGradientBrush SpreadMethod="Reflect">
-														<GradientStop Color="#00670000" Offset="1"/>
-														<GradientStop Color="#FF6F0000" Offset="1"/>
-														<GradientStop Color="#FF821515" Offset="1"/>
-														<GradientStop Color="Black" Offset="1"/>
-														<GradientStop Color="#FF730000" Offset="0"/>
-													</RadialGradientBrush>
-												</TextBox.Background>
-											</TextBox>
+											<TextBlock Background="#4C800000" >Year</TextBlock>
+											<TextBox InputScope="Number" Name="MovieFormYear"/>
 										</UniformGrid>
 
 										<UniformGrid Rows="1">
-											<TextBlock Background="#4C800000">Duration in minutes</TextBlock>
-											<TextBox InputScope="Number">
-												<TextBox.Background>
-													<RadialGradientBrush SpreadMethod="Reflect">
-														<GradientStop Color="#00670000" Offset="1"/>
-														<GradientStop Color="#FF6F0000" Offset="1"/>
-														<GradientStop Color="#FF821515" Offset="1"/>
-														<GradientStop Color="Black" Offset="1"/>
-														<GradientStop Color="#FF730000" Offset="0"/>
-													</RadialGradientBrush>
-												</TextBox.Background>
-											</TextBox>
+											<TextBlock Background="#4C800000" ToolTip="Duration in minutes">Duration</TextBlock>
+											<TextBox InputScope="Number" Name="MovieFormDuration"/>
 										</UniformGrid>
 
 										<UniformGrid Rows="1">
 											<TextBlock ToolTip="Age restriction" Background="#4C800000" >Age restriction</TextBlock>
-											<TextBox InputScope="Number" >
-												<TextBox.Background>
-													<RadialGradientBrush SpreadMethod="Reflect">
-														<GradientStop Color="#00670000" Offset="1"/>
-														<GradientStop Color="#FF6F0000" Offset="1"/>
-														<GradientStop Color="#FF821515" Offset="1"/>
-														<GradientStop Color="Black" Offset="1"/>
-														<GradientStop Color="#FF730000" Offset="0"/>
-													</RadialGradientBrush>
-												</TextBox.Background>
-											</TextBox>
+											<TextBox InputScope="Number" Name="MovieFormAge"/>
 										</UniformGrid>
 
 										<UniformGrid Rows="1">
 											<TextBlock ToolTip="Rental price" Background="#4C800000" >Rental price</TextBlock>
-											<TextBox InputScope="Number">
-												<TextBox.Background>
-													<RadialGradientBrush SpreadMethod="Reflect">
-														<GradientStop Color="#00670000" Offset="1"/>
-														<GradientStop Color="#FF6F0000" Offset="1"/>
-														<GradientStop Color="#FF821515" Offset="1"/>
-														<GradientStop Color="Black" Offset="1"/>
-														<GradientStop Color="#FF730000" Offset="0"/>
-													</RadialGradientBrush>
-												</TextBox.Background>
-											</TextBox>
+											<TextBox InputScope="Number"/>
 										</UniformGrid>
 
 										<UniformGrid Rows="1">
-											<TextBlock ToolTip="Remaining available copies for rental" Background="#4C800000" >Copies left</TextBlock>
-											<TextBox InputScope="Number" >
-												<TextBox.Background>
-													<RadialGradientBrush SpreadMethod="Reflect">
-														<GradientStop Color="#00670000" Offset="1"/>
-														<GradientStop Color="#FF6F0000" Offset="1"/>
-														<GradientStop Color="#FF821515" Offset="1"/>
-														<GradientStop Color="Black" Offset="1"/>
-														<GradientStop Color="#FF730000" Offset="0"/>
-													</RadialGradientBrush>
-												</TextBox.Background>
-											</TextBox>
+											<TextBlock ToolTip="Remaining available copies for rental" Background="#4C800000">Copies left</TextBlock>
+											<TextBox InputScope="Number" Name="MovieFormPrice"/>
 										</UniformGrid>
 
 										<UniformGrid Rows="1">
-											<TextBlock ToolTip="Total number of copies for rental" Background="#4C800000" >All copies</TextBlock>
-											<TextBox InputScope="Number">
-												<TextBox.Background>
-													<RadialGradientBrush SpreadMethod="Reflect">
-														<GradientStop Color="#00670000" Offset="1"/>
-														<GradientStop Color="#FF6F0000" Offset="1"/>
-														<GradientStop Color="#FF821515" Offset="1"/>
-														<GradientStop Color="Black" Offset="1"/>
-														<GradientStop Color="#FF730000" Offset="0"/>
-													</RadialGradientBrush>
-												</TextBox.Background>
-											</TextBox>
+											<TextBlock ToolTip="Total number of copies for rental" Background="#4C800000">All copies</TextBlock>
+											<TextBox InputScope="Number" Name="MovieFormCopies"/>
 										</UniformGrid>
 									</UniformGrid>
 									<!--Selectors-->
@@ -1119,33 +829,27 @@
 												<GradientStop Color="Transparent" Offset="1"/>
 											</LinearGradientBrush>
 										</UniformGrid.Background>
-										<ListBox SelectionMode="Multiple" Name="GenreSelector" ToolTip="Movie genre" Background="#4C800000" BorderBrush="Maroon">Genres</ListBox>
-										<ListBox SelectionMode="Multiple" Name="LangSelector" ToolTip="Languages available in this movie" Background="#4C800000" BorderBrush="Maroon">Languages</ListBox>
-										<ListBox SelectionMode="Multiple" Name="FormatSelector" ToolTip="Available medium formats (DVD, Bluray, VHS etc.)" Background="#4C800000" BorderBrush="Maroon">Formats</ListBox>
+										<ListBox SelectionMode="Multiple" Name="MovieFormGenre" ToolTip="Movie genre" Background="#4C800000" BorderBrush="Maroon">Genres</ListBox>
+										<ListBox SelectionMode="Multiple" Name="MovieFormLang" ToolTip="Languages available in this movie" Background="#4C800000" BorderBrush="Maroon">Languages</ListBox>
+										<ListBox SelectionMode="Multiple" Name="MovieFormFormat" ToolTip="Available medium formats (DVD, Bluray, VHS etc.)" Background="#4C800000" BorderBrush="Maroon">Formats</ListBox>
 
 										<UniformGrid Rows="1">
 											<TextBlock Background="#4C800000">Country</TextBlock>
-											<ComboBox Name="CountrySelector" ToolTip="Country of origin"></ComboBox>
+											<ComboBox Name="MovieFormCountry" ToolTip="Country of origin"></ComboBox>
 										</UniformGrid>
 
 										<UniformGrid Rows="1">
 											<TextBlock Background="#4C800000">Director</TextBlock>
-											<ComboBox Name="DirectorSelector" ToolTip="Movie director"></ComboBox>
+											<ComboBox Name="MovieFormDirector" ToolTip="Movie director"></ComboBox>
 										</UniformGrid>
 
 										<UniformGrid Rows="1">
 											<TextBlock Background="#4C800000">Lead actor</TextBlock>
-											<ComboBox Name="ActorSelector" ToolTip="Lead actor"></ComboBox>
+											<ComboBox Name="MovieFormActor" ToolTip="Lead actor"></ComboBox>
 										</UniformGrid>
 									</UniformGrid>
 									<!--Movie premise-->
-									<TextBox ToolTip="Initial plot description">
-										<TextBox.Background>
-											<RadialGradientBrush>
-												<GradientStop Color="#4CFF0000" Offset="1"/>
-												<GradientStop/>
-											</RadialGradientBrush>
-										</TextBox.Background> Movie premise
+									<TextBox Name="MovieFormPlot" ToolTip="Movie beggining plot description" Background="Transparent">Movie premise
 									</TextBox>
 								</UniformGrid>
 							</Border>
@@ -1160,77 +864,27 @@
 									</UniformGrid.Background>
 									<UniformGrid Rows="1">
 										<TextBlock ToolTip="Database client ID" Background="#4C800000">Client ID</TextBlock>
-										<TextBox InputScope="Number">
-											<TextBox.Background>
-												<RadialGradientBrush SpreadMethod="Reflect">
-													<GradientStop Color="#00670000" Offset="1"/>
-													<GradientStop Color="#FF6F0000" Offset="1"/>
-													<GradientStop Color="#FF821515" Offset="1"/>
-													<GradientStop Color="Black" Offset="1"/>
-													<GradientStop Color="#FF730000" Offset="0"/>
-												</RadialGradientBrush>
-											</TextBox.Background>
-										</TextBox>
+										<TextBox InputScope="Number" Name="ClientFormID"/>
 									</UniformGrid>
 
 									<UniformGrid Rows="1">
 										<TextBlock Background="#4C800000">First name</TextBlock>
-										<TextBox>
-											<TextBox.Background>
-												<RadialGradientBrush SpreadMethod="Reflect">
-													<GradientStop Color="#00670000" Offset="1"/>
-													<GradientStop Color="#FF6F0000" Offset="1"/>
-													<GradientStop Color="#FF821515" Offset="1"/>
-													<GradientStop Color="Black" Offset="1"/>
-													<GradientStop Color="#FF730000" Offset="0"/>
-												</RadialGradientBrush>
-											</TextBox.Background>
-										</TextBox>
+										<TextBox Name="ClientFormFirstName"/>
 									</UniformGrid>
 
 									<UniformGrid Rows="1">
 										<TextBlock Background="#4C800000">Last name</TextBlock>
-										<TextBox InputScope="Number">
-											<TextBox.Background>
-												<RadialGradientBrush SpreadMethod="Reflect">
-													<GradientStop Color="#00670000" Offset="1"/>
-													<GradientStop Color="#FF6F0000" Offset="1"/>
-													<GradientStop Color="#FF821515" Offset="1"/>
-													<GradientStop Color="Black" Offset="1"/>
-													<GradientStop Color="#FF730000" Offset="0"/>
-												</RadialGradientBrush>
-											</TextBox.Background>
-										</TextBox>
+										<TextBox Name="ClientFormLastName"/>
 									</UniformGrid>
 
 									<UniformGrid Rows="1">
 										<TextBlock Background="#4C800000">Phone</TextBlock>
-										<TextBox InputScope="Number">
-											<TextBox.Background>
-												<RadialGradientBrush SpreadMethod="Reflect">
-													<GradientStop Color="#00670000" Offset="1"/>
-													<GradientStop Color="#FF6F0000" Offset="1"/>
-													<GradientStop Color="#FF821515" Offset="1"/>
-													<GradientStop Color="Black" Offset="1"/>
-													<GradientStop Color="#FF730000" Offset="0"/>
-												</RadialGradientBrush>
-											</TextBox.Background>
-										</TextBox>
+										<TextBox InputScope="Number" Name="ClientFormPhone"/>
 									</UniformGrid>
 
 									<UniformGrid Rows="1">
-										<TextBlock Background="#4C800000">E-mail</TextBlock>
-										<TextBox>
-											<TextBox.Background>
-												<RadialGradientBrush SpreadMethod="Reflect">
-													<GradientStop Color="#00670000" Offset="1"/>
-													<GradientStop Color="#FF6F0000" Offset="1"/>
-													<GradientStop Color="#FF821515" Offset="1"/>
-													<GradientStop Color="Black" Offset="1"/>
-													<GradientStop Color="#FF730000" Offset="0"/>
-												</RadialGradientBrush>
-											</TextBox.Background>
-										</TextBox>
+										<TextBlock Background="#4C800000">E-Mail</TextBlock>
+										<TextBox Name="ClientFormEmail"/>
 									</UniformGrid>
 								</UniformGrid>
 							</Border>
@@ -1244,49 +898,29 @@
 										</LinearGradientBrush>
 									</UniformGrid.Background>
 									<UniformGrid Rows="1">
-										<TextBlock  ToolTip="If empty; new one will be created" Background="#4C800000">Order ID</TextBlock>
-										<TextBox  InputScope="Number">
-											<TextBox.Background>
-												<RadialGradientBrush SpreadMethod="Reflect">
-													<GradientStop Color="#00670000" Offset="1"/>
-													<GradientStop Color="#FF6F0000" Offset="1"/>
-													<GradientStop Color="#FF821515" Offset="1"/>
-													<GradientStop Color="Black" Offset="1"/>
-													<GradientStop Color="#FF730000" Offset="0"/>
-												</RadialGradientBrush>
-											</TextBox.Background>
-										</TextBox>
+										<TextBlock ToolTip="If empty; new one will be created" Background="#4C800000">Order ID</TextBlock>
+										<TextBox  InputScope="Number" Name="OrderFormID"/>
 									</UniformGrid>
 
 									<UniformGrid Rows="1">
 										<TextBlock  ToolTip="If empty; new one will be created" Background="#4C800000">Movie ID</TextBlock>
-										<TextBox  InputScope="Number">
-											<TextBox.Background>
-												<RadialGradientBrush SpreadMethod="Reflect">
-													<GradientStop Color="#00670000" Offset="1"/>
-													<GradientStop Color="#FF6F0000" Offset="1"/>
-													<GradientStop Color="#FF821515" Offset="1"/>
-													<GradientStop Color="Black" Offset="1"/>
-													<GradientStop Color="#FF730000" Offset="0"/>
-												</RadialGradientBrush>
-											</TextBox.Background>
-										</TextBox>
+										<TextBox InputScope="Number" Name="OrderFormMovieID"/>
 									</UniformGrid>
 
 									<UniformGrid Rows="1">
 										<TextBlock  ToolTip="Client selection" Background="#4C800000">Client</TextBlock>
-										<ComboBox ToolTip="Client selection"></ComboBox>
+										<ComboBox Name="OrderFormClientID"></ComboBox>
 									</UniformGrid>
 
 									<UniformGrid Rows="1">
 										<TextBlock ToolTip="Item return deadline" Background="#4C800000">Due date</TextBlock>
-										<DatePicker></DatePicker>
+										<DatePicker Name="OrderFormDueDate"></DatePicker>
 									</UniformGrid>
 								</UniformGrid>
 							</Border>
 						</Grid>
 						<!--Submit buttons-->
-						<UniformGrid Columns="1" Grid.Column="3" Width="90">
+						<UniformGrid Name="SubmitPanel" Columns="1" Grid.Column="3" Width="90">
 							<UniformGrid.Background>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="Black"/>
@@ -1296,7 +930,6 @@
 									<GradientStop Color="#FF730000" Offset="1"/>
 								</LinearGradientBrush>
 							</UniformGrid.Background>
-
 							<!--Submit movie button-->
 							<Border BorderBrush="Black" BorderThickness="2">
 								<UniformGrid Columns="1">
@@ -1308,7 +941,7 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit movie</TextBlock>
 									<Viewbox>
-										<Button MouseDown="SubmitAdd">
+										<Button MouseDown="SubmitMovie">
 											<Image VerticalAlignment="Top" Source="\icons\cinema\cinema.png" ToolTip="Movies">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
@@ -1332,7 +965,7 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit client</TextBlock>
 									<Viewbox>
-										<Button>
+										<Button MouseDown="SubmitClient">
 											<Image VerticalAlignment="Top" Source="icons/user-group-woman-woman.png">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
@@ -1356,7 +989,7 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit order</TextBlock>
 									<Viewbox>
-										<Button MouseDown="SubmitEdit">
+										<Button MouseDown="SubmitOrder">
 											<Image VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />

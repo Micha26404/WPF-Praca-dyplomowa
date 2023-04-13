@@ -30,9 +30,9 @@ namespace WPF
 		}
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			Movies_Click(sender,e);
-			Clients_Click(sender, e);
-			Orders_Click(sender, e);
+			MoviesGridRefresh(sender,e);
+			ClientsGridRefresh(sender, e);
+			OrdersGridRefresh(sender, e);
 		}
 		public void query(DataGrid grid, string query) 
 		{
@@ -64,7 +64,7 @@ namespace WPF
 			sqlDataAdap.Fill(dtRecord);
 			return dtRecord.ToString();
 		}
-		private void Movies_Click(object sender, RoutedEventArgs e)
+		private void MoviesGridRefresh(object sender, RoutedEventArgs e)
 		{
 			query(MoviesCatalog,
 				"Select movies.name as title, movies.year, movies.duration, movies.age as 'age category', movies.price,"+
@@ -80,11 +80,11 @@ namespace WPF
 				"join directors on directors.id = movies.director_id "+
 				"join formats on formats.id = movies.format_id");
 		}
-		private void Clients_Click(object sender, RoutedEventArgs e)
+		private void ClientsGridRefresh(object sender, RoutedEventArgs e)
 		{
 			query(ClientsCatalog, "Select * from clients");
 		}
-		private void Orders_Click(object sender, RoutedEventArgs e)
+		private void OrdersGridRefresh(object sender, RoutedEventArgs e)
 		{
 			query(OrdersCatalog, "Select * from orders");
 		}
@@ -94,7 +94,6 @@ namespace WPF
 			return int.Parse(rowview.Row["id"].ToString());
 		}
 		//Trailer panel
-
 		//action on trailer load
 		private void TrailerInit(object sender, RoutedEventArgs e)
 		{
@@ -125,7 +124,7 @@ namespace WPF
 			TimeSpan ts = new TimeSpan(0, 0, 0, 0, SliderValue);
 			Trailer.Position = ts;
 		}
-		//Load trailer from database file path
+		//Load existing trailer from database using trailer_path on right click menu
 		private void LoadTrailer(object sender, RoutedEventArgs e)
 		{
 			//get selected item id from selected row
@@ -161,20 +160,22 @@ namespace WPF
 			{
 				Uri uri = new Uri(op.FileName);
 				Trailer.Source = uri;
+				//add trailer to movie in database
+				query("update movies set poster=" + Trailer.Source + " where id=" + getmovie_id());
 			}
-			//TODO update database
 		}
 		private void DeleteTrailer(object sender, MouseButtonEventArgs e)
 		{
 			Trailer.Source = null;
-			//TODO update database
+			//update database
 			query("update movies set trailer_path=null where id="+getmovie_id());
 		}
-		//Poster panel
+		//Poster panel buttons
 		private void RemovePoster(object sender, RoutedEventArgs e)
 		{
 			Poster.Source = null;
-			//TODO update database
+			//remove movie poster from database
+			query("update movies set poster=null where id=" + getmovie_id());
 		}
 		private void SetPoster(object sender, MouseButtonEventArgs e)
 		{
@@ -186,143 +187,192 @@ namespace WPF
 			if (op.ShowDialog() == true)
 			{
 				Poster.Source = new BitmapImage(new Uri(op.FileName));
+				//add poster to movie in database
+				query("update movies set poster=" + Poster.Source + " where id=" + getmovie_id());
 			}
-			//TODO update database
 		}
-		//Admin panel
-		private void SubmitAdd(object sender, MouseButtonEventArgs e)
+		//Filter movies
+		private void FilterMovieTitle(object sender, KeyEventArgs e)
 		{
-
-        }
-		private void SubmitEdit(object sender, MouseButtonEventArgs e)
-		{
-
+			if(e.Key == Key.Return)
+			{
+			
+			}
 		}
-		//Filter movies  
-		private void FilterPrice_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMoviePrice(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterAge_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMovieAge(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterDuration_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMovieDuration(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterYear_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMovieYear(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterTitle_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMovieCopiesTotal(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterCopiesTotal_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMovieCopiesLeft(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterCopiesLeft_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMovieCountry(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterCountries_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMovieLang(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterLanguages_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMovieFormat(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterFormats_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMovieDirector(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterDirectors_Click(object sender, MouseButtonEventArgs e)
+		private void FilterMovieActor(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
-		}
-		private void FilterLeadActors_Click(object sender, MouseButtonEventArgs e)
-		{
-
+			}
 		}
 		//Filter clients
-		private void FilterLastName_Click(object sender, MouseButtonEventArgs e)
+		private void FilterClientLastName(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterFirstName_Click(object sender, MouseButtonEventArgs e)
+		private void FilterClientFirstName(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterEmail_Click(object sender, MouseButtonEventArgs e)
+		private void FilterClientEmail(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterPhone_Click(object sender, MouseButtonEventArgs e)
+		private void FilterClientPhone(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
 		//Filter orders
-		private void FilterOrderMovie_Click(object sender, MouseButtonEventArgs e)
+		private void FilterOrderMovie(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterLName_Click(object sender, MouseButtonEventArgs e)
+		private void FilterOrderLastName(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-
-		private void FilterFName_Click(object sender, MouseButtonEventArgs e)
+		private void FilterOrderFirstName(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterRentDate_Click(object sender, MouseButtonEventArgs e)
+		private void FilterOrderRentDate(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterDueDate_Click(object sender, MouseButtonEventArgs e)
+		private void FilterOrderDueDate(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
-		private void FilterReturnDate_Click(object sender, MouseButtonEventArgs e)
+		private void FilterOrderReturnDate(object sender, KeyEventArgs e)
 		{
+			if (e.Key == Key.Return)
+			{
 
+			}
 		}
 		//Movies right click menu
 		private void MovieItem_rent(object sender, RoutedEventArgs e)
 		{
 
 		}
-		private void MovieItem_add(object sender, RoutedEventArgs e)
-		{
-
-		}
 		private void MovieItem_edit(object sender, RoutedEventArgs e)
 		{
-
+			//set item id in admin panel
 		}
 		private void MovieItem_delete(object sender, RoutedEventArgs e)
 		{
-
+			//refresh grid
 		}
 		private void MovieItem_poster(object sender, RoutedEventArgs e)
 		{
-
+			//load poster
 		}
 		private void MovieItem_trailer(object sender, RoutedEventArgs e)
 		{
 			TrailerInit(null, null);
 		}
 		//Clients right click menu
-		private void ClientItem_add(object sender, RoutedEventArgs e)
-		{
-
-		}
 		private void ClientItem_edit(object sender, RoutedEventArgs e)
 		{
-
+			//set item id in admin panel
 		}
 		//Orders right click menu
 		private void OrderItem_return(object sender, RoutedEventArgs e)
@@ -331,15 +381,11 @@ namespace WPF
 		}
 		private void OrderItem_edit(object sender, RoutedEventArgs e)
 		{
-
-		}
-		private void OrderItem_add(object sender, RoutedEventArgs e)
-		{
-
+			//set item id in admin panel
 		}
 		private void OrderItem_delete(object sender, RoutedEventArgs e)
 		{
-
+			//refresh grid
 		}
 		//Mode selectors
 		//add or edit mode; false is add, true is edit.
@@ -351,28 +397,39 @@ namespace WPF
 			ModeSelected.Foreground = Brushes.White;
 			//set radial background
 			RadialGradientBrush radialGradient = new RadialGradientBrush();
-
 			radialGradient.GradientStops.Add(new GradientStop(Colors.Green, 0.8));
 			radialGradient.GradientStops.Add(new GradientStop(Colors.Transparent, 1.0));
-
 			radialGradient.Freeze();
 
 			ModeSelected.Background = radialGradient;
+			SubmitPanel.Background = radialGradient;
 		}
 		private void SelectEditMode(object sender, MouseButtonEventArgs e)
 		{
 			mode = true;
 			ModeSelected.Text = "edit\nmode";
-			ModeSelected.Foreground = Brushes.White;
+			ModeSelected.Foreground = Brushes.Yellow;
 			//set radial background
 			RadialGradientBrush radialGradient = new RadialGradientBrush();
-
 			radialGradient.GradientStops.Add(new GradientStop(Colors.Red, 0.8));
 			radialGradient.GradientStops.Add(new GradientStop(Colors.Transparent, 1.0));
-
 			radialGradient.Freeze();
 
 			ModeSelected.Background = radialGradient;
+			SubmitPanel.Background = radialGradient;
+		}
+		//Submit Buttons
+		private void SubmitOrder(object sender, MouseButtonEventArgs e)
+		{
+			//refresh grid
+		}
+		private void SubmitClient(object sender, MouseButtonEventArgs e)
+		{
+			//refresh grid
+		}
+		private void SubmitMovie(object sender, MouseButtonEventArgs e)
+		{
+			//refresh grid
 		}
 	}
 }
