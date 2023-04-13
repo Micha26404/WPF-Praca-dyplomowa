@@ -19,7 +19,6 @@ using WPF.database;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Win32;
 using System.IO;
-
 namespace WPF
 {
 	public partial class MainWindow : Window
@@ -93,21 +92,33 @@ namespace WPF
 			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
 			return int.Parse(rowview.Row["id"].ToString());
 		}
+		public int getclient_id()
+		{
+			//get selected item id from selected row
+			DataRowView rowview = ClientsCatalog.SelectedItem as DataRowView;
+			return int.Parse(rowview.Row["id"].ToString());
+		}
+		public int getorder_id()
+		{
+			//get selected item id from selected row
+			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
+			return int.Parse(rowview.Row["id"].ToString());
+		}
 		//Trailer panel
 		//action on trailer load
 		private void TrailerInit(object sender, RoutedEventArgs e)
 		{
 			//seek slider init
-			//SeekSlider.Maximum = Trailer.NaturalDuration.TimeSpan.TotalMilliseconds;
+			//SeekSlider.Maximum = Trailer.NaturalDuration.TimeSpan.TotalMilliseconds; //null pointer exception
 		}
 		private void AdjustVolume(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
-			//Trailer.Volume = (double)VolumeSlider.Value;
+			//Trailer.Volume = (double)VolumeSlider.Value; //null pointer exception
 		}
 		private void PlayTrailer(object sender, RoutedEventArgs e)
 		{
 			Trailer.Play();
-			//Trailer.Volume = (double)VolumeSlider.Value;
+			//Trailer.Volume = (double)VolumeSlider.Value; //null pointer exception
 		}
 		private void PauseTrailer(object sender, MouseButtonEventArgs e)
 		{
@@ -161,7 +172,7 @@ namespace WPF
 				Uri uri = new Uri(op.FileName);
 				Trailer.Source = uri;
 				//add trailer to movie in database
-				query("update movies set poster=" + Trailer.Source + " where id=" + getmovie_id());
+				query("update movies set poster=" + uri + " where id=" + getmovie_id());
 			}
 		}
 		private void DeleteTrailer(object sender, MouseButtonEventArgs e)
@@ -175,7 +186,7 @@ namespace WPF
 		{
 			Poster.Source = null;
 			//remove movie poster from database
-			query("update movies set poster=null where id=" + getmovie_id());
+			query("update movies set poster_path=null where id=" + getmovie_id());
 		}
 		private void SetPoster(object sender, MouseButtonEventArgs e)
 		{
@@ -186,10 +197,78 @@ namespace WPF
 			  "Portable Network Graphic (*.png)|*.png";
 			if (op.ShowDialog() == true)
 			{
-				Poster.Source = new BitmapImage(new Uri(op.FileName));
-				//add poster to movie in database
-				query("update movies set poster=" + Poster.Source + " where id=" + getmovie_id());
+				//load poster from file path
+				Uri uri = new Uri(op.FileName);
+				BitmapImage img= new BitmapImage(uri);
+				Poster.Source = img;
+				//add poster_path to database
+				query("update movies set poster_path=" + op.FileName + " where id=" + getmovie_id());
+				MoviesGridRefresh(null, null);
 			}
+		}
+		//Movies right click menu
+		private void MovieItem_rent(object sender, RoutedEventArgs e)
+		{
+			//add mode
+			SelectAddMode(null,null);
+			//set movie id in admin panel
+			OrderFormMovieID.Text = getmovie_id().ToString();
+			MessageBox.Show("Movie id set. Fill and submit order in admin panel.");
+		}
+		private void MovieItem_edit(object sender, RoutedEventArgs e)
+		{
+			//edit mode
+			SelectEditMode(null, null);
+			//set movie id in admin panel
+			MovieFormID.Text = getmovie_id().ToString();
+			MessageBox.Show("Movie id set. Fill edit form in admin panel.");
+		}
+		private void MovieItem_delete(object sender, RoutedEventArgs e)
+		{
+			query("delete from movies where id="+getmovie_id());
+			MoviesGridRefresh(null, null);
+		}
+		private void MovieItem_poster(object sender, RoutedEventArgs e)
+		{
+			//load poster_path from db
+			string filepath= query("select poster from movies where id=" + getmovie_id());
+			//load poster file from poster_path
+			Uri uri = new Uri(filepath);
+			BitmapImage img = new BitmapImage(uri);
+			Poster.Source = img;
+		}
+		private void MovieItem_trailer(object sender, RoutedEventArgs e)
+		{
+			TrailerInit(null, null);
+		}
+		//Clients right click menu
+		private void ClientItem_edit(object sender, RoutedEventArgs e)
+		{
+			//edit mode
+			SelectEditMode(null, null);
+			//set client id in admin panel
+			ClientFormID.Text = getclient_id().ToString();
+			MessageBox.Show("Client id set. Fill edit form in admin panel.");
+		}
+		//Orders right click menu
+		private void OrderItem_return(object sender, RoutedEventArgs e)
+		{
+			//update return date to current day
+			query("update orders set return_date=GETDATE() where id=" + getorder_id());
+			OrdersGridRefresh(sender, e);
+		}
+		private void OrderItem_edit(object sender, RoutedEventArgs e)
+		{
+			//edit mode
+			SelectEditMode(null, null);
+			//set order id in admin panel
+			OrderFormID.Text = getorder_id().ToString();
+			MessageBox.Show("Order id set. Fill edit form in admin panel.");
+		}
+		private void OrderItem_delete(object sender, RoutedEventArgs e)
+		{
+			query("delete from orders where id=" + getorder_id());
+			OrdersGridRefresh(null, null);
 		}
 		//Filter movies
 		private void FilterMovieTitle(object sender, KeyEventArgs e)
@@ -347,45 +426,6 @@ namespace WPF
 			{
 
 			}
-		}
-		//Movies right click menu
-		private void MovieItem_rent(object sender, RoutedEventArgs e)
-		{
-
-		}
-		private void MovieItem_edit(object sender, RoutedEventArgs e)
-		{
-			//set item id in admin panel
-		}
-		private void MovieItem_delete(object sender, RoutedEventArgs e)
-		{
-			//refresh grid
-		}
-		private void MovieItem_poster(object sender, RoutedEventArgs e)
-		{
-			//load poster
-		}
-		private void MovieItem_trailer(object sender, RoutedEventArgs e)
-		{
-			TrailerInit(null, null);
-		}
-		//Clients right click menu
-		private void ClientItem_edit(object sender, RoutedEventArgs e)
-		{
-			//set item id in admin panel
-		}
-		//Orders right click menu
-		private void OrderItem_return(object sender, RoutedEventArgs e)
-		{
-
-		}
-		private void OrderItem_edit(object sender, RoutedEventArgs e)
-		{
-			//set item id in admin panel
-		}
-		private void OrderItem_delete(object sender, RoutedEventArgs e)
-		{
-			//refresh grid
 		}
 		//Mode selectors
 		//add or edit mode; false is add, true is edit.

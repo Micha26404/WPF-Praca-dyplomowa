@@ -569,7 +569,7 @@
 								</Button>
 							</Viewbox>
 
-							<UniformGrid Rows="2">
+							<UniformGrid Rows="2" Visibility="Hidden">
 								<TextBox Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">Volume</TextBox>
 								<Slider Name="VolumeSlider" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="AdjustVolume" 
 									Minimum="0" Maximum="1" Value="0.5" Width="70" Cursor="Hand"/>
