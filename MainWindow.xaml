@@ -6,7 +6,7 @@
         mc:Ignorable="d"
 		Loaded="Window_Loaded"
 		Padding="6"
-		Title="Movie rental manager"
+		Title="Video rental software"
 		Width="1000" Height="700"
 		FontSize="16"
 		Icon="/icons/cinema/cinema.png">
