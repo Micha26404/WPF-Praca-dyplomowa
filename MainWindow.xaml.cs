@@ -19,6 +19,9 @@ using WPF.database;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Win32;
 using System.IO;
+using System.Data.Entity.ModelConfiguration.Configuration;
+using System.Windows.Controls.Primitives;
+
 namespace WPF
 {
 	public partial class MainWindow : Window
@@ -29,11 +32,62 @@ namespace WPF
 		}
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			MoviesGridRefresh(sender,e);
+			MoviesGridRefresh(sender, e);
 			ClientsGridRefresh(sender, e);
 			OrdersGridRefresh(sender, e);
 		}
-		public void query(DataGrid grid, string query) 
+		//sql panel button
+		private void QueryExecuteButton_Click(object sender, RoutedEventArgs e)
+		{
+			SQLquery();
+		}
+		//query with feedback info
+		public void setquery(string query)
+		{
+			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
+			SqlConnection con = new SqlConnection(strConnection);
+			try
+			{
+				if (con.State == ConnectionState.Closed)
+				{
+					con.Open();
+				}
+				SqlCommand NewCmd = con.CreateCommand();
+				NewCmd.Connection = con;
+				NewCmd.CommandType = CommandType.Text;
+				NewCmd.CommandText = query;
+				//number of rows affected
+				int a = NewCmd.ExecuteNonQuery();
+				con.Close();
+				if (a == 0)
+				{
+					//Not affected
+					MessageBox.Show("no rows affected");
+				}
+				else
+				{
+					//Affected
+					MessageBox.Show("rows affected: " + a);
+				}
+			}
+			catch (Exception ex)
+			{
+				//Not affected
+				MessageBox.Show("no rows affected:\n" + ex.ToString());
+			}
+		}
+		public void SQLquery()
+		{
+			if (SQLqueryText.Text != string.Empty)
+			{
+				if (SQLqueryText.Text.Contains("Select"))
+				{
+					setquery(SQLqueryText.Text);
+				}
+				else getquery(SQLgrid, SQLqueryText.Text);
+			}
+		}
+		public void getquery(DataGrid grid, string query)
 		{
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
 			SqlConnection con = new SqlConnection(strConnection);
@@ -48,7 +102,7 @@ namespace WPF
 			sqlDataAdap.Fill(dtRecord);
 			grid.ItemsSource = dtRecord.DefaultView;
 		}
-		public string query(string query)
+		public string getquery(string query)
 		{
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
 			SqlConnection con = new SqlConnection(strConnection);
@@ -65,27 +119,27 @@ namespace WPF
 		}
 		private void MoviesGridRefresh(object sender, RoutedEventArgs e)
 		{
-			query(MoviesCatalog,
-				"Select movies.name as title, movies.year, movies.duration, movies.age as 'age category', movies.price,"+
-				"movies.plot as premise,"+
-				"formats.name as formats,"+
-				"directors.first_name + ' ' + directors.first_name as directors,"+
-				"actors.last_name + ' ' + actors.first_name as actors,"+
-				"countries.name as countries, langs.name as languages "+
-				"from movies "+
-				"join actors on actors.id = movies.actor_id "+
-				"join countries on countries.id = movies.country_id "+
-				"join langs on langs.id = movies.lang_id "+
-				"join directors on directors.id = movies.director_id "+
+			getquery(MoviesCatalog,
+				"Select movies.id, movies.name as title, movies.year, movies.duration, movies.age, movies.price," +
+				"movies.plot," +
+				"formats.name as format," +
+				"CONCAT(directors.last_name,directors.first_name) as director," +
+				"CONCAT(actors.last_name,actors.first_name) as lead_actor," +
+				"countries.name as country, langs.name as language," +
+				"movies.copies_left, movies.copies_total from movies " +
+				"join actors on actors.id = movies.actor_id " +
+				"join countries on countries.id = movies.country_id " +
+				"join langs on langs.id = movies.lang_id " +
+				"join directors on directors.id = movies.director_id " +
 				"join formats on formats.id = movies.format_id");
 		}
 		private void ClientsGridRefresh(object sender, RoutedEventArgs e)
 		{
-			query(ClientsCatalog, "Select * from clients");
+			getquery(ClientsCatalog, "Select * from clients");
 		}
 		private void OrdersGridRefresh(object sender, RoutedEventArgs e)
 		{
-			query(OrdersCatalog, "Select * from orders");
+			getquery(OrdersCatalog, "Select * from orders");
 		}
 		public int getmovie_id() {
 			//get selected item id from selected row
@@ -141,12 +195,12 @@ namespace WPF
 			//get selected item id from selected row
 			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
 			string id = rowview.Row["id"].ToString();
-			
+
 			//Set trailer source from query to uri
-			string query_result = query("select trailer_path from movies where id=" + id);
-			if (query_result != null) 
+			string query_result = getquery("select trailer_path from movies where id=" + id);
+			if (query_result != null)
 			{
-				string file= query_result;
+				string file = query_result;
 				//Trailer file path correctness check
 				if (File.Exists(file))
 				{
@@ -154,12 +208,12 @@ namespace WPF
 					Trailer.Source = uri;
 				}
 				else
-				{ 
+				{
 					MessageBox.Show("Trailer file not found. Use set trailer function to select trailer file");
 					//Remove bad file path from database
 					DeleteTrailer(null, null);
 				}
-			} 
+			}
 			else MessageBox.Show("Trailer file path not set. Trailer_path is null.");
 		}
 		//Set trailer file path and update database
@@ -172,21 +226,21 @@ namespace WPF
 				Uri uri = new Uri(op.FileName);
 				Trailer.Source = uri;
 				//add trailer to movie in database
-				query("update movies set poster=" + uri + " where id=" + getmovie_id());
+				setquery("update movies set poster=" + uri + " where id=" + getmovie_id());
 			}
 		}
 		private void DeleteTrailer(object sender, MouseButtonEventArgs e)
 		{
 			Trailer.Source = null;
 			//update database
-			query("update movies set trailer_path=null where id="+getmovie_id());
+			setquery("update movies set trailer_path=null where id=" + getmovie_id());
 		}
 		//Poster panel buttons
 		private void RemovePoster(object sender, RoutedEventArgs e)
 		{
 			Poster.Source = null;
 			//remove movie poster from database
-			query("update movies set poster_path=null where id=" + getmovie_id());
+			setquery("update movies set poster_path=null where id=" + getmovie_id());
 		}
 		private void SetPoster(object sender, MouseButtonEventArgs e)
 		{
@@ -199,39 +253,106 @@ namespace WPF
 			{
 				//load poster from file path
 				Uri uri = new Uri(op.FileName);
-				BitmapImage img= new BitmapImage(uri);
+				BitmapImage img = new BitmapImage(uri);
 				Poster.Source = img;
 				//add poster_path to database
-				query("update movies set poster_path=" + op.FileName + " where id=" + getmovie_id());
+				setquery("update movies set poster_path=" + op.FileName + " where id=" + getmovie_id());
 				MoviesGridRefresh(null, null);
 			}
+		}
+		//Fills existing movie data into form in admin panel (rent movie option)
+		public void MovieEditRentFillForm() 
+		{
+			MovieFormID.Text = getmovie_id().ToString();
+			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
+			MovieFormTitle.Text = rowview.Row["title"].ToString();
+			MovieFormYear.Text = rowview.Row["year"].ToString();
+			MovieFormPrice.Text = rowview.Row["price"].ToString();
+			MovieFormPlot.Text = rowview.Row["plot"].ToString();
+			MovieFormActor.Text = rowview.Row["lead_actor"].ToString();
+			MovieFormDirector.Text = rowview.Row["director"].ToString();
+			MovieFormAge.Text = rowview.Row["age"].ToString();
+			MovieFormDuration.Text = rowview.Row["duration"].ToString();
+			MovieFormCopiesLeft.Text = rowview.Row["copies_left"].ToString();
+			MovieFormCopiesTotal.Text = rowview.Row["copies_total"].ToString();
+			MovieFormLang.Text = rowview.Row["language"].ToString();
+			MovieFormFormat.Text = rowview.Row["format"].ToString();
+			MovieFormGenre.Text = rowview.Row["genre"].ToString();
+		}
+		//Fills existing client data into form in admin panel (edit client option)
+		public void ClientEditFillForm()
+		{
+			ClientFormID.Text = getclient_id().ToString();
+			DataRowView rowview = ClientsCatalog.SelectedItem as DataRowView;
+			ClientFormLastName.Text = rowview.Row["last_name"].ToString();
+			ClientFormFirstName.Text = rowview.Row["first_name"].ToString();
+			ClientFormEmail.Text = rowview.Row["email"].ToString();
+			ClientFormPhone.Text = rowview.Row["phone"].ToString();
+		}
+		//Fills existing order data into form in admin panel (edit order option)
+		public void OrderEditFillForm()
+		{
+			//set order id
+			OrderFormID.Text = getorder_id().ToString();
+			
+			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
+			//set movie
+			int movie_id = int.Parse(rowview.Row["movie_id"].ToString());
+			OrderFormMovieTitleID.Text = getquery("select title from movies where id=" + movie_id) + " " + movie_id;
+			//set client
+			int client_id = int.Parse(rowview.Row["client_id"].ToString());
+			OrderFormClientFNLNID.Text = getquery("select first_name from clients where id=" + client_id);
+			OrderFormClientFNLNID.Text += " " + getquery("select last_name from clients where id=" + client_id);
+			OrderFormClientFNLNID.Text += " " + client_id;
+
+			//get date in format dd/mm/yy (30/12/2022)
+			//set rent date
+			string rent_date = getquery("select convert(varchar, rent_date, 1) from orders where id=" + OrderFormID.Text);
+			int dd = int.Parse(rent_date.Split('/')[0]);
+			int mm = int.Parse(rent_date.Split('/')[1]);
+			int yy = int.Parse(rent_date.Split('/')[2]);
+			OrderFormRentDate.SelectedDate=new DateTime(yy, mm, dd);
+
+			//set due date
+			string due_date = getquery("select convert(varchar, due_date, 1) from orders where id=" + OrderFormID.Text);
+			dd = int.Parse(rent_date.Split('/')[0]);
+			mm = int.Parse(rent_date.Split('/')[1]);
+			yy = int.Parse(rent_date.Split('/')[2]);
+			OrderFormRentDate.SelectedDate = new DateTime(yy, mm, dd);
+
+			//set return date
+			string return_date = getquery("select convert(varchar, return_date, 1) from orders where id=" + OrderFormID.Text);
+			dd = int.Parse(rent_date.Split('/')[0]);
+			mm = int.Parse(rent_date.Split('/')[1]);
+			yy = int.Parse(rent_date.Split('/')[2]);
+			OrderFormRentDate.SelectedDate = new DateTime(yy, mm, dd);
 		}
 		//Movies right click menu
 		private void MovieItem_rent(object sender, RoutedEventArgs e)
 		{
 			//add mode
 			SelectAddMode(null,null);
-			//set movie id in admin panel
-			OrderFormMovieID.Text = getmovie_id().ToString();
-			MessageBox.Show("Movie id set. Fill and submit order in admin panel.");
+			//autofill form
+			MovieEditRentFillForm();
+			MessageBox.Show("Movie data set. Submit in admin panel.");
 		}
 		private void MovieItem_edit(object sender, RoutedEventArgs e)
 		{
 			//edit mode
 			SelectEditMode(null, null);
-			//set movie id in admin panel
-			MovieFormID.Text = getmovie_id().ToString();
-			MessageBox.Show("Movie id set. Fill edit form in admin panel.");
+			//autofill form
+			MovieEditRentFillForm();
+			MessageBox.Show("Movie data set. Submit in admin panel.");
 		}
 		private void MovieItem_delete(object sender, RoutedEventArgs e)
 		{
-			query("delete from movies where id="+getmovie_id());
+			setquery("delete from movies where id="+getmovie_id());
 			MoviesGridRefresh(null, null);
 		}
 		private void MovieItem_poster(object sender, RoutedEventArgs e)
 		{
 			//load poster_path from db
-			string filepath= query("select poster from movies where id=" + getmovie_id());
+			string filepath= getquery("select poster from movies where id=" + getmovie_id());
 			//load poster file from poster_path
 			Uri uri = new Uri(filepath);
 			BitmapImage img = new BitmapImage(uri);
@@ -246,28 +367,34 @@ namespace WPF
 		{
 			//edit mode
 			SelectEditMode(null, null);
-			//set client id in admin panel
-			ClientFormID.Text = getclient_id().ToString();
-			MessageBox.Show("Client id set. Fill edit form in admin panel.");
+			//autofill form
+			ClientEditFillForm();
+			MessageBox.Show("Client data set. Submit in admin panel.");
 		}
 		//Orders right click menu
 		private void OrderItem_return(object sender, RoutedEventArgs e)
 		{
 			//update return date to current day
-			query("update orders set return_date=GETDATE() where id=" + getorder_id());
+			setquery("update orders set return_date=GETDATE() where id=" + getorder_id());
+			//get movie id from order and update copies_left
+			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
+			
+			int movie_id = int.Parse(rowview.Row["movie_id"].ToString());
+			int copies_left = int.Parse(getquery("select copies_left from movies where id="+movie_id));
+			setquery("update movies set copies_left=" + copies_left + 1 +" where id=" + movie_id);
+
 			OrdersGridRefresh(sender, e);
 		}
 		private void OrderItem_edit(object sender, RoutedEventArgs e)
 		{
 			//edit mode
 			SelectEditMode(null, null);
-			//set order id in admin panel
-			OrderFormID.Text = getorder_id().ToString();
-			MessageBox.Show("Order id set. Fill edit form in admin panel.");
+			OrderEditFillForm();
+			MessageBox.Show("Order data set. Edit order in admin panel.");
 		}
 		private void OrderItem_delete(object sender, RoutedEventArgs e)
 		{
-			query("delete from orders where id=" + getorder_id());
+			setquery("delete from orders where id=" + getorder_id());
 			OrdersGridRefresh(null, null);
 		}
 		//Filter movies
@@ -470,6 +597,119 @@ namespace WPF
 		private void SubmitMovie(object sender, MouseButtonEventArgs e)
 		{
 			//refresh grid
+		}
+		private void ListTables(object sender, MouseButtonEventArgs e)
+		{
+			MessageBox.Show("Available tables:\n" +
+				"Movies\n" +
+				"Clients\n" +
+				"Orders\n" +
+				"Actors\n" +
+				"Directors\n" +
+				"Formats\n" +
+				"Countries\n" +
+				"Langs (languages)");
+		}
+		//Admin panel 2
+		//Add
+		private void AddActor(object sender, MouseButtonEventArgs e)
+		{
+			setquery("Insert into actors values(null,"+AddActorFirstName+","+AddActorLastName+")");
+		}
+		private void AddDirector(object sender, MouseButtonEventArgs e)
+		{
+			setquery("Insert into directors values(null," + AddActorFirstName + "," + AddActorLastName + ")");
+		}
+		private void AddCountry(object sender, MouseButtonEventArgs e)
+		{
+			setquery("Insert into countries values(null," + AddCountryName + ")");
+		}
+		private void AddLang(object sender, MouseButtonEventArgs e)
+		{
+			setquery("Insert into langs values(null," + AddLangName + ")");
+		}
+		private void AddFormat(object sender, MouseButtonEventArgs e)
+		{
+			setquery("Insert into formats values(null," + AddFormatName + ")");
+		}
+		//Update
+		private void UpdateActor(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains last_name first_name id
+			string[] tokens = UpdateActorFNLNID.Text.Split(' ');
+
+			setquery("update actors set first_name=" + UpdateActorFirstName
+									+ ",last_name=" + UpdateActorLastName
+									+ "where id=" + tokens[2] +")");
+		}
+		private void UpdateDirector(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains last_name first_name id
+			string[] tokens = UpdateDirectorFNLNID.Text.Split(' ');
+
+			setquery("update directors set first_name=" + UpdateDirectorFirstName
+									+ ",last_name=" + UpdateDirectorLastName
+									+ "where id=" + tokens[2] + ")");
+		}
+		private void UpdateCountry(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains name id
+			string[] tokens = UpdateCountryNameID.Text.Split(' ');
+
+			setquery("update countries set name=" + UpdateCountryName
+									+ "where id=" + tokens[1] + ")");
+		}
+		private void UpdateLang(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains name id
+			string[] tokens = UpdateLangNameID.Text.Split(' ');
+
+			setquery("update langs set name=" + UpdateLangName
+									+ "where id=" + tokens[1] + ")");
+		}
+		private void UpdateFormat(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains name id
+			string[] tokens = UpdateFormatNameID.Text.Split(' ');
+
+			setquery("update formats set name=" + UpdateFormatName
+									+ "where id=" + tokens[1] + ")");
+		}
+		//Delete
+		private void DeleteActor(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains last_name first_name id
+			string[] tokens = UpdateActorFNLNID.Text.Split(' ');
+
+			setquery("delete from actors where id=" + tokens[2] + ")");
+		}
+		private void DeleteDirector(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains last_name first_name id
+			string[] tokens = UpdateDirectorFNLNID.Text.Split(' ');
+
+			setquery("delete from directors where id=" + tokens[2] + ")");
+		}
+		private void DeleteCountry(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains name id
+			string[] tokens = UpdateCountryNameID.Text.Split(' ');
+
+			setquery("delete from countries where id=" + tokens[1] + ")");
+		}
+		private void DeleteLang(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains name id
+			string[] tokens = UpdateLangNameID.Text.Split(' ');
+
+			setquery("delete from langs where id=" + tokens[1] + ")");
+		}
+		private void DeleteFormat(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains name id
+			string[] tokens = UpdateFormatNameID.Text.Split(' ');
+
+			setquery("delete from formats where id=" + tokens[1] + ")");
 		}
 	}
 }
