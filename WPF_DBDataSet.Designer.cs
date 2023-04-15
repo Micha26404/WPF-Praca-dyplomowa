@@ -40,31 +40,6 @@ namespace WPF.database {
         
         private ordersDataTable tableorders;
         
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-        private global::System.Data.DataRelation relationFK_moviescountries;
-========
-        private peopleDataTable tablepeople;
-        
-        private people_clientsDataTable tablepeople_clients;
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-        
-        private global::System.Data.DataRelation relationFK_actors_inherits_person;
-        
-        private global::System.Data.DataRelation relationFK_directors_inherits_person;
-        
-        private global::System.Data.DataRelation relationFK_clientsorders;
-        
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-        private global::System.Data.DataRelation relationFK_moviesorders;
-        
-        private global::System.Data.DataRelation relationmovies_genres;
-========
-        private global::System.Data.DataRelation relationFK_clients_inherits_person;
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-        
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -117,18 +92,6 @@ namespace WPF.database {
                 if ((ds.Tables["orders"] != null)) {
                     base.Tables.Add(new ordersDataTable(ds.Tables["orders"]));
                 }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-                if ((ds.Tables["people"] != null)) {
-                    base.Tables.Add(new peopleDataTable(ds.Tables["people"]));
-                }
-                if ((ds.Tables["people_clients"] != null)) {
-                    base.Tables.Add(new people_clientsDataTable(ds.Tables["people_clients"]));
-                }
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -229,32 +192,6 @@ namespace WPF.database {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public peopleDataTable people {
-            get {
-                return this.tablepeople;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public people_clientsDataTable people_clients {
-            get {
-                return this.tablepeople_clients;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         [global::System.ComponentModel.BrowsableAttribute(true)]
         [global::System.ComponentModel.DesignerSerializationVisibilityAttribute(global::System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public override global::System.Data.SchemaSerializationMode SchemaSerializationMode {
@@ -344,18 +281,6 @@ namespace WPF.database {
                 if ((ds.Tables["orders"] != null)) {
                     base.Tables.Add(new ordersDataTable(ds.Tables["orders"]));
                 }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-                if ((ds.Tables["people"] != null)) {
-                    base.Tables.Add(new peopleDataTable(ds.Tables["people"]));
-                }
-                if ((ds.Tables["people_clients"] != null)) {
-                    base.Tables.Add(new people_clientsDataTable(ds.Tables["people_clients"]));
-                }
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -437,33 +362,6 @@ namespace WPF.database {
                     this.tableorders.InitVars();
                 }
             }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-            this.relationFK_moviescountries = this.Relations["FK_moviescountries"];
-            this.relationFK_movieslangs = this.Relations["FK_movieslangs"];
-            this.relationFK_clientsorders = this.Relations["FK_clientsorders"];
-            this.relationFK_moviesorders = this.Relations["FK_moviesorders"];
-            this.relationmovies_genres = this.Relations["movies_genres"];
-========
-            this.tablepeople = ((peopleDataTable)(base.Tables["people"]));
-            if ((initTable == true)) {
-                if ((this.tablepeople != null)) {
-                    this.tablepeople.InitVars();
-                }
-            }
-            this.tablepeople_clients = ((people_clientsDataTable)(base.Tables["people_clients"]));
-            if ((initTable == true)) {
-                if ((this.tablepeople_clients != null)) {
-                    this.tablepeople_clients.InitVars();
-                }
-            }
-            this.relationFK_actors_inherits_person = this.Relations["FK_actors_inherits_person"];
-            this.relationFK_directors_inherits_person = this.Relations["FK_directors_inherits_person"];
-            this.relationFK_clientsorders = this.Relations["FK_clientsorders"];
-            this.relationFK_clients_inherits_person = this.Relations["FK_clients_inherits_person"];
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -490,59 +388,6 @@ namespace WPF.database {
             base.Tables.Add(this.tablemovies);
             this.tableorders = new ordersDataTable();
             base.Tables.Add(this.tableorders);
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-            global::System.Data.ForeignKeyConstraint fkc;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_movies_actors", new global::System.Data.DataColumn[] {
-                        this.tablemovies.movie_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tableactors.IdColumn});
-            this.tableactors.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            this.relationFK_moviescountries = new global::System.Data.DataRelation("FK_moviescountries", new global::System.Data.DataColumn[] {
-                        this.tablemovies.movie_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tablecountries.movie_idColumn}, false);
-            this.Relations.Add(this.relationFK_moviescountries);
-            this.relationFK_movieslangs = new global::System.Data.DataRelation("FK_movieslangs", new global::System.Data.DataColumn[] {
-                        this.tablemovies.movie_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tablelanguages.movie_idColumn}, false);
-            this.Relations.Add(this.relationFK_movieslangs);
-========
-            this.tablepeople = new peopleDataTable();
-            base.Tables.Add(this.tablepeople);
-            this.tablepeople_clients = new people_clientsDataTable();
-            base.Tables.Add(this.tablepeople_clients);
-            this.relationFK_actors_inherits_person = new global::System.Data.DataRelation("FK_actors_inherits_person", new global::System.Data.DataColumn[] {
-                        this.tablepeople.person_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tablepeople_actors.person_idColumn}, false);
-            this.Relations.Add(this.relationFK_actors_inherits_person);
-            this.relationFK_directors_inherits_person = new global::System.Data.DataRelation("FK_directors_inherits_person", new global::System.Data.DataColumn[] {
-                        this.tablepeople.person_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tablepeople_directors.person_idColumn}, false);
-            this.Relations.Add(this.relationFK_directors_inherits_person);
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-            this.relationFK_clientsorders = new global::System.Data.DataRelation("FK_clientsorders", new global::System.Data.DataColumn[] {
-                        this.tablepeople_clients.person_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tableorders.client_idColumn}, false);
-            this.Relations.Add(this.relationFK_clientsorders);
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-            this.relationFK_moviesorders = new global::System.Data.DataRelation("FK_moviesorders", new global::System.Data.DataColumn[] {
-                        this.tablemovies.movie_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tableorders.movies_movie_idColumn}, false);
-            this.Relations.Add(this.relationFK_moviesorders);
-            this.relationmovies_genres = new global::System.Data.DataRelation("movies_genres", new global::System.Data.DataColumn[] {
-                        this.tablemovies.movie_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tablegenres.idColumn}, false);
-            this.Relations.Add(this.relationmovies_genres);
-========
-            this.relationFK_clients_inherits_person = new global::System.Data.DataRelation("FK_clients_inherits_person", new global::System.Data.DataColumn[] {
-                        this.tablepeople.person_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tablepeople_clients.person_idColumn}, false);
-            this.Relations.Add(this.relationFK_clients_inherits_person);
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -595,24 +440,6 @@ namespace WPF.database {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-        private bool ShouldSerializepeople() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private bool ShouldSerializepeople_clients() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         private void SchemaChanged(object sender, global::System.ComponentModel.CollectionChangeEventArgs e) {
             if ((e.Action == global::System.ComponentModel.CollectionChangeAction.Remove)) {
                 this.InitVars();
@@ -690,18 +517,6 @@ namespace WPF.database {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         public delegate void ordersRowChangeEventHandler(object sender, ordersRowChangeEvent e);
         
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public delegate void peopleRowChangeEventHandler(object sender, peopleRowChangeEvent e);
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public delegate void people_clientsRowChangeEventHandler(object sender, people_clientsRowChangeEvent e);
-        
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
@@ -3166,15 +2981,6 @@ namespace WPF.database {
                 this.columnclient_id.AllowDBNull = false;
                 this.columnmovie_id.AllowDBNull = false;
                 this.columndue_date.AllowDBNull = false;
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-                this.columnreturn_date.AllowDBNull = false;
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-                this.columnclient_id.AllowDBNull = false;
-                this.columnmovies_movie_id.AllowDBNull = false;
-========
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3302,630 +3108,6 @@ namespace WPF.database {
         }
         
         /// <summary>
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class peopleDataTable : global::System.Data.TypedTableBase<peopleRow> {
-            
-            private global::System.Data.DataColumn columnperson_id;
-            
-            private global::System.Data.DataColumn columnname;
-            
-            private global::System.Data.DataColumn columnlast_name;
-            
-            private global::System.Data.DataColumn columngender;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public peopleDataTable() {
-                this.TableName = "people";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal peopleDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected peopleDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn person_idColumn {
-                get {
-                    return this.columnperson_id;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn nameColumn {
-                get {
-                    return this.columnname;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn last_nameColumn {
-                get {
-                    return this.columnlast_name;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn genderColumn {
-                get {
-                    return this.columngender;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public peopleRow this[int index] {
-                get {
-                    return ((peopleRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event peopleRowChangeEventHandler peopleRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event peopleRowChangeEventHandler peopleRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event peopleRowChangeEventHandler peopleRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event peopleRowChangeEventHandler peopleRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void AddpeopleRow(peopleRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public peopleRow AddpeopleRow(string name, string last_name, string gender) {
-                peopleRow rowpeopleRow = ((peopleRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        null,
-                        name,
-                        last_name,
-                        gender};
-                rowpeopleRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowpeopleRow);
-                return rowpeopleRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public peopleRow FindByperson_id(int person_id) {
-                return ((peopleRow)(this.Rows.Find(new object[] {
-                            person_id})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                peopleDataTable cln = ((peopleDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new peopleDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal void InitVars() {
-                this.columnperson_id = base.Columns["person_id"];
-                this.columnname = base.Columns["name"];
-                this.columnlast_name = base.Columns["last_name"];
-                this.columngender = base.Columns["gender"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            private void InitClass() {
-                this.columnperson_id = new global::System.Data.DataColumn("person_id", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnperson_id);
-                this.columnname = new global::System.Data.DataColumn("name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnname);
-                this.columnlast_name = new global::System.Data.DataColumn("last_name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnlast_name);
-                this.columngender = new global::System.Data.DataColumn("gender", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columngender);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnperson_id}, true));
-                this.columnperson_id.AutoIncrement = true;
-                this.columnperson_id.AutoIncrementSeed = -1;
-                this.columnperson_id.AutoIncrementStep = -1;
-                this.columnperson_id.AllowDBNull = false;
-                this.columnperson_id.ReadOnly = true;
-                this.columnperson_id.Unique = true;
-                this.columnname.MaxLength = 2147483647;
-                this.columnlast_name.AllowDBNull = false;
-                this.columnlast_name.MaxLength = 2147483647;
-                this.columngender.MaxLength = 2147483647;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public peopleRow NewpeopleRow() {
-                return ((peopleRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new peopleRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(peopleRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.peopleRowChanged != null)) {
-                    this.peopleRowChanged(this, new peopleRowChangeEvent(((peopleRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.peopleRowChanging != null)) {
-                    this.peopleRowChanging(this, new peopleRowChangeEvent(((peopleRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.peopleRowDeleted != null)) {
-                    this.peopleRowDeleted(this, new peopleRowChangeEvent(((peopleRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.peopleRowDeleting != null)) {
-                    this.peopleRowDeleting(this, new peopleRowChangeEvent(((peopleRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void RemovepeopleRow(peopleRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                WPF_DBDataSet1 ds = new WPF_DBDataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "peopleDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class people_clientsDataTable : global::System.Data.TypedTableBase<people_clientsRow> {
-            
-            private global::System.Data.DataColumn columnclient_id;
-            
-            private global::System.Data.DataColumn columnphone;
-            
-            private global::System.Data.DataColumn columnemail;
-            
-            private global::System.Data.DataColumn columnperson_id;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public people_clientsDataTable() {
-                this.TableName = "people_clients";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal people_clientsDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected people_clientsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn client_idColumn {
-                get {
-                    return this.columnclient_id;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn phoneColumn {
-                get {
-                    return this.columnphone;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn emailColumn {
-                get {
-                    return this.columnemail;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn person_idColumn {
-                get {
-                    return this.columnperson_id;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public people_clientsRow this[int index] {
-                get {
-                    return ((people_clientsRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event people_clientsRowChangeEventHandler people_clientsRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event people_clientsRowChangeEventHandler people_clientsRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event people_clientsRowChangeEventHandler people_clientsRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event people_clientsRowChangeEventHandler people_clientsRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void Addpeople_clientsRow(people_clientsRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public people_clientsRow Addpeople_clientsRow(string phone, string email, peopleRow parentpeopleRowByFK_clients_inherits_person) {
-                people_clientsRow rowpeople_clientsRow = ((people_clientsRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        null,
-                        phone,
-                        email,
-                        null};
-                if ((parentpeopleRowByFK_clients_inherits_person != null)) {
-                    columnValuesArray[3] = parentpeopleRowByFK_clients_inherits_person[0];
-                }
-                rowpeople_clientsRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowpeople_clientsRow);
-                return rowpeople_clientsRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public people_clientsRow FindByperson_id(int person_id) {
-                return ((people_clientsRow)(this.Rows.Find(new object[] {
-                            person_id})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                people_clientsDataTable cln = ((people_clientsDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new people_clientsDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal void InitVars() {
-                this.columnclient_id = base.Columns["client_id"];
-                this.columnphone = base.Columns["phone"];
-                this.columnemail = base.Columns["email"];
-                this.columnperson_id = base.Columns["person_id"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            private void InitClass() {
-                this.columnclient_id = new global::System.Data.DataColumn("client_id", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnclient_id);
-                this.columnphone = new global::System.Data.DataColumn("phone", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnphone);
-                this.columnemail = new global::System.Data.DataColumn("email", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnemail);
-                this.columnperson_id = new global::System.Data.DataColumn("person_id", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnperson_id);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnperson_id}, true));
-                this.columnclient_id.AutoIncrement = true;
-                this.columnclient_id.AutoIncrementSeed = -1;
-                this.columnclient_id.AutoIncrementStep = -1;
-                this.columnclient_id.AllowDBNull = false;
-                this.columnclient_id.ReadOnly = true;
-                this.columnphone.MaxLength = 2147483647;
-                this.columnemail.MaxLength = 2147483647;
-                this.columnperson_id.AllowDBNull = false;
-                this.columnperson_id.Unique = true;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public people_clientsRow Newpeople_clientsRow() {
-                return ((people_clientsRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new people_clientsRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(people_clientsRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.people_clientsRowChanged != null)) {
-                    this.people_clientsRowChanged(this, new people_clientsRowChangeEvent(((people_clientsRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.people_clientsRowChanging != null)) {
-                    this.people_clientsRowChanging(this, new people_clientsRowChangeEvent(((people_clientsRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.people_clientsRowDeleted != null)) {
-                    this.people_clientsRowDeleted(this, new people_clientsRowChangeEvent(((people_clientsRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.people_clientsRowDeleting != null)) {
-                    this.people_clientsRowDeleting(this, new people_clientsRowChangeEvent(((people_clientsRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void Removepeople_clientsRow(people_clientsRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                WPF_DBDataSet1 ds = new WPF_DBDataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "people_clientsDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class actorsRow : global::System.Data.DataRow {
@@ -3976,10 +3158,6 @@ namespace WPF.database {
                     this[this.tableactors.last_nameColumn] = value;
                 }
             }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-========
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
@@ -4113,7 +3291,6 @@ namespace WPF.database {
             public void Setfirst_nameNull() {
                 this[this.tableclients.first_nameColumn] = global::System.Convert.DBNull;
             }
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         }
         
         /// <summary>
@@ -4154,6 +3331,9 @@ namespace WPF.database {
         }
         
         /// <summary>
+>>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
+========
+>>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class directorsRow : global::System.Data.DataRow {
@@ -4631,6 +3811,7 @@ namespace WPF.database {
             public bool Isactor_idNull() {
                 return this.IsNull(this.tablemovies.actor_idColumn);
             }
+<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
@@ -4652,34 +3833,8 @@ namespace WPF.database {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-            public peopleRow peopleRow {
-                get {
-                    return ((peopleRow)(this.GetParentRow(this.Table.ParentRelations["FK_directors_inherits_person"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_directors_inherits_person"]);
-                }
-            }
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class clientsRow : global::System.Data.DataRow {
-            
-            private clientsDataTable tableclients;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal clientsRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableclients = ((clientsDataTable)(this.Table));
-========
             public bool Isformat_idNull() {
                 return this.IsNull(this.tablemovies.format_idColumn);
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4711,77 +3866,6 @@ namespace WPF.database {
             public void SetposterNull() {
                 this[this.tablemovies.posterColumn] = global::System.Convert.DBNull;
             }
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public ordersRow[] GetordersRows() {
-                if ((this.Table.ChildRelations["FK_clientsorders"] == null)) {
-                    return new ordersRow[0];
-                }
-                else {
-                    return ((ordersRow[])(base.GetChildRows(this.Table.ChildRelations["FK_clientsorders"])));
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class countriesRow : global::System.Data.DataRow {
-            
-            private countriesDataTable tablecountries;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal countriesRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tablecountries = ((countriesDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int id {
-                get {
-                    return ((int)(this[this.tablecountries.idColumn]));
-                }
-                set {
-                    this[this.tablecountries.idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string name {
-                get {
-                    return ((string)(this[this.tablecountries.nameColumn]));
-                }
-                set {
-                    this[this.tablecountries.nameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int movie_id {
-                get {
-                    return ((int)(this[this.tablecountries.movie_idColumn]));
-                }
-                set {
-                    this[this.tablecountries.movie_idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public moviesRow moviesRow {
-                get {
-                    return ((moviesRow)(this.GetParentRow(this.Table.ParentRelations["FK_moviescountries"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_moviescountries"]);
-                }
-            }
         }
         
         /// <summary>
@@ -4802,10 +3886,10 @@ namespace WPF.database {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public int id {
                 get {
-                    return ((int)(this[this.tablegenres.idColumn]));
+                    return ((int)(this[this.tableorders.idColumn]));
                 }
                 set {
-                    this[this.tablegenres.idColumn] = value;
+                    this[this.tableorders.idColumn] = value;
                 }
             }
             
@@ -4861,7 +3945,12 @@ namespace WPF.database {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public int id {
                 get {
-                    return ((int)(this[this.tablelanguages.idColumn]));
+                    try {
+                        return ((global::System.DateTime)(this[this.tableorders.rent_dateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'rent_date\' in table \'orders\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tablelanguages.idColumn] = value;
@@ -4883,241 +3972,6 @@ namespace WPF.database {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public int movie_id {
                 get {
-                    return ((int)(this[this.tablelanguages.movie_idColumn]));
-                }
-                set {
-                    this[this.tablelanguages.movie_idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public moviesRow moviesRow {
-                get {
-                    return ((moviesRow)(this.GetParentRow(this.Table.ParentRelations["FK_movieslangs"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_movieslangs"]);
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class moviesRow : global::System.Data.DataRow {
-            
-            private moviesDataTable tablemovies;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal moviesRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tablemovies = ((moviesDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int movie_id {
-                get {
-                    return ((int)(this[this.tablemovies.movie_idColumn]));
-                }
-                set {
-                    this[this.tablemovies.movie_idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string title {
-                get {
-                    return ((string)(this[this.tablemovies.titleColumn]));
-                }
-                set {
-                    this[this.tablemovies.titleColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string year {
-                get {
-                    return ((string)(this[this.tablemovies.yearColumn]));
-                }
-                set {
-                    this[this.tablemovies.yearColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public byte duration {
-                get {
-                    return ((byte)(this[this.tablemovies.durationColumn]));
-                }
-                set {
-                    this[this.tablemovies.durationColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public decimal price {
-                get {
-                    return ((decimal)(this[this.tablemovies.priceColumn]));
-                }
-                set {
-                    this[this.tablemovies.priceColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string description {
-                get {
-                    return ((string)(this[this.tablemovies.descriptionColumn]));
-                }
-                set {
-                    this[this.tablemovies.descriptionColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public byte age {
-                get {
-                    return ((byte)(this[this.tablemovies.ageColumn]));
-                }
-                set {
-                    this[this.tablemovies.ageColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public countriesRow[] GetcountriesRows() {
-                if ((this.Table.ChildRelations["FK_moviescountries"] == null)) {
-                    return new countriesRow[0];
-                }
-                else {
-                    return ((countriesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_moviescountries"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public languagesRow[] GetlanguagesRows() {
-                if ((this.Table.ChildRelations["FK_movieslangs"] == null)) {
-                    return new languagesRow[0];
-                }
-                else {
-                    return ((languagesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_movieslangs"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public ordersRow[] GetordersRows() {
-                if ((this.Table.ChildRelations["FK_moviesorders"] == null)) {
-                    return new ordersRow[0];
-                }
-                else {
-                    return ((ordersRow[])(base.GetChildRows(this.Table.ChildRelations["FK_moviesorders"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public genresRow[] GetgenresRows() {
-                if ((this.Table.ChildRelations["movies_genres"] == null)) {
-                    return new genresRow[0];
-                }
-                else {
-                    return ((genresRow[])(base.GetChildRows(this.Table.ChildRelations["movies_genres"])));
-                }
-            }
-========
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class ordersRow : global::System.Data.DataRow {
-            
-            private ordersDataTable tableorders;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal ordersRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableorders = ((ordersDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int id {
-                get {
-                    return ((int)(this[this.tableorders.idColumn]));
-                }
-                set {
-                    this[this.tableorders.idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int client_id {
-                get {
-                    return ((int)(this[this.tableorders.client_idColumn]));
-                }
-                set {
-                    this[this.tableorders.client_idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int movie_id {
-                get {
-                    return ((int)(this[this.tableorders.movie_idColumn]));
-                }
-                set {
-                    this[this.tableorders.movie_idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public System.DateTime rent_date {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableorders.rent_dateColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'rent_date\' in table \'orders\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableorders.rent_dateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public System.DateTime due_date {
-                get {
-                    return ((global::System.DateTime)(this[this.tableorders.due_dateColumn]));
-                }
-                set {
-                    this[this.tableorders.due_dateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public System.DateTime return_date {
-                get {
                     try {
                         return ((global::System.DateTime)(this[this.tableorders.return_dateColumn]));
                     }
@@ -5132,40 +3986,26 @@ namespace WPF.database {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-            public people_clientsRow people_clientsRow {
-                get {
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-                    return ((int)(this[this.tableorders.client_idColumn]));
-                }
-                set {
-                    this[this.tableorders.client_idColumn] = value;
-                }
+            public bool Isrent_dateNull() {
+                return this.IsNull(this.tableorders.rent_dateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int movies_movie_id {
-                get {
-                    return ((int)(this[this.tableorders.movies_movie_idColumn]));
-                }
-                set {
-                    this[this.tableorders.movies_movie_idColumn] = value;
-                }
+            public void Setrent_dateNull() {
+                this[this.tableorders.rent_dateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public clientsRow clientsRow {
-                get {
-                    return ((clientsRow)(this.GetParentRow(this.Table.ParentRelations["FK_clientsorders"])));
-========
-                    return ((people_clientsRow)(this.GetParentRow(this.Table.ParentRelations["FK_clientsorders"])));
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_clientsorders"]);
-                }
+            public bool Isreturn_dateNull() {
+                return this.IsNull(this.tableorders.return_dateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void Setreturn_dateNull() {
+                this[this.tableorders.return_dateColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -5210,40 +4050,6 @@ namespace WPF.database {
         
         /// <summary>
 >>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public class actorsRowChangeEvent : global::System.EventArgs {
-            
-            private actorsRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public actorsRowChangeEvent(actorsRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public actorsRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
@@ -5480,89 +4286,9 @@ namespace WPF.database {
                 }
             }
         }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-    }
-}
-namespace WPF.database.WPF_DBDataSetTableAdapters {
-========
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public class peopleRowChangeEvent : global::System.EventArgs {
-            
-            private peopleRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public peopleRowChangeEvent(peopleRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public peopleRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public class people_clientsRowChangeEvent : global::System.EventArgs {
-            
-            private people_clientsRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public people_clientsRowChangeEvent(people_clientsRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public people_clientsRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-    }
-}
-namespace WPF.WPF_DBDataSet1TableAdapters {
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
     }
 }
 namespace WPF.WPF_DBDataSet0TableAdapters {
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
     
     
     /// <summary>
@@ -6477,7 +5203,9 @@ SELECT id, phone, email, first_name, last_name FROM clients WHERE (id = @id)";
             this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[countries] ([name]) VALUES (@name);\r\nSELECT id, name FROM coun" +
                 "tries WHERE (id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@first_name", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "first_name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@last_name", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "last_name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[countries] SET [name] = @name WHERE (([id] = @Original_id) AND ([na" +
@@ -6591,12 +5319,19 @@ SELECT id, phone, email, first_name, last_name FROM clients WHERE (id = @id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string name) {
-            if ((name == null)) {
-                throw new global::System.ArgumentNullException("name");
+        public virtual int Insert(int Id, string first_name, string last_name) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Id));
+            if ((first_name == null)) {
+                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(name));
+                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(first_name));
+            }
+            if ((last_name == null)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(last_name));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -6623,7 +5358,7 @@ SELECT id, phone, email, first_name, last_name FROM clients WHERE (id = @id)";
                 throw new global::System.ArgumentNullException("name");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(name));
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(first_name));
             }
             this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(Original_id));
             if ((Original_name == null)) {
@@ -7573,14 +6308,16 @@ SELECT Id, first_name, last_name FROM directors WHERE (Id = @Id)";
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.DeleteCommand.Connection.Open();
             }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
+            else {
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_name));
             }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
+            if ((Original_year.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((short)(Original_year.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
         }
         
@@ -7600,14 +6337,17 @@ SELECT Id, first_name, last_name FROM directors WHERE (Id = @Id)";
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.InsertCommand.Connection.Open();
             }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
+            if ((Original_duration.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((short)(Original_duration.Value));
             }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
+            else {
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            if ((Original_age.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((byte)(Original_age.Value));
             }
         }
         
@@ -7633,15 +6373,15 @@ SELECT Id, first_name, last_name FROM directors WHERE (Id = @Id)";
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
+                this.Adapter.DeleteCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
                 if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
+                    this.Adapter.DeleteCommand.Connection.Close();
                 }
             }
         }
@@ -7691,70 +6431,65 @@ SELECT Id, first_name, last_name FROM directors WHERE (Id = @Id)";
                 }
                 return this._adapter;
             }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        internal global::System.Data.SqlClient.SqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
+            if ((duration.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((short)(duration.Value));
             }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        internal global::System.Data.SqlClient.SqlTransaction Transaction {
-            get {
-                return this._transaction;
+            else {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
+            if ((age.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[4].Value = ((byte)(age.Value));
             }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
+            else {
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.InsertCommand.Parameters[5].Value = ((byte)(total_count));
+            this.Adapter.InsertCommand.Parameters[6].Value = ((decimal)(price));
+            this.Adapter.InsertCommand.Parameters[7].Value = ((byte)(left_count));
+            if ((plot == null)) {
+                this.Adapter.InsertCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[8].Value = ((string)(plot));
+            }
+            if ((lang_id.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[9].Value = ((int)(lang_id.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            if ((actor_id.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[10].Value = ((int)(actor_id.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            if ((director_id.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[11].Value = ((int)(director_id.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            if ((format_id.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[12].Value = ((int)(format_id.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            if ((trailer_path == null)) {
+                this.Adapter.InsertCommand.Parameters[13].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[13].Value = ((string)(trailer_path));
+            }
+            if ((poster == null)) {
+                this.Adapter.InsertCommand.Parameters[14].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[14].Value = ((byte[])(poster));
             }
         }
         
@@ -8509,11 +7244,6 @@ SELECT id, name, year, country_id, duration, age, total_count, price, left_count
             tableMapping.ColumnMappings.Add("rent_date", "rent_date");
             tableMapping.ColumnMappings.Add("due_date", "due_date");
             tableMapping.ColumnMappings.Add("return_date", "return_date");
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-            tableMapping.ColumnMappings.Add("client_id", "client_id");
-            tableMapping.ColumnMappings.Add("movie_movie_id", "movies_movie_id");
-========
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -8676,326 +7406,8 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
         public virtual int Insert(int client_id, int movie_id, global::System.Nullable<global::System.DateTime> rent_date, System.DateTime due_date, global::System.Nullable<global::System.DateTime> return_date) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(client_id));
             this.Adapter.InsertCommand.Parameters[1].Value = ((int)(movie_id));
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-            this.Adapter.InsertCommand.Parameters[2].Value = ((System.DateTime)(rent_date));
-            this.Adapter.InsertCommand.Parameters[3].Value = ((System.DateTime)(due_date));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((System.DateTime)(return_date));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int client_id, int movie_id, System.DateTime rent_date, System.DateTime due_date, System.DateTime return_date, int Original_order_id, int Original_client_id, int Original_movie_id, System.DateTime Original_rent_date, System.DateTime Original_due_date, System.DateTime Original_return_date, int order_id) {
-            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(client_id));
-            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(movie_id));
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((System.DateTime)(rent_date));
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((System.DateTime)(due_date));
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((System.DateTime)(return_date));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_order_id));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_client_id));
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_movie_id));
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((System.DateTime)(Original_rent_date));
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((System.DateTime)(Original_due_date));
-            this.Adapter.UpdateCommand.Parameters[10].Value = ((System.DateTime)(Original_return_date));
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(order_id));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
-            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int client_id, int movie_id, System.DateTime rent_date, System.DateTime due_date, System.DateTime return_date, int Original_order_id, int Original_client_id, int Original_movie_id, System.DateTime Original_rent_date, System.DateTime Original_due_date, System.DateTime Original_return_date) {
-            return this.Update(client_id, movie_id, rent_date, due_date, return_date, Original_order_id, Original_client_id, Original_movie_id, Original_rent_date, Original_due_date, Original_return_date, Original_order_id);
-        }
-    }
-    
-    /// <summary>
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class peopleTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
-        
-        private global::System.Data.SqlClient.SqlConnection _connection;
-        
-        private global::System.Data.SqlClient.SqlTransaction _transaction;
-        
-        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public peopleTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        internal global::System.Data.SqlClient.SqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        internal global::System.Data.SqlClient.SqlTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private void InitAdapter() {
-            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "people";
-            tableMapping.ColumnMappings.Add("person_id", "person_id");
-            tableMapping.ColumnMappings.Add("name", "name");
-            tableMapping.ColumnMappings.Add("last_name", "last_name");
-            tableMapping.ColumnMappings.Add("gender", "gender");
-            this._adapter.TableMappings.Add(tableMapping);
-            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[people] WHERE (([person_id] = @Original_person_id))";
-            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_person_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "person_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[people] ([name], [last_name], [gender]) VALUES (@name, @last_n" +
-                "ame, @gender);\r\nSELECT person_id, name, last_name, gender FROM people WHERE (per" +
-                "son_id = SCOPE_IDENTITY())";
-            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@last_name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "last_name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@gender", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "gender", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[people] SET [name] = @name, [last_name] = @last_name, [gender] = @g" +
-                "ender WHERE (([person_id] = @Original_person_id));\r\nSELECT person_id, name, last" +
-                "_name, gender FROM people WHERE (person_id = @person_id)";
-            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@last_name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "last_name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@gender", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "gender", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_person_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "person_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@person_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "person_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private void InitConnection() {
-            this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::WPF.Properties.Settings.Default.WPF_DBConnectionString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
-            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT person_id, name, last_name, gender FROM dbo.people";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(WPF_DBDataSet1.peopleDataTable dataTable) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual WPF_DBDataSet1.peopleDataTable GetData() {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            WPF_DBDataSet1.peopleDataTable dataTable = new WPF_DBDataSet1.peopleDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(WPF_DBDataSet1.peopleDataTable dataTable) {
-            return this.Adapter.Update(dataTable);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(WPF_DBDataSet1 dataSet) {
-            return this.Adapter.Update(dataSet, "people");
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow dataRow) {
-            return this.Adapter.Update(new global::System.Data.DataRow[] {
-                        dataRow});
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow[] dataRows) {
-            return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_person_id) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_person_id));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
-            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.DeleteCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string name, string last_name, string gender) {
-            if ((name == null)) {
-                this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
-========
             if ((rent_date.HasValue == true)) {
                 this.Adapter.InsertCommand.Parameters[2].Value = ((System.DateTime)(rent_date.Value));
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
             }
             else {
                 this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
@@ -9118,16 +7530,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
         
         private ordersTableAdapter _ordersTableAdapter;
         
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-        private peopleTableAdapter _peopleTableAdapter;
-        
-        private people_clientsTableAdapter _people_clientsTableAdapter;
-        
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         private bool _backupDataSetBeforeUpdate;
         
         private global::System.Data.IDbConnection _connection;
@@ -9257,40 +7659,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
-            "a", "System.Drawing.Design.UITypeEditor")]
-        public peopleTableAdapter peopleTableAdapter {
-            get {
-                return this._peopleTableAdapter;
-            }
-            set {
-                this._peopleTableAdapter = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
-            "a", "System.Drawing.Design.UITypeEditor")]
-        public people_clientsTableAdapter people_clientsTableAdapter {
-            get {
-                return this._people_clientsTableAdapter;
-            }
-            set {
-                this._people_clientsTableAdapter = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
         public bool BackupDataSetBeforeUpdate {
             get {
                 return this._backupDataSetBeforeUpdate;
@@ -9340,20 +7708,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
                             && (this._ordersTableAdapter.Connection != null))) {
                     return this._ordersTableAdapter.Connection;
                 }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-                if (((this._peopleTableAdapter != null) 
-                            && (this._peopleTableAdapter.Connection != null))) {
-                    return this._peopleTableAdapter.Connection;
-                }
-                if (((this._people_clientsTableAdapter != null) 
-                            && (this._people_clientsTableAdapter.Connection != null))) {
-                    return this._people_clientsTableAdapter.Connection;
-                }
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
                 return null;
             }
             set {
@@ -9391,18 +7745,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
                 if ((this._ordersTableAdapter != null)) {
                     count = (count + 1);
                 }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-                if ((this._peopleTableAdapter != null)) {
-                    count = (count + 1);
-                }
-                if ((this._people_clientsTableAdapter != null)) {
-                    count = (count + 1);
-                }
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
                 return count;
             }
         }
@@ -9414,45 +7756,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateUpdatedRows(WPF_DBDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-            if ((this._clientsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.clients.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._clientsTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._moviesTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.movies.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._moviesTableAdapter.Update(updatedRows));
-========
-            if ((this._peopleTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.people.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._peopleTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._people_clientsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.people_clients.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._people_clientsTableAdapter.Update(updatedRows));
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
             if ((this._actorsTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.actors.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -9477,6 +7780,15 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._countriesTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._directorsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.directors.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._directorsTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -9535,41 +7847,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateInsertedRows(WPF_DBDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-            if ((this._clientsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.clients.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._clientsTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._moviesTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.movies.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._moviesTableAdapter.Update(addedRows));
-========
-            if ((this._peopleTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.people.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._peopleTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._people_clientsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.people_clients.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._people_clientsTableAdapter.Update(addedRows));
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
             if ((this._actorsTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.actors.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -9591,6 +7868,14 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._countriesTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._directorsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.directors.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._directorsTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -9652,78 +7937,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-            if ((this._languagesTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.languages.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._languagesTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._genresTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.genres.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._genresTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._countriesTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.countries.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._countriesTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._actorsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.actors.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._actorsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._moviesTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.movies.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._moviesTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-========
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-            if ((this._clientsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.clients.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._clientsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-            if ((this._people_directorsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.people_directors.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._people_directorsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._people_actorsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.people_actors.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._people_actorsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
             if ((this._moviesTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.movies.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -9777,23 +7990,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._actorsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-            if ((this._people_clientsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.people_clients.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._people_clientsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._peopleTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.people.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._peopleTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -9879,22 +8075,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-            if (((this._peopleTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._peopleTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
-            if (((this._people_clientsTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._people_clientsTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
             global::System.Data.IDbConnection workConnection = this.Connection;
             if ((workConnection == null)) {
                 throw new global::System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana" +
@@ -9999,30 +8179,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
                         adaptersWithAcceptChangesDuringUpdate.Add(this._ordersTableAdapter.Adapter);
                     }
                 }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-                if ((this._peopleTableAdapter != null)) {
-                    revertConnections.Add(this._peopleTableAdapter, this._peopleTableAdapter.Connection);
-                    this._peopleTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._peopleTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._peopleTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._peopleTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._peopleTableAdapter.Adapter);
-                    }
-                }
-                if ((this._people_clientsTableAdapter != null)) {
-                    revertConnections.Add(this._people_clientsTableAdapter, this._people_clientsTableAdapter.Connection);
-                    this._people_clientsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._people_clientsTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._people_clientsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._people_clientsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._people_clientsTableAdapter.Adapter);
-                    }
-                }
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
                 // 
                 //---- Perform updates -----------
                 //
@@ -10113,20 +8269,6 @@ SELECT id, client_id, movie_id, rent_date, due_date, return_date FROM orders WHE
                     this._ordersTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._ordersTableAdapter]));
                     this._ordersTableAdapter.Transaction = null;
                 }
-<<<<<<<< HEAD:WPF_DBDataSet11.Designer.cs
-<<<<<<<< HEAD:database/WPF_DBDataSet1.Designer.cs
-========
-                if ((this._peopleTableAdapter != null)) {
-                    this._peopleTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._peopleTableAdapter]));
-                    this._peopleTableAdapter.Transaction = null;
-                }
-                if ((this._people_clientsTableAdapter != null)) {
-                    this._people_clientsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._people_clientsTableAdapter]));
-                    this._people_clientsTableAdapter.Transaction = null;
-                }
->>>>>>>> 7d6979416f42af93ef02605a024ee286ccc42c85:WPF_DBDataSet11.Designer.cs
-========
->>>>>>>> UI_Revamp:WPF_DBDataSet.Designer.cs
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];
                     adaptersWithAcceptChangesDuringUpdate.CopyTo(adapters);
