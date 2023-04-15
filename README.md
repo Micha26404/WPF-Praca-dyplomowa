@@ -1,0 +1,2 @@
+Praca dyplomowa
+Projekt oraz implementacja aplikacji wspomagającej zarządzanie wypożyczalnią filmów z wykorzystaniem technologii Windows Presentation Foundation
