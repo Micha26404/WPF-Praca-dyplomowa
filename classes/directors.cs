@@ -17,8 +17,10 @@ namespace WPF.database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public directors()
         {}
-        public int Id { get; set; }
+        public int id { get; set; }
         public string first_name { get; set; }
         public string last_name { get; set; }
-    }
+
+		public virtual movies movie { get; set; }
+	}
 }

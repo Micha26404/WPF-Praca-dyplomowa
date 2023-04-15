@@ -19,11 +19,6 @@ namespace WPF.database
         {
             this.left_count=1;
 			this.total_count = 1;
-			this.langs = new HashSet<langs>();
-            this.genres = new HashSet<genres>();
-            this.countries = new HashSet<countries>();
-            this.formats = new HashSet<formats>();
-			this.directors = new HashSet<directors>();
 		}
         public int id { get; set; }
         public string name { get; set; }
@@ -47,7 +42,8 @@ namespace WPF.database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<countries> countries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<formats> formats { get; set; }
-		public virtual ICollection<directors> directors { get; set; }
+		public virtual ICollection<countries> directors { get; set; }
+		public virtual ICollection<countries> formats { get; set; }
+		public virtual ICollection<countries> actors { get; set; }
 	}
 }

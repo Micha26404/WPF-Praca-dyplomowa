@@ -6,43 +6,100 @@
         mc:Ignorable="d"
 		Loaded="Window_Loaded"
 		Padding="6"
-		Title="Perspective" Width="1280" Height="800" FontSize="16" Icon="/icons/showing-video-frames.png" UseLayoutRounding="False">
+		Title="Video rental software"
+		Width="1000" Height="700"
+		FontSize="16"
+		Icon="/icons/cinema/cinema.png">
 	<Window.Background>
-		<ImageBrush ImageSource="/backgrounds/wallpapersden.com_milky-way-starry-sky-landscape_2499x1406.jpg" Stretch="UniformToFill"/>
+		<ImageBrush ImageSource="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" Stretch="UniformToFill"/>
 	</Window.Background>
 	<Window.Resources>
-		<Style TargetType="RadioButton">
-			<Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-			<Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+		<Style TargetType="Slider">
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="Background" Value="Black"/>
+			<Setter Property="Ticks" Value="0,10,20,30,40,50,60,70,80,90,100"/>
+		</Style>
+		<Style TargetType="DatePicker">
+			<Setter Property="BorderBrush" Value="DarkRed"></Setter>
+			<Setter Property="IsTodayHighlighted" Value="True"></Setter>
+			<Setter Property="SelectedDateFormat" Value="Short"></Setter>
 			<Setter Property="Foreground" Value="White"></Setter>
+			<Setter Property="Background" Value="Maroon"/>
+		</Style>
+		<Style TargetType="DataGridColumnHeader">
+			<Setter Property="Padding" Value="5"></Setter>
+		</Style>
+		<Style TargetType="DataGridCell">
+			<Setter Property="BorderBrush" Value="Maroon"></Setter>
+		</Style>
+		<Style TargetType="ComboBox">
 			<Setter Property="BorderBrush" Value="Transparent"></Setter>
-			<Style.Triggers>
-				<Trigger Property="IsChecked" Value="True">
-					<Setter Property="BorderBrush" Value="Maroon"></Setter>
-					<Setter Property="Background" Value="Maroon"></Setter>
-				</Trigger>
-			</Style.Triggers>
+		</Style>
+		<Style TargetType="ComboBoxItem">
+			<Setter Property="BorderBrush" Value="Transparent"></Setter>
+			<Setter Property="Background" Value="Maroon"></Setter>
+			<Setter Property="Foreground" Value="White"></Setter>
 		</Style>
 		<Style TargetType="{x:Type TabControl}">
 			<Setter Property="BorderBrush" Value="Transparent"/>
 		</Style>
 		<Style TargetType="{x:Type TabItem}">
-			<Setter Property="BorderBrush" Value="Transparent"></Setter>
-			<Setter Property="Background">
+			<Setter Property="Template">
 				<Setter.Value>
-					<RadialGradientBrush SpreadMethod="Reflect">
-						<GradientStop Color="Black"/>
-						<GradientStop Color="#FF821515"/>
-						<GradientStop Color="#FF6F0000"/>
-						<GradientStop Color="#00670000"/>
-						<GradientStop Color="#FF730000" Offset="1"/>
-					</RadialGradientBrush>
+					<ControlTemplate TargetType="{x:Type TabItem}">
+						<Grid>
+							<Border 
+                                Name="Border"
+                                CornerRadius="0,25,25,0"
+								BorderBrush="Transparent" >
+								<Border.Background>
+									<RadialGradientBrush SpreadMethod="Repeat">
+										<GradientStop Color="#FF821515"/>
+										<GradientStop Color="Black"/>
+										<GradientStop Color="#FF821515" Offset="1"/>
+									</RadialGradientBrush>
+								</Border.Background>
+								<ContentPresenter x:Name="ContentSite"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    ContentSource="Header"
+                                    RecognizesAccessKey="True"/>
+							</Border>
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter TargetName="Border" Property="Background">
+									<Setter.Value>
+										<RadialGradientBrush>
+											<GradientStop Color="Red" Offset="0.9"/>
+											<GradientStop Color="DarkRed" Offset="1"/>
+										</RadialGradientBrush>
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+							<Trigger Property="IsSelected" Value="True">
+								<Setter TargetName="Border" Property="Background">
+									<Setter.Value>
+										<RadialGradientBrush>
+											<GradientStop Color="DarkRed" Offset="0.9"/>
+											<GradientStop Color="Maroon" Offset="1"/>
+										</RadialGradientBrush>
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
 			<Style.Triggers>
 				<Trigger Property="IsSelected" Value="True">
 					<Setter Property="BorderBrush" Value="Maroon"></Setter>
 					<Setter Property="Background" Value="Maroon"></Setter>
+				</Trigger>
+				<Trigger Property="IsEnabled" Value="False">
+					<Setter Property="BorderBrush" Value="Transparent"></Setter>
+					<Setter Property="Background" Value="Transparent"></Setter>
+					<Setter Property="ToolTip" Value="Not available for selected item"></Setter>
 				</Trigger>
 				<Trigger Property="IsMouseOver" Value="True">
 					<Setter Property="BorderBrush" Value="Maroon"></Setter>
@@ -51,19 +108,41 @@
 			</Style.Triggers>
 		</Style>
 		<Style TargetType="{x:Type TextBlock}">
-			<Setter Property="TextAlignment" Value="Justify"></Setter>
+			<Setter Property="TextAlignment" Value="Center"></Setter>
+			<Setter Property="VerticalAlignment" Value="Center"></Setter>
+			<Setter Property="HorizontalAlignment" Value="Center"></Setter>
 			<Setter Property="Foreground" Value="White"></Setter>
 			<Setter Property="Background">
 				<Setter.Value>
-					<RadialGradientBrush SpreadMethod="Reflect">
-						<GradientStop Color="Black"/>
-						<GradientStop Color="#FF821515"/>
-						<GradientStop Color="#FF6F0000"/>
-						<GradientStop Color="#00670000"/>
-						<GradientStop Color="#FF730000" Offset="1"/>
+					<RadialGradientBrush>
+						<GradientStop Color="DarkRed" Offset="0.8"/>
+						<GradientStop Color="Transparent" Offset="1"/>
 					</RadialGradientBrush>
 				</Setter.Value>
 			</Setter>
+			<Setter Property="TextWrapping" Value="WrapWithOverflow"></Setter>
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Background">
+						<Setter.Value>
+							<RadialGradientBrush>
+								<GradientStop Color="Red" Offset="0.9"/>
+								<GradientStop Color="DarkRed" Offset="1"/>
+							</RadialGradientBrush>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
+				<Trigger Property="IsKeyboardFocusWithin" Value="True">
+					<Setter Property="Background">
+						<Setter.Value>
+							<RadialGradientBrush>
+								<GradientStop Color="Red" Offset="0.9"/>
+								<GradientStop Color="DarkRed" Offset="1"/>
+							</RadialGradientBrush>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
+			</Style.Triggers>
 		</Style>
 		<Style TargetType="TextBox">
 			<Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -72,16 +151,42 @@
 			<Setter Property="Background">
 				<Setter.Value>
 					<RadialGradientBrush SpreadMethod="Reflect">
-						<GradientStop Color="Black"/>
-						<GradientStop Color="#FF821515"/>
-						<GradientStop Color="#FF6F0000"/>
-						<GradientStop Color="#00670000"/>
-						<GradientStop Color="#FF730000" Offset="1"/>
+						<GradientStop Color="#00670000" Offset="1"/>
+						<GradientStop Color="#FF6F0000" Offset="1"/>
+						<GradientStop Color="#FF821515" Offset="1"/>
+						<GradientStop Color="Black" Offset="1"/>
+						<GradientStop Color="#FF730000" Offset="0"/>
 					</RadialGradientBrush>
 				</Setter.Value>
 			</Setter>
-			<Setter Property="BorderBrush" Value="Transparent"></Setter>
+			<Setter Property="BorderBrush" Value="DarkRed"></Setter>
 			<Setter Property="SelectionBrush" Value="White"></Setter>
+			<Setter Property="TextWrapping" Value="WrapWithOverflow"></Setter>
+			<Setter Property="AcceptsReturn" Value="True"></Setter>
+			<Setter Property="AcceptsTab" Value="True"></Setter>
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="BorderBrush" Value="Red"></Setter>
+					<Setter Property="Background">
+						<Setter.Value>
+							<RadialGradientBrush>
+								<GradientStop Color="Red" Offset="0.9"/>
+								<GradientStop Color="DarkRed" Offset="1"/>
+							</RadialGradientBrush>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
+				<Trigger Property="IsKeyboardFocusWithin" Value="True">
+					<Setter Property="Background">
+						<Setter.Value>
+							<RadialGradientBrush>
+								<GradientStop Color="Red" Offset="0.9"/>
+								<GradientStop Color="DarkRed" Offset="1"/>
+							</RadialGradientBrush>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
+			</Style.Triggers>
 		</Style>
 		<Style TargetType="ListBox">
 			<Setter Property="Foreground" Value="White"></Setter>
@@ -123,309 +228,1177 @@
 			</Setter>
 		</Style>
 	</Window.Resources>
-
+	<!--end of styles-->
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="64" />
 			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="64" />
+			<ColumnDefinition Width="auto" />
 		</Grid.ColumnDefinitions>
+		<!--tab contents grid -->
+		<Grid Grid.Column="0">
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
+			<TabControl Grid.Column="1" Grid.Row="0" Background="Transparent" TabStripPlacement="Left" BorderBrush="Maroon">
+				<TabItem Width="64" Height="auto">
+					<TabItem.Header>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition/>
+							</Grid.RowDefinitions>
+							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="17">Movies</TextBlock>
+							<Image Grid.Row="1" VerticalAlignment="Top" Source="\icons\cinema\cinema.png">
+								<Image.Clip>
+									<EllipseGeometry Center="32,32" RadiusX="25" RadiusY="25" />
+								</Image.Clip>
+							</Image>
+						</Grid>
+					</TabItem.Header>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="2*"/>
+							<ColumnDefinition Width="49*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+						</Grid.RowDefinitions>
+						<!--Movie filter panel-->
+						<UniformGrid ToolTip="Type text and press enter to filter movies" Rows="1" Height="100" VerticalAlignment="Center" Grid.ColumnSpan="2">
+							<UniformGrid Columns="1">
+								<TextBlock>Title</TextBlock>
+								<TextBox Name="FilterMovieTitleText" KeyDown="FilterMovieTitle"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Year</TextBlock>
+								<TextBox Name="FilterMovieYearText" KeyDown="FilterMovieYear"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Duration</TextBlock>
+								<TextBox Name="FilterMovieDurationText" KeyDown="FilterMovieDuration"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Age rating</TextBlock>
+								<TextBox Name="FilterMovieAgeText" KeyDown="FilterMovieAge"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Price</TextBlock>
+								<TextBox Name="FilterMoivePriceText" KeyDown="FilterMoviePrice"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Lead actor</TextBlock>
+								<TextBox Name="FilterMovieActorText" KeyDown="FilterMovieActor"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Director</TextBlock>
+								<TextBox Name="FilterMovieDirectorText" KeyDown="FilterMovieDirector"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Formats</TextBlock>
+								<TextBox Name="FilterMovieFormatText" KeyDown="FilterMovieFormat"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Languages</TextBlock>
+								<TextBox Name="FilterMovieLangText" KeyDown="FilterMovieLang"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Countries</TextBlock>
+								<TextBox Name="FilterMovieCountryText" KeyDown="FilterMovieCountry"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Copies left</TextBlock>
+								<TextBox Name="FilterMovieCopiesLeftText" KeyDown="FilterMovieCopiesLeft"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Copies total</TextBlock>
+								<TextBox Name="FilterMovieCopiesTotalText" KeyDown="FilterMovieCopiesTotal"/>
+							</UniformGrid>
+						</UniformGrid>
 
-		<UniformGrid Columns="1">
-			<UniformGrid.Background>
-				<RadialGradientBrush SpreadMethod="Reflect">
-					<GradientStop Color="Black"/>
-					<GradientStop Color="#FF821515"/>
-					<GradientStop Color="#FF6F0000"/>
-					<GradientStop Color="#00670000"/>
-					<GradientStop Color="#FF730000" Offset="1"/>
-				</RadialGradientBrush>
-			</UniformGrid.Background>
+						<DataGrid Name="MoviesCatalog" Grid.Row="1" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000" Grid.ColumnSpan="2">
+							<DataGrid.AlternatingRowBackground>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="#00000000" Offset="0.423"/>
+									<GradientStop Color="#FF3E0000" Offset="1"/>
+									<GradientStop Color="#B2310000" Offset="0"/>
+								</LinearGradientBrush>
+							</DataGrid.AlternatingRowBackground>
+							<DataGrid.RowBackground>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="#00000000" Offset="0.423"/>
+									<GradientStop Color="#FF3E0000" Offset="1"/>
+									<GradientStop Color="#B2310000" Offset="0"/>
+								</LinearGradientBrush>
+							</DataGrid.RowBackground>
+							<DataGrid.Resources>
+								<Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+									<Setter Property="Background" Value="#4C730000" />
+									<Setter Property="Foreground" Value="white" />
+								</Style>
+							</DataGrid.Resources>
+							<DataGrid.ContextMenu>
+								<ContextMenu>
+									<MenuItem Header="Return" Click="MovieItem_rent" />
+									<MenuItem Header="Edit" Click="MovieItem_edit" />
+									<MenuItem Header="Delete" Click="MovieItem_delete" />
+									<MenuItem Header="Load poster to tab" Click="MovieItem_poster" />
+									<MenuItem Header="Load trailer to tab" Click="LoadTrailer" />
+								</ContextMenu>
+							</DataGrid.ContextMenu>
+						</DataGrid>
+					</Grid>
+				</TabItem>
+				<TabItem Width="64" Height="auto">
+					<TabItem.Header>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition/>
+							</Grid.RowDefinitions>
+							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="17">Clients</TextBlock>
+							<Image Grid.Row="1" VerticalAlignment="Top" Source="icons/user-group-woman-woman.png">
+								<Image.Clip>
+									<EllipseGeometry Center="32,32" RadiusX="25" RadiusY="25" />
+								</Image.Clip>
+							</Image>
+						</Grid>
+					</TabItem.Header>
+					<!--tab contents grid -->
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="59*"/>
+							<RowDefinition Height="110*"/>
+						</Grid.RowDefinitions>
+						<!--Client filter panel-->
+						<UniformGrid Rows="1" Height="100" ToolTip="Type text and press enter to filter clients" VerticalAlignment="Center">
+							<UniformGrid Columns="1">
+								<TextBlock>Last Name</TextBlock>
+								<TextBox Name="FilterClientLastNameText" KeyDown="FilterClientLastName"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>First name</TextBlock>
+								<TextBox Name="FilterClientFirstNameText" KeyDown="FilterClientFirstName"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>E-mail</TextBlock>
+								<TextBox Name="FilterClientEmailText" KeyDown="FilterClientEmail"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Phone</TextBlock>
+								<TextBox Name="FilterClientPhoneText" KeyDown="FilterClientPhone"/>
+							</UniformGrid>
+						</UniformGrid>
 
-		</UniformGrid>
+						<DataGrid Name="ClientsCatalog" Grid.Row="1" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000" Grid.RowSpan="2">
+							<DataGrid.AlternatingRowBackground>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="#00000000" Offset="0.423"/>
+									<GradientStop Color="#FF3E0000" Offset="1"/>
+									<GradientStop Color="#B2310000" Offset="0"/>
+								</LinearGradientBrush>
+							</DataGrid.AlternatingRowBackground>
+							<DataGrid.RowBackground>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="#00000000" Offset="0.423"/>
+									<GradientStop Color="#FF3E0000" Offset="1"/>
+									<GradientStop Color="#B2310000" Offset="0"/>
+								</LinearGradientBrush>
+							</DataGrid.RowBackground>
+							<DataGrid.Resources>
+								<Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+									<Setter Property="Background" Value="#4C730000" />
+									<Setter Property="Foreground" Value="white" />
+								</Style>
+							</DataGrid.Resources>
+							<DataGrid.ContextMenu>
+								<ContextMenu>
+									<MenuItem Header="Edit" Click="ClientItem_edit" />
+								</ContextMenu>
+							</DataGrid.ContextMenu>
+						</DataGrid>
+					</Grid>
+				</TabItem>
+				<TabItem Width="64" Height="auto">
+					<TabItem.Header>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition/>
+							</Grid.RowDefinitions>
+							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="17">Orders</TextBlock>
+							<Image Grid.Row="1" VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
+								<Image.Clip>
+									<EllipseGeometry Center="32,32" RadiusX="40" RadiusY="22" />
+								</Image.Clip>
+							</Image>
+						</Grid>
+					</TabItem.Header>
+					<!--tab contents grid -->
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+						<!--Orders filter panel-->
+						<UniformGrid Rows="1" Height="100" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top">
+							<UniformGrid Columns="1">
+								<TextBlock>Movie</TextBlock>
+								<TextBox KeyDown="FilterOrderMovie" Name="FilterOrderMovieText"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Last Name</TextBlock>
+								<TextBox KeyDown="FilterOrderLastName" Name="FilterOrderLastNameText"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>First Name</TextBlock>
+								<TextBox KeyDown="FilterOrderFirstName" Name="FilterOrderFirstNameText"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Rent date</TextBlock>
+								<DatePicker KeyDown="FilterOrderRentDate" Name="FilterOrderRentDateText"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Due date</TextBlock>
+								<DatePicker KeyDown="FilterOrderDueDate" Name="FilterOrderDueDateText"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
+								<TextBlock>Return date</TextBlock>
+								<DatePicker KeyDown="FilterOrderReturnDate" Name="FilterOrderReturnDateText"/>
+							</UniformGrid>
+						</UniformGrid>
 
-		<UniformGrid Name="AddEdit" Grid.Column="1" VerticalAlignment="Center" Columns="6" Visibility="Hidden" Panel.ZIndex="5">
-			<UniformGrid Grid.Column="2" Columns="1">
-				<TextBox Background="#4C800000">Select action on submit</TextBox>
-				<RadioButton GroupName="AddEdit" ToolTip="Add movie" Background="#4C800000">Add</RadioButton>
-				<RadioButton GroupName="AddEdit" ToolTip="Edit movie" Background="#4C800000">Edit</RadioButton>
-			</UniformGrid>
-			<UniformGrid Columns="1" VerticalAlignment="Center">
-				<TextBox InputScope="Number" ToolTip="Movie identification number" Background="#4C800000">Movie id</TextBox>
-				<TextBox ToolTip="Movie title" Background="#4C800000">Title</TextBox>
-				<TextBox InputScope="Number" ToolTip="Year of production" Background="#4C800000">Year of production</TextBox>
-				<TextBox InputScope="Number" ToolTip="Movie duration in minutes" Background="#4C800000">Duration in minutes</TextBox>
-				<TextBox InputScope="Number" ToolTip="Age restriction" Background="#4C800000">Age restriction</TextBox>
-				<TextBox InputScope="Number" ToolTip="Rental price" Background="#4C800000">Rental price</TextBox>
-				<TextBox InputScope="Number" ToolTip="All copies" Background="#4C800000">All copies</TextBox>
-				<TextBox InputScope="Number" ToolTip="Remaining copies" Background="#4C800000">Remaining copies</TextBox>
-				<ComboBox Name="CountrySelector" ToolTip="Country of origin" Background="#4C800000"></ComboBox>
-				<ComboBox Name="DirectorSelector" ToolTip="Movie director" Background="#4C800000"></ComboBox>
-				<ComboBox Name="Actor1Selector" ToolTip="Movie lead actor 1" Background="#4C800000"></ComboBox>
-				<ComboBox Name="Actor2Selector" ToolTip="Movie lead actor 2" Background="#4C800000"></ComboBox>
-			</UniformGrid>
-			<ListBox SelectionMode="Multiple" Name="GenreSelector" ToolTip="Movie genre" Background="#4C800000" BorderBrush="Maroon">Action</ListBox>
-			<ListBox SelectionMode="Multiple" Name="LangSelector" ToolTip="Languages available in this movie" Background="#4C800000" BorderBrush="Maroon">Languages</ListBox>
-			<ListBox SelectionMode="Multiple" Name="FormatSelector" ToolTip="Available medium formats" Background="#4C800000" BorderBrush="Maroon">Medium format</ListBox>
-			<TextBlock ToolTip="Movie plot premise" Background="#4C800000">Movie premise</TextBlock>
-		</UniformGrid>
+						<DataGrid Name="OrdersCatalog" Grid.Row="2" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000">
+							<DataGrid.AlternatingRowBackground>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="#00000000" Offset="0.423"/>
+									<GradientStop Color="#FF3E0000" Offset="1"/>
+									<GradientStop Color="#B2310000" Offset="0"/>
+								</LinearGradientBrush>
+							</DataGrid.AlternatingRowBackground>
+							<DataGrid.RowBackground>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="#00000000" Offset="0.423"/>
+									<GradientStop Color="#FF3E0000" Offset="1"/>
+									<GradientStop Color="#B2310000" Offset="0"/>
+								</LinearGradientBrush>
+							</DataGrid.RowBackground>
+							<DataGrid.Resources>
+								<Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+									<Setter Property="Background" Value="#4C730000" />
+									<Setter Property="Foreground" Value="white" />
+								</Style>
+							</DataGrid.Resources>
+							<DataGrid.ContextMenu>
+								<ContextMenu>
+									<MenuItem Header="Return" Click="OrderItem_return" />
+									<MenuItem Header="Edit" Click="OrderItem_edit" />
+									<MenuItem Header="Delete" Click="OrderItem_delete" />
+								</ContextMenu>
+							</DataGrid.ContextMenu>
+						</DataGrid>
+					</Grid>
+				</TabItem>
 
-		<Viewbox Name="Poster"  Grid.Column="1" Visibility="Hidden" Stretch="Uniform" MouseLeftButtonDown="Poster_MouseLeftButtonDown" Panel.ZIndex="9">
-			<Image Source="icons\add.png" ToolTip="Return to movies"/>
-		</Viewbox>
+				<TabItem Width="64" Height="auto">
+					<TabItem.Header>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition/>
+							</Grid.RowDefinitions>
+							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="17">Trailer</TextBlock>
+							<Image Grid.Row="1" VerticalAlignment="Top" Source="icons/media/preview-pane.png">
+								<Image.Clip>
+									<EllipseGeometry Center="32,32" RadiusX="20" RadiusY="20" />
+								</Image.Clip>
+							</Image>
+						</Grid>
+					</TabItem.Header>
+					<Grid Background="Transparent">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="16*"/>
+							<RowDefinition Height="151*"/>
+						</Grid.RowDefinitions>
 
-		<StackPanel Grid.Column="1" Background="Transparent" Visibility="Hidden" Panel.ZIndex="10">
-			<MediaElement Source="animations\activity.gif" Name="Media"
-				LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform" 
-				MediaOpened="Element_MediaOpened" MediaEnded="Element_MediaEnded"/>
+						<UniformGrid Height="64" Rows="1" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+							<UniformGrid.Background>
+								<RadialGradientBrush SpreadMethod="Reflect">
+									<GradientStop Color="Black" Offset="1"/>
+									<GradientStop Color="#FF730000" Offset="0.884"/>
+									<GradientStop Color="Black"/>
+									<GradientStop Color="#FF821515"/>
+									<GradientStop Color="#FF6F0000"/>
+									<GradientStop Color="#00670000"/>
+									<GradientStop Color="Black" Offset="0.878"/>
+									<GradientStop Color="#FF730000" Offset="0.98"/>
+								</RadialGradientBrush>
+							</UniformGrid.Background>
 
-			<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
-				<StackPanel.Background>
+							<Viewbox ToolTip="Set trailer">
+								<Button>
+									<Image Source="icons\media\link.png" MouseDown="SetTrailer" Cursor="Hand"/>
+									<Button.Clip>
+										<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
+									</Button.Clip>
+								</Button>
+							</Viewbox>
+
+							<Viewbox ToolTip="Remove trailer">
+								<Button>
+									<Image Source="icons\media\delete-link.png" MouseDown="DeleteTrailer" Cursor="Hand"/>
+									<Button.Clip>
+										<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
+									</Button.Clip>
+								</Button>
+							</Viewbox>
+
+							<UniformGrid Rows="2">
+								<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" >Title</TextBox>
+								<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" >Year</TextBox>
+							</UniformGrid>
+
+							<Viewbox ToolTip="Play">
+								<Button>
+									<Image Name="PlayButton" Source="icons\media\circled-play.png" MouseDown="PlayTrailer" Cursor="Hand"/>
+									<Button.Clip>
+										<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
+									</Button.Clip>
+								</Button>
+							</Viewbox>
+
+							<Viewbox ToolTip="Pause">
+								<Button>
+									<Image Name="PauseButton" Source="icons\media\circled-pause.png" MouseDown="PauseTrailer" Cursor="Hand"/>
+									<Button.Clip>
+										<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
+									</Button.Clip>
+								</Button>
+							</Viewbox>
+
+							<UniformGrid Rows="2" Visibility="Hidden">
+								<TextBox Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">Volume</TextBox>
+								<Slider Name="VolumeSlider" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="AdjustVolume" 
+									Minimum="0" Maximum="1" Value="0.5" Width="70" Cursor="Hand"/>
+							</UniformGrid>
+
+							<UniformGrid Rows="2">
+								<TextBox Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">Position</TextBox>
+								<Slider Name="SeekSlider" ValueChanged="SeekTrailer" VerticalAlignment="Center" Width="130" Cursor="Hand"/>
+							</UniformGrid>
+
+							<Viewbox ToolTip="Reset">
+								<Button>
+									<Image Source="icons\media\stop-circled.png" MouseDown="StopTrailer" Cursor="Hand"/>
+									<Button.Clip>
+										<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
+									</Button.Clip>
+								</Button>
+							</Viewbox>
+
+						</UniformGrid>
+
+						<MediaElement Grid.Row="2" Name="Trailer" 
+							LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform" 
+							MediaOpened="TrailerInit" MediaEnded="StopTrailer" Source="/blu-ray.png"/>
+					</Grid>
+				</TabItem>
+
+				<TabItem Width="64" Height="auto">
+					<TabItem.Header>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition/>
+							</Grid.RowDefinitions>
+							<TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Height="17">Poster</TextBlock>
+							<Image Grid.Row="1" VerticalAlignment="Bottom" Source="icons/media/easel.png">
+								<Image.Clip>
+									<EllipseGeometry Center="32,29" RadiusX="20" RadiusY="18" />
+								</Image.Clip>
+							</Image>
+						</Grid>
+					</TabItem.Header>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition />
+						</Grid.RowDefinitions>
+						<UniformGrid Grid.Row="0" Rows="1" Height="64" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+							<UniformGrid.Background>
+								<RadialGradientBrush SpreadMethod="Reflect">
+									<GradientStop Color="Black" Offset="1"/>
+									<GradientStop Color="#FF730000" Offset="0.884"/>
+									<GradientStop Color="Black"/>
+									<GradientStop Color="#FF821515"/>
+									<GradientStop Color="#FF6F0000"/>
+									<GradientStop Color="#00670000"/>
+									<GradientStop Color="Black" Offset="0.878"/>
+									<GradientStop Color="#FF730000" Offset="0.98"/>
+								</RadialGradientBrush>
+							</UniformGrid.Background>
+
+							<Viewbox ToolTip="Set poster" MouseDown="SetPoster" Cursor="Hand">
+								<Button>
+									<Image Source="icons\media\link.png"/>
+									<Button.Clip>
+										<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
+									</Button.Clip>
+								</Button>
+							</Viewbox>
+
+							<Viewbox ToolTip="Remove poster" MouseDown="RemovePoster" Cursor="Hand">
+								<Button>
+									<Image Source="icons\media\delete-link.png"/>
+									<Button.Clip>
+										<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
+									</Button.Clip>
+								</Button>
+							</Viewbox>
+
+							<UniformGrid Rows="2">
+								<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" >Title</TextBox>
+								<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" >Year</TextBox>
+							</UniformGrid>
+						</UniformGrid>
+
+						<Viewbox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="Uniform">
+							<Image Name="Poster"/>
+						</Viewbox>
+					</Grid>
+				</TabItem>
+				<!--Admin panel movies clients orders-->
+				<TabItem Name="AdminPanelTab" Width="64" Height="auto">
+					<TabItem.Header>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition/>
+							</Grid.RowDefinitions>
+							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">Admin 1</TextBlock>
+							<Image Grid.Row="1" VerticalAlignment="Top" Source="icons/edit.png"/>
+						</Grid>
+					</TabItem.Header>
+					<Grid Name="Admin_panel">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="auto"/>
+							<ColumnDefinition Width="auto"/>
+							<ColumnDefinition/>
+							<ColumnDefinition Width="auto"/>
+						</Grid.ColumnDefinitions>
+						<!--Mode selection panel-->
+						<UniformGrid Columns="1" Width="60" ToolTip="Mode selection">
+							<Border BorderBrush="Black" BorderThickness="2">
+								<Grid MouseDown="SelectAddMode">
+									<TextBlock>Add mode</TextBlock>
+									<Viewbox VerticalAlignment="Center">
+										<Image Source="icons/add.png" Cursor="Hand"/>
+									</Viewbox>
+								</Grid>
+							</Border>
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid>
+									<UniformGrid.Background>
+										<RadialGradientBrush SpreadMethod="Pad">
+											<GradientStop Color="DarkRed" Offset="0.9"/>
+											<GradientStop Offset="1" Color="Black"/>
+										</RadialGradientBrush>
+									</UniformGrid.Background>
+									<TextBlock Name="ModeSelected"
+									Text="Select mode
+									Fill form
+									Submit">
+									</TextBlock>
+								</UniformGrid>
+							</Border>
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Columns="1" MouseDown="SelectEditMode" Background="#B28B0000" >
+									<TextBlock>Update mode</TextBlock>
+									<Viewbox>
+										<Image Source="icons/edit.png" Cursor="Hand"/>
+									</Viewbox>
+								</UniformGrid>
+							</Border>
+						</UniformGrid>
+						<!--Current dataset indicator-->
+						<UniformGrid Columns="1" Grid.Column="1" Width="50">
+							<!--Movie form info-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Columns="1">
+									<UniformGrid.Background>
+										<RadialGradientBrush SpreadMethod="Reflect">
+											<GradientStop Color="DarkRed" Offset="0.5"/>
+											<GradientStop Color="Red" Offset="0"/>
+											<GradientStop Color="#00000000" Offset="1"/>
+										</RadialGradientBrush>
+									</UniformGrid.Background>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Movie form</TextBlock>
+									<Image VerticalAlignment="Top" Source="\icons\cinema\cinema.png">
+										<Image.Clip>
+											<EllipseGeometry Center="25,30" RadiusX="20" RadiusY="20" />
+										</Image.Clip>
+									</Image>
+								</UniformGrid>
+							</Border>
+							<!--Client form info-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Columns="1">
+									<UniformGrid.Background>
+										<RadialGradientBrush>
+											<GradientStop Color="DarkRed" Offset="0.5"/>
+											<GradientStop Offset="0" Color="Red"/>
+											<GradientStop Color="#FD000000" Offset="1"/>
+										</RadialGradientBrush>
+									</UniformGrid.Background>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Client form</TextBlock>
+									<Image VerticalAlignment="Top" Source="icons/user-group-woman-woman.png">
+										<Image.Clip>
+											<EllipseGeometry Center="25,30" RadiusX="20" RadiusY="20" />
+										</Image.Clip>
+									</Image>
+								</UniformGrid>
+							</Border>
+							<!--Order form info-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Columns="1">
+									<UniformGrid.Background>
+										<RadialGradientBrush SpreadMethod="Pad">
+											<GradientStop Color="DarkRed" Offset="0.5"/>
+											<GradientStop Color="Red" Offset="0"/>
+											<GradientStop Color="Black" Offset="1"/>
+										</RadialGradientBrush>
+									</UniformGrid.Background>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Order form</TextBlock>
+									<Image VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
+										<Image.Clip>
+											<EllipseGeometry Center="28,28" RadiusX="25" RadiusY="25" />
+										</Image.Clip>
+									</Image>
+								</UniformGrid>
+							</Border>
+						</UniformGrid>
+						<!--Data input panel-->
+						<Grid Grid.Column="2">
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition/>
+								<RowDefinition/>
+							</Grid.RowDefinitions>
+							<!--Movie panel-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Rows="1">
+									<!--Main form-->
+									<UniformGrid Columns="1">
+										<UniformGrid.Background>
+											<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+												<GradientStop Color="#4CFF0000" Offset="0.502"/>
+												<GradientStop Color="Transparent" Offset="1"/>
+											</LinearGradientBrush>
+										</UniformGrid.Background>
+										<UniformGrid Rows="1">
+											<TextBlock ToolTip="Database movie ID" Background="#4C800000">Movie ID</TextBlock>
+											<TextBlock InputScope="Number" Name="MovieFormID"/>
+										</UniformGrid>
+
+										<UniformGrid Rows="1">
+											<TextBlock ToolTip="Movie title" Background="#4C800000" >Title</TextBlock>
+											<TextBox Name="MovieFormTitle"/>
+										</UniformGrid>
+
+										<UniformGrid Rows="1">
+											<TextBlock Background="#4C800000" >Year</TextBlock>
+											<TextBox InputScope="Number" Name="MovieFormYear"/>
+										</UniformGrid>
+
+										<UniformGrid Rows="1">
+											<TextBlock Background="#4C800000" ToolTip="Duration in minutes">Duration</TextBlock>
+											<TextBox InputScope="Number" Name="MovieFormDuration"/>
+										</UniformGrid>
+
+										<UniformGrid Rows="1">
+											<TextBlock ToolTip="Age restriction" Background="#4C800000" >Age restriction</TextBlock>
+											<TextBox InputScope="Number" Name="MovieFormAge"/>
+										</UniformGrid>
+
+										<UniformGrid Rows="1">
+											<TextBlock ToolTip="Rental price" Background="#4C800000" >Rental price</TextBlock>
+											<TextBox Name="MovieFormPrice" InputScope="Number"/>
+										</UniformGrid>
+
+										<UniformGrid Rows="1">
+											<TextBlock ToolTip="Remaining available copies for rental" Background="#4C800000">Copies left</TextBlock>
+											<TextBox InputScope="Number" Name="MovieFormCopiesLeft"/>
+										</UniformGrid>
+
+										<UniformGrid Rows="1">
+											<TextBlock ToolTip="Total number of copies for rental" Background="#4C800000">All copies</TextBlock>
+											<TextBox InputScope="Number" Name="MovieFormCopiesTotal"/>
+										</UniformGrid>
+									</UniformGrid>
+									<!--Selectors-->
+									<UniformGrid Columns="1">
+										<UniformGrid.Background>
+											<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+												<GradientStop Color="#4CFF0000"/>
+												<GradientStop Color="Transparent" Offset="1"/>
+											</LinearGradientBrush>
+										</UniformGrid.Background>
+										<UniformGrid Rows="1">
+											<TextBlock Background="#4C800000" ToolTip="Most popular language in this movie">Language</TextBlock>
+											<ComboBox Name="MovieFormLang" Background="#4C800000" BorderBrush="Maroon"/>
+										</UniformGrid>
+										<UniformGrid Rows="1">
+											<TextBlock Background="#4C800000" ToolTip="Most dominating genre in this movie">Genre</TextBlock>
+											<ComboBox Name="MovieFormGenre" Background="#4C800000" BorderBrush="Maroon"/>
+										</UniformGrid>
+										<UniformGrid Rows="1">
+											<TextBlock Background="#4C800000" ToolTip="Most popular medium format of this movie in stock (DVD, Bluray, VHS etc.)">Format</TextBlock>
+											<ComboBox Name="MovieFormFormat" Background="#4C800000" BorderBrush="Maroon"/>
+										</UniformGrid>
+										<UniformGrid Rows="1">
+											<TextBlock Background="#4C800000">Director</TextBlock>
+											<ComboBox Name="MovieFormDirector" ToolTip="Movie director"></ComboBox>
+										</UniformGrid>
+
+										<UniformGrid Rows="1">
+											<TextBlock Background="#4C800000">Lead actor</TextBlock>
+											<ComboBox Name="MovieFormActor" ToolTip="Lead actor"></ComboBox>
+										</UniformGrid>
+									</UniformGrid>
+									<!--Movie premise-->
+									<TextBox Name="MovieFormPlot" ToolTip="Movie beggining plot description" Background="Transparent">Movie premise
+									</TextBox>
+								</UniformGrid>
+							</Border>
+							<!--Client panel-->
+							<Border Grid.Row="1" BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Columns="1" >
+									<UniformGrid.Background>
+										<LinearGradientBrush EndPoint="1,3" StartPoint="1,2" SpreadMethod="Pad">
+											<GradientStop Color="#00000000"/>
+											<GradientStop Color="Maroon" Offset="1"/>
+										</LinearGradientBrush>
+									</UniformGrid.Background>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock ToolTip="Database client ID" Background="#4C800000" Width="NaN">Client ID</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock InputScope="Number" Name="ClientFormID"/>
+											</Border>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock Background="#4C800000">First name</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBox Name="ClientFormFirstName"/>
+											</Border>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock Background="#4C800000">Last name</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBox Name="ClientFormLastName"/>
+											</Border>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock Background="#4C800000">Phone</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBox InputScope="Number" Name="ClientFormPhone"/>
+											</Border>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock Background="#4C800000">E-Mail</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBox Name="ClientFormEmail"/>
+											</Border>
+										</UniformGrid>
+									</Border>
+								</UniformGrid>
+							</Border>
+							<!--Order form-->
+							<Border Grid.Row="2" BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Columns="1">
+									<UniformGrid.Background>
+										<LinearGradientBrush SpreadMethod="Pad" StartPoint="1,0">
+											<GradientStop Color="Transparent" Offset="1"/>
+											<GradientStop Color="#4CFF0000" Offset="0.493"/>
+										</LinearGradientBrush>
+									</UniformGrid.Background>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock ToolTip="If empty; new one will be created" Background="#4C800000">Order ID</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock Name="OrderFormID" ToolTip="Use edit option from context menu in orders catalog"/>
+											</Border>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock ToolTip="Select rent context menu option in movies catalog" Background="#4C800000">
+													Movie
+												</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<ComboBox Name="OrderFormMovieTitleID"/>
+											</Border>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock  ToolTip="Client selection" Background="#4C800000">Client</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<ComboBox Name="OrderFormClientFNLNID"></ComboBox>
+											</Border>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock ToolTip="Item rent date" Background="#4C800000">
+													Rent date
+												</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<DatePicker Name="OrderFormRentDate"></DatePicker>
+											</Border>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock ToolTip="Item return deadline" Background="#4C800000">Due date</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<DatePicker Name="OrderFormDueDate"></DatePicker>
+											</Border>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Rows="1">
+											<Border BorderBrush="Black" BorderThickness="2">
+												<TextBlock ToolTip="Item return actual date" Background="#4C800000">
+													Return date
+												</TextBlock>
+											</Border>
+											<Border BorderBrush="Black" BorderThickness="2">
+												<DatePicker Name="OrderFormReturnDate"></DatePicker>
+											</Border>
+										</UniformGrid>
+									</Border>
+								</UniformGrid>
+							</Border>
+						</Grid>
+						<!--Submit buttons-->
+						<UniformGrid Name="SubmitPanel" Columns="1" Grid.Column="3" Width="50">
+							<UniformGrid.Background>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="Black"/>
+									<GradientStop Color="#FF821515"/>
+									<GradientStop Color="#FF6F0000"/>
+									<GradientStop Color="#00670000"/>
+									<GradientStop Color="#FF730000" Offset="1"/>
+								</LinearGradientBrush>
+							</UniformGrid.Background>
+							<!--Submit movie button-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Columns="1">
+									<UniformGrid.Background>
+										<LinearGradientBrush EndPoint="0,1" StartPoint="0,0" SpreadMethod="Reflect">
+											<GradientStop Color="#7FFF0000" Offset="0"/>
+											<GradientStop Color="Transparent" Offset="1"/>
+										</LinearGradientBrush>
+									</UniformGrid.Background>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit movie</TextBlock>
+									<Viewbox>
+										<Button MouseDown="SubmitMovie">
+											<Image VerticalAlignment="Top" Source="\icons\cinema\cinema.png" ToolTip="Movies">
+												<Image.Clip>
+													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
+												</Image.Clip>
+											</Image>
+											<Button.Clip>
+												<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
+											</Button.Clip>
+										</Button>
+									</Viewbox>
+								</UniformGrid>
+							</Border>
+							<!--Submit client button-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Columns="1">
+									<UniformGrid.Background>
+										<RadialGradientBrush>
+											<GradientStop Color="#7FFF0000" Offset="0"/>
+											<GradientStop Offset="1"/>
+										</RadialGradientBrush>
+									</UniformGrid.Background>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit client</TextBlock>
+									<Viewbox>
+										<Button MouseDown="SubmitClient">
+											<Image VerticalAlignment="Top" Source="icons/user-group-woman-woman.png">
+												<Image.Clip>
+													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
+												</Image.Clip>
+											</Image>
+											<Button.Clip>
+												<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
+											</Button.Clip>
+										</Button>
+									</Viewbox>
+								</UniformGrid>
+							</Border>
+							<!--Submit order button-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Columns="1">
+									<UniformGrid.Background>
+										<LinearGradientBrush EndPoint="0,1" StartPoint="0,0" SpreadMethod="Reflect">
+											<GradientStop Color="Maroon" Offset="1"/>
+											<GradientStop Color="Transparent" Offset="0"/>
+										</LinearGradientBrush>
+									</UniformGrid.Background>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit order</TextBlock>
+									<Viewbox>
+										<Button MouseDown="SubmitOrder">
+											<Image VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
+												<Image.Clip>
+													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
+												</Image.Clip>
+											</Image>
+											<Button.Clip>
+												<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
+											</Button.Clip>
+										</Button>
+									</Viewbox>
+								</UniformGrid>
+							</Border>
+						</UniformGrid>
+					</Grid>
+				</TabItem>
+				<!--Admin panel directors actors formats langs countries-->
+				<TabItem Name="AdminPanelTab2" Width="64" Height="auto">
+					<TabItem.Header>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition/>
+							</Grid.RowDefinitions>
+							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">Admin 2</TextBlock>
+							<Image Grid.Row="1" VerticalAlignment="Top" Source="icons/edit.png"/>
+						</Grid>
+					</TabItem.Header>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="auto"/>
+							<ColumnDefinition/>
+							<ColumnDefinition Width="auto"/>
+						</Grid.ColumnDefinitions>
+						<UniformGrid Columns="1" Background="#7F800000" >
+							<Border BorderBrush="Black" BorderThickness="2">
+								<TextBlock MouseDown="AddActor">Add actor</TextBlock>
+							</Border>
+							<Border BorderBrush="Black" BorderThickness="2">
+								<TextBlock MouseDown="AddDirector">Add director</TextBlock>
+							</Border>
+							<Border BorderBrush="Black" BorderThickness="2">
+								<TextBlock MouseDown="AddCountry">Add country</TextBlock>
+							</Border>
+							<Border BorderBrush="Black" BorderThickness="2">
+								<TextBlock MouseDown="AddLang">Add Language</TextBlock>
+							</Border>
+							<Border BorderBrush="Black" BorderThickness="2">
+								<TextBlock MouseDown="AddFormat">Add Format</TextBlock>
+							</Border>
+						</UniformGrid>
+						<UniformGrid  Grid.Column="1" Columns="1" Background="#7F800000" >
+							<!--Actors-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Grid.Column="1" Rows="1">
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>First name</TextBlock>
+												<TextBox Name="AddActorFirstName"></TextBox>
+											</UniformGrid>
+											<UniformGrid Rows="1">
+												<TextBlock>Last name</TextBlock>
+												<TextBox Name="AddActorLastName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>Actor</TextBlock>
+												<ComboBox Name="UpdateActorFNLNID"></ComboBox>
+											</UniformGrid>
+											<UniformGrid Rows="1">
+												<TextBlock>New first name</TextBlock>
+												<TextBox Name="UpdateActorFirstName"></TextBox>
+											</UniformGrid>
+											<UniformGrid Rows="1">
+												<TextBlock>New last name</TextBlock>
+												<TextBox Name="UpdateActorLastName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+								</UniformGrid>
+							</Border>
+							<!--Directors-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Rows="1">
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>First name</TextBlock>
+												<TextBox Name="AddDirectorFirstName"></TextBox>
+											</UniformGrid>
+											<UniformGrid Rows="1">
+												<TextBlock>Last name</TextBlock>
+												<TextBox Name="AddDirectorLastName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>Director</TextBlock>
+												<ComboBox Name="UpdateDirectorFNLNID"></ComboBox>
+											</UniformGrid>
+											<UniformGrid Rows="1">
+												<TextBlock>New First name</TextBlock>
+												<TextBox Name="UpdateDirectorFirstName"></TextBox>
+											</UniformGrid>
+											<UniformGrid Rows="1">
+												<TextBlock>New Last name</TextBlock>
+												<TextBox Name="UpdateDirectorLastName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+								</UniformGrid>
+							</Border>
+							<!--Countries-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Rows="1">
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>Name</TextBlock>
+												<TextBox Name="AddCountryName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>Country</TextBlock>
+												<ComboBox Name="UpdateCountryNameID"></ComboBox>
+											</UniformGrid>
+											<UniformGrid Rows="1">
+												<TextBlock>New name</TextBlock>
+												<TextBox Name="UpdateCountryName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+								</UniformGrid>
+							</Border>
+							<!--Languages-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Rows="1">
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>Name</TextBlock>
+												<TextBox Name="AddLangName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>Language</TextBlock>
+												<ComboBox Name="UpdateLangNameID"></ComboBox>
+											</UniformGrid>
+											<UniformGrid Rows="1">
+												<TextBlock>New name</TextBlock>
+												<TextBox Name="UpdateLangName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+								</UniformGrid>
+							</Border>
+							<!--Formats-->
+							<Border BorderBrush="Black" BorderThickness="2">
+								<UniformGrid Rows="1">
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>Name</TextBlock>
+												<TextBox Name="AddFormatName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+									<Border BorderBrush="Black" BorderThickness="2">
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>Name</TextBlock>
+												<ComboBox Name="UpdateFormatNameID"></ComboBox>
+											</UniformGrid>
+											<UniformGrid Rows="1">
+												<TextBlock>New name</TextBlock>
+												<TextBox Name="UpdateFormatName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+								</UniformGrid>
+							</Border>
+						</UniformGrid>
+						<UniformGrid Grid.Column="2" Columns="1" Background="#7F800000" Margin="10">
+							<UniformGrid Columns="1" Margin="10">
+								<Border BorderBrush="Black" BorderThickness="2">
+									<TextBlock MouseDown="UpdateActor">Update actor</TextBlock>
+								</Border>
+								<Border BorderBrush="Black" BorderThickness="2">
+									<TextBlock MouseDown="DeleteActor">Delete actor</TextBlock>
+								</Border>
+							</UniformGrid>
+							<UniformGrid Columns="1" Margin="10">
+								<Border BorderBrush="Black" BorderThickness="2">
+									<TextBlock MouseDown="UpdateDirector">Update director</TextBlock>
+								</Border>
+								<Border BorderBrush="Black" BorderThickness="2">
+									<TextBlock MouseDown="DeleteDirector">Delete director</TextBlock>
+								</Border>
+							</UniformGrid>
+							<UniformGrid Columns="1" Margin="10">
+								<Border BorderBrush="Black" BorderThickness="2">
+									<TextBlock MouseDown="UpdateCountry">Update country</TextBlock>
+								</Border>
+								<Border BorderBrush="Black" BorderThickness="2">
+									<TextBlock MouseDown="DeleteCountry">Delete country</TextBlock>
+								</Border>
+							</UniformGrid>
+							<UniformGrid Columns="1" Margin="10">
+								<Border BorderBrush="Black" BorderThickness="2">
+									<TextBlock MouseDown="UpdateLang">Update language</TextBlock>
+								</Border>
+								<Border BorderBrush="Black" BorderThickness="2">
+									<TextBlock MouseDown="DeleteLang">Delete language</TextBlock>
+								</Border>
+							</UniformGrid>
+							<UniformGrid Columns="1" Margin="10">
+								<Border BorderBrush="Black" BorderThickness="2">
+									<TextBlock MouseDown="UpdateFormat">Update format</TextBlock>
+								</Border>
+								<Border BorderBrush="Black" BorderThickness="2">
+									<TextBlock MouseDown="DeleteFormat">Delete format</TextBlock>
+								</Border>
+							</UniformGrid>
+						</UniformGrid>
+					</Grid>
+				</TabItem>
+				<TabItem Width="64" Height="100">
+					<TabItem.Header>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition/>
+							</Grid.RowDefinitions>
+							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">SQL</TextBlock>
+							<Image Grid.Row="1" VerticalAlignment="Top" Source="icons/edit.png"/>
+						</Grid>
+					</TabItem.Header>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition/>
+							<RowDefinition Height="auto"/>
+						</Grid.RowDefinitions>
+						<TextBlock Grid.Row="0" MouseDown="ListTables" Background="Maroon">Click for available tables. If query contains SELECT database wont be modified</TextBlock>
+
+						<DataGrid Grid.Row="1" Name="SQLgrid" ItemsSource="{Binding}" FontSize="16" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000" UseLayoutRounding="False">
+							<DataGrid.AlternatingRowBackground>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="#00000000" Offset="0.423"/>
+									<GradientStop Color="#FF3E0000" Offset="1"/>
+									<GradientStop Color="#B2310000" Offset="0"/>
+								</LinearGradientBrush>
+							</DataGrid.AlternatingRowBackground>
+							<DataGrid.RowBackground>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="#00000000" Offset="0.423"/>
+									<GradientStop Color="#FF3E0000" Offset="1"/>
+									<GradientStop Color="#B2310000" Offset="0"/>
+								</LinearGradientBrush>
+							</DataGrid.RowBackground>
+							<DataGrid.Resources>
+								<Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+									<Setter Property="Background" Value="#4C730000" />
+									<Setter Property="Foreground" Value="white" />
+								</Style>
+							</DataGrid.Resources>
+						</DataGrid>
+
+						<Grid Grid.Row="3" VerticalAlignment="Bottom" Height="auto" MinHeight="200">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition/>
+								<ColumnDefinition Width="100"/>
+							</Grid.ColumnDefinitions>
+							<TextBox Name="SQLqueryText" Background="#7F800000" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" >
+							</TextBox>
+							<Grid Grid.Column="1" Background="#7F800000">
+								<Grid.RowDefinitions>
+									<RowDefinition/>
+									<RowDefinition/>
+								</Grid.RowDefinitions>
+								<TextBlock Background="#3F800000">
+									Click button below to execute query
+								</TextBlock>
+								<Button Grid.Row="1" ToolTip="Click to execute query" Click="QueryExecuteButton_Click">
+								</Button>
+							</Grid>
+						</Grid>
+					</Grid>
+				</TabItem>
+			</TabControl>
+			<!--bottom decor -->
+			<UniformGrid Grid.Row="2" Height="10">
+				<UniformGrid.Background>
 					<RadialGradientBrush SpreadMethod="Reflect">
-						<GradientStop Color="Black" Offset="1"/>
-						<GradientStop Color="#FF730000" Offset="0.884"/>
 						<GradientStop Color="Black"/>
 						<GradientStop Color="#FF821515"/>
 						<GradientStop Color="#FF6F0000"/>
 						<GradientStop Color="#00670000"/>
-						<GradientStop Color="Black" Offset="0.878"/>
-						<GradientStop Color="#FF730000" Offset="0.98"/>
+						<GradientStop Color="#FF730000" Offset="1"/>
 					</RadialGradientBrush>
-				</StackPanel.Background>
-
-				<TextBlock Foreground="White" VerticalAlignment="Center" Margin="5"  >Volume</TextBlock>
-				<Slider Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
-				Minimum="0" Maximum="1" Value="0.5" MinWidth="64"/>
-
-				<Viewbox MaxWidth="32" Margin="5" ToolTip="Play">
-					<Button Click="OnMouseDownPlayMedia">
-						<Image Source="icons\circled-play.png"/>
-					</Button>
-				</Viewbox>
-
-				<Viewbox MaxWidth="32" Margin="5" ToolTip="Pause">
-					<Button Click="OnMouseDownPauseMedia">
-						<Image Source="icons\circled-pause.png"/>
-					</Button>
-				</Viewbox>
-
-				<Viewbox MaxWidth="32" Margin="5" ToolTip="Beginning">
-					<Button Click="OnMouseDownStopMedia">
-						<Image Source="icons\stop-circled.png"/>
-					</Button>
-				</Viewbox>
-
-				<TextBlock Foreground="White" Margin="5"  VerticalAlignment="Center">Position</TextBlock>
-				<Slider Name="timelineSlider" Margin="5" ValueChanged="SeekToMediaPosition" VerticalAlignment="Center" MinWidth="300"/>
-			</StackPanel>
-		</StackPanel>
-
-		<TabControl Grid.Column="1" Background="Transparent" TabStripPlacement="Left" Panel.ZIndex="1">
-
-			<TabItem Width="64" MinHeight="256" ToolTip="Movies">
-				<TabItem.Header>
-					<Image Source="\icons\around-the-globe.png"/>
-				</TabItem.Header>
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="auto"/>
-						<RowDefinition Height="7*"/>
-						<RowDefinition Height="45*"/>
-					</Grid.RowDefinitions>
-
-					<UniformGrid Name="MoviesFilters" Rows="1" Height="100" VerticalAlignment="Center">
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterTitle_MouseDoubleClick">Title</TextBox>
-							<TextBox Name="FilterTitle">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterYear_MouseDoubleClick">Year</TextBox>
-							<TextBox Name="FilterYear">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="Duration_MouseDoubleClick">Duration</TextBox>
-							<TextBox Name="FilterDuration">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterAge_MouseDoubleClick">Age restriction</TextBox>
-							<TextBox Name="FilterAge">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterPremise_MouseDoubleClick">Premise</TextBox>
-							<TextBox Name="FilterPremise">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterPrice_MouseDoubleClick">Price</TextBox>
-							<TextBox Name="FilterPrice">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterDirectors_MouseDoubleClick">Directors</TextBox>
-							<TextBox Name="FilterDirectors">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterLeadActors_MouseDoubleClick">Lead actors</TextBox>
-							<TextBox Name="FilterLeadActors">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterFormats_MouseDoubleClick">Formats</TextBox>
-							<TextBox Name="FilterFormats">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterLanguages_MouseDoubleClick">Languages</TextBox>
-							<TextBox Name="FilterLanguages">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterCountries_MouseDoubleClick">Countries</TextBox>
-							<TextBox Name="FilterCountries">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterCopiesLeft_MouseDoubleClick">Copies left</TextBox>
-							<TextBox Name="FilterCopiesLeft">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterCopiesTotal_MouseDoubleClick">Copies total</TextBox>
-							<TextBox Name="FilterCopiesTotal">filter</TextBox>
-						</UniformGrid>
-					</UniformGrid>
-
-					<DataGrid Name="MoviesCatalog" Grid.Row="1" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000" Grid.RowSpan="2">
-						<DataGrid.AlternatingRowBackground>
-							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-								<GradientStop Color="#00000000" Offset="0.423"/>
-								<GradientStop Color="#FF3E0000" Offset="1"/>
-								<GradientStop Color="#B2310000" Offset="0"/>
-							</LinearGradientBrush>
-						</DataGrid.AlternatingRowBackground>
-						<DataGrid.RowBackground>
-							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-								<GradientStop Color="#00000000" Offset="0.423"/>
-								<GradientStop Color="#FF3E0000" Offset="1"/>
-								<GradientStop Color="#B2310000" Offset="0"/>
-							</LinearGradientBrush>
-						</DataGrid.RowBackground>
-						<DataGrid.Resources>
-							<Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-								<Setter Property="Background" Value="#4C730000" />
-								<Setter Property="Foreground" Value="white" />
-							</Style>
-						</DataGrid.Resources>
-					</DataGrid>
-				</Grid>
-			</TabItem>
-			<TabItem Width="64" MinHeight="256" ToolTip="Clients" Foreground="White">
-				<TabItem.Header>
-					<Image Source="icons/two-tickets.png"/>
-				</TabItem.Header>
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="auto"/>
-						<RowDefinition Height="59*"/>
-						<RowDefinition Height="110*"/>
-					</Grid.RowDefinitions>
-
-					<UniformGrid Name="ClientsFilters" Rows="1" Height="100" VerticalAlignment="Center">
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterLastName_MouseDoubleClick">Title</TextBox>
-							<TextBox Name="FilterLastName">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterFirstName_MouseDoubleClick">Year</TextBox>
-							<TextBox Name="FilterFirstName">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterEmail_MouseDoubleClick">Duration</TextBox>
-							<TextBox Name="FilterEmail">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterPhone_MouseDoubleClick">Age restriction</TextBox>
-							<TextBox Name="FilterPhone">filter</TextBox>
-						</UniformGrid>
-					</UniformGrid>
-
-					<DataGrid Name="ClientsCatalog" Grid.Row="1" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000" Grid.RowSpan="2">
-						<DataGrid.AlternatingRowBackground>
-							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-								<GradientStop Color="#00000000" Offset="0.423"/>
-								<GradientStop Color="#FF3E0000" Offset="1"/>
-								<GradientStop Color="#B2310000" Offset="0"/>
-							</LinearGradientBrush>
-						</DataGrid.AlternatingRowBackground>
-						<DataGrid.RowBackground>
-							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-								<GradientStop Color="#00000000" Offset="0.423"/>
-								<GradientStop Color="#FF3E0000" Offset="1"/>
-								<GradientStop Color="#B2310000" Offset="0"/>
-							</LinearGradientBrush>
-						</DataGrid.RowBackground>
-						<DataGrid.Resources>
-							<Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-								<Setter Property="Background" Value="#4C730000" />
-								<Setter Property="Foreground" Value="white" />
-							</Style>
-						</DataGrid.Resources>
-					</DataGrid>
-				</Grid>
-			</TabItem>
-			<TabItem Width="64" MinHeight="256" ToolTip="Orders" Foreground="White">
-				<TabItem.Header>
-					<Image Source="icons/street-view.png"/>
-				</TabItem.Header>
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="auto"/>
-						<RowDefinition/>
-					</Grid.RowDefinitions>
-
-					<UniformGrid Name="OrdersFilters" Rows="1" Height="100" VerticalAlignment="Top">
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterLName_MouseDoubleClick">Title</TextBox>
-							<TextBox Name="FilterLName">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterFName_MouseDoubleClick">Year</TextBox>
-							<TextBox Name="FilterFName">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterDueDate_MouseDoubleClick">Duration</TextBox>
-							<TextBox Name="FilterDueDate">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterReturnDate_MouseDoubleClick">Age restriction</TextBox>
-							<TextBox Name="FilterReturnDate">filter</TextBox>
-						</UniformGrid>
-						<UniformGrid Columns="1">
-							<TextBox IsManipulationEnabled="False" MouseDoubleClick="FilterRentDate_MouseDoubleClick">Age restriction</TextBox>
-							<TextBox Name="FilterRentDate">filter</TextBox>
-						</UniformGrid>
-					</UniformGrid>
-
-					<DataGrid Name="OrdersCatalog" Grid.Row="2" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000">
-						<DataGrid.AlternatingRowBackground>
-							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-								<GradientStop Color="#00000000" Offset="0.423"/>
-								<GradientStop Color="#FF3E0000" Offset="1"/>
-								<GradientStop Color="#B2310000" Offset="0"/>
-							</LinearGradientBrush>
-						</DataGrid.AlternatingRowBackground>
-						<DataGrid.RowBackground>
-							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-								<GradientStop Color="#00000000" Offset="0.423"/>
-								<GradientStop Color="#FF3E0000" Offset="1"/>
-								<GradientStop Color="#B2310000" Offset="0"/>
-							</LinearGradientBrush>
-						</DataGrid.RowBackground>
-						<DataGrid.Resources>
-							<Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-								<Setter Property="Background" Value="#4C730000" />
-								<Setter Property="Foreground" Value="white" />
-							</Style>
-						</DataGrid.Resources>
-					</DataGrid>
-				</Grid>
-			</TabItem>
-		</TabControl>
-
-		<UniformGrid Grid.Column="4" Width="64" Columns="1">
+				</UniformGrid.Background>
+			</UniformGrid>
+		</Grid>
+		<!--right decor -->
+		<UniformGrid Grid.Column="2" Width="10">
 			<UniformGrid.Background>
 				<RadialGradientBrush SpreadMethod="Reflect">
 					<GradientStop Color="Black"/>
@@ -435,43 +1408,6 @@
 					<GradientStop Color="#FF730000" Offset="1"/>
 				</RadialGradientBrush>
 			</UniformGrid.Background>
-
-			<Viewbox  VerticalAlignment="Top">
-				<Button x:Name="Trailer" ToolTipService.ToolTip="Trailer">
-					<Image Source="icons/preview-pane.png" Stretch="Uniform"/>
-				</Button>
-			</Viewbox>
-
-			<Viewbox VerticalAlignment="Top">
-				<Button x:Name="Rent" ToolTipService.ToolTip="Rent">
-					<Image Source="icons/starred-ticket.png" Stretch="Uniform"/>
-				</Button>
-			</Viewbox>
-
-			<Viewbox VerticalAlignment="Top">
-				<Button x:Name="Return" ToolTipService.ToolTip="Return">
-					<Image Source="icons/circled-left-2.png" Stretch="Uniform"/>
-				</Button>
-			</Viewbox>
-
-			<Viewbox VerticalAlignment="Bottom">
-				<Button x:Name="Add" ToolTipService.ToolTip="Add">
-					<Image Source="icons/add.png" Stretch="Uniform"/>
-				</Button>
-			</Viewbox>
-
-			<Viewbox VerticalAlignment="Bottom">
-				<Button x:Name="Edit" ToolTipService.ToolTip="Edit">
-					<Image Source="icons/edit.png" Stretch="Uniform"/>
-				</Button>
-			</Viewbox>
-
-			<Viewbox VerticalAlignment="Bottom">
-				<Button x:Name="Delete" ToolTipService.ToolTip="Delete">
-					<Image Source="icons/minus.png" Stretch="Uniform"/>
-				</Button>
-			</Viewbox>
-
 		</UniformGrid>
 	</Grid>
 </Window>
