@@ -14,6 +14,13 @@
 		<ImageBrush ImageSource="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" Stretch="UniformToFill"/>
 	</Window.Background>
 	<Window.Resources>
+		<Style TargetType="CheckBox">
+			<Setter Property="Foreground" Value="White"></Setter>
+		</Style>
+		<Style TargetType="Border">
+			<Setter Property="BorderThickness" Value="1"></Setter>
+			<Setter Property="BorderBrush" Value="Black"></Setter>
+		</Style>
 		<Style TargetType="Slider">
 			<Setter Property="Foreground" Value="White"/>
 			<Setter Property="Background" Value="Black"/>
@@ -459,14 +466,17 @@
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Rent date</TextBlock>
+								<CheckBox>Toggle filter</CheckBox>
 								<DatePicker KeyDown="FilterOrderRentDate" Name="FilterOrderRentDateText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Due date</TextBlock>
+								<CheckBox>Toggle filter</CheckBox>
 								<DatePicker KeyDown="FilterOrderDueDate" Name="FilterOrderDueDateText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Return date</TextBlock>
+								<CheckBox>Toggle filter</CheckBox>
 								<DatePicker KeyDown="FilterOrderReturnDate" Name="FilterOrderReturnDateText"/>
 							</UniformGrid>
 						</UniformGrid>
@@ -579,12 +589,6 @@
 								</Button>
 							</Viewbox>
 
-							<UniformGrid Rows="2" Visibility="Hidden">
-								<TextBox Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">Volume</TextBox>
-								<Slider Name="VolumeSlider" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="AdjustVolume" 
-									Minimum="0" Maximum="1" Value="0.5" Width="70" Cursor="Hand"/>
-							</UniformGrid>
-
 							<UniformGrid Rows="2">
 								<TextBox Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">Position</TextBox>
 								<Slider Name="SeekSlider" ValueChanged="SeekTrailer" VerticalAlignment="Center" Width="130" Cursor="Hand"/>
@@ -691,7 +695,7 @@
 						</Grid.ColumnDefinitions>
 						<!--Mode selection panel-->
 						<UniformGrid Columns="1" Width="60" ToolTip="Mode selection">
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<Grid MouseDown="SelectAddMode">
 									<TextBlock>Add mode</TextBlock>
 									<Viewbox VerticalAlignment="Center">
@@ -699,7 +703,7 @@
 									</Viewbox>
 								</Grid>
 							</Border>
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid>
 									<UniformGrid.Background>
 										<RadialGradientBrush SpreadMethod="Pad">
@@ -714,7 +718,7 @@
 									</TextBlock>
 								</UniformGrid>
 							</Border>
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Columns="1" MouseDown="SelectEditMode" Background="#B28B0000" >
 									<TextBlock>Update mode</TextBlock>
 									<Viewbox>
@@ -726,7 +730,7 @@
 						<!--Current dataset indicator-->
 						<UniformGrid Columns="1" Grid.Column="1" Width="50">
 							<!--Movie form info-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Columns="1">
 									<UniformGrid.Background>
 										<RadialGradientBrush SpreadMethod="Reflect">
@@ -744,7 +748,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Client form info-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Columns="1">
 									<UniformGrid.Background>
 										<RadialGradientBrush>
@@ -762,7 +766,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Order form info-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Columns="1">
 									<UniformGrid.Background>
 										<RadialGradientBrush SpreadMethod="Pad">
@@ -788,7 +792,7 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 							<!--Movie panel-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Rows="1">
 									<!--Main form-->
 									<UniformGrid Columns="1">
@@ -874,7 +878,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Client panel-->
-							<Border Grid.Row="1" BorderBrush="Black" BorderThickness="2">
+							<Border Grid.Row="1">
 								<UniformGrid Columns="1" >
 									<UniformGrid.Background>
 										<LinearGradientBrush EndPoint="1,3" StartPoint="1,2" SpreadMethod="Pad">
@@ -882,52 +886,52 @@
 											<GradientStop Color="Maroon" Offset="1"/>
 										</LinearGradientBrush>
 									</UniformGrid.Background>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock ToolTip="Database client ID" Background="#4C800000" Width="NaN">Client ID</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock InputScope="Number" Name="ClientFormID"/>
 											</Border>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock Background="#4C800000">First name</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBox Name="ClientFormFirstName"/>
 											</Border>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock Background="#4C800000">Last name</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBox Name="ClientFormLastName"/>
 											</Border>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock Background="#4C800000">Phone</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBox InputScope="Number" Name="ClientFormPhone"/>
 											</Border>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock Background="#4C800000">E-Mail</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBox Name="ClientFormEmail"/>
 											</Border>
 										</UniformGrid>
@@ -935,7 +939,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Order form-->
-							<Border Grid.Row="2" BorderBrush="Black" BorderThickness="2">
+							<Border Grid.Row="2">
 								<UniformGrid Columns="1">
 									<UniformGrid.Background>
 										<LinearGradientBrush SpreadMethod="Pad" StartPoint="1,0">
@@ -943,68 +947,74 @@
 											<GradientStop Color="#4CFF0000" Offset="0.493"/>
 										</LinearGradientBrush>
 									</UniformGrid.Background>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock ToolTip="If empty; new one will be created" Background="#4C800000">Order ID</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock Name="OrderFormID" ToolTip="Use edit option from context menu in orders catalog"/>
 											</Border>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock ToolTip="Select rent context menu option in movies catalog" Background="#4C800000">
 													Movie
 												</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<ComboBox Name="OrderFormMovieTitleID"/>
 											</Border>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock  ToolTip="Client selection" Background="#4C800000">Client</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
-												<ComboBox Name="OrderFormClientFNLNID"></ComboBox>
+											<Border>
+												<ComboBox Name="OrderFormClientLNFNID"></ComboBox>
 											</Border>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock ToolTip="Item rent date" Background="#4C800000">
 													Rent date
 												</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<DatePicker Name="OrderFormRentDate"></DatePicker>
 											</Border>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock ToolTip="Item return deadline" Background="#4C800000">Due date</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
+												<CheckBox Name="OrderFormDueDateCheck">Toggle to set date otherwise null</CheckBox>
+											</Border>
+											<Border>
 												<DatePicker Name="OrderFormDueDate"></DatePicker>
 											</Border>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Rows="1">
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
 												<TextBlock ToolTip="Item return actual date" Background="#4C800000">
 													Return date
 												</TextBlock>
 											</Border>
-											<Border BorderBrush="Black" BorderThickness="2">
+											<Border>
+												<CheckBox Name="OrderFormReturnDateCheck">Toggle to set date otherwise null</CheckBox>
+											</Border>
+											<Border>
 												<DatePicker Name="OrderFormReturnDate"></DatePicker>
 											</Border>
 										</UniformGrid>
@@ -1024,7 +1034,7 @@
 								</LinearGradientBrush>
 							</UniformGrid.Background>
 							<!--Submit movie button-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Columns="1">
 									<UniformGrid.Background>
 										<LinearGradientBrush EndPoint="0,1" StartPoint="0,0" SpreadMethod="Reflect">
@@ -1032,7 +1042,7 @@
 											<GradientStop Color="Transparent" Offset="1"/>
 										</LinearGradientBrush>
 									</UniformGrid.Background>
-									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit movie</TextBlock>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">Submit movie</TextBlock>
 									<Viewbox>
 										<Button MouseDown="SubmitMovie">
 											<Image VerticalAlignment="Top" Source="\icons\cinema\cinema.png" ToolTip="Movies">
@@ -1048,7 +1058,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Submit client button-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Columns="1">
 									<UniformGrid.Background>
 										<RadialGradientBrush>
@@ -1072,7 +1082,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Submit order button-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Columns="1">
 									<UniformGrid.Background>
 										<LinearGradientBrush EndPoint="0,1" StartPoint="0,0" SpreadMethod="Reflect">
@@ -1117,27 +1127,27 @@
 							<ColumnDefinition Width="auto"/>
 						</Grid.ColumnDefinitions>
 						<UniformGrid Columns="1" Background="#7F800000" >
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<TextBlock MouseDown="AddActor">Add actor</TextBlock>
 							</Border>
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<TextBlock MouseDown="AddDirector">Add director</TextBlock>
 							</Border>
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<TextBlock MouseDown="AddCountry">Add country</TextBlock>
 							</Border>
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<TextBlock MouseDown="AddLang">Add Language</TextBlock>
 							</Border>
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<TextBlock MouseDown="AddFormat">Add Format</TextBlock>
 							</Border>
 						</UniformGrid>
 						<UniformGrid  Grid.Column="1" Columns="1" Background="#7F800000" >
 							<!--Actors-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Grid.Column="1" Rows="1">
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>First name</TextBlock>
@@ -1149,7 +1159,7 @@
 											</UniformGrid>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>Actor</TextBlock>
@@ -1168,9 +1178,9 @@
 								</UniformGrid>
 							</Border>
 							<!--Directors-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Rows="1">
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>First name</TextBlock>
@@ -1182,7 +1192,7 @@
 											</UniformGrid>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>Director</TextBlock>
@@ -1201,9 +1211,9 @@
 								</UniformGrid>
 							</Border>
 							<!--Countries-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Rows="1">
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>Name</TextBlock>
@@ -1211,7 +1221,7 @@
 											</UniformGrid>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>Country</TextBlock>
@@ -1226,9 +1236,9 @@
 								</UniformGrid>
 							</Border>
 							<!--Languages-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Rows="1">
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>Name</TextBlock>
@@ -1236,7 +1246,7 @@
 											</UniformGrid>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>Language</TextBlock>
@@ -1251,9 +1261,9 @@
 								</UniformGrid>
 							</Border>
 							<!--Formats-->
-							<Border BorderBrush="Black" BorderThickness="2">
+							<Border>
 								<UniformGrid Rows="1">
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>Name</TextBlock>
@@ -1261,7 +1271,7 @@
 											</UniformGrid>
 										</UniformGrid>
 									</Border>
-									<Border BorderBrush="Black" BorderThickness="2">
+									<Border>
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>Name</TextBlock>
@@ -1278,42 +1288,42 @@
 						</UniformGrid>
 						<UniformGrid Grid.Column="2" Columns="1" Background="#7F800000" Margin="10">
 							<UniformGrid Columns="1" Margin="10">
-								<Border BorderBrush="Black" BorderThickness="2">
+								<Border>
 									<TextBlock MouseDown="UpdateActor">Update actor</TextBlock>
 								</Border>
-								<Border BorderBrush="Black" BorderThickness="2">
+								<Border>
 									<TextBlock MouseDown="DeleteActor">Delete actor</TextBlock>
 								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
-								<Border BorderBrush="Black" BorderThickness="2">
+								<Border>
 									<TextBlock MouseDown="UpdateDirector">Update director</TextBlock>
 								</Border>
-								<Border BorderBrush="Black" BorderThickness="2">
+								<Border>
 									<TextBlock MouseDown="DeleteDirector">Delete director</TextBlock>
 								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
-								<Border BorderBrush="Black" BorderThickness="2">
+								<Border>
 									<TextBlock MouseDown="UpdateCountry">Update country</TextBlock>
 								</Border>
-								<Border BorderBrush="Black" BorderThickness="2">
+								<Border>
 									<TextBlock MouseDown="DeleteCountry">Delete country</TextBlock>
 								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
-								<Border BorderBrush="Black" BorderThickness="2">
+								<Border>
 									<TextBlock MouseDown="UpdateLang">Update language</TextBlock>
 								</Border>
-								<Border BorderBrush="Black" BorderThickness="2">
+								<Border>
 									<TextBlock MouseDown="DeleteLang">Delete language</TextBlock>
 								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
-								<Border BorderBrush="Black" BorderThickness="2">
+								<Border>
 									<TextBlock MouseDown="UpdateFormat">Update format</TextBlock>
 								</Border>
-								<Border BorderBrush="Black" BorderThickness="2">
+								<Border>
 									<TextBlock MouseDown="DeleteFormat">Delete format</TextBlock>
 								</Border>
 							</UniformGrid>

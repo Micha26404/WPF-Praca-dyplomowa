@@ -165,14 +165,9 @@ namespace WPF
 			//seek slider init
 			//SeekSlider.Maximum = Trailer.NaturalDuration.TimeSpan.TotalMilliseconds; //null pointer exception
 		}
-		private void AdjustVolume(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			//Trailer.Volume = (double)VolumeSlider.Value; //null pointer exception
-		}
 		private void PlayTrailer(object sender, RoutedEventArgs e)
 		{
 			Trailer.Play();
-			//Trailer.Volume = (double)VolumeSlider.Value; //null pointer exception
 		}
 		private void PauseTrailer(object sender, MouseButtonEventArgs e)
 		{
@@ -301,11 +296,14 @@ namespace WPF
 			OrderFormMovieTitleID.Text = getquery("select title from movies where id=" + movie_id) + " " + movie_id;
 			//set client
 			int client_id = int.Parse(rowview.Row["client_id"].ToString());
-			OrderFormClientFNLNID.Text = getquery("select first_name from clients where id=" + client_id);
-			OrderFormClientFNLNID.Text += " " + getquery("select last_name from clients where id=" + client_id);
-			OrderFormClientFNLNID.Text += " " + client_id;
+			//first name
+			OrderFormClientLNFNID.Text = getquery("select first_name from clients where id=" + client_id);
+			//last name
+			OrderFormClientLNFNID.Text += " " + getquery("select last_name from clients where id=" + client_id);
+			//client name
+			OrderFormClientLNFNID.Text += " " + client_id;
 
-			//get date in format dd/mm/yy (30/12/2022)
+			//get dates in format dd/mm/yy (30/12/2022)
 			//set rent date
 			string rent_date = getquery("select convert(varchar, rent_date, 1) from orders where id=" + OrderFormID.Text);
 			int dd = int.Parse(rent_date.Split('/')[0]);
@@ -315,17 +313,165 @@ namespace WPF
 
 			//set due date
 			string due_date = getquery("select convert(varchar, due_date, 1) from orders where id=" + OrderFormID.Text);
-			dd = int.Parse(rent_date.Split('/')[0]);
-			mm = int.Parse(rent_date.Split('/')[1]);
-			yy = int.Parse(rent_date.Split('/')[2]);
-			OrderFormRentDate.SelectedDate = new DateTime(yy, mm, dd);
+			dd = int.Parse(due_date.Split('/')[0]);
+			mm = int.Parse(due_date.Split('/')[1]);
+			yy = int.Parse(due_date.Split('/')[2]);
+			OrderFormDueDate.SelectedDate = new DateTime(yy, mm, dd);
 
 			//set return date
 			string return_date = getquery("select convert(varchar, return_date, 1) from orders where id=" + OrderFormID.Text);
-			dd = int.Parse(rent_date.Split('/')[0]);
-			mm = int.Parse(rent_date.Split('/')[1]);
-			yy = int.Parse(rent_date.Split('/')[2]);
-			OrderFormRentDate.SelectedDate = new DateTime(yy, mm, dd);
+			dd = int.Parse(return_date.Split('/')[0]);
+			mm = int.Parse(return_date.Split('/')[1]);
+			yy = int.Parse(return_date.Split('/')[2]);
+			OrderFormReturnDate.SelectedDate = new DateTime(yy, mm, dd);
+		}
+		//Submit Buttons
+		private int SubmitOrder(object sender, MouseButtonEventArgs e)
+		{
+			//get movie_id and client_id
+			int movie_id,
+				client_id;
+			if (OrderFormMovieTitleID.Text != "" &&
+				OrderFormClientLNFNID.Text != "")
+			{
+				//split string and get movie id
+				movie_id = int.Parse(OrderFormMovieTitleID.Text.Split(' ')[1]);
+				//split string and get client id
+				client_id = int.Parse(OrderFormClientLNFNID.Text.Split(' ')[2]);
+			}
+			else
+			{
+				//needed values are not present
+				MessageBox.Show("Form incomplete");
+				return 1;
+			}
+			//get dates in format dd/mm/yy (30/12/2022)
+			//Default date in form is today
+			int dd, mm, yy;
+			//set due date if not null
+			string rent_date = getquery("select ISNULL(due_date,'') from orders where id=" + OrderFormID.Text);
+			if (rent_date != "")
+			{
+				rent_date = getquery("select convert(varchar, rent_date, 1) from orders where id=" + OrderFormID.Text);
+				dd = int.Parse(rent_date.Split('/')[0]);
+				mm = int.Parse(rent_date.Split('/')[1]);
+				yy = int.Parse(rent_date.Split('/')[2]);
+				OrderFormRentDate.SelectedDate = new DateTime(yy, mm, dd);
+			}
+			//set due date if not null
+			string due_date = getquery("select ISNULL(due_date,'') from orders where id=" + OrderFormID.Text);
+			if (due_date != "")
+			{
+				due_date = getquery("select convert(varchar, due_date, 1) from orders where id=" + OrderFormID.Text);
+				dd = int.Parse(due_date.Split('/')[0]);
+				mm = int.Parse(due_date.Split('/')[1]);
+				yy = int.Parse(due_date.Split('/')[2]);
+				OrderFormDueDate.SelectedDate = new DateTime(yy, mm, dd);
+			}
+			//set return date if not null
+			string return_date = getquery("select ISNULL(return_date,'') from orders where id=" + OrderFormID.Text);
+			if (return_date != "")
+			{
+				return_date = getquery("select convert(varchar, return_date, 1) from orders where id=" + OrderFormID.Text);
+				dd = int.Parse(return_date.Split('/')[0]);
+				mm = int.Parse(return_date.Split('/')[1]);
+				yy = int.Parse(return_date.Split('/')[2]);
+				OrderFormReturnDate.SelectedDate = new DateTime(yy, mm, dd);
+			}
+				//add mode
+				if (mode == false)
+				{
+					//set dates if checked
+					if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == false)
+					{
+						//due_date = "null";
+						//return_date = "null";
+					setquery("Insert into Orders values" +
+							"(null," + client_id + "," + movie_id + "," +
+							"TODATE(" + rent_date + ",'dd/mm/yy')," +
+							"null," +
+							"null)");
+					}
+					if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
+					{
+						//due_date="null";
+					setquery("Insert into Orders values" +
+							"(null," + client_id + "," + movie_id + "," +
+							"TODATE(" + rent_date + ",'dd/mm/yy')," +
+							"null," +
+							"TODATE(" + return_date + ",'dd/mm/yy'))");
+					}
+					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
+					{
+						//return_date = "null";
+					setquery("Insert into Orders values" +
+							"(null," + client_id + "," + movie_id + "," +
+							"TODATE(" + rent_date + ",'dd/mm/yy')," +
+							"TODATE(" + due_date + ",'dd/mm/yy')," +
+							"null)");
+					}
+					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
+					{
+					setquery("Insert into Orders values" +
+							"(null," + client_id + "," + movie_id + "," +
+							"TODATE(" + rent_date + ",'dd/mm/yy')," +
+							"TODATE(" + due_date + ",'dd/mm/yy')," +
+							"TODATE(" + return_date + ",'dd/mm/yy'))");
+					}
+				}
+				else//edit mode
+				{
+				//set dates if checked
+				if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == false)
+				{
+					//due_date = "null";
+					//return_date = "null";
+					setquery("update Orders set " +
+							"client_id=" + client_id + ",movie_id=" + movie_id + "," +
+							"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
+							"due_date=null," +
+							"return_date=null");
+				}
+				if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
+				{
+					//due_date="null";
+					setquery("update Orders set " +
+							"client_id=" + client_id + ",movie_id=" + movie_id + "," +
+							"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
+							"due_date=null," +
+							"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
+				}
+				if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
+				{
+					//return_date = "null";
+					setquery("update Orders set " +
+							"client_id=" + client_id + ",movie_id=" + movie_id + "," +
+							"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
+							"due_date=TODATE(" + due_date + ",'dd/mm/yy')," +
+							"return_date=null");
+				}
+				if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
+				{
+					setquery("update Orders set" +
+							"client_id=" + client_id + ",movie_id=" + movie_id + "," +
+							"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
+							"due_date=TODATE(" + due_date + ",'dd/mm/yy')," +
+							"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
+				}
+			}
+			MessageBox.Show("Form incomplete");
+			//refresh grid
+			return 0;
+		}
+		private void SubmitClient(object sender, MouseButtonEventArgs e)
+		{
+			setquery("Insert into actors values(null," + AddActorFirstName + "," + AddActorLastName + ")");
+			//refresh grid
+		}
+		private void SubmitMovie(object sender, MouseButtonEventArgs e)
+		{
+			setquery("Insert into actors values(null," + AddActorFirstName + "," + AddActorLastName + ")");
+			//refresh grid
 		}
 		//Movies right click menu
 		private void MovieItem_rent(object sender, RoutedEventArgs e)
@@ -585,19 +731,7 @@ namespace WPF
 			ModeSelected.Background = radialGradient;
 			SubmitPanel.Background = radialGradient;
 		}
-		//Submit Buttons
-		private void SubmitOrder(object sender, MouseButtonEventArgs e)
-		{
-			//refresh grid
-		}
-		private void SubmitClient(object sender, MouseButtonEventArgs e)
-		{
-			//refresh grid
-		}
-		private void SubmitMovie(object sender, MouseButtonEventArgs e)
-		{
-			//refresh grid
-		}
+		
 		private void ListTables(object sender, MouseButtonEventArgs e)
 		{
 			MessageBox.Show("Available tables:\n" +

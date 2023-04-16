@@ -112,6 +112,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="WPF_DBDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="WPF_DB_context.cs" />
     <Compile Include="WPF_DB_diagram.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -160,6 +165,17 @@
     </None>
     <None Include="WPF_DBDataSet.xss">
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="WPF_DBDataSet1.xsc">
+      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="WPF_DBDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>WPF_DBDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="WPF_DBDataSet1.xss">
+      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
     </None>
     <None Include="WPF_DB_diagram.edmx.diagram">
       <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
