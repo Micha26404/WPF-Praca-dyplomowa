@@ -91,6 +91,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="actor.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>actor.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="actor.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>actor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="actors.cs">
+      <DependentUpon>order.tt</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -104,6 +117,100 @@
     <Compile Include="classes\langs.cs" />
     <Compile Include="classes\movies.cs" />
     <Compile Include="classes\orders.cs" />
+    <Compile Include="client.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>client.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="client.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>client.tt</DependentUpon>
+    </Compile>
+    <Compile Include="clients.cs">
+      <DependentUpon>order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="countries.cs">
+      <DependentUpon>order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="country.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>country.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="country.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>country.tt</DependentUpon>
+    </Compile>
+    <Compile Include="director.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>director.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="director.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>director.tt</DependentUpon>
+    </Compile>
+    <Compile Include="directors.cs">
+      <DependentUpon>order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="format.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>format.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="format.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>format.tt</DependentUpon>
+    </Compile>
+    <Compile Include="formats.cs">
+      <DependentUpon>order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="genres.cs">
+      <DependentUpon>order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="lang.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>lang.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="lang.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>lang.tt</DependentUpon>
+    </Compile>
+    <Compile Include="langs.cs">
+      <DependentUpon>order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="movie.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>movie.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="movie.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>movie.tt</DependentUpon>
+    </Compile>
+    <Compile Include="movies.cs">
+      <DependentUpon>order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="order.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>order.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="order.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="orders.cs">
+      <DependentUpon>order.tt</DependentUpon>
+    </Compile>
     <Compile Include="WPF_DBDataSet.cs">
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </Compile>
@@ -112,10 +219,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="WPF_DBDataSet1.Designer.cs">
+    <Compile Include="WPF_DBDataSet11.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
+      <DependentUpon>WPF_DBDataSet11.xsd</DependentUpon>
     </Compile>
     <Compile Include="WPF_DB_context.cs" />
     <Compile Include="WPF_DB_diagram.Designer.cs">
@@ -166,16 +273,16 @@
     <None Include="WPF_DBDataSet.xss">
       <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
     </None>
-    <None Include="WPF_DBDataSet1.xsc">
-      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
+    <None Include="WPF_DBDataSet11.xsc">
+      <DependentUpon>WPF_DBDataSet11.xsd</DependentUpon>
     </None>
-    <None Include="WPF_DBDataSet1.xsd">
+    <None Include="WPF_DBDataSet11.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>WPF_DBDataSet1.Designer.cs</LastGenOutput>
+      <LastGenOutput>WPF_DBDataSet11.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="WPF_DBDataSet1.xss">
-      <DependentUpon>WPF_DBDataSet1.xsd</DependentUpon>
+    <None Include="WPF_DBDataSet11.xss">
+      <DependentUpon>WPF_DBDataSet11.xsd</DependentUpon>
     </None>
     <None Include="WPF_DB_diagram.edmx.diagram">
       <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
@@ -210,6 +317,86 @@
     <Resource Include="icons\cinema\cinema.png" />
     <Resource Include="icons\media\easel.png" />
     <Resource Include="icons\media\blu-ray.png" />
+    <Content Include="actor.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>actor.Context.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="actor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>actor.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="client.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>client.Context.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="client.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>client.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="country.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>country.Context.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="country.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>country.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="director.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>director.Context.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="director.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>director.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="format.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>format.Context.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="format.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>format.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="lang.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>lang.Context.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="lang.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>lang.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="movie.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>movie.Context.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="movie.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>movie.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="order.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>order.Context.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
+    <Content Include="order.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>order.cs</LastGenOutput>
+      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
+    </Content>
     <Content Include="WPF_DB_log.ldf">
       <DependentUpon>WPF_DB.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

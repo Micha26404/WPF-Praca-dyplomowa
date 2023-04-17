@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/13/2023 20:03:21
+-- Date Created: 04/17/2023 18:15:50
 -- Generated from EDMX file: E:\university\WPF\WPF_DB_diagram.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [WPF_DB];
+USE [E:\UNIVERSITY\WPF\WPF_DB.MDF];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -17,8 +17,26 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_moviescountries]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[movies] DROP CONSTRAINT [FK_moviescountries];
+GO
+IF OBJECT_ID(N'[dbo].[FK_movieslangs]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[movies] DROP CONSTRAINT [FK_movieslangs];
+GO
+IF OBJECT_ID(N'[dbo].[FK_moviesformats]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[movies] DROP CONSTRAINT [FK_moviesformats];
+GO
+IF OBJECT_ID(N'[dbo].[FK_moviesdirectors]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[movies] DROP CONSTRAINT [FK_moviesdirectors];
+GO
+IF OBJECT_ID(N'[dbo].[FK_moviesactors]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[movies] DROP CONSTRAINT [FK_moviesactors];
+GO
 IF OBJECT_ID(N'[dbo].[FK_clientsorders]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[orders] DROP CONSTRAINT [FK_clientsorders];
+GO
+IF OBJECT_ID(N'[dbo].[FK_moviesorders]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[orders] DROP CONSTRAINT [FK_moviesorders];
 GO
 
 -- --------------------------------------------------
@@ -40,14 +58,14 @@ GO
 IF OBJECT_ID(N'[dbo].[countries]', 'U') IS NOT NULL
     DROP TABLE [dbo].[countries];
 GO
-IF OBJECT_ID(N'[dbo].[people_clients]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[people_clients];
+IF OBJECT_ID(N'[dbo].[directors]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[directors];
 GO
-IF OBJECT_ID(N'[dbo].[people_directors]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[people_directors];
+IF OBJECT_ID(N'[dbo].[actors]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[actors];
 GO
-IF OBJECT_ID(N'[dbo].[people_actors]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[people_actors];
+IF OBJECT_ID(N'[dbo].[clients]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[clients];
 GO
 
 -- --------------------------------------------------
@@ -57,21 +75,22 @@ GO
 -- Creating table 'movies'
 CREATE TABLE [dbo].[movies] (
     [id] int IDENTITY(1,1) NOT NULL,
-    [name] nvarchar(max)  NULL,
+    [name] nvarchar(max)  NOT NULL,
     [year] smallint  NULL,
-    [country_id] int  NOT NULL,
+    [country_id] int  NULL,
     [duration] smallint  NULL,
     [age] tinyint  NULL,
     [total_count] tinyint  NULL,
     [price] decimal(18,0)  NULL,
     [left_count] tinyint  NULL,
     [plot] nvarchar(max)  NULL,
-    [lang_id] int  NOT NULL,
-    [actor_id] int  NOT NULL,
-    [director_id] int  NOT NULL,
-    [format_id] int  NOT NULL,
+    [lang_id] int  NULL,
+    [actor_id] int  NULL,
+    [director_id] int  NULL,
+    [format_id] int  NULL,
     [poster_path] nvarchar(max)  NULL,
-    [trailer_path] nvarchar(max)  NULL
+    [trailer_path] nvarchar(max)  NULL,
+    [genre_id] int  NULL
 );
 GO
 
@@ -81,15 +100,15 @@ CREATE TABLE [dbo].[orders] (
     [client_id] int  NOT NULL,
     [movie_id] int  NOT NULL,
     [rent_date] datetime  NOT NULL,
-    [due_date] datetime  NOT NULL,
-    [return_date] datetime  NOT NULL
+    [due_date] datetime  NULL,
+    [return_date] datetime  NULL
 );
 GO
 
 -- Creating table 'langs'
 CREATE TABLE [dbo].[langs] (
     [id] int IDENTITY(1,1) NOT NULL,
-    [name] nvarchar(max)  NULL
+    [name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -110,16 +129,16 @@ GO
 -- Creating table 'directors'
 CREATE TABLE [dbo].[directors] (
     [id] int IDENTITY(1,1) NOT NULL,
-    [first_name] nvarchar(max)  NULL,
-    [last_name] nvarchar(max)  NULL
+    [first_name] nvarchar(max)  NOT NULL,
+    [last_name] nvarchar(max)  NOT NULL
 );
 GO
 
 -- Creating table 'actors'
 CREATE TABLE [dbo].[actors] (
     [id] int IDENTITY(1,1) NOT NULL,
-    [first_name] nvarchar(max)  NULL,
-    [last_name] nvarchar(max)  NULL
+    [first_name] nvarchar(max)  NOT NULL,
+    [last_name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -128,8 +147,15 @@ CREATE TABLE [dbo].[clients] (
     [id] int IDENTITY(1,1) NOT NULL,
     [phone] nvarchar(max)  NULL,
     [email] nvarchar(max)  NULL,
-    [first_name] nvarchar(max)  NULL,
-    [last_name] nvarchar(max)  NULL
+    [first_name] nvarchar(max)  NOT NULL,
+    [last_name] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'genres'
+CREATE TABLE [dbo].[genres] (
+    [id] int IDENTITY(1,1) NOT NULL,
+    [name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -182,6 +208,12 @@ GO
 -- Creating primary key on [id] in table 'clients'
 ALTER TABLE [dbo].[clients]
 ADD CONSTRAINT [PK_clients]
+    PRIMARY KEY CLUSTERED ([id] ASC);
+GO
+
+-- Creating primary key on [id] in table 'genres'
+ALTER TABLE [dbo].[genres]
+ADD CONSTRAINT [PK_genres]
     PRIMARY KEY CLUSTERED ([id] ASC);
 GO
 
@@ -292,6 +324,21 @@ GO
 CREATE INDEX [IX_FK_moviesorders]
 ON [dbo].[orders]
     ([movie_id]);
+GO
+
+-- Creating foreign key on [genre_id] in table 'movies'
+ALTER TABLE [dbo].[movies]
+ADD CONSTRAINT [FK_genresmovies]
+    FOREIGN KEY ([genre_id])
+    REFERENCES [dbo].[genres]
+        ([id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_genresmovies'
+CREATE INDEX [IX_FK_genresmovies]
+ON [dbo].[movies]
+    ([genre_id]);
 GO
 
 -- --------------------------------------------------

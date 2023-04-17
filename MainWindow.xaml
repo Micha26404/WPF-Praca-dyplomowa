@@ -288,6 +288,10 @@
 								<TextBox Name="FilterMovieDurationText" KeyDown="FilterMovieDuration"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
+								<TextBlock>Genre</TextBlock>
+								<TextBox Name="FilterMovieGenreText" KeyDown="FilterMovieGenre"/>
+							</UniformGrid>
+							<UniformGrid Columns="1">
 								<TextBlock>Age rating</TextBlock>
 								<TextBox Name="FilterMovieAgeText" KeyDown="FilterMovieAge"/>
 							</UniformGrid>
@@ -852,24 +856,29 @@
 										</UniformGrid.Background>
 										<UniformGrid Rows="1">
 											<TextBlock Background="#4C800000" ToolTip="Most popular language in this movie">Language</TextBlock>
-											<ComboBox Name="MovieFormLang" Background="#4C800000" BorderBrush="Maroon"/>
+											<ComboBox Name="MovieFormLangNameID" Background="#4C800000" BorderBrush="Maroon"/>
 										</UniformGrid>
 										<UniformGrid Rows="1">
 											<TextBlock Background="#4C800000" ToolTip="Most dominating genre in this movie">Genre</TextBlock>
-											<ComboBox Name="MovieFormGenre" Background="#4C800000" BorderBrush="Maroon"/>
+											<ComboBox Name="MovieFormGenreNameID" Background="#4C800000" BorderBrush="Maroon"/>
 										</UniformGrid>
 										<UniformGrid Rows="1">
 											<TextBlock Background="#4C800000" ToolTip="Most popular medium format of this movie in stock (DVD, Bluray, VHS etc.)">Format</TextBlock>
-											<ComboBox Name="MovieFormFormat" Background="#4C800000" BorderBrush="Maroon"/>
+											<ComboBox Name="MovieFormFormatNameID" Background="#4C800000" BorderBrush="Maroon"/>
 										</UniformGrid>
 										<UniformGrid Rows="1">
-											<TextBlock Background="#4C800000">Director</TextBlock>
-											<ComboBox Name="MovieFormDirector" ToolTip="Movie director"></ComboBox>
+											<TextBlock Background="#4C800000" ToolTip="Movie director">Director</TextBlock>
+											<ComboBox Name="MovieFormDirectorLNFNID"></ComboBox>
 										</UniformGrid>
 
 										<UniformGrid Rows="1">
-											<TextBlock Background="#4C800000">Lead actor</TextBlock>
-											<ComboBox Name="MovieFormActor" ToolTip="Lead actor"></ComboBox>
+											<TextBlock Background="#4C800000" ToolTip="Lead actor">Lead actor</TextBlock>
+											<ComboBox Name="MovieFormActorLNFNID"></ComboBox>
+										</UniformGrid>
+
+										<UniformGrid Rows="1">
+											<TextBlock Background="#4C800000" ToolTip="Country of production">Country</TextBlock>
+											<ComboBox Name="MovieFormCountryNameID"></ComboBox>
 										</UniformGrid>
 									</UniformGrid>
 									<!--Movie premise-->
@@ -961,11 +970,11 @@
 										<UniformGrid Rows="1">
 											<Border>
 												<TextBlock ToolTip="Select rent context menu option in movies catalog" Background="#4C800000">
-													Movie
+													Movie ID
 												</TextBlock>
 											</Border>
 											<Border>
-												<ComboBox Name="OrderFormMovieTitleID"/>
+												<TextBlock Name="OrderFormMovieID"/>
 											</Border>
 										</UniformGrid>
 									</Border>
@@ -1142,6 +1151,9 @@
 							<Border>
 								<TextBlock MouseDown="AddFormat">Add Format</TextBlock>
 							</Border>
+							<Border>
+								<TextBlock MouseDown="AddGenre">Add Genre</TextBlock>
+							</Border>
 						</UniformGrid>
 						<UniformGrid  Grid.Column="1" Columns="1" Background="#7F800000" >
 							<!--Actors-->
@@ -1285,6 +1297,31 @@
 									</Border>
 								</UniformGrid>
 							</Border>
+							<!--Genres-->
+							<Border>
+								<UniformGrid Rows="1">
+									<Border>
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>Name</TextBlock>
+												<TextBox Name="AddGenreName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+									<Border>
+										<UniformGrid Columns="1">
+											<UniformGrid Rows="1">
+												<TextBlock>Name</TextBlock>
+												<ComboBox Name="UpdateGenreNameID"></ComboBox>
+											</UniformGrid>
+											<UniformGrid Rows="1">
+												<TextBlock>New name</TextBlock>
+												<TextBox Name="UpdateGenreName"></TextBox>
+											</UniformGrid>
+										</UniformGrid>
+									</Border>
+								</UniformGrid>
+							</Border>
 						</UniformGrid>
 						<UniformGrid Grid.Column="2" Columns="1" Background="#7F800000" Margin="10">
 							<UniformGrid Columns="1" Margin="10">
@@ -1325,6 +1362,14 @@
 								</Border>
 								<Border>
 									<TextBlock MouseDown="DeleteFormat">Delete format</TextBlock>
+								</Border>
+							</UniformGrid>
+							<UniformGrid Columns="1" Margin="10">
+								<Border>
+									<TextBlock MouseDown="UpdateGenre">Update genre</TextBlock>
+								</Border>
+								<Border>
+									<TextBlock MouseDown="DeleteGenre">Delete genre</TextBlock>
 								</Border>
 							</UniformGrid>
 						</UniformGrid>

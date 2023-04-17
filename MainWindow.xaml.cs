@@ -136,6 +136,7 @@ namespace WPF
 		private void ClientsGridRefresh(object sender, RoutedEventArgs e)
 		{
 			getquery(ClientsCatalog, "Select * from clients");
+			//refresh client combobox
 		}
 		private void OrdersGridRefresh(object sender, RoutedEventArgs e)
 		{
@@ -264,15 +265,15 @@ namespace WPF
 			MovieFormYear.Text = rowview.Row["year"].ToString();
 			MovieFormPrice.Text = rowview.Row["price"].ToString();
 			MovieFormPlot.Text = rowview.Row["plot"].ToString();
-			MovieFormActor.Text = rowview.Row["lead_actor"].ToString();
-			MovieFormDirector.Text = rowview.Row["director"].ToString();
+			MovieFormActorLNFNID.Text = rowview.Row["lead_actor"].ToString();
+			MovieFormDirectorLNFNID.Text = rowview.Row["director"].ToString();
 			MovieFormAge.Text = rowview.Row["age"].ToString();
 			MovieFormDuration.Text = rowview.Row["duration"].ToString();
 			MovieFormCopiesLeft.Text = rowview.Row["copies_left"].ToString();
 			MovieFormCopiesTotal.Text = rowview.Row["copies_total"].ToString();
-			MovieFormLang.Text = rowview.Row["language"].ToString();
-			MovieFormFormat.Text = rowview.Row["format"].ToString();
-			MovieFormGenre.Text = rowview.Row["genre"].ToString();
+			MovieFormLangNameID.Text = rowview.Row["language"].ToString();
+			MovieFormFormatNameID.Text = rowview.Row["format"].ToString();
+			MovieFormGenreNameID.Text = rowview.Row["genre"].ToString();
 		}
 		//Fills existing client data into form in admin panel (edit client option)
 		public void ClientEditFillForm()
@@ -293,7 +294,7 @@ namespace WPF
 			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
 			//set movie
 			int movie_id = int.Parse(rowview.Row["movie_id"].ToString());
-			OrderFormMovieTitleID.Text = getquery("select title from movies where id=" + movie_id) + " " + movie_id;
+			OrderFormMovieID.Text = getquery("select title from movies where id=" + movie_id) + " " + movie_id;
 			//set client
 			int client_id = int.Parse(rowview.Row["client_id"].ToString());
 			//first name
@@ -331,18 +332,18 @@ namespace WPF
 			//get movie_id and client_id
 			int movie_id,
 				client_id;
-			if (OrderFormMovieTitleID.Text != "" &&
+			if (OrderFormMovieID.Text != "" &&
 				OrderFormClientLNFNID.Text != "")
 			{
 				//split string and get movie id
-				movie_id = int.Parse(OrderFormMovieTitleID.Text.Split(' ')[1]);
+				movie_id = int.Parse(OrderFormMovieID.Text);
 				//split string and get client id
-				client_id = int.Parse(OrderFormClientLNFNID.Text.Split(' ')[2]);
+				client_id = int.Parse(OrderFormClientLNFNID.Text.Split(' ').Last());
 			}
 			else
 			{
-				//needed values are not present
-				MessageBox.Show("Form incomplete");
+				//no movie id or client
+				MessageBox.Show("Form incomplete: use rent context menu option in movies catalog to fill movie id and select client");
 				return 1;
 			}
 			//get dates in format dd/mm/yy (30/12/2022)
@@ -391,6 +392,8 @@ namespace WPF
 							"TODATE(" + rent_date + ",'dd/mm/yy')," +
 							"null," +
 							"null)");
+					//refresh grid
+					OrdersGridRefresh(sender, e);
 					}
 					if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
 					{
@@ -400,6 +403,8 @@ namespace WPF
 							"TODATE(" + rent_date + ",'dd/mm/yy')," +
 							"null," +
 							"TODATE(" + return_date + ",'dd/mm/yy'))");
+					//refresh grid
+					OrdersGridRefresh(sender, e);
 					}
 					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
 					{
@@ -409,6 +414,8 @@ namespace WPF
 							"TODATE(" + rent_date + ",'dd/mm/yy')," +
 							"TODATE(" + due_date + ",'dd/mm/yy')," +
 							"null)");
+					//refresh grid
+					OrdersGridRefresh(sender, e);
 					}
 					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
 					{
@@ -417,61 +424,288 @@ namespace WPF
 							"TODATE(" + rent_date + ",'dd/mm/yy')," +
 							"TODATE(" + due_date + ",'dd/mm/yy')," +
 							"TODATE(" + return_date + ",'dd/mm/yy'))");
+					//refresh grid
+					OrdersGridRefresh(sender, e);
 					}
 				}
 				else//edit mode
 				{
-				//set dates if checked
-				if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == false)
-				{
-					//due_date = "null";
-					//return_date = "null";
-					setquery("update Orders set " +
-							"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-							"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
-							"due_date=null," +
-							"return_date=null");
+					//get order_id
+					if (OrderFormID.Text != "")
+					{
+						int order_id = int.Parse(OrderFormID.Text);
+						//set dates if checked and submit
+						if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == false)
+						{
+							//due_date = "null";
+							//return_date = "null";
+							setquery("update Orders set " +
+									"client_id=" + client_id + ",movie_id=" + movie_id + "," +
+									"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
+									"due_date=null," +
+									"return_date=null");
+							//refresh grid
+							OrdersGridRefresh(sender, e);
+							return 0;
+						}
+						if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
+						{
+							//due_date="null";
+							setquery("update Orders set " +
+									"client_id=" + client_id + ",movie_id=" + movie_id + "," +
+									"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
+									"due_date=null," +
+									"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
+							//refresh grid
+							OrdersGridRefresh(sender, e);
+							return 0;
+						}
+						if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
+						{
+							//return_date = "null";
+							setquery("update Orders set " +
+									"client_id=" + client_id + ",movie_id=" + movie_id + "," +
+									"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
+									"due_date=TODATE(" + due_date + ",'dd/mm/yy')," +
+									"return_date=null");
+							//refresh grid
+							OrdersGridRefresh(sender, e);
+							return 0;
+						}
+						if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
+						{
+							setquery("update Orders set" +
+									"client_id=" + client_id + ",movie_id=" + movie_id + "," +
+									"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
+									"due_date=TODATE(" + due_date + ",'dd/mm/yy')," +
+									"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
+							//refresh grid
+							OrdersGridRefresh(sender, e);
+							return 0;
+						}
+					}
+					else
+					{
+						//needed values are not present. For edit mode order_id is needed
+						MessageBox.Show("Form incomplete: order id not set");
+						return 1;
+					}
 				}
-				if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
+			MessageBox.Show("Submit failed. None of the function conditions were met.");
+			return 1;
+		}
+		private int SubmitClient(object sender, MouseButtonEventArgs e)
+		{
+			//add mode
+			if (mode == false)
+			{
+				if (ClientFormFirstName.Text != "" && ClientFormLastName.Text != "")
 				{
-					//due_date="null";
-					setquery("update Orders set " +
-							"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-							"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
-							"due_date=null," +
-							"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
+					setquery("Insert into clients values(null," + ClientFormPhone.Text + "," + ClientFormEmail.Text +
+						"," + ClientFormFirstName.Text + "," + ClientFormLastName.Text + ")");
+					//refresh grid
+					ClientsGridRefresh(sender, e);
 				}
-				if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
+				else 
 				{
-					//return_date = "null";
-					setquery("update Orders set " +
-							"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-							"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
-							"due_date=TODATE(" + due_date + ",'dd/mm/yy')," +
-							"return_date=null");
-				}
-				if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
-				{
-					setquery("update Orders set" +
-							"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-							"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
-							"due_date=TODATE(" + due_date + ",'dd/mm/yy')," +
-							"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
+					MessageBox.Show("First name and last name have to be filled");
+					return 1;
 				}
 			}
-			MessageBox.Show("Form incomplete");
-			//refresh grid
-			return 0;
+			//edit mode
+			else 
+			{
+				if (ClientFormFirstName.Text != "" && ClientFormLastName.Text != "")
+				{
+					int client_id = int.Parse(ClientFormID.Text);
+					setquery("update clients set phone=" + ClientFormPhone.Text + ", email=" + ClientFormEmail.Text +
+							",first_name=" + ClientFormFirstName.Text + ",last_name=" + ClientFormLastName.Text + " where id=" + client_id);
+					//refresh grid
+					ClientsGridRefresh(sender, e);
+				}
+				else
+				{
+					MessageBox.Show("First name last name and id have to be filled. To set id use edit context menu option in clients catalog");
+					return 1;
+				}
+			}
+			return 1;
 		}
-		private void SubmitClient(object sender, MouseButtonEventArgs e)
+		private int SubmitMovie(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into actors values(null," + AddActorFirstName + "," + AddActorLastName + ")");
-			//refresh grid
-		}
-		private void SubmitMovie(object sender, MouseButtonEventArgs e)
-		{
-			setquery("Insert into actors values(null," + AddActorFirstName + "," + AddActorLastName + ")");
-			//refresh grid
+			//get country id from combobox
+			int country_id = int.Parse(MovieFormCountryNameID.Text.Split(' ').Last());
+			//get year
+			string year;
+			if (MovieFormYear.Text != "")
+			{
+				year = MovieFormYear.Text;
+			}
+			else
+			{
+				year = null;
+			}
+			//get duration
+			string duration;
+			if (MovieFormDuration.Text != "")
+			{
+				duration = MovieFormDuration.Text;
+			}
+			else
+			{
+				duration = null;
+			}
+			//get age
+			string age;
+			if (MovieFormAge.Text != "")
+			{
+				age = MovieFormAge.Text;
+			}
+			else
+			{
+				age = null;
+			}
+			//get total count of copies
+			string copies_total;
+			if (MovieFormCopiesTotal.Text != "")
+			{
+				copies_total = MovieFormCopiesTotal.Text;
+			}
+			else
+			{
+				copies_total = null;
+			}
+			//get count of copies left
+			string copies_left;
+			if (MovieFormCopiesLeft.Text != "")
+			{
+				copies_left = MovieFormCopiesLeft.Text;
+			}
+			else
+			{
+				copies_left = null;
+			}
+			//get rental price
+			string price;
+			if (MovieFormPrice.Text != "")
+			{
+				price = MovieFormPrice.Text;
+			}
+			else
+			{
+				price = null;
+			}
+			//get plot premise
+			string plot;
+			if (MovieFormPlot.Text != "")
+			{
+				plot = MovieFormPlot.Text;
+			}
+			else
+			{
+				plot = null;
+			}
+			//get lang_id from combobox
+			string lang_id;
+			if (MovieFormLangNameID.Text != "")
+			{
+				lang_id = MovieFormLangNameID.Text.Split(' ').Last();
+			}
+			else
+			{
+				lang_id = null;
+			}
+			//get actor_id from combobox
+			string actor_id;
+			if (MovieFormActorLNFNID.Text != "")
+			{
+				actor_id = MovieFormActorLNFNID.Text.Split(' ').Last();
+			}
+			else
+			{
+				actor_id = null;
+			}
+			//get director_id from combobox
+			string director_id;
+			if (MovieFormDirectorLNFNID.Text != "")
+			{
+				director_id = MovieFormDirectorLNFNID.Text.Split(' ').Last();
+			}
+			else
+			{
+				director_id = null;
+			}
+			//get format_id from combobox
+			string format_id;
+			if (MovieFormFormatNameID.Text != "")
+			{
+				format_id = MovieFormFormatNameID.Text.Split(' ').Last();
+			}
+			else
+			{
+				format_id = null;
+			}
+			//get genre_id from combobox
+			string genre_id;
+			if (MovieFormFormatNameID.Text != "")
+			{
+				genre_id = MovieFormGenreNameID.Text.Split(' ').Last();
+			}
+			else
+			{
+				genre_id = null;
+			}
+			//poster_path and trailer_path have to be set in their respective panels
+
+			//add mode
+			if (mode == false)
+			{
+				if (MovieFormTitle.Text != "")
+				{
+					setquery("Insert into movies values(null," + MovieFormTitle.Text + "," + year +
+						"," + country_id + "," + duration + "," + age + "," + copies_total + "," + 
+						price + "," + copies_left + "," + plot + "," + lang_id + "," + actor_id + "," + director_id +
+						 format_id + ",null,null," + genre_id + ")");
+					//refresh grid
+					ClientsGridRefresh(null, null);
+				}
+				else
+				{
+					MessageBox.Show("Movie title not set");
+					return 1;
+				}
+			}
+			//edit mode
+			else
+			{
+				//get movie_id from combobox
+				string movie_id;
+				if (MovieFormFormatNameID.Text != "")
+				{
+					movie_id = MovieFormID.Text;
+				}
+				else
+				{
+					MessageBox.Show("Movie id not set. Use edit context menu option from movies catalog");
+					return 1;
+				}
+				if (MovieFormTitle.Text != "")
+				{
+					setquery("update movies set movie_id=" + movie_id + ",name=" + MovieFormTitle.Text +
+						",year=" + year + ",country_id=" + country_id + ",duration=" + duration + ",age=" + age +
+						",copies_total=" + copies_total + ",price=" + price + ",left_count=" + copies_left +
+						",plot=" + plot + ",lang_id=" + lang_id + ",actor_id=" + actor_id + ",director_id=" + director_id +
+						",format_id=" + format_id + ")");
+					//refresh grid
+					ClientsGridRefresh(null, null);
+				}
+				else
+				{
+					MessageBox.Show("Movie title not set");
+					return 1;
+				}
+			}
+			return 1;
 		}
 		//Movies right click menu
 		private void MovieItem_rent(object sender, RoutedEventArgs e)
@@ -566,6 +800,13 @@ namespace WPF
 			}
 		}
 		private void FilterMovieDuration(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Return)
+			{
+
+			}
+		}
+		private void FilterMovieGenre(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Return)
 			{
@@ -745,105 +986,137 @@ namespace WPF
 				"Langs (languages)");
 		}
 		//Admin panel 2
-		//Add
+		//New row adding
 		private void AddActor(object sender, MouseButtonEventArgs e)
 		{
 			setquery("Insert into actors values(null,"+AddActorFirstName+","+AddActorLastName+")");
+			//refresh actors combobox
 		}
 		private void AddDirector(object sender, MouseButtonEventArgs e)
 		{
 			setquery("Insert into directors values(null," + AddActorFirstName + "," + AddActorLastName + ")");
+			//refresh directors combobox
 		}
 		private void AddCountry(object sender, MouseButtonEventArgs e)
 		{
 			setquery("Insert into countries values(null," + AddCountryName + ")");
+			//refresh countries combobox
 		}
 		private void AddLang(object sender, MouseButtonEventArgs e)
 		{
 			setquery("Insert into langs values(null," + AddLangName + ")");
+			//refresh langs combobox
 		}
 		private void AddFormat(object sender, MouseButtonEventArgs e)
 		{
 			setquery("Insert into formats values(null," + AddFormatName + ")");
+			//refresh formats combobox
 		}
-		//Update
+		private void AddGenre(object sender, MouseButtonEventArgs e)
+		{
+			setquery("Insert into genres values(null," + AddGenreName + ")");
+			//refresh genres combobox
+		}
+		//Existing row pdating
 		private void UpdateActor(object sender, MouseButtonEventArgs e)
 		{
 			//combobox contains last_name first_name id
-			string[] tokens = UpdateActorFNLNID.Text.Split(' ');
+			string id = UpdateActorFNLNID.Text.Split(' ').Last();
 
-			setquery("update actors set first_name=" + UpdateActorFirstName
-									+ ",last_name=" + UpdateActorLastName
-									+ "where id=" + tokens[2] +")");
+			setquery("update actors set first_name=" + UpdateActorFirstName + ",last_name=" + UpdateActorLastName
+			+ "where id=" + id +")");
+			//refresh actors combobox
 		}
 		private void UpdateDirector(object sender, MouseButtonEventArgs e)
 		{
 			//combobox contains last_name first_name id
-			string[] tokens = UpdateDirectorFNLNID.Text.Split(' ');
+			string id = UpdateDirectorFNLNID.Text.Split(' ').Last();
 
-			setquery("update directors set first_name=" + UpdateDirectorFirstName
-									+ ",last_name=" + UpdateDirectorLastName
-									+ "where id=" + tokens[2] + ")");
+			setquery("update directors set first_name=" + UpdateDirectorFirstName + ",last_name=" + UpdateDirectorLastName
+			+ "where id=" + id + ")");
+			//refresh directors combobox
 		}
 		private void UpdateCountry(object sender, MouseButtonEventArgs e)
 		{
 			//combobox contains name id
-			string[] tokens = UpdateCountryNameID.Text.Split(' ');
+			string id = UpdateCountryNameID.Text.Split(' ').Last();
 
-			setquery("update countries set name=" + UpdateCountryName
-									+ "where id=" + tokens[1] + ")");
+			setquery("update countries set name=" + UpdateCountryName + "where id=" + id + ")");
+			//refresh countries combobox
 		}
 		private void UpdateLang(object sender, MouseButtonEventArgs e)
 		{
 			//combobox contains name id
-			string[] tokens = UpdateLangNameID.Text.Split(' ');
+			string id = UpdateLangNameID.Text.Split(' ').Last();
 
-			setquery("update langs set name=" + UpdateLangName
-									+ "where id=" + tokens[1] + ")");
+			setquery("update langs set name=" + UpdateLangName + "where id=" + id + ")");
+			//refresh langs combobox
 		}
 		private void UpdateFormat(object sender, MouseButtonEventArgs e)
 		{
 			//combobox contains name id
-			string[] tokens = UpdateFormatNameID.Text.Split(' ');
+			string id = UpdateFormatNameID.Text.Split(' ').Last();
 
-			setquery("update formats set name=" + UpdateFormatName
-									+ "where id=" + tokens[1] + ")");
+			setquery("update formats set name=" + UpdateFormatName + "where id=" + id + ")");
+			//refresh formats combobox
 		}
-		//Delete
+		private void UpdateGenre(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains name id
+			string id = UpdateGenreNameID.Text.Split(' ').Last();
+
+			setquery("update genres set name=" + UpdateGenreName + "where id=" + id + ")");
+			//refresh genres combobox
+		}
+		//Existing row Deletion
 		private void DeleteActor(object sender, MouseButtonEventArgs e)
 		{
 			//combobox contains last_name first_name id
-			string[] tokens = UpdateActorFNLNID.Text.Split(' ');
+			string id = UpdateActorFNLNID.Text.Split(' ').Last();
 
-			setquery("delete from actors where id=" + tokens[2] + ")");
+			setquery("delete from actors where id=" + id + ")");
+			//refresh actors combobox
 		}
 		private void DeleteDirector(object sender, MouseButtonEventArgs e)
 		{
 			//combobox contains last_name first_name id
-			string[] tokens = UpdateDirectorFNLNID.Text.Split(' ');
+			string id = UpdateDirectorFNLNID.Text.Split(' ').Last();
 
-			setquery("delete from directors where id=" + tokens[2] + ")");
+			setquery("delete from directors where id=" + id + ")");
+			//refresh directors combobox
 		}
 		private void DeleteCountry(object sender, MouseButtonEventArgs e)
 		{
 			//combobox contains name id
-			string[] tokens = UpdateCountryNameID.Text.Split(' ');
+			string id = UpdateCountryNameID.Text.Split(' ').Last();
 
-			setquery("delete from countries where id=" + tokens[1] + ")");
+			setquery("delete from countries where id=" + id + ")");
+			//refresh countries combobox
 		}
 		private void DeleteLang(object sender, MouseButtonEventArgs e)
 		{
 			//combobox contains name id
-			string[] tokens = UpdateLangNameID.Text.Split(' ');
+			string id = UpdateLangNameID.Text.Split(' ').Last();
 
-			setquery("delete from langs where id=" + tokens[1] + ")");
+			setquery("delete from langs where id=" + id + ")");
+			//refresh langs combobox
 		}
 		private void DeleteFormat(object sender, MouseButtonEventArgs e)
 		{
 			//combobox contains name id
-			string[] tokens = UpdateFormatNameID.Text.Split(' ');
+			string id = UpdateFormatNameID.Text.Split(' ').Last();
 
-			setquery("delete from formats where id=" + tokens[1] + ")");
+			setquery("delete from formats where id=" + id + ")");
+			//refresh formats combobox
 		}
+		private void DeleteGenre(object sender, MouseButtonEventArgs e)
+		{
+			//combobox contains name id
+			string id = UpdateGenreNameID.Text.Split(' ').Last();
+
+			setquery("delete from genres where id=" + id + ")");
+			//refresh genres combobox
+		}
+
 	}
 }

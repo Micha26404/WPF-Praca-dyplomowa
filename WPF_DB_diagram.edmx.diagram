@@ -11,15 +11,17 @@
         <EntityTypeShape EntityType="DBModel.clients" Width="1.5" PointX="6" PointY="1.125" />
         <EntityTypeShape EntityType="DBModel.orders" Width="1.5" PointX="6" PointY="3.875" />
         <EntityTypeShape EntityType="DBModel.langs" Width="1.5" PointX="3.875" PointY="4.625" />
-        <EntityTypeShape EntityType="DBModel.formats" Width="1.5" PointX="2.5" PointY="6.375" />
-        <EntityTypeShape EntityType="DBModel.countries" Width="1.5" PointX="0.5" PointY="6.375" />
+        <EntityTypeShape EntityType="DBModel.formats" Width="1.5" PointX="0.625" PointY="6.25" />
+        <EntityTypeShape EntityType="DBModel.countries" Width="1.5" PointX="2.375" PointY="6.25" />
         <AssociationConnector Association="DBModel.moviescountries" />
         <AssociationConnector Association="DBModel.movieslangs" />
         <AssociationConnector Association="DBModel.moviesformats" ></AssociationConnector>
         <AssociationConnector Association="DBModel.moviesdirectors" />
         <AssociationConnector Association="DBModel.moviesactors" />
         <AssociationConnector Association="DBModel.clientsorders" />
-        <AssociationConnector Association="DBModel.moviesorders" />
+        <AssociationConnector Association="DBModel.FK_moviesorders" />
+        <EntityTypeShape EntityType="DBModel.genres" Width="1.5" PointX="4.375" PointY="6.75" />
+        <AssociationConnector Association="DBModel.genresmovies" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
