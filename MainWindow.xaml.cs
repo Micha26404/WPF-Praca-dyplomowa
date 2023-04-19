@@ -30,18 +30,77 @@ namespace WPF
 		{
 			InitializeComponent();
 		}
+		public void MoviesGridRefresh() {
+			getquery(MoviesCatalog,
+					"Select movies.id, movies.name as title, movies.year, movies.duration, movies.age, movies.price," +
+					"movies.plot," +
+					"formats.name as format," +
+					"CONCAT(directors.last_name,directors.first_name) as director," +
+					"CONCAT(actors.last_name,actors.first_name) as lead_actor," +
+					"countries.name as country, langs.name as language," +
+					"movies.copies_left, movies.copies_total from movies " +
+					"join actors on actors.id = movies.actor_id " +
+					"join countries on countries.id = movies.country_id " +
+					"join langs on langs.id = movies.lang_id " +
+					"join directors on directors.id = movies.director_id " +
+					"join formats on formats.id = movies.format_id");
+		}
+		public void ClientsGridRefresh()
+		{
+			getquery(ClientsCatalog, "Select * from clients");
+		}
+		public void OrdersGridRefresh()
+		{
+			getquery(OrdersCatalog, "Select orders.id,CONCAT(client.last_name,client.first_name) as client," +
+				"CONCAT(movie.name,movie.year) as movie, orders.rent_date, orders.due_date, orders.return_date " +
+				"from orders " +
+				"join movies on movie.id=order.movie_id " +
+				"join clients on clients.id=orders.client_id");
+		}
+		public void MoviesComboboxRefresh() 
+		{
+			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
+			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
+			ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
+			ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
+			ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
+			ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
+		}
+		public void ClientsComboboxRefresh()
+		{
+			ComboboxRefresh(OrderFormClientLNFNID, "select last_name,first_name,id from clients");
+		}
+		public void Admin2ComboboxesRefresh()
+		{
+			//Actors
+			ComboboxRefresh(UpdateActorFNLNID, "select * from actors last_name,first_name,id");
+			//Directors
+			ComboboxRefresh(UpdateDirectorFNLNID, "select * from directors last_name,first_name,id");
+			//Countries
+			ComboboxRefresh(UpdateCountryNameID, "select * from countries name,id");
+			//Languages
+			ComboboxRefresh(UpdateLangNameID, "select * from langs name,id");
+			//Formats
+			ComboboxRefresh(UpdateFormatNameID, "select * from formats name,id");
+			//Genres
+			ComboboxRefresh(UpdateGenreNameID, "select * from genres name,id");
+		}
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			MoviesGridRefresh(sender, e);
-			ClientsGridRefresh(sender, e);
-			OrdersGridRefresh(sender, e);
+			MoviesGridRefresh();
+			MoviesComboboxRefresh();
+			ClientsGridRefresh();
+			ClientsComboboxRefresh();
+			OrdersGridRefresh();
+			//Admin Panel 2 Comboboxes
+			Admin2ComboboxesRefresh();
 		}
 		//sql panel button
 		private void QueryExecuteButton_Click(object sender, RoutedEventArgs e)
 		{
 			SQLquery();
 		}
-		//query with feedback info
+		//setquery has error feedback
 		public void setquery(string query)
 		{
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
@@ -76,6 +135,7 @@ namespace WPF
 				MessageBox.Show("no rows affected:\n" + ex.ToString());
 			}
 		}
+		//for sql panel; select getquery or setquery based on select existence
 		public void SQLquery()
 		{
 			if (SQLqueryText.Text != string.Empty)
@@ -87,6 +147,7 @@ namespace WPF
 				else getquery(SQLgrid, SQLqueryText.Text);
 			}
 		}
+		//fill or refresh grid items
 		public void getquery(DataGrid grid, string query)
 		{
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
@@ -100,8 +161,10 @@ namespace WPF
 
 			DataTable dtRecord = new DataTable();
 			sqlDataAdap.Fill(dtRecord);
+			con.Close();
 			grid.ItemsSource = dtRecord.DefaultView;
 		}
+		//query for single row to string
 		public string getquery(string query)
 		{
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
@@ -115,36 +178,27 @@ namespace WPF
 
 			DataTable dtRecord = new DataTable();
 			sqlDataAdap.Fill(dtRecord);
-			return dtRecord.ToString();
+			con.Close();
+			return dtRecord.Rows[0].ToString();
 		}
-		private void MoviesGridRefresh(object sender, RoutedEventArgs e)
+		//Combobox items clear and fill (refresh)
+		public void ComboboxRefresh(ComboBox combo,string query) 
 		{
-			getquery(MoviesCatalog,
-				"Select movies.id, movies.name as title, movies.year, movies.duration, movies.age, movies.price," +
-				"movies.plot," +
-				"formats.name as format," +
-				"CONCAT(directors.last_name,directors.first_name) as director," +
-				"CONCAT(actors.last_name,actors.first_name) as lead_actor," +
-				"countries.name as country, langs.name as language," +
-				"movies.copies_left, movies.copies_total from movies " +
-				"join actors on actors.id = movies.actor_id " +
-				"join countries on countries.id = movies.country_id " +
-				"join langs on langs.id = movies.lang_id " +
-				"join directors on directors.id = movies.director_id " +
-				"join formats on formats.id = movies.format_id");
-		}
-		private void ClientsGridRefresh(object sender, RoutedEventArgs e)
-		{
-			getquery(ClientsCatalog, "Select * from clients");
-			//refresh client combobox
-		}
-		private void OrdersGridRefresh(object sender, RoutedEventArgs e)
-		{
-			getquery(OrdersCatalog, "Select orders.id,CONCAT(client.last_name,client.first_name) as client," +
-				"CONCAT(movie.name,movie.year) as movie, orders.rent_date, orders.due_date, orders.return_date " +
-				"from orders " +
-				"join movies on movie.id=order.movie_id " +
-				"join clients on clients.id=orders.client_id");
+			combo.Items.Clear();
+
+			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
+			SqlConnection con = new SqlConnection(strConnection);
+
+			SqlCommand sqlCmd = new SqlCommand();
+			sqlCmd.Connection = con;
+			sqlCmd.CommandType = CommandType.Text;
+			sqlCmd.CommandText = query;
+			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
+
+			DataTable dtRecord = new DataTable();
+			sqlDataAdap.Fill(dtRecord);
+			con.Close();
+			combo.ItemsSource = dtRecord.DefaultView;
 		}
 		public int getmovie_id() {
 			//get selected item id from selected row
@@ -241,6 +295,7 @@ namespace WPF
 			Poster.Source = null;
 			//remove movie poster from database
 			setquery("update movies set poster_path=null where id=" + getmovie_id());
+			MoviesGridRefresh();
 		}
 		private void SetPoster(object sender, MouseButtonEventArgs e)
 		{
@@ -257,7 +312,7 @@ namespace WPF
 				Poster.Source = img;
 				//add poster_path to database
 				setquery("update movies set poster_path=" + op.FileName + " where id=" + getmovie_id());
-				MoviesGridRefresh(null, null);
+				MoviesGridRefresh();
 			}
 		}
 		//Fills existing movie data into form in admin panel (rent movie option)
@@ -391,45 +446,69 @@ namespace WPF
 					{
 						//due_date = "null";
 						//return_date = "null";
-					setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
+					//update movie copies left available if any
+					int copies_left = int.Parse(getquery("select copies_left from movies where id=" + movie_id));
+					if (copies_left > 0) { 
+						copies_left--;
+						setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
 							client_id + "," + movie_id + "," +
 							"TODATE(" + rent_date + ",'dd/mm/yy')," +
 							"null," +
 							"null)");
-					//refresh grid
-					OrdersGridRefresh(sender, e);
+						setquery("update movies set copies_left=" + copies_left);
+						//refresh grid
+						OrdersGridRefresh();
 					}
+				}
 					if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
 					{
 						//due_date="null";
-					setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
-							client_id + "," + movie_id + "," +
-							"TODATE(" + rent_date + ",'dd/mm/yy')," +
-							"null," +
-							"TODATE(" + return_date + ",'dd/mm/yy'))");
-					//refresh grid
-					OrdersGridRefresh(sender, e);
+						int copies_left = int.Parse(getquery("select copies_left from movies where id=" + movie_id));
+						if (copies_left > 0)
+						{
+							copies_left--;
+							setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
+								client_id + "," + movie_id + "," +
+								"TODATE(" + rent_date + ",'dd/mm/yy')," +
+								"null," +
+								"TODATE(" + return_date + ",'dd/mm/yy'))");
+							setquery("update movies set copies_left=" + copies_left);
+							//refresh grid
+							OrdersGridRefresh();
+						}
 					}
 					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
 					{
 						//return_date = "null";
-					setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
-							client_id + "," + movie_id + "," +
-							"TODATE(" + rent_date + ",'dd/mm/yy')," +
-							"TODATE(" + due_date + ",'dd/mm/yy')," +
-							"null)");
-					//refresh grid
-					OrdersGridRefresh(sender, e);
+						int copies_left = int.Parse(getquery("select copies_left from movies where id=" + movie_id));
+						if (copies_left > 0)
+						{
+							copies_left--;
+							setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
+								client_id + "," + movie_id + "," +
+								"TODATE(" + rent_date + ",'dd/mm/yy')," +
+								"TODATE(" + due_date + ",'dd/mm/yy')," +
+								"null)");
+							setquery("update movies set copies_left=" + copies_left);
+							//refresh grid
+							OrdersGridRefresh();
+						}
 					}
 					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
 					{
-					setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
-							client_id + "," + movie_id + "," +
-							"TODATE(" + rent_date + ",'dd/mm/yy')," +
-							"TODATE(" + due_date + ",'dd/mm/yy')," +
-							"TODATE(" + return_date + ",'dd/mm/yy'))");
-					//refresh grid
-					OrdersGridRefresh(sender, e);
+						int copies_left = int.Parse(getquery("select copies_left from movies where id=" + movie_id));
+						if (copies_left > 0)
+						{
+							copies_left--;
+							setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
+								client_id + "," + movie_id + "," +
+								"TODATE(" + rent_date + ",'dd/mm/yy')," +
+								"TODATE(" + due_date + ",'dd/mm/yy')," +
+								"TODATE(" + return_date + ",'dd/mm/yy'))");
+							setquery("update movies set copies_left=" + copies_left);
+							//refresh grid
+							OrdersGridRefresh();
+						}
 					}
 				}
 				else//edit mode
@@ -449,7 +528,7 @@ namespace WPF
 									"due_date=null," +
 									"return_date=null");
 							//refresh grid
-							OrdersGridRefresh(sender, e);
+							OrdersGridRefresh();
 							return 0;
 						}
 						if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
@@ -461,7 +540,7 @@ namespace WPF
 									"due_date=null," +
 									"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
 							//refresh grid
-							OrdersGridRefresh(sender, e);
+							OrdersGridRefresh();
 							return 0;
 						}
 						if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
@@ -473,7 +552,7 @@ namespace WPF
 									"due_date=TODATE(" + due_date + ",'dd/mm/yy')," +
 									"return_date=null");
 							//refresh grid
-							OrdersGridRefresh(sender, e);
+							OrdersGridRefresh();
 							return 0;
 						}
 						if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
@@ -484,7 +563,7 @@ namespace WPF
 									"due_date=TODATE(" + due_date + ",'dd/mm/yy')," +
 									"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
 							//refresh grid
-							OrdersGridRefresh(sender, e);
+							OrdersGridRefresh();
 							return 0;
 						}
 					}
@@ -509,7 +588,8 @@ namespace WPF
 						"values(" + ClientFormPhone.Text + "," + ClientFormEmail.Text +
 						"," + ClientFormFirstName.Text + "," + ClientFormLastName.Text + ")");
 					//refresh grid
-					ClientsGridRefresh(sender, e);
+					ClientsGridRefresh();
+					ClientsComboboxRefresh();
 				}
 				else 
 				{
@@ -526,7 +606,8 @@ namespace WPF
 					setquery("update clients set phone=" + ClientFormPhone.Text + ", email=" + ClientFormEmail.Text +
 							",first_name=" + ClientFormFirstName.Text + ",last_name=" + ClientFormLastName.Text + " where id=" + client_id);
 					//refresh grid
-					ClientsGridRefresh(sender, e);
+					ClientsGridRefresh();
+					ClientsComboboxRefresh();
 				}
 				else
 				{
@@ -673,7 +754,7 @@ namespace WPF
 						price + "," + copies_left + "," + plot + "," + lang_id + "," + actor_id + "," + director_id +
 						 format_id + ",null,null," + genre_id + ")");
 					//refresh grid
-					ClientsGridRefresh(null, null);
+					ClientsGridRefresh();
 				}
 				else
 				{
@@ -703,7 +784,7 @@ namespace WPF
 						",plot=" + plot + ",lang_id=" + lang_id + ",actor_id=" + actor_id + ",director_id=" + director_id +
 						",format_id=" + format_id + ")");
 					//refresh grid
-					ClientsGridRefresh(null, null);
+					ClientsGridRefresh();
 				}
 				else
 				{
@@ -733,7 +814,7 @@ namespace WPF
 		private void MovieItem_delete(object sender, RoutedEventArgs e)
 		{
 			setquery("delete from movies where id="+getmovie_id());
-			MoviesGridRefresh(null, null);
+			MoviesGridRefresh();
 		}
 		private void MovieItem_poster(object sender, RoutedEventArgs e)
 		{
@@ -769,7 +850,7 @@ namespace WPF
 			int copies_left = int.Parse(getquery("select copies_left from movies where id="+movie_id));
 			setquery("update movies set copies_left=" + copies_left + 1 +" where id=" + movie_id);
 
-			OrdersGridRefresh(sender, e);
+			OrdersGridRefresh();
 		}
 		private void OrderItem_edit(object sender, RoutedEventArgs e)
 		{
@@ -781,7 +862,7 @@ namespace WPF
 		private void OrderItem_delete(object sender, RoutedEventArgs e)
 		{
 			setquery("delete from orders where id=" + getorder_id());
-			OrdersGridRefresh(null, null);
+			OrdersGridRefresh();
 		}
 		//Filter movies
 		private void FilterMovieTitle(object sender, KeyEventArgs e)
@@ -978,7 +1059,6 @@ namespace WPF
 			ModeSelected.Background = radialGradient;
 			SubmitPanel.Background = radialGradient;
 		}
-		
 		private void ListTables(object sender, MouseButtonEventArgs e)
 		{
 			MessageBox.Show("Available tables:\n" +
@@ -997,31 +1077,37 @@ namespace WPF
 		{
 			setquery("Insert into actors (first_name,last_name) values("+AddActorFirstName+","+AddActorLastName+")");
 			//refresh actors combobox
+			ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
 		}
 		private void AddDirector(object sender, MouseButtonEventArgs e)
 		{
 			setquery("Insert into directors (first_name,last_name) values(" + AddActorFirstName + "," + AddActorLastName + ")");
 			//refresh directors combobox
+			ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
 		}
 		private void AddCountry(object sender, MouseButtonEventArgs e)
 		{
 			setquery("Insert into countries (name) values(" + AddCountryName + ")");
 			//refresh countries combobox
+			ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
 		}
 		private void AddLang(object sender, MouseButtonEventArgs e)
 		{
 			setquery("Insert into langs (name) values(" + AddLangName + ")");
 			//refresh langs combobox
+			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
 		}
 		private void AddFormat(object sender, MouseButtonEventArgs e)
 		{
 			setquery("Insert into formats (name) values(" + AddFormatName + ")");
 			//refresh formats combobox
+			ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
 		}
 		private void AddGenre(object sender, MouseButtonEventArgs e)
 		{
 			setquery("Insert into genres (name) values(" + AddGenreName + ")");
 			//refresh genres combobox
+			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
 		}
 		//Existing row pdating
 		private void UpdateActor(object sender, MouseButtonEventArgs e)
@@ -1032,6 +1118,7 @@ namespace WPF
 			setquery("update actors set first_name=" + UpdateActorFirstName + ",last_name=" + UpdateActorLastName
 			+ "where id=" + id +")");
 			//refresh actors combobox
+			ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
 		}
 		private void UpdateDirector(object sender, MouseButtonEventArgs e)
 		{
@@ -1041,6 +1128,7 @@ namespace WPF
 			setquery("update directors set first_name=" + UpdateDirectorFirstName + ",last_name=" + UpdateDirectorLastName
 			+ "where id=" + id + ")");
 			//refresh directors combobox
+			ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
 		}
 		private void UpdateCountry(object sender, MouseButtonEventArgs e)
 		{
@@ -1049,6 +1137,7 @@ namespace WPF
 
 			setquery("update countries set name=" + UpdateCountryName + "where id=" + id + ")");
 			//refresh countries combobox
+			ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
 		}
 		private void UpdateLang(object sender, MouseButtonEventArgs e)
 		{
@@ -1057,6 +1146,7 @@ namespace WPF
 
 			setquery("update langs set name=" + UpdateLangName + "where id=" + id + ")");
 			//refresh langs combobox
+			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
 		}
 		private void UpdateFormat(object sender, MouseButtonEventArgs e)
 		{
@@ -1065,6 +1155,7 @@ namespace WPF
 
 			setquery("update formats set name=" + UpdateFormatName + "where id=" + id + ")");
 			//refresh formats combobox
+			ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
 		}
 		private void UpdateGenre(object sender, MouseButtonEventArgs e)
 		{
@@ -1073,6 +1164,7 @@ namespace WPF
 
 			setquery("update genres set name=" + UpdateGenreName + "where id=" + id + ")");
 			//refresh genres combobox
+			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
 		}
 		//Existing row Deletion
 		private void DeleteActor(object sender, MouseButtonEventArgs e)
@@ -1082,6 +1174,7 @@ namespace WPF
 
 			setquery("delete from actors where id=" + id + ")");
 			//refresh actors combobox
+			ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
 		}
 		private void DeleteDirector(object sender, MouseButtonEventArgs e)
 		{
@@ -1090,6 +1183,7 @@ namespace WPF
 
 			setquery("delete from directors where id=" + id + ")");
 			//refresh directors combobox
+			ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
 		}
 		private void DeleteCountry(object sender, MouseButtonEventArgs e)
 		{
@@ -1098,6 +1192,7 @@ namespace WPF
 
 			setquery("delete from countries where id=" + id + ")");
 			//refresh countries combobox
+			ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
 		}
 		private void DeleteLang(object sender, MouseButtonEventArgs e)
 		{
@@ -1106,6 +1201,7 @@ namespace WPF
 
 			setquery("delete from langs where id=" + id + ")");
 			//refresh langs combobox
+			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
 		}
 		private void DeleteFormat(object sender, MouseButtonEventArgs e)
 		{
@@ -1114,6 +1210,7 @@ namespace WPF
 
 			setquery("delete from formats where id=" + id + ")");
 			//refresh formats combobox
+			ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
 		}
 		private void DeleteGenre(object sender, MouseButtonEventArgs e)
 		{
@@ -1122,7 +1219,7 @@ namespace WPF
 
 			setquery("delete from genres where id=" + id + ")");
 			//refresh genres combobox
+			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
 		}
-
 	}
 }
