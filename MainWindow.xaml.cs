@@ -140,7 +140,11 @@ namespace WPF
 		}
 		private void OrdersGridRefresh(object sender, RoutedEventArgs e)
 		{
-			getquery(OrdersCatalog, "Select * from orders");
+			getquery(OrdersCatalog, "Select orders.id,CONCAT(client.last_name,client.first_name) as client," +
+				"CONCAT(movie.name,movie.year) as movie, orders.rent_date, orders.due_date, orders.return_date " +
+				"from orders " +
+				"join movies on movie.id=order.movie_id " +
+				"join clients on clients.id=orders.client_id");
 		}
 		public int getmovie_id() {
 			//get selected item id from selected row
@@ -387,8 +391,8 @@ namespace WPF
 					{
 						//due_date = "null";
 						//return_date = "null";
-					setquery("Insert into Orders values" +
-							"(null," + client_id + "," + movie_id + "," +
+					setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
+							client_id + "," + movie_id + "," +
 							"TODATE(" + rent_date + ",'dd/mm/yy')," +
 							"null," +
 							"null)");
@@ -398,8 +402,8 @@ namespace WPF
 					if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
 					{
 						//due_date="null";
-					setquery("Insert into Orders values" +
-							"(null," + client_id + "," + movie_id + "," +
+					setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
+							client_id + "," + movie_id + "," +
 							"TODATE(" + rent_date + ",'dd/mm/yy')," +
 							"null," +
 							"TODATE(" + return_date + ",'dd/mm/yy'))");
@@ -409,8 +413,8 @@ namespace WPF
 					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
 					{
 						//return_date = "null";
-					setquery("Insert into Orders values" +
-							"(null," + client_id + "," + movie_id + "," +
+					setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
+							client_id + "," + movie_id + "," +
 							"TODATE(" + rent_date + ",'dd/mm/yy')," +
 							"TODATE(" + due_date + ",'dd/mm/yy')," +
 							"null)");
@@ -419,8 +423,8 @@ namespace WPF
 					}
 					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
 					{
-					setquery("Insert into Orders values" +
-							"(null," + client_id + "," + movie_id + "," +
+					setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
+							client_id + "," + movie_id + "," +
 							"TODATE(" + rent_date + ",'dd/mm/yy')," +
 							"TODATE(" + due_date + ",'dd/mm/yy')," +
 							"TODATE(" + return_date + ",'dd/mm/yy'))");
@@ -501,7 +505,8 @@ namespace WPF
 			{
 				if (ClientFormFirstName.Text != "" && ClientFormLastName.Text != "")
 				{
-					setquery("Insert into clients values(null," + ClientFormPhone.Text + "," + ClientFormEmail.Text +
+					setquery("Insert into clients (phone,email,first_name,last_name)" +
+						"values(" + ClientFormPhone.Text + "," + ClientFormEmail.Text +
 						"," + ClientFormFirstName.Text + "," + ClientFormLastName.Text + ")");
 					//refresh grid
 					ClientsGridRefresh(sender, e);
@@ -662,7 +667,8 @@ namespace WPF
 			{
 				if (MovieFormTitle.Text != "")
 				{
-					setquery("Insert into movies values(null," + MovieFormTitle.Text + "," + year +
+					setquery("Insert into movies (name,year,country_id,duration,age,total_count,price,left_count,plot,lang_id,actor_id,director_id,format_id,poster_path,trailer_path,genre_id) " +
+						"values(" + MovieFormTitle.Text + "," + year +
 						"," + country_id + "," + duration + "," + age + "," + copies_total + "," + 
 						price + "," + copies_left + "," + plot + "," + lang_id + "," + actor_id + "," + director_id +
 						 format_id + ",null,null," + genre_id + ")");
@@ -989,32 +995,32 @@ namespace WPF
 		//New row adding
 		private void AddActor(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into actors values(null,"+AddActorFirstName+","+AddActorLastName+")");
+			setquery("Insert into actors (first_name,last_name) values("+AddActorFirstName+","+AddActorLastName+")");
 			//refresh actors combobox
 		}
 		private void AddDirector(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into directors values(null," + AddActorFirstName + "," + AddActorLastName + ")");
+			setquery("Insert into directors (first_name,last_name) values(" + AddActorFirstName + "," + AddActorLastName + ")");
 			//refresh directors combobox
 		}
 		private void AddCountry(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into countries values(null," + AddCountryName + ")");
+			setquery("Insert into countries (name) values(" + AddCountryName + ")");
 			//refresh countries combobox
 		}
 		private void AddLang(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into langs values(null," + AddLangName + ")");
+			setquery("Insert into langs (name) values(" + AddLangName + ")");
 			//refresh langs combobox
 		}
 		private void AddFormat(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into formats values(null," + AddFormatName + ")");
+			setquery("Insert into formats (name) values(" + AddFormatName + ")");
 			//refresh formats combobox
 		}
 		private void AddGenre(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into genres values(null," + AddGenreName + ")");
+			setquery("Insert into genres (name) values(" + AddGenreName + ")");
 			//refresh genres combobox
 		}
 		//Existing row pdating
