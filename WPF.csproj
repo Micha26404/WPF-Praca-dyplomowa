@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,12 +52,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -91,19 +84,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="actor.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>actor.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="actor.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>actor.tt</DependentUpon>
-    </Compile>
-    <Compile Include="actors.cs">
-      <DependentUpon>order.tt</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -117,114 +97,6 @@
     <Compile Include="classes\langs.cs" />
     <Compile Include="classes\movies.cs" />
     <Compile Include="classes\orders.cs" />
-    <Compile Include="client.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>client.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="client.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>client.tt</DependentUpon>
-    </Compile>
-    <Compile Include="clients.cs">
-      <DependentUpon>order.tt</DependentUpon>
-    </Compile>
-    <Compile Include="countries.cs">
-      <DependentUpon>order.tt</DependentUpon>
-    </Compile>
-    <Compile Include="country.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>country.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="country.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>country.tt</DependentUpon>
-    </Compile>
-    <Compile Include="director.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>director.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="director.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>director.tt</DependentUpon>
-    </Compile>
-    <Compile Include="directors.cs">
-      <DependentUpon>order.tt</DependentUpon>
-    </Compile>
-    <Compile Include="format.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>format.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="format.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>format.tt</DependentUpon>
-    </Compile>
-    <Compile Include="formats.cs">
-      <DependentUpon>order.tt</DependentUpon>
-    </Compile>
-    <Compile Include="genres.cs">
-      <DependentUpon>order.tt</DependentUpon>
-    </Compile>
-    <Compile Include="lang.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>lang.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="lang.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>lang.tt</DependentUpon>
-    </Compile>
-    <Compile Include="langs.cs">
-      <DependentUpon>order.tt</DependentUpon>
-    </Compile>
-    <Compile Include="movie.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>movie.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="movie.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>movie.tt</DependentUpon>
-    </Compile>
-    <Compile Include="movies.cs">
-      <DependentUpon>order.tt</DependentUpon>
-    </Compile>
-    <Compile Include="order.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>order.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="order.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>order.tt</DependentUpon>
-    </Compile>
-    <Compile Include="orders.cs">
-      <DependentUpon>order.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WPF_DBDataSet.cs">
-      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="WPF_DBDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="WPF_DBDataSet11.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WPF_DBDataSet11.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="WPF_DB_context.cs" />
     <Compile Include="WPF_DB_diagram.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -236,11 +108,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WPF_DB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WPF_DB.Context.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -262,28 +129,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>WPF_DB_diagram.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="WPF_DBDataSet.xsc">
-      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="WPF_DBDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>WPF_DBDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="WPF_DBDataSet.xss">
-      <DependentUpon>WPF_DBDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="WPF_DBDataSet11.xsc">
-      <DependentUpon>WPF_DBDataSet11.xsd</DependentUpon>
-    </None>
-    <None Include="WPF_DBDataSet11.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>WPF_DBDataSet11.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="WPF_DBDataSet11.xss">
-      <DependentUpon>WPF_DBDataSet11.xsd</DependentUpon>
-    </None>
     <None Include="WPF_DB_diagram.edmx.diagram">
       <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
     </None>
@@ -317,86 +162,6 @@
     <Resource Include="icons\cinema\cinema.png" />
     <Resource Include="icons\media\easel.png" />
     <Resource Include="icons\media\blu-ray.png" />
-    <Content Include="actor.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>actor.Context.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="actor.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>actor.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="client.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>client.Context.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="client.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>client.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="country.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>country.Context.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="country.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>country.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="director.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>director.Context.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="director.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>director.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="format.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>format.Context.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="format.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>format.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="lang.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>lang.Context.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="lang.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>lang.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="movie.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>movie.Context.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="movie.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>movie.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="order.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>order.Context.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
-    <Content Include="order.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>order.cs</LastGenOutput>
-      <DependentUpon>WPF_DB_diagram.edmx</DependentUpon>
-    </Content>
     <Content Include="WPF_DB_log.ldf">
       <DependentUpon>WPF_DB.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -427,10 +192,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>WPF_DB.mdf</DependentUpon>
     </Content>
-    <Content Include="WPF_DB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>WPF_DB.Context.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -449,12 +210,4 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

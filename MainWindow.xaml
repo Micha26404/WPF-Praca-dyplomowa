@@ -32,12 +32,24 @@
 			<Setter Property="SelectedDateFormat" Value="Short"></Setter>
 			<Setter Property="Foreground" Value="White"></Setter>
 			<Setter Property="Background" Value="Maroon"/>
+			<Setter Property="FirstDayOfWeek" Value="Monday"/>
 		</Style>
 		<Style TargetType="DataGridColumnHeader">
 			<Setter Property="Padding" Value="5"></Setter>
 		</Style>
 		<Style TargetType="DataGridCell">
 			<Setter Property="BorderBrush" Value="Maroon"></Setter>
+			<Setter Property="Foreground" Value="White"></Setter>
+		</Style>
+		<Style TargetType="DataGrid">
+			<Setter Property="HorizontalGridLinesBrush" Value="Maroon"></Setter>
+			<Setter Property="VerticalGridLinesBrush" Value="Maroon"></Setter>
+			<Setter Property="Background" Value="Transparent"></Setter>
+			<Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+			<Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+			<Setter Property="HeadersVisibility" Value="Column"></Setter>
+			<Setter Property="AlternationCount" Value="2"></Setter>
+			<Setter Property="FontSize" Value="16"></Setter>
 		</Style>
 		<Style TargetType="ComboBox">
 			<Setter Property="BorderBrush" Value="Transparent"></Setter>
@@ -252,7 +264,7 @@
 					<TabItem.Header>
 						<Grid>
 							<Grid.RowDefinitions>
-								<RowDefinition/>
+								<RowDefinition Height="auto"/>
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="17">Movies</TextBlock>
@@ -264,72 +276,67 @@
 						</Grid>
 					</TabItem.Header>
 					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="2*"/>
-							<ColumnDefinition Width="49*"/>
-						</Grid.ColumnDefinitions>
 						<Grid.RowDefinitions>
-							<RowDefinition Height="auto"/>
-							<RowDefinition Height="auto"/>
-							<RowDefinition Height="auto"/>
+							<RowDefinition Height="70"/>
+							<RowDefinition/>
 						</Grid.RowDefinitions>
 						<!--Movie filter panel-->
-						<UniformGrid ToolTip="Type text and press enter to filter movies" Rows="1" Height="100" VerticalAlignment="Center" Grid.ColumnSpan="2">
+						<UniformGrid ToolTip="Type text and press enter to filter movies" Rows="1" VerticalAlignment="Center">
 							<UniformGrid Columns="1">
 								<TextBlock>Title</TextBlock>
-								<TextBox Name="FilterMovieTitleText" KeyDown="FilterMovieTitle"/>
+								<TextBox Name="FilterMovieTitleText" TextChanged="FilterMovieTitle"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Year</TextBlock>
-								<TextBox Name="FilterMovieYearText" KeyDown="FilterMovieYear"/>
+								<TextBox Name="FilterMovieYearText" TextChanged="FilterMovieYear"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Duration</TextBlock>
-								<TextBox Name="FilterMovieDurationText" KeyDown="FilterMovieDuration"/>
+								<TextBox Name="FilterMovieDurationText" TextChanged="FilterMovieDuration"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Genre</TextBlock>
-								<TextBox Name="FilterMovieGenreText" KeyDown="FilterMovieGenre"/>
+								<TextBox Name="FilterMovieGenreText" TextChanged="FilterMovieGenre"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Age rating</TextBlock>
-								<TextBox Name="FilterMovieAgeText" KeyDown="FilterMovieAge"/>
+								<TextBox Name="FilterMovieAgeText" TextChanged="FilterMovieAge"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Price</TextBlock>
-								<TextBox Name="FilterMoivePriceText" KeyDown="FilterMoviePrice"/>
+								<TextBox Name="FilterMoivePriceText" TextChanged="FilterMoviePrice"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Lead actor</TextBlock>
-								<TextBox Name="FilterMovieActorText" KeyDown="FilterMovieActor"/>
+								<TextBox Name="FilterMovieActorText" TextChanged="FilterMovieActor"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Director</TextBlock>
-								<TextBox Name="FilterMovieDirectorText" KeyDown="FilterMovieDirector"/>
+								<TextBox Name="FilterMovieDirectorText" TextChanged="FilterMovieDirector"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Formats</TextBlock>
-								<TextBox Name="FilterMovieFormatText" KeyDown="FilterMovieFormat"/>
+								<TextBox Name="FilterMovieFormatText" TextChanged="FilterMovieFormat"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Languages</TextBlock>
-								<TextBox Name="FilterMovieLangText" KeyDown="FilterMovieLang"/>
+								<TextBox Name="FilterMovieLangText" TextChanged="FilterMovieLang"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Countries</TextBlock>
-								<TextBox Name="FilterMovieCountryText" KeyDown="FilterMovieCountry"/>
+								<TextBox Name="FilterMovieCountryText" TextChanged="FilterMovieCountry"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Copies left</TextBlock>
-								<TextBox Name="FilterMovieCopiesLeftText" KeyDown="FilterMovieCopiesLeft"/>
+								<TextBox Name="FilterMovieCopiesLeftText" TextChanged="FilterMovieCopiesLeft"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Copies total</TextBlock>
-								<TextBox Name="FilterMovieCopiesTotalText" KeyDown="FilterMovieCopiesTotal"/>
+								<TextBox Name="FilterMovieCopiesTotalText" TextChanged="FilterMovieCopiesTotal"/>
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Name="MoviesCatalog" Grid.Row="1" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000" Grid.ColumnSpan="2">
+						<DataGrid Name="MoviesCatalog" Grid.Row="1" ItemsSource="{Binding}">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>
@@ -366,7 +373,7 @@
 					<TabItem.Header>
 						<Grid>
 							<Grid.RowDefinitions>
-								<RowDefinition/>
+								<RowDefinition Height="auto"/>
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="17">Clients</TextBlock>
@@ -380,31 +387,30 @@
 					<!--tab contents grid -->
 					<Grid>
 						<Grid.RowDefinitions>
-							<RowDefinition Height="auto"/>
-							<RowDefinition Height="59*"/>
-							<RowDefinition Height="110*"/>
+							<RowDefinition Height="50"/>
+							<RowDefinition/>
 						</Grid.RowDefinitions>
 						<!--Client filter panel-->
-						<UniformGrid Rows="1" Height="100" ToolTip="Type text and press enter to filter clients" VerticalAlignment="Center">
+						<UniformGrid Rows="1" ToolTip="Type text and press enter to filter clients" VerticalAlignment="Center">
 							<UniformGrid Columns="1">
 								<TextBlock>Last Name</TextBlock>
-								<TextBox Name="FilterClientLastNameText" KeyDown="FilterClientLastName"/>
+								<TextBox Name="FilterClientLastNameText" TextChanged="FilterClientLastName"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>First name</TextBlock>
-								<TextBox Name="FilterClientFirstNameText" KeyDown="FilterClientFirstName"/>
+								<TextBox Name="FilterClientFirstNameText" TextChanged="FilterClientFirstName"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>E-mail</TextBlock>
-								<TextBox Name="FilterClientEmailText" KeyDown="FilterClientEmail"/>
+								<TextBox Name="FilterClientEmailText" TextChanged="FilterClientEmail"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Phone</TextBlock>
-								<TextBox Name="FilterClientPhoneText" KeyDown="FilterClientPhone"/>
+								<TextBox Name="FilterClientPhoneText" TextChanged="FilterClientPhone"/>
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Name="ClientsCatalog" Grid.Row="1" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000" Grid.RowSpan="2">
+						<DataGrid Name="ClientsCatalog" Grid.Row="1" ItemsSource="{Binding}">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>
@@ -451,41 +457,43 @@
 					<!--tab contents grid -->
 					<Grid>
 						<Grid.RowDefinitions>
-							<RowDefinition Height="auto"/>
+							<RowDefinition Height="150"/>
 							<RowDefinition/>
 						</Grid.RowDefinitions>
 						<!--Orders filter panel-->
-						<UniformGrid Rows="1" Height="100" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top">
+						<UniformGrid Rows="1" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top">
 							<UniformGrid Columns="1">
 								<TextBlock>Movie</TextBlock>
-								<TextBox KeyDown="FilterOrderMovie" Name="FilterOrderMovieText"/>
+								<TextBox TextChanged="FilterOrderMovie" Name="FilterOrderMovieText"/>
+								<TextBlock>Year</TextBlock>
+								<TextBox TextChanged="FilterOrderYear" Name="FilterOrderYearText"/>
+								<TextBlock>Genre</TextBlock>
+								<TextBox TextChanged="FilterOrderGenre" Name="FilterOrderGenreText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Last Name</TextBlock>
-								<TextBox KeyDown="FilterOrderLastName" Name="FilterOrderLastNameText"/>
-							</UniformGrid>
-							<UniformGrid Columns="1">
+								<TextBox TextChanged="FilterOrderLastName" Name="FilterOrderLastNameText"/>
 								<TextBlock>First Name</TextBlock>
-								<TextBox KeyDown="FilterOrderFirstName" Name="FilterOrderFirstNameText"/>
+								<TextBox TextChanged="FilterOrderFirstName" Name="FilterOrderFirstNameText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Rent date</TextBlock>
-								<CheckBox>Toggle filter</CheckBox>
-								<DatePicker KeyDown="FilterOrderRentDate" Name="FilterOrderRentDateText"/>
+								<CheckBox Name="RentDateFilterToggle">Toggle filter</CheckBox>
+								<DatePicker SelectedDateChanged="FilterOrderRentDate" Name="FilterOrderRentDateText" Opacity="0.8"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Due date</TextBlock>
-								<CheckBox>Toggle filter</CheckBox>
-								<DatePicker KeyDown="FilterOrderDueDate" Name="FilterOrderDueDateText"/>
+								<CheckBox Name="DueDateFilterToggle">Toggle filter</CheckBox>
+								<DatePicker SelectedDateChanged="FilterOrderDueDate" Name="FilterOrderDueDateText" Opacity="0.8"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Return date</TextBlock>
-								<CheckBox>Toggle filter</CheckBox>
-								<DatePicker KeyDown="FilterOrderReturnDate" Name="FilterOrderReturnDateText"/>
+								<CheckBox Name="ReturnDateFilterToggle">Toggle filter</CheckBox>
+								<DatePicker SelectedDateChanged="FilterOrderReturnDate" Name="FilterOrderReturnDateText" Opacity="0.8"/>
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Name="OrdersCatalog" Grid.Row="2" ItemsSource="{Binding}" FontSize="16" Panel.ZIndex="1" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternationCount="2" BorderBrush="{x:Null}" Background="Transparent" HorizontalGridLinesBrush="#FF460000" VerticalGridLinesBrush="#FF420000">
+						<DataGrid Name="OrdersCatalog" Grid.Row="1" ItemsSource="{Binding}">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>

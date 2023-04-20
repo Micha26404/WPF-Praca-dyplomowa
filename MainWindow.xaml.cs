@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Data.Entity.Core.Objects;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -19,7 +18,6 @@ using WPF.database;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Win32;
 using System.IO;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Windows.Controls.Primitives;
 
 namespace WPF
@@ -30,15 +28,46 @@ namespace WPF
 		{
 			InitializeComponent();
 		}
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			//load data to datatables which are sources for datagrids
+			MoviesGridRefresh();
+			ClientsGridRefresh();
+			OrdersGridRefresh();
+			//Fill form comboboxes
+			MoviesComboboxRefresh();
+			ClientsComboboxRefresh();
+
+			//Admin Panel 2 Comboboxes
+			Admin2ComboboxesRefresh();
+
+			MoviesCatalog.ItemsSource = movies_dt.DefaultView;
+			MoviesCatalog.AutoGenerateColumns = true;
+			MoviesCatalog.CanUserAddRows = false;
+			MoviesCatalog.CanUserDeleteRows = false;
+
+			ClientsCatalog.ItemsSource = clients_dt.DefaultView;
+			ClientsCatalog.AutoGenerateColumns = true;
+			ClientsCatalog.CanUserAddRows = false;
+			ClientsCatalog.CanUserDeleteRows = false;
+
+			OrdersCatalog.ItemsSource = orders_dt.DefaultView;
+			OrdersCatalog.AutoGenerateColumns = true;
+			OrdersCatalog.CanUserAddRows = false;
+			OrdersCatalog.CanUserDeleteRows = false;
+		}
+		DataTable movies_dt = new DataTable();
+		DataTable clients_dt = new DataTable();
+		DataTable orders_dt = new DataTable();
 		public void MoviesGridRefresh() {
-			getquery(MoviesCatalog,
+			getquery(movies_dt,
 					"Select movies.id, movies.name as title, movies.year, movies.duration, movies.age, movies.price," +
 					"movies.plot," +
 					"formats.name as format," +
-					"CONCAT(directors.last_name,directors.first_name) as director," +
-					"CONCAT(actors.last_name,actors.first_name) as lead_actor," +
+					"CONCAT(directors.last_name,' ',directors.first_name) as director," +
+					"CONCAT(actors.last_name,' ',actors.first_name) as lead_actor," +
 					"countries.name as country, langs.name as language," +
-					"movies.copies_left, movies.copies_total from movies " +
+					"movies.left_count, movies.total_count from movies " +
 					"join actors on actors.id = movies.actor_id " +
 					"join countries on countries.id = movies.country_id " +
 					"join langs on langs.id = movies.lang_id " +
@@ -47,21 +76,21 @@ namespace WPF
 		}
 		public void ClientsGridRefresh()
 		{
-			getquery(ClientsCatalog, "Select * from clients");
+			getquery(clients_dt, "Select * from clients");
 		}
 		public void OrdersGridRefresh()
 		{
-			getquery(OrdersCatalog, "Select orders.id,CONCAT(client.last_name,client.first_name) as client," +
-				"CONCAT(movie.name,movie.year) as movie, orders.rent_date, orders.due_date, orders.return_date " +
+			getquery(orders_dt, "Select orders.id,CONCAT(clients.last_name,' ',clients.first_name) as client," +
+				"movies.name as title,movies.year, orders.rent_date, orders.due_date, orders.return_date " +
 				"from orders " +
-				"join movies on movie.id=order.movie_id " +
+				"join movies on movies.id=orders.movie_id " +
 				"join clients on clients.id=orders.client_id");
 		}
 		public void MoviesComboboxRefresh() 
 		{
 			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
 			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
-			ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
+			ComboboxRefresh(MovieFormFormatNameID, "select name,id from formats");
 			ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
 			ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
 			ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
@@ -73,28 +102,19 @@ namespace WPF
 		public void Admin2ComboboxesRefresh()
 		{
 			//Actors
-			ComboboxRefresh(UpdateActorFNLNID, "select * from actors last_name,first_name,id");
+			ComboboxRefresh(UpdateActorFNLNID, "select last_name,first_name,id from actors");
 			//Directors
-			ComboboxRefresh(UpdateDirectorFNLNID, "select * from directors last_name,first_name,id");
+			ComboboxRefresh(UpdateDirectorFNLNID, "select last_name,first_name,id from directors");
 			//Countries
-			ComboboxRefresh(UpdateCountryNameID, "select * from countries name,id");
+			ComboboxRefresh(UpdateCountryNameID, "select name,id from countries");
 			//Languages
-			ComboboxRefresh(UpdateLangNameID, "select * from langs name,id");
+			ComboboxRefresh(UpdateLangNameID, "select name,id from langs");
 			//Formats
-			ComboboxRefresh(UpdateFormatNameID, "select * from formats name,id");
+			ComboboxRefresh(UpdateFormatNameID, "select name,id from formats");
 			//Genres
-			ComboboxRefresh(UpdateGenreNameID, "select * from genres name,id");
+			ComboboxRefresh(UpdateGenreNameID, "select name,id from genres");
 		}
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-			MoviesGridRefresh();
-			MoviesComboboxRefresh();
-			ClientsGridRefresh();
-			ClientsComboboxRefresh();
-			OrdersGridRefresh();
-			//Admin Panel 2 Comboboxes
-			Admin2ComboboxesRefresh();
-		}
+		
 		//sql panel button
 		private void QueryExecuteButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -147,7 +167,22 @@ namespace WPF
 				else getquery(SQLgrid, SQLqueryText.Text);
 			}
 		}
-		//fill or refresh grid items
+		//refresh datatable to refresh grid items
+		public void getquery(DataTable dt, string query)
+		{
+			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
+			SqlConnection con = new SqlConnection(strConnection);
+
+			SqlCommand sqlCmd = new SqlCommand();
+			sqlCmd.Connection = con;
+			sqlCmd.CommandType = CommandType.Text;
+			sqlCmd.CommandText = query;
+			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
+
+			sqlDataAdap.Fill(dt);
+			con.Close();
+		}
+		//unused
 		public void getquery(DataGrid grid, string query)
 		{
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
@@ -328,8 +363,8 @@ namespace WPF
 			MovieFormDirectorLNFNID.Text = rowview.Row["director"].ToString();
 			MovieFormAge.Text = rowview.Row["age"].ToString();
 			MovieFormDuration.Text = rowview.Row["duration"].ToString();
-			MovieFormCopiesLeft.Text = rowview.Row["copies_left"].ToString();
-			MovieFormCopiesTotal.Text = rowview.Row["copies_total"].ToString();
+			MovieFormCopiesLeft.Text = rowview.Row["left_count"].ToString();
+			MovieFormCopiesTotal.Text = rowview.Row["total_count"].ToString();
 			MovieFormLangNameID.Text = rowview.Row["language"].ToString();
 			MovieFormFormatNameID.Text = rowview.Row["format"].ToString();
 			MovieFormGenreNameID.Text = rowview.Row["genre"].ToString();
@@ -386,11 +421,11 @@ namespace WPF
 			OrderFormReturnDate.SelectedDate = new DateTime(yy, mm, dd);
 		}
 		//Submit Buttons
-		private int SubmitOrder(object sender, MouseButtonEventArgs e)
+		private void SubmitOrder(object sender, MouseButtonEventArgs e)
 		{
 			//get movie_id and client_id
-			int movie_id,
-				client_id;
+			int movie_id=-1,
+				client_id=-1;
 			if (OrderFormMovieID.Text != "" &&
 				OrderFormClientLNFNID.Text != "")
 			{
@@ -403,7 +438,7 @@ namespace WPF
 			{
 				//no movie id or client
 				MessageBox.Show("Form incomplete: use rent context menu option in movies catalog to fill movie id and select client");
-				return 1;
+				//return 1;
 			}
 			//get dates in format dd/mm/yy (30/12/2022)
 			//Default date in form is today
@@ -439,7 +474,7 @@ namespace WPF
 				OrderFormReturnDate.SelectedDate = new DateTime(yy, mm, dd);
 			}
 				//add mode
-				if (mode == false)
+				if (mode == false && movie_id>=0 && client_id >= 0)
 				{
 					//set dates if checked
 					if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == false)
@@ -447,7 +482,7 @@ namespace WPF
 						//due_date = "null";
 						//return_date = "null";
 					//update movie copies left available if any
-					int copies_left = int.Parse(getquery("select copies_left from movies where id=" + movie_id));
+					int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
 					if (copies_left > 0) { 
 						copies_left--;
 						setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
@@ -455,7 +490,7 @@ namespace WPF
 							"TODATE(" + rent_date + ",'dd/mm/yy')," +
 							"null," +
 							"null)");
-						setquery("update movies set copies_left=" + copies_left);
+						setquery("update movies set left_count=" + copies_left);
 						//refresh grid
 						OrdersGridRefresh();
 					}
@@ -463,7 +498,7 @@ namespace WPF
 					if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
 					{
 						//due_date="null";
-						int copies_left = int.Parse(getquery("select copies_left from movies where id=" + movie_id));
+						int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
 						if (copies_left > 0)
 						{
 							copies_left--;
@@ -472,7 +507,7 @@ namespace WPF
 								"TODATE(" + rent_date + ",'dd/mm/yy')," +
 								"null," +
 								"TODATE(" + return_date + ",'dd/mm/yy'))");
-							setquery("update movies set copies_left=" + copies_left);
+							setquery("update movies set left_count=" + copies_left);
 							//refresh grid
 							OrdersGridRefresh();
 						}
@@ -480,7 +515,7 @@ namespace WPF
 					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
 					{
 						//return_date = "null";
-						int copies_left = int.Parse(getquery("select copies_left from movies where id=" + movie_id));
+						int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
 						if (copies_left > 0)
 						{
 							copies_left--;
@@ -489,14 +524,14 @@ namespace WPF
 								"TODATE(" + rent_date + ",'dd/mm/yy')," +
 								"TODATE(" + due_date + ",'dd/mm/yy')," +
 								"null)");
-							setquery("update movies set copies_left=" + copies_left);
+							setquery("update movies set left_count=" + copies_left);
 							//refresh grid
 							OrdersGridRefresh();
 						}
 					}
 					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
 					{
-						int copies_left = int.Parse(getquery("select copies_left from movies where id=" + movie_id));
+						int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
 						if (copies_left > 0)
 						{
 							copies_left--;
@@ -505,13 +540,13 @@ namespace WPF
 								"TODATE(" + rent_date + ",'dd/mm/yy')," +
 								"TODATE(" + due_date + ",'dd/mm/yy')," +
 								"TODATE(" + return_date + ",'dd/mm/yy'))");
-							setquery("update movies set copies_left=" + copies_left);
+							setquery("update movies set left_count=" + copies_left);
 							//refresh grid
 							OrdersGridRefresh();
 						}
 					}
 				}
-				else//edit mode
+				else if (mode == true && movie_id >= 0 && client_id >= 0)//edit mode
 				{
 					//get order_id
 					if (OrderFormID.Text != "")
@@ -529,7 +564,7 @@ namespace WPF
 									"return_date=null");
 							//refresh grid
 							OrdersGridRefresh();
-							return 0;
+							//return 0;
 						}
 						if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
 						{
@@ -541,7 +576,7 @@ namespace WPF
 									"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
 							//refresh grid
 							OrdersGridRefresh();
-							return 0;
+							//return 0;
 						}
 						if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
 						{
@@ -553,7 +588,7 @@ namespace WPF
 									"return_date=null");
 							//refresh grid
 							OrdersGridRefresh();
-							return 0;
+							//return 0;
 						}
 						if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
 						{
@@ -564,20 +599,21 @@ namespace WPF
 									"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
 							//refresh grid
 							OrdersGridRefresh();
-							return 0;
+							//return 0;
 						}
 					}
 					else
 					{
 						//needed values are not present. For edit mode order_id is needed
 						MessageBox.Show("Form incomplete: order id not set");
-						return 1;
+						//return 1;
 					}
 				}
-			MessageBox.Show("Submit failed. None of the function conditions were met.");
-			return 1;
+				else
+				MessageBox.Show("Submit failed. Movie and client have to be set.");
+				//return 1;
 		}
-		private int SubmitClient(object sender, MouseButtonEventArgs e)
+		private void SubmitClient(object sender, MouseButtonEventArgs e)
 		{
 			//add mode
 			if (mode == false)
@@ -594,7 +630,7 @@ namespace WPF
 				else 
 				{
 					MessageBox.Show("First name and last name have to be filled");
-					return 1;
+					//return 1;
 				}
 			}
 			//edit mode
@@ -612,12 +648,12 @@ namespace WPF
 				else
 				{
 					MessageBox.Show("First name last name and id have to be filled. To set id use edit context menu option in clients catalog");
-					return 1;
+					//return 1;
 				}
 			}
-			return 1;
+			//return 1;
 		}
-		private int SubmitMovie(object sender, MouseButtonEventArgs e)
+		private void SubmitMovie(object sender, MouseButtonEventArgs e)
 		{
 			//get country id from combobox
 			int country_id = int.Parse(MovieFormCountryNameID.Text.Split(' ').Last());
@@ -759,14 +795,14 @@ namespace WPF
 				else
 				{
 					MessageBox.Show("Movie title not set");
-					return 1;
+					//return 1;
 				}
 			}
 			//edit mode
 			else
 			{
 				//get movie_id from combobox
-				string movie_id;
+				string movie_id=null;
 				if (MovieFormFormatNameID.Text != "")
 				{
 					movie_id = MovieFormID.Text;
@@ -774,13 +810,13 @@ namespace WPF
 				else
 				{
 					MessageBox.Show("Movie id not set. Use edit context menu option from movies catalog");
-					return 1;
+					//return 1;
 				}
-				if (MovieFormTitle.Text != "")
+				if (MovieFormTitle.Text != "" && movie_id != null)
 				{
 					setquery("update movies set movie_id=" + movie_id + ",name=" + MovieFormTitle.Text +
 						",year=" + year + ",country_id=" + country_id + ",duration=" + duration + ",age=" + age +
-						",copies_total=" + copies_total + ",price=" + price + ",left_count=" + copies_left +
+						",total_count=" + copies_total + ",price=" + price + ",left_count=" + copies_left +
 						",plot=" + plot + ",lang_id=" + lang_id + ",actor_id=" + actor_id + ",director_id=" + director_id +
 						",format_id=" + format_id + ")");
 					//refresh grid
@@ -788,11 +824,11 @@ namespace WPF
 				}
 				else
 				{
-					MessageBox.Show("Movie title not set");
-					return 1;
+					MessageBox.Show("Movie not set");
+					//return 1;
 				}
 			}
-			return 1;
+			//return 1;
 		}
 		//Movies right click menu
 		private void MovieItem_rent(object sender, RoutedEventArgs e)
@@ -847,8 +883,8 @@ namespace WPF
 			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
 			
 			int movie_id = int.Parse(rowview.Row["movie_id"].ToString());
-			int copies_left = int.Parse(getquery("select copies_left from movies where id="+movie_id));
-			setquery("update movies set copies_left=" + copies_left + 1 +" where id=" + movie_id);
+			int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
+			setquery("update movies set left_count=" + copies_left + 1 +" where id=" + movie_id);
 
 			OrdersGridRefresh();
 		}
@@ -865,168 +901,107 @@ namespace WPF
 			OrdersGridRefresh();
 		}
 		//Filter movies
-		private void FilterMovieTitle(object sender, KeyEventArgs e)
+		private void FilterMovieTitle(object sender, TextChangedEventArgs e)
 		{
-			if(e.Key == Key.Return)
-			{
 			
-			}
 		}
-		private void FilterMoviePrice(object sender, KeyEventArgs e)
+		private void FilterMoviePrice(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieAge(object sender, KeyEventArgs e)
+		private void FilterMovieAge(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieDuration(object sender, KeyEventArgs e)
+		private void FilterMovieDuration(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieGenre(object sender, KeyEventArgs e)
+		private void FilterMovieGenre(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieYear(object sender, KeyEventArgs e)
+		private void FilterMovieYear(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieCopiesTotal(object sender, KeyEventArgs e)
+		private void FilterMovieCopiesTotal(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieCopiesLeft(object sender, KeyEventArgs e)
+		private void FilterMovieCopiesLeft(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieCountry(object sender, KeyEventArgs e)
+		private void FilterMovieCountry(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieLang(object sender, KeyEventArgs e)
+		private void FilterMovieLang(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieFormat(object sender, KeyEventArgs e)
+		private void FilterMovieFormat(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieDirector(object sender, KeyEventArgs e)
+		private void FilterMovieDirector(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterMovieActor(object sender, KeyEventArgs e)
+		private void FilterMovieActor(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
 		//Filter clients
-		private void FilterClientLastName(object sender, KeyEventArgs e)
+		private void FilterClientLastName(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterClientFirstName(object sender, KeyEventArgs e)
+		private void FilterClientFirstName(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterClientEmail(object sender, KeyEventArgs e)
+		private void FilterClientEmail(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterClientPhone(object sender, KeyEventArgs e)
+		private void FilterClientPhone(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
 		//Filter orders
-		private void FilterOrderMovie(object sender, KeyEventArgs e)
+		private void FilterOrderMovie(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterOrderLastName(object sender, KeyEventArgs e)
+		private void FilterOrderLastName(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterOrderFirstName(object sender, KeyEventArgs e)
+		private void FilterOrderFirstName(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterOrderRentDate(object sender, KeyEventArgs e)
+		private void FilterOrderGenre(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterOrderDueDate(object sender, KeyEventArgs e)
+		private void FilterOrderYear(object sender, TextChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
 		}
-		private void FilterOrderReturnDate(object sender, KeyEventArgs e)
+		private void FilterOrderRentDate(object sender, SelectionChangedEventArgs e)
 		{
-			if (e.Key == Key.Return)
-			{
-
-			}
+			
+		}
+		private void FilterOrderDueDate(object sender, SelectionChangedEventArgs e)
+		{
+			
+		}
+		private void FilterOrderReturnDate(object sender, SelectionChangedEventArgs e)
+		{
+			
 		}
 		//Mode selectors
 		//add or edit mode; false is add, true is edit.
@@ -1221,5 +1196,6 @@ namespace WPF
 			//refresh genres combobox
 			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
 		}
+
 	}
 }
