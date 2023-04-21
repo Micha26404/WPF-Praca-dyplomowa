@@ -63,6 +63,7 @@
 			<Setter Property="BorderBrush" Value="Transparent"></Setter>
 			<Setter Property="SelectedIndex" Value="0"></Setter>
 			<Setter Property="IsEditable" Value="True"></Setter>
+			<Setter Property="ToolTip" Value="Bad value won't be submitted"></Setter>
 		</Style>
 		<Style TargetType="ComboBoxItem">
 			<Setter Property="BorderBrush" Value="Transparent"></Setter>
@@ -707,6 +708,7 @@
 							</Grid.RowDefinitions>
 							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">Admin 1</TextBlock>
 							<Image Grid.Row="1" VerticalAlignment="Top" Source="icons/edit.png"/>
+							<Border Grid.Row="1"/>
 						</Grid>
 					</TabItem.Header>
 					<Grid Name="Admin_panel">

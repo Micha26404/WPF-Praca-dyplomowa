@@ -437,6 +437,8 @@ namespace WPF
 		//Submit Buttons
 		private void SubmitOrder(object sender, MouseButtonEventArgs e)
 		{
+			//remove bad values
+			if (OrderFormClientLNFNID.Items.Contains(OrderFormClientLNFNID.Text) == false) OrderFormClientLNFNID.Text = "null";
 			//ensure correct date (dd/mm/yyyy)
 			Regex regex = new Regex(@"[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]", RegexOptions.IgnoreCase);
 			MatchCollection matches = regex.Matches(OrderFormRentDate.Text);
@@ -498,8 +500,11 @@ namespace WPF
 				yyyy = int.Parse(return_date.Split('/')[2]);
 				OrderFormReturnDate.SelectedDate = new DateTime(yyyy, mm, dd);
 			}
-			//add mode
-			if (mode == false && movie_id!=null && client_id != null)
+			//client must be selected
+			if (OrderFormClientLNFNID.Text != "null")
+			{
+				//add mode
+				if (mode == false && movie_id!=null && client_id != null)
 				{
 					//none date set
 					if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text == "")
@@ -593,7 +598,6 @@ namespace WPF
 									"return_date=null");
 							//refresh grid
 							OrdersGridRefresh();
-							//return 0;
 						}
 						//only return date set
 						if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text != "")
@@ -606,7 +610,6 @@ namespace WPF
 									"return_date=TODATE(" + return_date + ",'dd/mm/yyyy')");
 							//refresh grid
 							OrdersGridRefresh();
-							//return 0;
 						}
 						//only due date set
 						if (OrderFormDueDate.Text != "" && OrderFormReturnDate.Text == "")
@@ -619,7 +622,6 @@ namespace WPF
 									"return_date=null");
 							//refresh grid
 							OrdersGridRefresh();
-							//return 0;
 						}
 						//all dates set
 						if (OrderFormDueDate.Text != "" && OrderFormReturnDate.Text != "")
@@ -631,19 +633,18 @@ namespace WPF
 									"return_date=TODATE(" + return_date + ",'dd/mm/yyyy')");
 							//refresh grid
 							OrdersGridRefresh();
-							//return 0;
 						}
 					}
 					else
 					{
 						//needed values are not present. For edit mode order_id is needed
 						MessageBox.Show("Form incomplete: order id not set");
-						//return 1;
 					}
 				}
 				else
-				MessageBox.Show("Submit failed. Movie and client have to be set.");
-				//return 1;
+				MessageBox.Show("Submit failed. Movie and client must be set.");
+			}
+			else MessageBox.Show("No client selected");
 		}
 		private void SubmitClient(object sender, MouseButtonEventArgs e)
 		{
@@ -664,7 +665,7 @@ namespace WPF
 				}
 				else 
 				{
-					MessageBox.Show("First name and last name have to be filled");
+					MessageBox.Show("First name and last name must be filled");
 					//return 1;
 				}
 			}
@@ -682,7 +683,7 @@ namespace WPF
 				}
 				else
 				{
-					MessageBox.Show("First name last name and id have to be filled. To set id use edit context menu option in clients catalog");
+					MessageBox.Show("First name last name and id must be filled. To set id use edit context menu option in clients catalog");
 					//return 1;
 				}
 			}
@@ -697,6 +698,13 @@ namespace WPF
 			if (MovieFormPrice.Text.Any(char.IsLetter)) MovieFormPrice.Text = "";
 			if (MovieFormCopiesLeft.Text.Any(char.IsLetter)) MovieFormCopiesLeft.Text = "1";
 			if (MovieFormCopiesTotal.Text.Any(char.IsLetter)) MovieFormCopiesTotal.Text = "1";
+
+			if (MovieFormCountryNameID.Items.Contains(MovieFormCountryNameID.Text) == false) MovieFormCountryNameID.Text="null";
+			if (MovieFormLangNameID.Items.Contains(MovieFormLangNameID.Text) == false) MovieFormLangNameID.Text = "null";
+			if (MovieFormGenreNameID.Items.Contains(MovieFormGenreNameID.Text) == false) MovieFormGenreNameID.Text = "null";
+			if (MovieFormDirectorLNFNID.Items.Contains(MovieFormDirectorLNFNID.Text) == false) MovieFormDirectorLNFNID.Text = "null";
+			if (MovieFormActorLNFNID.Items.Contains(MovieFormActorLNFNID.Text) == false) MovieFormActorLNFNID.Text = "null";
+			if (MovieFormFormatNameID.Items.Contains(MovieFormFormatNameID.Text) == false) MovieFormFormatNameID.Text="null";
 
 			//get country id from combobox
 			string country_id = null;
@@ -822,7 +830,7 @@ namespace WPF
 			{
 				genre_id = null;
 			}
-			//poster_path and trailer_path have to be set in their respective tabs
+			//poster_path and trailer_path must be set in their respective tabs
 			
 			//add mode
 			if (mode == false)
@@ -1101,151 +1109,223 @@ namespace WPF
 		//New row adding
 		private void AddActor(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into actors (first_name,last_name) values("+AddActorFirstName+","+AddActorLastName+")");
+			setquery("Insert into actors (first_name,last_name) values(" + AddActorFirstName.Text + "," + AddActorLastName.Text +")");
 			//refresh actors combobox
 			ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
 		}
 		private void AddDirector(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into directors (first_name,last_name) values(" + AddActorFirstName + "," + AddActorLastName + ")");
+			setquery("Insert into directors (first_name,last_name) values(" + AddActorFirstName.Text + "," + AddActorLastName.Text + ")");
 			//refresh directors combobox
 			ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
 		}
 		private void AddCountry(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into countries (name) values(" + AddCountryName + ")");
+			setquery("Insert into countries (name) values(" + AddCountryName.Text + ")");
 			//refresh countries combobox
 			ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
 		}
 		private void AddLang(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into langs (name) values(" + AddLangName + ")");
+			setquery("Insert into langs (name) values(" + AddLangName.Text + ")");
 			//refresh langs combobox
 			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
 		}
 		private void AddFormat(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into formats (name) values(" + AddFormatName + ")");
+			setquery("Insert into formats (name) values(" + AddFormatName.Text + ")");
 			//refresh formats combobox
 			ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
 		}
 		private void AddGenre(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into genres (name) values(" + AddGenreName + ")");
+			setquery("Insert into genres (name) values(" + AddGenreName.Text + ")");
 			//refresh genres combobox
 			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
 		}
 		//Existing row pdating
 		private void UpdateActor(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains last_name first_name id
-			string id = UpdateActorFNLNID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateActorFNLNID.Items.Contains(UpdateActorFNLNID.Text) == false) UpdateActorFNLNID.Text = "null";
+			if (UpdateActorFNLNID.Text != "null")
+			{
+				//combobox contains last_name first_name id
+				string actor_id = UpdateActorFNLNID.Text.Split(' ').Last();
 
-			setquery("update actors set first_name=" + UpdateActorFirstName + ",last_name=" + UpdateActorLastName
-			+ "where id=" + id +")");
-			//refresh actors combobox
-			ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
+				setquery("update actors set first_name=" + UpdateActorFirstName.Text + ",last_name=" + UpdateActorLastName.Text
+				+ "where id=" + actor_id + ")");
+				//refresh actors combobox
+				ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		private void UpdateDirector(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains last_name first_name id
-			string id = UpdateDirectorFNLNID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateDirectorFNLNID.Items.Contains(UpdateDirectorFNLNID.Text) == false) UpdateDirectorFNLNID.Text = "null";
+			if (UpdateDirectorFNLNID.Text != "null")
+			{
+				//combobox contains last_name first_name id
+				string director_id = UpdateDirectorFNLNID.Text.Split(' ').Last();
 
-			setquery("update directors set first_name=" + UpdateDirectorFirstName + ",last_name=" + UpdateDirectorLastName
-			+ "where id=" + id + ")");
-			//refresh directors combobox
-			ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
+				setquery("update directors set first_name=" + UpdateDirectorFirstName.Text + ",last_name=" + UpdateDirectorLastName.Text
+				+ "where id=" + director_id + ")");
+				//refresh directors combobox
+				ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		private void UpdateCountry(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains name id
-			string id = UpdateCountryNameID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateCountryNameID.Items.Contains(UpdateCountryNameID.Text) == false) UpdateCountryNameID.Text = "null";
+			if (UpdateCountryNameID.Text != "null")
+			{
+				//combobox contains name id
+				string country_id = UpdateCountryNameID.Text.Split(' ').Last();
 
-			setquery("update countries set name=" + UpdateCountryName + "where id=" + id + ")");
-			//refresh countries combobox
-			ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
+				setquery("update countries set name=" + UpdateCountryName.Text + "where id=" + country_id + ")");
+				//refresh countries combobox
+				ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		private void UpdateLang(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains name id
-			string id = UpdateLangNameID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateLangNameID.Items.Contains(UpdateLangNameID.Text) == false) UpdateLangNameID.Text = "null";
+			if (UpdateLangNameID.Text != "null")
+			{
+				//combobox contains name id
+				string lang_id = UpdateLangNameID.Text.Split(' ').Last();
 
-			setquery("update langs set name=" + UpdateLangName + "where id=" + id + ")");
-			//refresh langs combobox
-			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
+				setquery("update langs set name=" + UpdateLangName.Text + "where id=" + lang_id + ")");
+				//refresh langs combobox
+				ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		private void UpdateFormat(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains name id
-			string id = UpdateFormatNameID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateFormatNameID.Items.Contains(UpdateFormatNameID.Text) == false) UpdateFormatNameID.Text = "null";
+			if (UpdateFormatNameID.Text != "null")
+			{
+				//combobox contains name id
+				string format_id = UpdateFormatNameID.Text.Split(' ').Last();
 
-			setquery("update formats set name=" + UpdateFormatName + "where id=" + id + ")");
-			//refresh formats combobox
-			ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
+				setquery("update formats set name=" + UpdateFormatName.Text + "where id=" + format_id + ")");
+				//refresh formats combobox
+				ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		private void UpdateGenre(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains name id
-			string id = UpdateGenreNameID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateGenreNameID.Items.Contains(UpdateGenreNameID.Text) == false) UpdateGenreNameID.Text = "null";
+			if (UpdateGenreNameID.Text != "null")
+			{
+				//combobox contains name id
+				string genre_id = UpdateGenreNameID.Text.Split(' ').Last();
 
-			setquery("update genres set name=" + UpdateGenreName + "where id=" + id + ")");
-			//refresh genres combobox
-			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
+				setquery("update genres set name=" + UpdateGenreName.Text + "where id=" + genre_id + ")");
+				//refresh genres combobox
+				ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		//Existing row Deletion
 		private void DeleteActor(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains last_name first_name id
-			string id = UpdateActorFNLNID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateActorFNLNID.Items.Contains(UpdateActorFNLNID.Text) == false) UpdateActorFNLNID.Text = "null";
+			if (UpdateActorFNLNID.Text != "null")
+			{
+				//combobox contains last_name first_name id
+				string actor_id = UpdateActorFNLNID.Text.Split(' ').Last();
 
-			setquery("delete from actors where id=" + id + ")");
-			//refresh actors combobox
-			ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
+				setquery("delete from actors where id=" + actor_id + ")");
+				//refresh actors combobox
+				ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		private void DeleteDirector(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains last_name first_name id
-			string id = UpdateDirectorFNLNID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateDirectorFNLNID.Items.Contains(UpdateDirectorFNLNID.Text) == false) UpdateDirectorFNLNID.Text = "null";
+			if (UpdateDirectorFNLNID.Text != "null")
+			{
+				//combobox contains last_name first_name id
+				string director_id = UpdateDirectorFNLNID.Text.Split(' ').Last();
 
-			setquery("delete from directors where id=" + id + ")");
-			//refresh directors combobox
-			ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
+				setquery("delete from directors where id=" + director_id + ")");
+				//refresh directors combobox
+				ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		private void DeleteCountry(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains name id
-			string id = UpdateCountryNameID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateCountryNameID.Items.Contains(UpdateCountryNameID.Text) == false) UpdateCountryNameID.Text = "null";
+			if (UpdateCountryNameID.Text != "null")
+			{
+				//combobox contains name id
+				string country_id = UpdateCountryNameID.Text.Split(' ').Last();
 
-			setquery("delete from countries where id=" + id + ")");
-			//refresh countries combobox
-			ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
+				setquery("delete from countries where id=" + country_id + ")");
+				//refresh countries combobox
+				ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		private void DeleteLang(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains name id
-			string id = UpdateLangNameID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateLangNameID.Items.Contains(UpdateLangNameID.Text) == false) UpdateLangNameID.Text = "null";
+			if (UpdateLangNameID.Text != "null")
+			{
+				//combobox contains name id
+				string lang_id = UpdateLangNameID.Text.Split(' ').Last();
 
-			setquery("delete from langs where id=" + id + ")");
-			//refresh langs combobox
-			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
+				setquery("delete from langs where id=" + lang_id + ")");
+				//refresh langs combobox
+				ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		private void DeleteFormat(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains name id
-			string id = UpdateFormatNameID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateFormatNameID.Items.Contains(UpdateFormatNameID.Text) == false) UpdateFormatNameID.Text = "null";
+			if (UpdateFormatNameID.Text != "null")
+			{
+				//combobox contains name id
+				string format_id = UpdateFormatNameID.Text.Split(' ').Last();
 
-			setquery("delete from formats where id=" + id + ")");
-			//refresh formats combobox
-			ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
+				setquery("delete from formats where id=" + format_id + ")");
+				//refresh formats combobox
+				ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
+			}
+			else MessageBox.Show("No item selected");
 		}
 		private void DeleteGenre(object sender, MouseButtonEventArgs e)
 		{
-			//combobox contains name id
-			string id = UpdateGenreNameID.Text.Split(' ').Last();
+			//remove bad values
+			if (UpdateGenreNameID.Items.Contains(UpdateGenreNameID.Text) == false) UpdateGenreNameID.Text = "null";
+			if (UpdateGenreNameID.Text != "null")
+			{
+				//combobox contains name id
+				string genre_id = UpdateGenreNameID.Text.Split(' ').Last();
 
-			setquery("delete from genres where id=" + id + ")");
-			//refresh genres combobox
-			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
+				setquery("delete from genres where id=" + genre_id + ")");
+				//refresh genres combobox
+				ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
+			}
+			else MessageBox.Show("No item selected");
 		}
 	}
 }
