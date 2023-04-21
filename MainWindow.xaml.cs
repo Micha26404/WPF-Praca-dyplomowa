@@ -1222,13 +1222,14 @@ namespace WPF
 
 				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 				{
-					string sqlText = @"UPDATE actors
-						SET last_name = @new_last_name, first_name = @new_first_name
-						WHERE id = @actor_id";
-					SqlCommand dbCommand = new SqlCommand(sqlText, connection);
-					dbCommand.Parameters.AddWithValue("@new_last_name", UpdateActorLastName.Text);
-					dbCommand.Parameters.AddWithValue("@new_first_name", UpdateActorFirstName.Text);
-					dbCommand.Parameters.AddWithValue("@actor_id", actor_id);
+					var sql = @"UPDATE actors
+						SET last_name = @last_name, first_name = @first_name
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@last_name", UpdateActorLastName.Text);
+					cmd.Parameters.AddWithValue("@first_name", UpdateActorFirstName.Text);
+					cmd.Parameters.AddWithValue("@id", actor_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 				//setquery("update actors set first_name=" + UpdateActorFirstName.Text + ",last_name=" + UpdateActorLastName.Text
 				//+ "where id=" + actor_id + ")");
@@ -1249,13 +1250,14 @@ namespace WPF
 
 				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 				{
-					string sqlText = @"UPDATE directors
-						SET last_name = @new_last_name, first_name = @new_first_name
-						WHERE id = @actor_id";
-					SqlCommand dbCommand = new SqlCommand(sqlText, connection);
-					dbCommand.Parameters.AddWithValue("@new_last_name", UpdateDirectorLastName.Text);
-					dbCommand.Parameters.AddWithValue("@new_first_name", UpdateDirectorFirstName.Text);
-					dbCommand.Parameters.AddWithValue("@actor_id", director_id);
+					var sql = @"UPDATE directors
+						SET last_name = @last_name, first_name = @first_name
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@last_name", UpdateDirectorLastName.Text);
+					cmd.Parameters.AddWithValue("@first_name", UpdateDirectorFirstName.Text);
+					cmd.Parameters.AddWithValue("@id", director_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 				//setquery("update directors set first_name=" + UpdateDirectorFirstName.Text + ",last_name=" + UpdateDirectorLastName.Text
 				//+ "where id=" + director_id + ")");
@@ -1274,9 +1276,20 @@ namespace WPF
 				//combobox contains name id
 				string country_id = UpdateCountryNameID.Text.Split(' ').Last();
 
-				setquery("update countries set name=" + UpdateCountryName.Text + "where id=" + country_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					var sql = @"UPDATE countries
+						SET name = @name,
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@name", UpdateCountryName.Text);
+					cmd.Parameters.AddWithValue("@id", country_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+				//setquery("update countries set name=" + UpdateCountryName.Text + "where id=" + country_id + ")");
 				//refresh countries combobox
 				ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
+				ComboboxRefresh(UpdateCountryNameID, "select name,id from countries");
 			}
 			else MessageBox.Show("No item selected");
 		}
@@ -1289,9 +1302,20 @@ namespace WPF
 				//combobox contains name id
 				string lang_id = UpdateLangNameID.Text.Split(' ').Last();
 
-				setquery("update langs set name=" + UpdateLangName.Text + "where id=" + lang_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					var sql = @"UPDATE langs
+						SET name = @name,
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@name", UpdateLangName.Text);
+					cmd.Parameters.AddWithValue("@id", lang_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+				//setquery("update langs set name=" + UpdateLangName.Text + "where id=" + lang_id + ")");
 				//refresh langs combobox
 				ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
+				ComboboxRefresh(UpdateLangNameID, "select name,id from langs");
 			}
 			else MessageBox.Show("No item selected");
 		}
@@ -1304,9 +1328,20 @@ namespace WPF
 				//combobox contains name id
 				string format_id = UpdateFormatNameID.Text.Split(' ').Last();
 
-				setquery("update formats set name=" + UpdateFormatName.Text + "where id=" + format_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					var sql = @"UPDATE formats
+						SET name = @name,
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@name", UpdateFormatName.Text);
+					cmd.Parameters.AddWithValue("@id", format_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+				//setquery("update formats set name=" + UpdateFormatName.Text + "where id=" + format_id + ")");
 				//refresh formats combobox
 				ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
+				ComboboxRefresh(UpdateFormatNameID, "select name,id from format");
 			}
 			else MessageBox.Show("No item selected");
 		}
@@ -1319,9 +1354,20 @@ namespace WPF
 				//combobox contains name id
 				string genre_id = UpdateGenreNameID.Text.Split(' ').Last();
 
-				setquery("update genres set name=" + UpdateGenreName.Text + "where id=" + genre_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					var sql = @"UPDATE genres
+						SET name = @name,
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@name", UpdateGenreName.Text);
+					cmd.Parameters.AddWithValue("@id", genre_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+				//setquery("update genres set name=" + UpdateGenreName.Text + "where id=" + genre_id + ")");
 				//refresh genres combobox
 				ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
+				ComboboxRefresh(UpdateGenreNameID, "select name,id from genres");
 			}
 			else MessageBox.Show("No item selected");
 		}
@@ -1335,9 +1381,18 @@ namespace WPF
 				//combobox contains last_name first_name id
 				string actor_id = UpdateActorLNFNID.Text.Split(' ').Last();
 
-				setquery("delete from actors where id=" + actor_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					var sql = @"delete from actors
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@id", actor_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+				//setquery("delete from actors where id=" + actor_id + ")");
 				//refresh actors combobox
 				ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
+				ComboboxRefresh(UpdateActorLNFNID, "select last_name,first_name,id from actors");
 			}
 			else MessageBox.Show("No item selected");
 		}
@@ -1350,9 +1405,18 @@ namespace WPF
 				//combobox contains last_name first_name id
 				string director_id = UpdateDirectorLNFNID.Text.Split(' ').Last();
 
-				setquery("delete from directors where id=" + director_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					var sql = @"delete from directors
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@id", director_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+				//setquery("delete from directors where id=" + director_id + ")");
 				//refresh directors combobox
 				ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
+				ComboboxRefresh(UpdateDirectorLNFNID, "select last_name,first_name,id from directors");
 			}
 			else MessageBox.Show("No item selected");
 		}
@@ -1365,9 +1429,18 @@ namespace WPF
 				//combobox contains name id
 				string country_id = UpdateCountryNameID.Text.Split(' ').Last();
 
-				setquery("delete from countries where id=" + country_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					var sql = @"delete from countries
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@id", country_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+				//setquery("delete from countries where id=" + country_id + ")");
 				//refresh countries combobox
 				ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
+				ComboboxRefresh(UpdateCountryNameID, "select name,id from countries");
 			}
 			else MessageBox.Show("No item selected");
 		}
@@ -1380,9 +1453,18 @@ namespace WPF
 				//combobox contains name id
 				string lang_id = UpdateLangNameID.Text.Split(' ').Last();
 
-				setquery("delete from langs where id=" + lang_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					var sql = @"delete from langs
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@id", lang_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+				//setquery("delete from langs where id=" + lang_id + ")");
 				//refresh langs combobox
 				ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
+				ComboboxRefresh(UpdateLangNameID, "select name,id from langs");
 			}
 			else MessageBox.Show("No item selected");
 		}
@@ -1395,9 +1477,18 @@ namespace WPF
 				//combobox contains name id
 				string format_id = UpdateFormatNameID.Text.Split(' ').Last();
 
-				setquery("delete from formats where id=" + format_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					var sql = @"delete from formats
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@id", format_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+				//setquery("delete from formats where id=" + format_id + ")");
 				//refresh formats combobox
 				ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
+				ComboboxRefresh(UpdateFormatNameID, "select name,id from format");
 			}
 			else MessageBox.Show("No item selected");
 		}
@@ -1410,9 +1501,18 @@ namespace WPF
 				//combobox contains name id
 				string genre_id = UpdateGenreNameID.Text.Split(' ').Last();
 
-				setquery("delete from genres where id=" + genre_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					var sql = @"delete from genres
+						WHERE id = @id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@id", genre_id);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+				//setquery("delete from genres where id=" + genre_id + ")");
 				//refresh genres combobox
 				ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
+				ComboboxRefresh(UpdateGenreNameID, "select name,id from genres");
 			}
 			else MessageBox.Show("No item selected");
 		}

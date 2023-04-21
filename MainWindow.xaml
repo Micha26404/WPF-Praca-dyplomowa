@@ -1156,22 +1156,22 @@
 						</Grid.ColumnDefinitions>
 						<UniformGrid Columns="1" Background="#7F800000" >
 							<Border>
-								<TextBlock MouseDown="AddActor">Add actor</TextBlock>
+								<TextBlock MouseDown="AddActor" Cursor="Hand">Add actor</TextBlock>
 							</Border>
 							<Border>
-								<TextBlock MouseDown="AddDirector">Add director</TextBlock>
+								<TextBlock MouseDown="AddDirector" Cursor="Hand">Add director</TextBlock>
 							</Border>
 							<Border>
-								<TextBlock MouseDown="AddCountry">Add country</TextBlock>
+								<TextBlock MouseDown="AddCountry" Cursor="Hand">Add country</TextBlock>
 							</Border>
 							<Border>
-								<TextBlock MouseDown="AddLang">Add Language</TextBlock>
+								<TextBlock MouseDown="AddLang" Cursor="Hand">Add Language</TextBlock>
 							</Border>
 							<Border>
-								<TextBlock MouseDown="AddFormat">Add Format</TextBlock>
+								<TextBlock MouseDown="AddFormat" Cursor="Hand">Add Format</TextBlock>
 							</Border>
 							<Border>
-								<TextBlock MouseDown="AddGenre">Add Genre</TextBlock>
+								<TextBlock MouseDown="AddGenre" Cursor="Hand">Add Genre</TextBlock>
 							</Border>
 						</UniformGrid>
 						<UniformGrid  Grid.Column="1" Columns="1" Background="#7F800000" >
@@ -1345,50 +1345,50 @@
 						<UniformGrid Grid.Column="2" Columns="1" Background="#7F800000" Margin="10">
 							<UniformGrid Columns="1" Margin="10">
 								<Border>
-									<TextBlock MouseDown="UpdateActor">Update actor</TextBlock>
+									<TextBlock MouseDown="UpdateActor" Cursor="Hand">Update actor</TextBlock>
 								</Border>
 								<Border>
-									<TextBlock MouseDown="DeleteActor">Delete actor</TextBlock>
-								</Border>
-							</UniformGrid>
-							<UniformGrid Columns="1" Margin="10">
-								<Border>
-									<TextBlock MouseDown="UpdateDirector">Update director</TextBlock>
-								</Border>
-								<Border>
-									<TextBlock MouseDown="DeleteDirector">Delete director</TextBlock>
+									<TextBlock MouseDown="DeleteActor" Cursor="Hand">Delete actor</TextBlock>
 								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
 								<Border>
-									<TextBlock MouseDown="UpdateCountry">Update country</TextBlock>
+									<TextBlock MouseDown="UpdateDirector" Cursor="Hand">Update director</TextBlock>
 								</Border>
 								<Border>
-									<TextBlock MouseDown="DeleteCountry">Delete country</TextBlock>
-								</Border>
-							</UniformGrid>
-							<UniformGrid Columns="1" Margin="10">
-								<Border>
-									<TextBlock MouseDown="UpdateLang">Update language</TextBlock>
-								</Border>
-								<Border>
-									<TextBlock MouseDown="DeleteLang">Delete language</TextBlock>
+									<TextBlock MouseDown="DeleteDirector" Cursor="Hand">Delete director</TextBlock>
 								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
 								<Border>
-									<TextBlock MouseDown="UpdateFormat">Update format</TextBlock>
+									<TextBlock MouseDown="UpdateCountry" Cursor="Hand">Update country</TextBlock>
 								</Border>
 								<Border>
-									<TextBlock MouseDown="DeleteFormat">Delete format</TextBlock>
+									<TextBlock MouseDown="DeleteCountry" Cursor="Hand">Delete country</TextBlock>
 								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
 								<Border>
-									<TextBlock MouseDown="UpdateGenre">Update genre</TextBlock>
+									<TextBlock MouseDown="UpdateLang" Cursor="Hand">Update language</TextBlock>
 								</Border>
 								<Border>
-									<TextBlock MouseDown="DeleteGenre">Delete genre</TextBlock>
+									<TextBlock MouseDown="DeleteLang" Cursor="Hand">Delete language</TextBlock>
+								</Border>
+							</UniformGrid>
+							<UniformGrid Columns="1" Margin="10">
+								<Border>
+									<TextBlock MouseDown="UpdateFormat" Cursor="Hand">Update format</TextBlock>
+								</Border>
+								<Border>
+									<TextBlock MouseDown="DeleteFormat" Cursor="Hand">Delete format</TextBlock>
+								</Border>
+							</UniformGrid>
+							<UniformGrid Columns="1" Margin="10">
+								<Border>
+									<TextBlock MouseDown="UpdateGenre" Cursor="Hand">Update genre</TextBlock>
+								</Border>
+								<Border>
+									<TextBlock MouseDown="DeleteGenre" Cursor="Hand">Delete genre</TextBlock>
 								</Border>
 							</UniformGrid>
 						</UniformGrid>
