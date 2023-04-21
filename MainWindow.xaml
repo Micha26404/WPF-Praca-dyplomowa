@@ -1194,7 +1194,7 @@
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>Actor</TextBlock>
-												<ComboBox Name="UpdateActorFNLNID"></ComboBox>
+												<ComboBox Name="UpdateActorLNFNID"></ComboBox>
 											</UniformGrid>
 											<UniformGrid Rows="1">
 												<TextBlock>New first name</TextBlock>
@@ -1227,7 +1227,7 @@
 										<UniformGrid Columns="1">
 											<UniformGrid Rows="1">
 												<TextBlock>Director</TextBlock>
-												<ComboBox Name="UpdateDirectorFNLNID"></ComboBox>
+												<ComboBox Name="UpdateDirectorLNFNID"></ComboBox>
 											</UniformGrid>
 											<UniformGrid Rows="1">
 												<TextBlock>New First name</TextBlock>

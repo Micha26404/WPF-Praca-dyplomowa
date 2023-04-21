@@ -103,9 +103,9 @@ namespace WPF
 		public void Admin2ComboboxesRefresh()
 		{
 			//Actors
-			ComboboxRefresh(UpdateActorFNLNID, "select last_name,first_name,id from actors");
+			ComboboxRefresh(UpdateActorLNFNID, "select last_name,first_name,id from actors");
 			//Directors
-			ComboboxRefresh(UpdateDirectorFNLNID, "select last_name,first_name,id from directors");
+			ComboboxRefresh(UpdateDirectorLNFNID, "select last_name,first_name,id from directors");
 			//Countries
 			ComboboxRefresh(UpdateCountryNameID, "select name,id from countries");
 			//Languages
@@ -880,7 +880,6 @@ namespace WPF
 					MessageBox.Show("Movie not set");
 				}
 			}
-			//return 1;
 		}
 		//Movies right click menu
 		private void MovieItem_plot(object sender, RoutedEventArgs e)
@@ -1109,70 +1108,160 @@ namespace WPF
 		//New row adding
 		private void AddActor(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into actors (first_name,last_name) values(" + AddActorFirstName.Text + "," + AddActorLastName.Text +")");
+			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+			{
+				connection.Open();
+				var sql = "INSERT INTO actors(first_name, last_name) VALUES(@first_name, @last_name)";
+				using (var cmd = new SqlCommand(sql, connection))
+				{
+					cmd.Parameters.AddWithValue("@first_name", AddActorFirstName.Text);
+					cmd.Parameters.AddWithValue("@last_name", AddActorLastName.Text);
+					MessageBox.Show("Rows affected: "+cmd.ExecuteNonQuery().ToString());
+				}
+			}
+			//setquery("Insert into actors (first_name,last_name) values(" + AddActorFirstName.Text + "," + AddActorLastName.Text +")");
 			//refresh actors combobox
+			ComboboxRefresh(UpdateActorLNFNID, "select last_name,first_name,id from actors");
 			ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
 		}
 		private void AddDirector(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into directors (first_name,last_name) values(" + AddActorFirstName.Text + "," + AddActorLastName.Text + ")");
+			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+			{
+				connection.Open();
+				var sql = "INSERT INTO directors(first_name, last_name) VALUES(@first_name, @last_name)";
+				using (var cmd = new SqlCommand(sql, connection))
+				{
+					cmd.Parameters.AddWithValue("@first_name", AddDirectorFirstName.Text);
+					cmd.Parameters.AddWithValue("@last_name", AddDirectorLastName.Text);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+			}
+			//setquery("Insert into directors (first_name,last_name) values(" + AddActorFirstName.Text + "," + AddActorLastName.Text + ")");
 			//refresh directors combobox
 			ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
+			ComboboxRefresh(UpdateDirectorLNFNID, "select last_name,first_name,id from directors");
 		}
 		private void AddCountry(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into countries (name) values(" + AddCountryName.Text + ")");
+			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+			{
+				connection.Open();
+				var sql = "INSERT INTO countries(name) VALUES(@name)";
+				using (var cmd = new SqlCommand(sql, connection))
+				{
+					cmd.Parameters.AddWithValue("@name", AddCountryName.Text);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+			}
+			//setquery("Insert into countries (name) values(" + AddCountryName.Text + ")");
 			//refresh countries combobox
 			ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
+			ComboboxRefresh(UpdateCountryNameID, "select name,id from countries");
 		}
 		private void AddLang(object sender, MouseButtonEventArgs e)
 		{
+			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+			{
+				connection.Open();
+				var sql = "INSERT INTO langs(name) VALUES(@name)";
+				using (var cmd = new SqlCommand(sql, connection))
+				{
+					cmd.Parameters.AddWithValue("@name", AddLangName.Text);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+			}
 			setquery("Insert into langs (name) values(" + AddLangName.Text + ")");
 			//refresh langs combobox
 			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
+			ComboboxRefresh(UpdateLangNameID, "select name,id from langs");
 		}
 		private void AddFormat(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into formats (name) values(" + AddFormatName.Text + ")");
+			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+			{
+				connection.Open();
+				var sql = "INSERT INTO formats(name) VALUES(@name)";
+				using (var cmd = new SqlCommand(sql, connection))
+				{
+					cmd.Parameters.AddWithValue("@name", AddFormatName.Text);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+			}
+			//setquery("Insert into formats (name) values(" + AddFormatName.Text + ")");
 			//refresh formats combobox
 			ComboboxRefresh(MovieFormFormatNameID, "select name,id from format");
+			ComboboxRefresh(UpdateFormatNameID, "select name,id from format");
 		}
 		private void AddGenre(object sender, MouseButtonEventArgs e)
 		{
-			setquery("Insert into genres (name) values(" + AddGenreName.Text + ")");
+			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+			{
+				connection.Open();
+				var sql = "INSERT INTO genres(name) VALUES(@name)";
+				using (var cmd = new SqlCommand(sql, connection))
+				{
+					cmd.Parameters.AddWithValue("@name", AddGenreName.Text);
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+				}
+			}
+			//setquery("Insert into genres (name) values(" + AddGenreName.Text + ")");
 			//refresh genres combobox
 			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
+			ComboboxRefresh(UpdateGenreNameID, "select name,id from genres");
 		}
 		//Existing row pdating
 		private void UpdateActor(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateActorFNLNID.Items.Contains(UpdateActorFNLNID.Text) == false) UpdateActorFNLNID.Text = "null";
-			if (UpdateActorFNLNID.Text != "null")
+			if (UpdateActorLNFNID.Items.Contains(UpdateActorLNFNID.Text) == false) UpdateActorLNFNID.Text = "null";
+			if (UpdateActorLNFNID.Text != "null")
 			{
 				//combobox contains last_name first_name id
-				string actor_id = UpdateActorFNLNID.Text.Split(' ').Last();
+				string actor_id = UpdateActorLNFNID.Text.Split(' ').Last();
 
-				setquery("update actors set first_name=" + UpdateActorFirstName.Text + ",last_name=" + UpdateActorLastName.Text
-				+ "where id=" + actor_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					string sqlText = @"UPDATE actors
+						SET last_name = @new_last_name, first_name = @new_first_name
+						WHERE id = @actor_id";
+					SqlCommand dbCommand = new SqlCommand(sqlText, connection);
+					dbCommand.Parameters.AddWithValue("@new_last_name", UpdateActorLastName.Text);
+					dbCommand.Parameters.AddWithValue("@new_first_name", UpdateActorFirstName.Text);
+					dbCommand.Parameters.AddWithValue("@actor_id", actor_id);
+				}
+				//setquery("update actors set first_name=" + UpdateActorFirstName.Text + ",last_name=" + UpdateActorLastName.Text
+				//+ "where id=" + actor_id + ")");
 				//refresh actors combobox
 				ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
+				ComboboxRefresh(UpdateActorLNFNID, "select last_name,first_name,id from actors");
 			}
 			else MessageBox.Show("No item selected");
 		}
 		private void UpdateDirector(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateDirectorFNLNID.Items.Contains(UpdateDirectorFNLNID.Text) == false) UpdateDirectorFNLNID.Text = "null";
-			if (UpdateDirectorFNLNID.Text != "null")
+			if (UpdateDirectorLNFNID.Items.Contains(UpdateDirectorLNFNID.Text) == false) UpdateDirectorLNFNID.Text = "null";
+			if (UpdateDirectorLNFNID.Text != "null")
 			{
 				//combobox contains last_name first_name id
-				string director_id = UpdateDirectorFNLNID.Text.Split(' ').Last();
+				string director_id = UpdateDirectorLNFNID.Text.Split(' ').Last();
 
-				setquery("update directors set first_name=" + UpdateDirectorFirstName.Text + ",last_name=" + UpdateDirectorLastName.Text
-				+ "where id=" + director_id + ")");
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					string sqlText = @"UPDATE directors
+						SET last_name = @new_last_name, first_name = @new_first_name
+						WHERE id = @actor_id";
+					SqlCommand dbCommand = new SqlCommand(sqlText, connection);
+					dbCommand.Parameters.AddWithValue("@new_last_name", UpdateDirectorLastName.Text);
+					dbCommand.Parameters.AddWithValue("@new_first_name", UpdateDirectorFirstName.Text);
+					dbCommand.Parameters.AddWithValue("@actor_id", director_id);
+				}
+				//setquery("update directors set first_name=" + UpdateDirectorFirstName.Text + ",last_name=" + UpdateDirectorLastName.Text
+				//+ "where id=" + director_id + ")");
 				//refresh directors combobox
 				ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
+				ComboboxRefresh(UpdateDirectorLNFNID, "select last_name,first_name,id from directors");
 			}
 			else MessageBox.Show("No item selected");
 		}
@@ -1240,11 +1329,11 @@ namespace WPF
 		private void DeleteActor(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateActorFNLNID.Items.Contains(UpdateActorFNLNID.Text) == false) UpdateActorFNLNID.Text = "null";
-			if (UpdateActorFNLNID.Text != "null")
+			if (UpdateActorLNFNID.Items.Contains(UpdateActorLNFNID.Text) == false) UpdateActorLNFNID.Text = "null";
+			if (UpdateActorLNFNID.Text != "null")
 			{
 				//combobox contains last_name first_name id
-				string actor_id = UpdateActorFNLNID.Text.Split(' ').Last();
+				string actor_id = UpdateActorLNFNID.Text.Split(' ').Last();
 
 				setquery("delete from actors where id=" + actor_id + ")");
 				//refresh actors combobox
@@ -1255,11 +1344,11 @@ namespace WPF
 		private void DeleteDirector(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateDirectorFNLNID.Items.Contains(UpdateDirectorFNLNID.Text) == false) UpdateDirectorFNLNID.Text = "null";
-			if (UpdateDirectorFNLNID.Text != "null")
+			if (UpdateDirectorLNFNID.Items.Contains(UpdateDirectorLNFNID.Text) == false) UpdateDirectorLNFNID.Text = "null";
+			if (UpdateDirectorLNFNID.Text != "null")
 			{
 				//combobox contains last_name first_name id
-				string director_id = UpdateDirectorFNLNID.Text.Split(' ').Last();
+				string director_id = UpdateDirectorLNFNID.Text.Split(' ').Last();
 
 				setquery("delete from directors where id=" + director_id + ")");
 				//refresh directors combobox
