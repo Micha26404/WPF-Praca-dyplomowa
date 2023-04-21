@@ -822,8 +822,8 @@ namespace WPF
 			{
 				genre_id = null;
 			}
-			//poster_path and trailer_path have to be set in their respective panels
-
+			//poster_path and trailer_path have to be set in their respective tabs
+			
 			//add mode
 			if (mode == false)
 			{
