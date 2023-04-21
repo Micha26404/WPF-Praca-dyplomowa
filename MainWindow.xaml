@@ -40,6 +40,14 @@
 		<Style TargetType="DataGridCell">
 			<Setter Property="BorderBrush" Value="Maroon"></Setter>
 			<Setter Property="Foreground" Value="White"></Setter>
+			<Setter Property="MaxWidth" Value="200"></Setter>
+			<Style.Triggers>
+				<Trigger Property="IsSelected" Value="True">
+					<Setter Property="Background" Value="Maroon"></Setter>
+					<Setter Property="IsEnabled" Value="False"></Setter>
+					<Setter Property="ToolTip" Value="Select with right click"></Setter>
+				</Trigger>
+			</Style.Triggers>
 		</Style>
 		<Style TargetType="DataGrid">
 			<Setter Property="HorizontalGridLinesBrush" Value="Maroon"></Setter>
@@ -53,6 +61,7 @@
 		</Style>
 		<Style TargetType="ComboBox">
 			<Setter Property="BorderBrush" Value="Transparent"></Setter>
+			<Setter Property="SelectedIndex" Value="0"></Setter>
 		</Style>
 		<Style TargetType="ComboBoxItem">
 			<Setter Property="BorderBrush" Value="Transparent"></Setter>
@@ -336,7 +345,7 @@
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Name="MoviesCatalog" Grid.Row="1" ItemsSource="{Binding}">
+						<DataGrid Name="MoviesCatalog" ToolTip="Right click for options" Grid.Row="1" ItemsSource="{Binding}">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>
@@ -359,6 +368,7 @@
 							</DataGrid.Resources>
 							<DataGrid.ContextMenu>
 								<ContextMenu>
+									<MenuItem Header="Show plot" Click="MovieItem_plot" />
 									<MenuItem Header="Return" Click="MovieItem_rent" />
 									<MenuItem Header="Edit" Click="MovieItem_edit" />
 									<MenuItem Header="Delete" Click="MovieItem_delete" />
@@ -410,7 +420,7 @@
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Name="ClientsCatalog" Grid.Row="1" ItemsSource="{Binding}">
+						<DataGrid Name="ClientsCatalog" ToolTip="Right click for options" Grid.Row="1" ItemsSource="{Binding}">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>
@@ -493,7 +503,7 @@
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Name="OrdersCatalog" Grid.Row="1" ItemsSource="{Binding}">
+						<DataGrid Name="OrdersCatalog" ToolTip="Right click for options" Grid.Row="1" ItemsSource="{Binding}">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>
@@ -560,7 +570,7 @@
 								</RadialGradientBrush>
 							</UniformGrid.Background>
 
-							<Viewbox ToolTip="Set trailer">
+							<Viewbox>
 								<Button>
 									<Image Source="icons\media\link.png" MouseDown="SetTrailer" Cursor="Hand"/>
 									<Button.Clip>
@@ -569,7 +579,7 @@
 								</Button>
 							</Viewbox>
 
-							<Viewbox ToolTip="Remove trailer">
+							<Viewbox>
 								<Button>
 									<Image Source="icons\media\delete-link.png" MouseDown="DeleteTrailer" Cursor="Hand"/>
 									<Button.Clip>
@@ -583,7 +593,7 @@
 								<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" >Year</TextBox>
 							</UniformGrid>
 
-							<Viewbox ToolTip="Play">
+							<Viewbox>
 								<Button>
 									<Image Name="PlayButton" Source="icons\media\circled-play.png" MouseDown="PlayTrailer" Cursor="Hand"/>
 									<Button.Clip>
@@ -592,7 +602,7 @@
 								</Button>
 							</Viewbox>
 
-							<Viewbox ToolTip="Pause">
+							<Viewbox>
 								<Button>
 									<Image Name="PauseButton" Source="icons\media\circled-pause.png" MouseDown="PauseTrailer" Cursor="Hand"/>
 									<Button.Clip>
@@ -606,7 +616,7 @@
 								<Slider Name="SeekSlider" ValueChanged="SeekTrailer" VerticalAlignment="Center" Width="130" Cursor="Hand"/>
 							</UniformGrid>
 
-							<Viewbox ToolTip="Reset">
+							<Viewbox>
 								<Button>
 									<Image Source="icons\media\stop-circled.png" MouseDown="StopTrailer" Cursor="Hand"/>
 									<Button.Clip>
@@ -657,18 +667,18 @@
 								</RadialGradientBrush>
 							</UniformGrid.Background>
 
-							<Viewbox ToolTip="Set poster" MouseDown="SetPoster" Cursor="Hand">
+							<Viewbox>
 								<Button>
-									<Image Source="icons\media\link.png"/>
+									<Image MouseDown="SetPoster" Cursor="Hand" ToolTip="Set poster" Source="icons\media\link.png"/>
 									<Button.Clip>
 										<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
 									</Button.Clip>
 								</Button>
 							</Viewbox>
 
-							<Viewbox ToolTip="Remove poster" MouseDown="RemovePoster" Cursor="Hand">
+							<Viewbox Width="306">
 								<Button>
-									<Image Source="icons\media\delete-link.png"/>
+									<Image ToolTip="Remove poster" MouseDown="RemovePoster" Cursor="Hand" Source="icons\media\delete-link.png"/>
 									<Button.Clip>
 										<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
 									</Button.Clip>
@@ -708,10 +718,10 @@
 						<!--Mode selection panel-->
 						<UniformGrid Columns="1" Width="60" ToolTip="Mode selection">
 							<Border>
-								<Grid MouseDown="SelectAddMode">
+								<Grid>
 									<TextBlock>Add mode</TextBlock>
-									<Viewbox VerticalAlignment="Center">
-										<Image Source="icons/add.png" Cursor="Hand"/>
+									<Viewbox VerticalAlignment="Bottom">
+										<Image MouseDown="SelectAddMode" Source="icons/add.png" Cursor="Hand"/>
 									</Viewbox>
 								</Grid>
 							</Border>
@@ -731,10 +741,10 @@
 								</UniformGrid>
 							</Border>
 							<Border>
-								<UniformGrid Columns="1" MouseDown="SelectEditMode" Background="#B28B0000" >
+								<UniformGrid Columns="1" Background="#B28B0000" >
 									<TextBlock>Update mode</TextBlock>
 									<Viewbox>
-										<Image Source="icons/edit.png" Cursor="Hand"/>
+										<Image MouseDown="SelectEditMode" Source="icons/edit.png" Cursor="Hand"/>
 									</Viewbox>
 								</UniformGrid>
 							</Border>
@@ -890,7 +900,7 @@
 										</UniformGrid>
 									</UniformGrid>
 									<!--Movie premise-->
-									<TextBox Name="MovieFormPlot" ToolTip="Movie beggining plot description" Background="Transparent">Movie premise
+									<TextBox Name="MovieFormPlot" ToolTip="Movie initial plot description" Background="Transparent">Premise
 									</TextBox>
 								</UniformGrid>
 							</Border>
@@ -957,85 +967,83 @@
 							</Border>
 							<!--Order form-->
 							<Border Grid.Row="2">
-								<UniformGrid Columns="1">
+								<UniformGrid Columns="2">
 									<UniformGrid.Background>
 										<LinearGradientBrush SpreadMethod="Pad" StartPoint="1,0">
 											<GradientStop Color="Transparent" Offset="1"/>
 											<GradientStop Color="#4CFF0000" Offset="0.493"/>
 										</LinearGradientBrush>
 									</UniformGrid.Background>
-									<Border>
-										<UniformGrid Rows="1">
-											<Border>
-												<TextBlock ToolTip="If empty; new one will be created" Background="#4C800000">Order ID</TextBlock>
-											</Border>
-											<Border>
-												<TextBlock Name="OrderFormID" ToolTip="Use edit option from context menu in orders catalog"/>
-											</Border>
-										</UniformGrid>
-									</Border>
-									<Border>
-										<UniformGrid Rows="1">
-											<Border>
-												<TextBlock ToolTip="Select rent context menu option in movies catalog" Background="#4C800000">
+									<UniformGrid Columns="1">
+										<Border>
+											<UniformGrid Rows="1">
+												<Border>
+													<TextBlock ToolTip="If empty; new one will be created" Background="#4C800000">Order ID</TextBlock>
+												</Border>
+												<Border>
+													<TextBlock Name="OrderFormID" ToolTip="Use edit option from context menu in orders catalog"/>
+												</Border>
+											</UniformGrid>
+										</Border>
+										<Border>
+											<UniformGrid Rows="1">
+												<Border>
+													<TextBlock ToolTip="Select rent context menu option in movies catalog" Background="#4C800000">
 													Movie ID
-												</TextBlock>
-											</Border>
-											<Border>
-												<TextBlock Name="OrderFormMovieID"/>
-											</Border>
-										</UniformGrid>
-									</Border>
-									<Border>
-										<UniformGrid Rows="1">
-											<Border>
-												<TextBlock  ToolTip="Client selection" Background="#4C800000">Client</TextBlock>
-											</Border>
-											<Border>
-												<ComboBox Name="OrderFormClientLNFNID"></ComboBox>
-											</Border>
-										</UniformGrid>
-									</Border>
-									<Border>
-										<UniformGrid Rows="1">
-											<Border>
-												<TextBlock ToolTip="Item rent date" Background="#4C800000">
+													</TextBlock>
+												</Border>
+												<Border>
+													<TextBlock Name="OrderFormMovieID"/>
+												</Border>
+											</UniformGrid>
+										</Border>
+										<Border>
+											<UniformGrid Rows="1">
+												<Border>
+													<TextBlock  ToolTip="Client selection" Background="#4C800000">Client</TextBlock>
+												</Border>
+												<Border>
+													<ComboBox Name="OrderFormClientLNFNID"></ComboBox>
+												</Border>
+											</UniformGrid>
+										</Border>
+									</UniformGrid>
+									<UniformGrid Columns="1">
+										<Border>
+											<UniformGrid Rows="1">
+												<Border>
+													<TextBlock ToolTip="Item taken date dd/mm/yyyy" Background="#4C800000">
 													Rent date
-												</TextBlock>
-											</Border>
-											<Border>
-												<DatePicker Name="OrderFormRentDate"></DatePicker>
-											</Border>
-										</UniformGrid>
-									</Border>
-									<Border>
-										<UniformGrid Rows="1">
-											<Border>
-												<TextBlock ToolTip="Item return deadline" Background="#4C800000">Due date</TextBlock>
-											</Border>
-											<Border>
-												<CheckBox Name="OrderFormDueDateCheck">Toggle to set date otherwise null</CheckBox>
-											</Border>
-											<Border>
-												<DatePicker Name="OrderFormDueDate"></DatePicker>
-											</Border>
-										</UniformGrid>
-									</Border>
-									<Border>
-										<UniformGrid Rows="1">
-											<Border>
-												<TextBlock ToolTip="Item return actual date" Background="#4C800000">
+													</TextBlock>
+												</Border>
+												<Border>
+													<DatePicker Name="OrderFormRentDate" ToolTip="Item taken date dd/mm/yyyy"></DatePicker>
+												</Border>
+											</UniformGrid>
+										</Border>
+										<Border>
+											<UniformGrid Rows="1">
+												<Border>
+													<TextBlock ToolTip="Item return deadline dd/mm/yyyy" Background="#4C800000">Due date</TextBlock>
+												</Border>
+												<Border>
+													<DatePicker ToolTip="Item return deadline dd/mm/yyyy"  Name="OrderFormDueDate"></DatePicker>
+												</Border>
+											</UniformGrid>
+										</Border>
+										<Border>
+											<UniformGrid Rows="1">
+												<Border>
+													<TextBlock ToolTip="Item return date dd/mm/yyyy" Background="#4C800000">
 													Return date
-												</TextBlock>
-											</Border>
-											<Border>
-												<CheckBox Name="OrderFormReturnDateCheck">Toggle to set date otherwise null</CheckBox>
-											</Border>
-											<Border>
-												<DatePicker Name="OrderFormReturnDate"></DatePicker>
-											</Border>
-										</UniformGrid>
-									</Border>
+													</TextBlock>
+												</Border>
+												<Border>
+													<DatePicker Name="OrderFormReturnDate" ToolTip="Item return date dd/mm/yyyy"></DatePicker>
+												</Border>
+											</UniformGrid>
+										</Border>
+									</UniformGrid>
 								</UniformGrid>
 							</Border>
 						</Grid>
@@ -1061,8 +1069,8 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">Submit movie</TextBlock>
 									<Viewbox>
-										<Button MouseDown="SubmitMovie">
-											<Image VerticalAlignment="Top" Source="\icons\cinema\cinema.png" ToolTip="Movies">
+										<Button>
+											<Image MouseDown="SubmitMovie" VerticalAlignment="Top" Source="\icons\cinema\cinema.png" ToolTip="Submit movie. Bad values will be replaced with nothing">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
 												</Image.Clip>
@@ -1085,8 +1093,8 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit client</TextBlock>
 									<Viewbox>
-										<Button MouseDown="SubmitClient">
-											<Image VerticalAlignment="Top" Source="icons/user-group-woman-woman.png">
+										<Button>
+											<Image MouseDown="SubmitClient" ToolTip="Submit client. Bad values will be replaced with nothing" VerticalAlignment="Top" Source="icons/user-group-woman-woman.png">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
 												</Image.Clip>
@@ -1109,8 +1117,8 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit order</TextBlock>
 									<Viewbox>
-										<Button MouseDown="SubmitOrder">
-											<Image VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
+										<Button>
+											<Image MouseDown="SubmitOrder" ToolTip="Submit client. Bad values will be replaced with nothing" VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
 												</Image.Clip>

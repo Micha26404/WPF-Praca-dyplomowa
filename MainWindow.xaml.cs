@@ -19,6 +19,7 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows.Controls.Primitives;
+using System.Text.RegularExpressions;
 
 namespace WPF
 {
@@ -65,9 +66,9 @@ namespace WPF
 					"movies.plot," +
 					"formats.name as format," +
 					"CONCAT(directors.last_name,' ',directors.first_name) as director," +
-					"CONCAT(actors.last_name,' ',actors.first_name) as lead_actor," +
+					"CONCAT(actors.last_name,' ',actors.first_name) as 'lead actor'," +
 					"countries.name as country, langs.name as language," +
-					"movies.left_count, movies.total_count from movies " +
+					"movies.left_count as 'left copies', movies.total_count as 'all copies' from movies " +
 					"join actors on actors.id = movies.actor_id " +
 					"join countries on countries.id = movies.country_id " +
 					"join langs on langs.id = movies.lang_id " +
@@ -81,7 +82,7 @@ namespace WPF
 		public void OrdersGridRefresh()
 		{
 			getquery(orders_dt, "Select orders.id,CONCAT(clients.last_name,' ',clients.first_name) as client," +
-				"movies.name as title,movies.year, orders.rent_date, orders.due_date, orders.return_date " +
+				"movies.name as title,movies.year, orders.rent_date as 'rent date', orders.due_date as 'due date', orders.return_date as 'return date' " +
 				"from orders " +
 				"join movies on movies.id=orders.movie_id " +
 				"join clients on clients.id=orders.client_id");
@@ -114,7 +115,6 @@ namespace WPF
 			//Genres
 			ComboboxRefresh(UpdateGenreNameID, "select name,id from genres");
 		}
-		
 		//sql panel button
 		private void QueryExecuteButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -170,6 +170,8 @@ namespace WPF
 		//refresh datatable to refresh grid items
 		public void getquery(DataTable dt, string query)
 		{
+			dt.Clear();
+
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
 			SqlConnection con = new SqlConnection(strConnection);
 
@@ -182,7 +184,7 @@ namespace WPF
 			sqlDataAdap.Fill(dt);
 			con.Close();
 		}
-		//unused
+		//unusedd deprecated
 		public void getquery(DataGrid grid, string query)
 		{
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
@@ -217,7 +219,7 @@ namespace WPF
 			return dtRecord.Rows[0].ToString();
 		}
 		//Combobox items clear and fill (refresh)
-		public void ComboboxRefresh(ComboBox combo,string query) 
+		public void ComboboxRefresh(ComboBox combo, string query)
 		{
 			combo.Items.Clear();
 
@@ -233,7 +235,19 @@ namespace WPF
 			DataTable dtRecord = new DataTable();
 			sqlDataAdap.Fill(dtRecord);
 			con.Close();
-			combo.ItemsSource = dtRecord.DefaultView;
+
+			//populate rows
+			combo.Items.Add("null");
+			string row = "";
+			for (int i = 0; i < dtRecord.Rows.Count; i++)
+			{
+				row = "";
+				for (int j = 0; j < dtRecord.Columns.Count; j++)
+				{
+					row += dtRecord.Rows[i][j].ToString()+" ";
+				}
+				combo.Items.Add(row);
+			}
 		}
 		public int getmovie_id() {
 			//get selected item id from selected row
@@ -423,16 +437,27 @@ namespace WPF
 		//Submit Buttons
 		private void SubmitOrder(object sender, MouseButtonEventArgs e)
 		{
+			//ensure correct date (dd/mm/yyyy)
+			Regex regex = new Regex(@"[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]", RegexOptions.IgnoreCase);
+			MatchCollection matches = regex.Matches(OrderFormRentDate.Text);
+			if (matches.Count == 0) OrderFormRentDate.Text = "";
+
+			matches = regex.Matches(OrderFormDueDate.Text);
+			if (matches.Count == 0) OrderFormDueDate.Text = "";
+
+			matches = regex.Matches(OrderFormReturnDate.Text);
+			if (matches.Count == 0) OrderFormReturnDate.Text = "";
+
 			//get movie_id and client_id
-			int movie_id=-1,
-				client_id=-1;
+			string movie_id =null,
+				client_id=null;
 			if (OrderFormMovieID.Text != "" &&
-				OrderFormClientLNFNID.Text != "")
+				OrderFormClientLNFNID.Text != "null")
 			{
 				//split string and get movie id
-				movie_id = int.Parse(OrderFormMovieID.Text);
+				movie_id = OrderFormMovieID.Text;
 				//split string and get client id
-				client_id = int.Parse(OrderFormClientLNFNID.Text.Split(' ').Last());
+				client_id = OrderFormClientLNFNID.Text.Split(' ').Last();
 			}
 			else
 			{
@@ -442,42 +467,42 @@ namespace WPF
 			}
 			//get dates in format dd/mm/yy (30/12/2022)
 			//Default date in form is today
-			int dd, mm, yy;
+			int dd, mm, yyyy;
 			//set due date if not null
 			string rent_date = getquery("select ISNULL(due_date,'') from orders where id=" + OrderFormID.Text);
 			if (rent_date != "")
 			{
-				rent_date = getquery("select convert(varchar, rent_date, 1) from orders where id=" + OrderFormID.Text);
+				rent_date = getquery("select convert(varchar, rent_date, 103) from orders where id=" + OrderFormID.Text);
 				dd = int.Parse(rent_date.Split('/')[0]);
 				mm = int.Parse(rent_date.Split('/')[1]);
-				yy = int.Parse(rent_date.Split('/')[2]);
-				OrderFormRentDate.SelectedDate = new DateTime(yy, mm, dd);
+				yyyy = int.Parse(rent_date.Split('/')[2]);
+				OrderFormRentDate.SelectedDate = new DateTime(yyyy, mm, dd);
 			}
 			//set due date if not null
 			string due_date = getquery("select ISNULL(due_date,'') from orders where id=" + OrderFormID.Text);
 			if (due_date != "")
 			{
-				due_date = getquery("select convert(varchar, due_date, 1) from orders where id=" + OrderFormID.Text);
+				due_date = getquery("select convert(varchar, due_date, 103) from orders where id=" + OrderFormID.Text);
 				dd = int.Parse(due_date.Split('/')[0]);
 				mm = int.Parse(due_date.Split('/')[1]);
-				yy = int.Parse(due_date.Split('/')[2]);
-				OrderFormDueDate.SelectedDate = new DateTime(yy, mm, dd);
+				yyyy = int.Parse(due_date.Split('/')[2]);
+				OrderFormDueDate.SelectedDate = new DateTime(yyyy, mm, dd);
 			}
 			//set return date if not null
 			string return_date = getquery("select ISNULL(return_date,'') from orders where id=" + OrderFormID.Text);
 			if (return_date != "")
 			{
-				return_date = getquery("select convert(varchar, return_date, 1) from orders where id=" + OrderFormID.Text);
+				return_date = getquery("select convert(varchar, return_date, 103) from orders where id=" + OrderFormID.Text);
 				dd = int.Parse(return_date.Split('/')[0]);
 				mm = int.Parse(return_date.Split('/')[1]);
-				yy = int.Parse(return_date.Split('/')[2]);
-				OrderFormReturnDate.SelectedDate = new DateTime(yy, mm, dd);
+				yyyy = int.Parse(return_date.Split('/')[2]);
+				OrderFormReturnDate.SelectedDate = new DateTime(yyyy, mm, dd);
 			}
-				//add mode
-				if (mode == false && movie_id>=0 && client_id >= 0)
+			//add mode
+			if (mode == false && movie_id!=null && client_id != null)
 				{
-					//set dates if checked
-					if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == false)
+					//none date set
+					if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text == "")
 					{
 						//due_date = "null";
 						//return_date = "null";
@@ -487,7 +512,7 @@ namespace WPF
 						copies_left--;
 						setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
 							client_id + "," + movie_id + "," +
-							"TODATE(" + rent_date + ",'dd/mm/yy')," +
+							"TODATE(" + rent_date + ",'dd/mm/yyyy')," +
 							"null," +
 							"null)");
 						setquery("update movies set left_count=" + copies_left);
@@ -495,7 +520,8 @@ namespace WPF
 						OrdersGridRefresh();
 					}
 				}
-					if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
+					//only return date set
+					if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text != "")
 					{
 						//due_date="null";
 						int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
@@ -504,15 +530,16 @@ namespace WPF
 							copies_left--;
 							setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
 								client_id + "," + movie_id + "," +
-								"TODATE(" + rent_date + ",'dd/mm/yy')," +
+								"TODATE(" + rent_date + ",'dd/mm/yyyy')," +
 								"null," +
-								"TODATE(" + return_date + ",'dd/mm/yy'))");
+								"TODATE(" + return_date + ",'dd/mm/yyyy'))");
 							setquery("update movies set left_count=" + copies_left);
 							//refresh grid
 							OrdersGridRefresh();
 						}
 					}
-					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
+					//only due date set
+					if (OrderFormDueDate.Text != "" && OrderFormReturnDate.Text == "")
 					{
 						//return_date = "null";
 						int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
@@ -521,15 +548,16 @@ namespace WPF
 							copies_left--;
 							setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
 								client_id + "," + movie_id + "," +
-								"TODATE(" + rent_date + ",'dd/mm/yy')," +
-								"TODATE(" + due_date + ",'dd/mm/yy')," +
+								"TODATE(" + rent_date + ",'dd/mm/yyyy')," +
+								"TODATE(" + due_date + ",'dd/mm/yyyy')," +
 								"null)");
 							setquery("update movies set left_count=" + copies_left);
 							//refresh grid
 							OrdersGridRefresh();
 						}
 					}
-					if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
+					//all dates set
+					if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text == "")
 					{
 						int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
 						if (copies_left > 0)
@@ -537,66 +565,70 @@ namespace WPF
 							copies_left--;
 							setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
 								client_id + "," + movie_id + "," +
-								"TODATE(" + rent_date + ",'dd/mm/yy')," +
-								"TODATE(" + due_date + ",'dd/mm/yy')," +
-								"TODATE(" + return_date + ",'dd/mm/yy'))");
+								"TODATE(" + rent_date + ",'dd/mm/yyyy')," +
+								"TODATE(" + due_date + ",'dd/mm/yyyy')," +
+								"TODATE(" + return_date + ",'dd/mm/yyyy'))");
 							setquery("update movies set left_count=" + copies_left);
 							//refresh grid
 							OrdersGridRefresh();
 						}
 					}
 				}
-				else if (mode == true && movie_id >= 0 && client_id >= 0)//edit mode
+				else if (mode == true && movie_id != null && client_id != null)//edit mode
 				{
 					//get order_id
 					if (OrderFormID.Text != "")
 					{
 						int order_id = int.Parse(OrderFormID.Text);
 						//set dates if checked and submit
-						if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == false)
+						//none date set
+						if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text == "")
 						{
 							//due_date = "null";
 							//return_date = "null";
 							setquery("update Orders set " +
 									"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-									"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
+									"rent_date=TODATE(" + rent_date + ",'dd/mm/yyyy')," +
 									"due_date=null," +
 									"return_date=null");
 							//refresh grid
 							OrdersGridRefresh();
 							//return 0;
 						}
-						if (OrderFormDueDateCheck.IsChecked == false && OrderFormReturnDateCheck.IsChecked == true)
+						//only return date set
+						if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text != "")
 						{
 							//due_date="null";
 							setquery("update Orders set " +
 									"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-									"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
+									"rent_date=TODATE(" + rent_date + ",'dd/mm/yyyy')," +
 									"due_date=null," +
-									"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
+									"return_date=TODATE(" + return_date + ",'dd/mm/yyyy')");
 							//refresh grid
 							OrdersGridRefresh();
 							//return 0;
 						}
-						if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == false)
+						//only due date set
+						if (OrderFormDueDate.Text != "" && OrderFormReturnDate.Text == "")
 						{
 							//return_date = "null";
 							setquery("update Orders set " +
 									"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-									"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
-									"due_date=TODATE(" + due_date + ",'dd/mm/yy')," +
+									"rent_date=TODATE(" + rent_date + ",'dd/mm/yyyy')," +
+									"due_date=TODATE(" + due_date + ",'dd/mm/yyyy')," +
 									"return_date=null");
 							//refresh grid
 							OrdersGridRefresh();
 							//return 0;
 						}
-						if (OrderFormDueDateCheck.IsChecked == true && OrderFormReturnDateCheck.IsChecked == true)
+						//all dates set
+						if (OrderFormDueDate.Text != "" && OrderFormReturnDate.Text != "")
 						{
 							setquery("update Orders set" +
 									"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-									"rent_date=TODATE(" + rent_date + ",'dd/mm/yy')," +
-									"due_date=TODATE(" + due_date + ",'dd/mm/yy')," +
-									"return_date=TODATE(" + return_date + ",'dd/mm/yy')");
+									"rent_date=TODATE(" + rent_date + ",'dd/mm/yyyy')," +
+									"due_date=TODATE(" + due_date + ",'dd/mm/yyyy')," +
+									"return_date=TODATE(" + return_date + ",'dd/mm/yyyy')");
 							//refresh grid
 							OrdersGridRefresh();
 							//return 0;
@@ -615,6 +647,9 @@ namespace WPF
 		}
 		private void SubmitClient(object sender, MouseButtonEventArgs e)
 		{
+			//remove bad values
+			if (ClientFormPhone.Text.Any(char.IsLetter)) MovieFormAge.Text = "";
+
 			//add mode
 			if (mode == false)
 			{
@@ -655,11 +690,21 @@ namespace WPF
 		}
 		private void SubmitMovie(object sender, MouseButtonEventArgs e)
 		{
+			//remove bad values
+			if (MovieFormAge.Text.Any(char.IsLetter)) MovieFormAge.Text = "";
+			if (MovieFormYear.Text.Any(char.IsLetter)) MovieFormYear.Text = "";
+			if (MovieFormDuration.Text.Any(char.IsLetter)) MovieFormDuration.Text = "";
+			if (MovieFormPrice.Text.Any(char.IsLetter)) MovieFormPrice.Text = "";
+			if (MovieFormCopiesLeft.Text.Any(char.IsLetter)) MovieFormCopiesLeft.Text = "1";
+			if (MovieFormCopiesTotal.Text.Any(char.IsLetter)) MovieFormCopiesTotal.Text = "1";
+
 			//get country id from combobox
-			int country_id = int.Parse(MovieFormCountryNameID.Text.Split(' ').Last());
+			string country_id = null;
+			if (MovieFormCountryNameID.Text != "null")
+				country_id = MovieFormCountryNameID.Text.Split(' ').Last();
 			//get year
 			string year;
-			if (MovieFormYear.Text != "")
+			if (MovieFormYear.Text != null)
 			{
 				year = MovieFormYear.Text;
 			}
@@ -669,7 +714,7 @@ namespace WPF
 			}
 			//get duration
 			string duration;
-			if (MovieFormDuration.Text != "")
+			if (MovieFormDuration.Text != null)
 			{
 				duration = MovieFormDuration.Text;
 			}
@@ -679,7 +724,7 @@ namespace WPF
 			}
 			//get age
 			string age;
-			if (MovieFormAge.Text != "")
+			if (MovieFormAge.Text != null)
 			{
 				age = MovieFormAge.Text;
 			}
@@ -689,27 +734,27 @@ namespace WPF
 			}
 			//get total count of copies
 			string copies_total;
-			if (MovieFormCopiesTotal.Text != "")
+			if (MovieFormCopiesTotal.Text != null)
 			{
 				copies_total = MovieFormCopiesTotal.Text;
 			}
 			else
 			{
-				copies_total = null;
+				copies_total = "1";
 			}
 			//get count of copies left
 			string copies_left;
-			if (MovieFormCopiesLeft.Text != "")
+			if (MovieFormCopiesLeft.Text != null)
 			{
 				copies_left = MovieFormCopiesLeft.Text;
 			}
 			else
 			{
-				copies_left = null;
+				copies_left = "1";
 			}
 			//get rental price
 			string price;
-			if (MovieFormPrice.Text != "")
+			if (MovieFormPrice.Text != null)
 			{
 				price = MovieFormPrice.Text;
 			}
@@ -719,7 +764,7 @@ namespace WPF
 			}
 			//get plot premise
 			string plot;
-			if (MovieFormPlot.Text != "")
+			if (MovieFormPlot.Text != null)
 			{
 				plot = MovieFormPlot.Text;
 			}
@@ -729,7 +774,7 @@ namespace WPF
 			}
 			//get lang_id from combobox
 			string lang_id;
-			if (MovieFormLangNameID.Text != "")
+			if (MovieFormLangNameID.Text != "null")
 			{
 				lang_id = MovieFormLangNameID.Text.Split(' ').Last();
 			}
@@ -739,7 +784,7 @@ namespace WPF
 			}
 			//get actor_id from combobox
 			string actor_id;
-			if (MovieFormActorLNFNID.Text != "")
+			if (MovieFormActorLNFNID.Text != "null")
 			{
 				actor_id = MovieFormActorLNFNID.Text.Split(' ').Last();
 			}
@@ -749,7 +794,7 @@ namespace WPF
 			}
 			//get director_id from combobox
 			string director_id;
-			if (MovieFormDirectorLNFNID.Text != "")
+			if (MovieFormDirectorLNFNID.Text != "null")
 			{
 				director_id = MovieFormDirectorLNFNID.Text.Split(' ').Last();
 			}
@@ -759,7 +804,7 @@ namespace WPF
 			}
 			//get format_id from combobox
 			string format_id;
-			if (MovieFormFormatNameID.Text != "")
+			if (MovieFormFormatNameID.Text != "null")
 			{
 				format_id = MovieFormFormatNameID.Text.Split(' ').Last();
 			}
@@ -769,7 +814,7 @@ namespace WPF
 			}
 			//get genre_id from combobox
 			string genre_id;
-			if (MovieFormFormatNameID.Text != "")
+			if (MovieFormFormatNameID.Text != "null")
 			{
 				genre_id = MovieFormGenreNameID.Text.Split(' ').Last();
 			}
@@ -782,55 +827,60 @@ namespace WPF
 			//add mode
 			if (mode == false)
 			{
-				if (MovieFormTitle.Text != "")
+				if (MovieFormTitle.Text != null)
 				{
-					setquery("Insert into movies (name,year,country_id,duration,age,total_count,price,left_count,plot,lang_id,actor_id,director_id,format_id,poster_path,trailer_path,genre_id) " +
-						"values(" + MovieFormTitle.Text + "," + year +
-						"," + country_id + "," + duration + "," + age + "," + copies_total + "," + 
-						price + "," + copies_left + "," + plot + "," + lang_id + "," + actor_id + "," + director_id +
-						 format_id + ",null,null," + genre_id + ")");
+					setquery("Insert into movies (name,year,country_id,duration,age,total_count,price,left_count,plot,lang_id,actor_id,director_id,format_id,genre_id) " +
+						"values(" + MovieFormTitle.Text + "," + year + "," + country_id + "," + duration + "," + age + "," + copies_total + "," + 
+						price + "," + copies_left + "," + plot + "," + lang_id + "," + actor_id + "," + director_id + "," +
+						 format_id + "," + genre_id + ")");
 					//refresh grid
-					ClientsGridRefresh();
+					MoviesGridRefresh();
 				}
 				else
 				{
 					MessageBox.Show("Movie title not set");
-					//return 1;
 				}
 			}
 			//edit mode
 			else
 			{
 				//get movie_id from combobox
-				string movie_id=null;
-				if (MovieFormFormatNameID.Text != "")
+				string movie_id = null;
+				if (MovieFormFormatNameID.Text != "null")
 				{
 					movie_id = MovieFormID.Text;
 				}
 				else
 				{
 					MessageBox.Show("Movie id not set. Use edit context menu option from movies catalog");
-					//return 1;
 				}
-				if (MovieFormTitle.Text != "" && movie_id != null)
+				if (MovieFormTitle.Text != null && movie_id != null)
 				{
+					//if total copies lower than copies left
+					if (int.Parse(copies_total.ToString()) < int.Parse(copies_left.ToString()))
+						copies_total = copies_left;
 					setquery("update movies set movie_id=" + movie_id + ",name=" + MovieFormTitle.Text +
 						",year=" + year + ",country_id=" + country_id + ",duration=" + duration + ",age=" + age +
 						",total_count=" + copies_total + ",price=" + price + ",left_count=" + copies_left +
 						",plot=" + plot + ",lang_id=" + lang_id + ",actor_id=" + actor_id + ",director_id=" + director_id +
 						",format_id=" + format_id + ")");
 					//refresh grid
-					ClientsGridRefresh();
+					MoviesGridRefresh();
 				}
 				else
 				{
 					MessageBox.Show("Movie not set");
-					//return 1;
 				}
 			}
 			//return 1;
 		}
 		//Movies right click menu
+		private void MovieItem_plot(object sender, RoutedEventArgs e)
+		{
+			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
+			string plot = rowview.Row["plot"].ToString();
+			MessageBox.Show(plot);
+		}
 		private void MovieItem_rent(object sender, RoutedEventArgs e)
 		{
 			//add mode
@@ -883,7 +933,8 @@ namespace WPF
 			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
 			
 			int movie_id = int.Parse(rowview.Row["movie_id"].ToString());
-			int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
+			int copies_left = int.Parse(rowview.Row["left copies"].ToString());
+			//int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
 			setquery("update movies set left_count=" + copies_left + 1 +" where id=" + movie_id);
 
 			OrdersGridRefresh();
@@ -1196,6 +1247,5 @@ namespace WPF
 			//refresh genres combobox
 			ComboboxRefresh(MovieFormGenreNameID, "select name,id from genres");
 		}
-
 	}
 }
