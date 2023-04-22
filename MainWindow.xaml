@@ -30,9 +30,10 @@
 			<Setter Property="BorderBrush" Value="DarkRed"></Setter>
 			<Setter Property="IsTodayHighlighted" Value="True"></Setter>
 			<Setter Property="SelectedDateFormat" Value="Short"></Setter>
-			<Setter Property="Foreground" Value="White"></Setter>
+			<Setter Property="Foreground" Value="Maroon"></Setter>
 			<Setter Property="Background" Value="Maroon"/>
 			<Setter Property="FirstDayOfWeek" Value="Monday"/>
+			<Setter Property="Opacity" Value="0.95"/>
 		</Style>
 		<Style TargetType="DataGridColumnHeader">
 			<Setter Property="Padding" Value="5"></Setter>
@@ -64,6 +65,7 @@
 			<Setter Property="SelectedIndex" Value="0"></Setter>
 			<Setter Property="IsEditable" Value="True"></Setter>
 			<Setter Property="ToolTip" Value="Bad value won't be submitted"></Setter>
+			<Setter Property="Opacity" Value="0.95"/>
 		</Style>
 		<Style TargetType="ComboBoxItem">
 			<Setter Property="BorderBrush" Value="Transparent"></Setter>
@@ -371,7 +373,7 @@
 							<DataGrid.ContextMenu>
 								<ContextMenu>
 									<MenuItem Header="Show plot" Click="MovieItem_plot" />
-									<MenuItem Header="Return" Click="MovieItem_rent" />
+									<MenuItem Header="Rent" Click="MovieItem_rent" />
 									<MenuItem Header="Edit" Click="MovieItem_edit" />
 									<MenuItem Header="Delete" Click="MovieItem_delete" />
 									<MenuItem Header="Load poster to tab" Click="MovieItem_poster" />
@@ -446,6 +448,7 @@
 							<DataGrid.ContextMenu>
 								<ContextMenu>
 									<MenuItem Header="Edit" Click="ClientItem_edit" />
+									<MenuItem Header="Delete" Click="ClientItem_delete" />
 								</ContextMenu>
 							</DataGrid.ContextMenu>
 						</DataGrid>
@@ -490,18 +493,18 @@
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Rent date</TextBlock>
-								<CheckBox Name="RentDateFilterToggle">Toggle filter</CheckBox>
-								<DatePicker SelectedDateChanged="FilterOrderRentDate" Name="FilterOrderRentDateText" Opacity="0.8"/>
+								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderRentStartDate" Name="FilterOrderRentStartDateText"/>
+								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderRentStopDate" Name="FilterOrderRentStopDateText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Due date</TextBlock>
-								<CheckBox Name="DueDateFilterToggle">Toggle filter</CheckBox>
-								<DatePicker SelectedDateChanged="FilterOrderDueDate" Name="FilterOrderDueDateText" Opacity="0.8"/>
+								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderDueStartDate" Name="FilterOrderDueStartDateText"/>
+								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderDueStopDate" Name="FilterOrderDueStopDateText"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Return date</TextBlock>
-								<CheckBox Name="ReturnDateFilterToggle">Toggle filter</CheckBox>
-								<DatePicker SelectedDateChanged="FilterOrderReturnDate" Name="FilterOrderReturnDateText" Opacity="0.8"/>
+								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderReturnStartDate" Name="FilterOrderReturnStartDateText"/>
+								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderReturnStopDate" Name="FilterOrderReturnStopDateText"/>
 							</UniformGrid>
 						</UniformGrid>
 
@@ -903,7 +906,7 @@
 										</UniformGrid>
 									</UniformGrid>
 									<!--Movie premise-->
-									<TextBox Name="MovieFormPlot" ToolTip="Movie initial plot description" Background="Transparent">Premise
+									<TextBox Name="MovieFormPlot" ToolTip="Movie initial plot description" Background="Transparent">Premise unknown
 									</TextBox>
 								</UniformGrid>
 							</Border>
@@ -1072,7 +1075,7 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">Submit movie</TextBlock>
 									<Viewbox>
-										<Button>
+										<Button MouseDown="SubmitMovie">
 											<Image MouseDown="SubmitMovie" VerticalAlignment="Top" Source="\icons\cinema\cinema.png" ToolTip="Submit movie. Bad values will be replaced with nothing">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
@@ -1096,7 +1099,7 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit client</TextBlock>
 									<Viewbox>
-										<Button>
+										<Button MouseDown="SubmitClient">
 											<Image MouseDown="SubmitClient" ToolTip="Submit client. Bad values will be replaced with nothing" VerticalAlignment="Top" Source="icons/user-group-woman-woman.png">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
@@ -1120,7 +1123,7 @@
 									</UniformGrid.Background>
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit order</TextBlock>
 									<Viewbox>
-										<Button>
+										<Button MouseDown="SubmitOrder">
 											<Image MouseDown="SubmitOrder" ToolTip="Submit client. Bad values will be replaced with nothing" VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
 												<Image.Clip>
 													<EllipseGeometry Center="170,170" RadiusX="130" RadiusY="140" />
