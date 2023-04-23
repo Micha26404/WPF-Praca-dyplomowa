@@ -725,7 +725,7 @@
 						<UniformGrid Columns="1" Width="60" ToolTip="Mode selection">
 							<Border>
 								<Grid>
-									<TextBlock>Add mode</TextBlock>
+									<TextBlock MouseDown="SelectAddMode">Add mode</TextBlock>
 									<Viewbox VerticalAlignment="Bottom">
 										<Image MouseDown="SelectAddMode" Source="icons/add.png" Cursor="Hand"/>
 									</Viewbox>
@@ -748,7 +748,7 @@
 							</Border>
 							<Border>
 								<UniformGrid Columns="1" Background="#B28B0000" >
-									<TextBlock>Update mode</TextBlock>
+									<TextBlock MouseDown="SelectEditMode">Edit mode</TextBlock>
 									<Viewbox>
 										<Image MouseDown="SelectEditMode" Source="icons/edit.png" Cursor="Hand"/>
 									</Viewbox>

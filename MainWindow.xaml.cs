@@ -62,13 +62,16 @@ namespace WPF
 		DataTable orders_dt = new DataTable();
 		public void MoviesGridRefresh() {
 			getquery(movies_dt,
-					"Select movies.id, movies.name as title, movies.year, movies.duration, movies.age, genres.name as genre, movies.price," +
-					"movies.plot," +
-					"formats.name as format," +
-					"CONCAT(directors.last_name,' ',directors.first_name) as director," +
-					"CONCAT(actors.last_name,' ',actors.first_name) as 'lead actor'," +
-					"countries.name as country, langs.name as language," +
-					"movies.left_count as 'left copies', movies.total_count as 'all copies' " +
+					"Select movies.id, movies.name as title, movies.year, movies.duration, movies.age," +
+					"CONCAT(genres.name,' ',genres.id) as genre," +
+					"movies.price,movies.plot," +
+					"CONCAT(formats.name,' ',formats.id) as format," +
+					"CONCAT(directors.last_name,' ',directors.first_name,' ',directors.id) as director," +
+					"CONCAT(actors.last_name,' ',actors.first_name,' ',actors.id) as 'lead actor'," +
+					"CONCAT(countries.name,' ',countries.id) as country," +
+					"CONCAT(langs.name,' ',langs.id) as language," +
+					"movies.left_count as 'left copies'," +
+					"movies.total_count as 'all copies' " +
 					"from movies " +
 					"join actors on actors.id = movies.actor_id " +
 					"join countries on countries.id = movies.country_id " +
@@ -79,12 +82,12 @@ namespace WPF
 		}
 		public void ClientsGridRefresh()
 		{
-			getquery(clients_dt, "Select * from clients");
+			getquery(clients_dt, "Select id,last_name as 'last name', first_name as 'first name',phone, email from clients");
 		}
 		public void OrdersGridRefresh()
 		{
-			getquery(orders_dt, "Select orders.id,CONCAT(clients.last_name,' ',clients.first_name) as client," +
-				"movies.name as title,movies.year, orders.rent_date as 'rent date', orders.due_date as 'due date', orders.return_date as 'return date' " +
+			getquery(orders_dt, "Select orders.id,CONCAT(clients.last_name,' ',clients.first_name,' ',clients.id) as client," +
+				"CONCAT(movies.name,' ',movies.id) as movie,movies.year, orders.rent_date as 'rent date', orders.due_date as 'due date', orders.return_date as 'return date' " +
 				"from orders " +
 				"join movies on movies.id=orders.movie_id " +
 				"join clients on clients.id=orders.client_id");
@@ -186,7 +189,7 @@ namespace WPF
 			sqlDataAdap.Fill(dt);
 			con.Close();
 		}
-		//unusedd deprecated
+		//query to grid used in sql panel
 		public void getquery(DataGrid grid, string query)
 		{
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
@@ -203,7 +206,7 @@ namespace WPF
 			con.Close();
 			grid.ItemsSource = dtRecord.DefaultView;
 		}
-		//query for single row to string
+		//old query for single row to string
 		public string getquery(string query)
 		{
 			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
@@ -216,6 +219,7 @@ namespace WPF
 			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
 
 			DataTable dtRecord = new DataTable();
+
 			sqlDataAdap.Fill(dtRecord);
 			con.Close();
 			return dtRecord.Rows[0].ToString();
@@ -248,7 +252,7 @@ namespace WPF
 				{
 					row += dtRecord.Rows[i][j].ToString()+" ";
 				}
-				combo.Items.Add(row);
+				combo.Items.Add(row.Trim());
 			}
 		}
 		public int getmovie_id() {
@@ -369,104 +373,43 @@ namespace WPF
 		//Fills existing movie data into form in admin panel (rent movie option)
 		public void MovieEditRentFillForm() 
 		{
-			MovieFormID.Text = getmovie_id().ToString();
+			SelectAddMode(null, null);
+			OrderFormMovieID.Text = getmovie_id().ToString();
 			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
-			MovieFormTitle.Text = rowview.Row["title"].ToString();
-			MovieFormYear.Text = rowview.Row["year"].ToString();
 			MovieFormPrice.Text = rowview.Row["price"].ToString();
-			MovieFormPlot.Text = rowview.Row["plot"].ToString();
-			MovieFormActorLNFNID.Text = rowview.Row["lead actor"].ToString();
-			MovieFormDirectorLNFNID.Text = rowview.Row["director"].ToString();
-			MovieFormAge.Text = rowview.Row["age"].ToString();
-			MovieFormDuration.Text = rowview.Row["duration"].ToString();
-			MovieFormCopiesLeft.Text = rowview.Row["left copies"].ToString();
-			MovieFormCopiesTotal.Text = rowview.Row["all copies"].ToString();
-			MovieFormLangNameID.Text = rowview.Row["language"].ToString();
-			MovieFormFormatNameID.Text = rowview.Row["format"].ToString();
-			MovieFormGenreNameID.Text = rowview.Row["genre"].ToString();
+			//comboboxes
 		}
 		//Fills existing client data into form in admin panel (edit client option)
 		public void ClientEditFillForm()
 		{
+			SelectEditMode(null, null);
 			ClientFormID.Text = getclient_id().ToString();
 			DataRowView rowview = ClientsCatalog.SelectedItem as DataRowView;
-			ClientFormLastName.Text = rowview.Row["last_name"].ToString();
-			ClientFormFirstName.Text = rowview.Row["first_name"].ToString();
+			ClientFormLastName.Text = rowview.Row["last name"].ToString();
+			ClientFormFirstName.Text = rowview.Row["first name"].ToString();
 			ClientFormEmail.Text = rowview.Row["email"].ToString();
 			ClientFormPhone.Text = rowview.Row["phone"].ToString();
 		}
 		//Fills existing order data into form in admin panel (edit order option)
 		public void OrderEditFillForm()
 		{
+			SelectEditMode(null, null);
 			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
-			//set order id
+			//get order id
 			OrderFormID.Text = getorder_id().ToString();
 			
 			//get movie id
-			string movie_id;
-			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-			{
-				connection.Open();
-				var sql = @"select movie_id from orders where id=@id";
-				var cmd = new SqlCommand(sql, connection);
-				cmd.Parameters.AddWithValue("@id", getorder_id());
-				movie_id = cmd.ExecuteScalar().ToString();
-			}
-			//movie_id = rowview.Row["movie_id"].ToString();
+			string movie_id = rowview.Row["movie"].ToString().Split().Last();
+			OrderFormMovieID.Text = movie_id;
 
-			//get movie title
-			string title;
-			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-			{
-				connection.Open();
-				var sql = @"select name from movies where id=@id";
-				var cmd = new SqlCommand(sql, connection);
-				cmd.Parameters.AddWithValue("@id", movie_id);
-				title = cmd.ExecuteScalar().ToString();
-			}
-			//set movie title id
-			//OrderFormMovieID.Text = getquery("select title from movies where id=" + movie_id) + " " + movie_id;
-			OrderFormMovieID.Text = title + " " + movie_id;
-
-			//get client_id
-			string client_id;
-			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-			{
-				connection.Open();
-				var sql = @"select client_id from orders where id=@id";
-				var cmd = new SqlCommand(sql, connection);
-				cmd.Parameters.AddWithValue("@id", getorder_id());
-				client_id = cmd.ExecuteScalar().ToString();
-			}
-			//int client_id = int.Parse(rowview.Row["client_id"].ToString());
-
-			//get client first name
-			string first_name;
-			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-			{
-				connection.Open();
-				var sql = @"select first_name from clients where id=@id";
-				var cmd = new SqlCommand(sql, connection);
-				cmd.Parameters.AddWithValue("@id", client_id);
-				first_name = cmd.ExecuteScalar().ToString();
-			}
+			//get client name id
+			string client = rowview.Row["client"].ToString();
+			OrderFormClientLNFNID.Text = client;
 			
-			//get client last_name
-			string last_name;
-			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-			{
-				connection.Open();
-				var sql = @"select last_name from clients where id=@id";
-				var cmd = new SqlCommand(sql, connection);
-				cmd.Parameters.AddWithValue("@id", client_id);
-				last_name = cmd.ExecuteScalar().ToString();
-			}
-			//set client last name first name id
-			OrderFormClientLNFNID.Text = last_name + " " + first_name + " " + client_id;
-			
-			//get dates in format dd/mm/yy
 			//get rent date
-			string rent_date;
+			string rent_date = rowview.Row["rent date"].ToString();
+			OrderFormRentDate.Text = rent_date;
+			/*
 			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 			{
 				connection.Open();
@@ -474,16 +417,18 @@ namespace WPF
 				var cmd = new SqlCommand(sql, connection);
 				cmd.Parameters.AddWithValue("@id", getorder_id());
 				rent_date = cmd.ExecuteScalar().ToString();
+				int dd = int.Parse(rent_date.Split('/')[0]);
+				int mm = int.Parse(rent_date.Split('/')[1]);
+				int yy = int.Parse(rent_date.Split('/')[2]);
+				//set date if not null
+				if (dd != 1 && mm != 1 && yy != 1970)
+					OrderFormRentDate.SelectedDate = new DateTime(yy, mm, dd);
 			}
-			int dd = int.Parse(rent_date.Split('/')[0]);
-			int mm = int.Parse(rent_date.Split('/')[1]);
-			int yy = int.Parse(rent_date.Split('/')[2]);
-			//set date if not null
-			if(dd!=1 && mm!=1 && yy!=1970)
-				OrderFormRentDate.SelectedDate = new DateTime(yy, mm, dd);
-
+			*/
 			//get due date
-			string due_date;
+			string due_date = rowview.Row["due date"].ToString();
+			OrderFormDueDate.Text = due_date;
+			/*
 			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 			{
 				connection.Open();
@@ -491,16 +436,18 @@ namespace WPF
 				var cmd = new SqlCommand(sql, connection);
 				cmd.Parameters.AddWithValue("@id", getorder_id());
 				due_date = cmd.ExecuteScalar().ToString();
+				int dd = int.Parse(due_date.Split('/')[0]);
+				int mm = int.Parse(due_date.Split('/')[1]);
+				int yy = int.Parse(due_date.Split('/')[2]);
+				//set date if not null
+				if (dd != 1 && mm != 1 && yy != 1970)
+					OrderFormDueDate.SelectedDate = new DateTime(yy, mm, dd);
 			}
-			dd = int.Parse(due_date.Split('/')[0]);
-			mm = int.Parse(due_date.Split('/')[1]);
-			yy = int.Parse(due_date.Split('/')[2]);
-			//set date if not null
-			if (dd != 1 && mm != 1 && yy != 1970)
-				OrderFormDueDate.SelectedDate = new DateTime(yy, mm, dd);
-
+			*/
 			//get return date
-			string return_date;
+			string return_date = rowview.Row["return date"].ToString();
+			OrderFormReturnDate.Text = return_date;
+			/*
 			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 			{
 				connection.Open();
@@ -508,55 +455,32 @@ namespace WPF
 				var cmd = new SqlCommand(sql, connection);
 				cmd.Parameters.AddWithValue("@id", getorder_id());
 				return_date = cmd.ExecuteScalar().ToString();
+				int dd = int.Parse(return_date.Split('/')[0]);
+				int mm = int.Parse(return_date.Split('/')[1]);
+				int yy = int.Parse(return_date.Split('/')[2]);
+				//set date if not null
+				if (dd != 1 && mm != 1 && yy != 1970)
+					OrderFormReturnDate.SelectedDate = new DateTime(yy, mm, dd);
 			}
-			dd = int.Parse(return_date.Split('/')[0]);
-			mm = int.Parse(return_date.Split('/')[1]);
-			yy = int.Parse(return_date.Split('/')[2]);
-			//set date if not null
-			if (dd != 1 && mm != 1 && yy != 1970)
-				OrderFormReturnDate.SelectedDate = new DateTime(yy, mm, dd);
-			/*
-			//set rent date
-			string rent_date = getquery("select convert(varchar, rent_date, 103) from orders where id=" + OrderFormID.Text);
-			int dd = int.Parse(rent_date.Split('/')[0]);
-			int mm = int.Parse(rent_date.Split('/')[1]);
-			int yy = int.Parse(rent_date.Split('/')[2]);
-			OrderFormRentDate.SelectedDate=new DateTime(yy, mm, dd);
-
-			//set due date
-			string due_date = getquery("select convert(varchar, due_date, 103) from orders where id=" + OrderFormID.Text);
-			dd = int.Parse(due_date.Split('/')[0]);
-			mm = int.Parse(due_date.Split('/')[1]);
-			yy = int.Parse(due_date.Split('/')[2]);
-			OrderFormDueDate.SelectedDate = new DateTime(yy, mm, dd);
-
-			//set return date
-			string return_date = getquery("select convert(varchar, return_date, 103) from orders where id=" + OrderFormID.Text);
-			dd = int.Parse(return_date.Split('/')[0]);
-			mm = int.Parse(return_date.Split('/')[1]);
-			yy = int.Parse(return_date.Split('/')[2]);
-			OrderFormReturnDate.SelectedDate = new DateTime(yy, mm, dd);
 			*/
 		}
 		//Submit Buttons
 		private void SubmitOrder(object sender, MouseButtonEventArgs e)
 		{
-			//remove bad values
-			if (OrderFormClientLNFNID.Items.Contains(OrderFormClientLNFNID.Text) == false) OrderFormClientLNFNID.Text = "null";
-			//ensure correct date (dd/mm/yyyy)
-			Regex regex = new Regex(@"[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]", RegexOptions.IgnoreCase);
-			MatchCollection matches = regex.Matches(OrderFormRentDate.Text);
-			if (matches.Count == 0) OrderFormRentDate.Text = "";
-
-			matches = regex.Matches(OrderFormDueDate.Text);
-			if (matches.Count == 0) OrderFormDueDate.Text = "";
-
-			matches = regex.Matches(OrderFormReturnDate.Text);
-			if (matches.Count == 0) OrderFormReturnDate.Text = "";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			//Console.WriteLine(OrderFormClientLNFNID.Text);
+			foreach (string item in OrderFormClientLNFNID.Items)
+			{
+				//Console.WriteLine(item+" "+ OrderFormClientLNFNID.Text);
+				exists = item == OrderFormClientLNFNID.Text;
+				if (exists) break;
+			}
+			if (exists == false) OrderFormClientLNFNID.Text = "null";
 
 			//get movie_id and client_id
-			string movie_id =null,
-				client_id=null;
+			string movie_id = null,
+				client_id = null;
 			if (OrderFormMovieID.Text != "" &&
 				OrderFormClientLNFNID.Text != "null")
 			{
@@ -568,181 +492,27 @@ namespace WPF
 			else
 			{
 				//no movie id or client
-				MessageBox.Show("Form incomplete: use rent context menu option in movies catalog to fill movie id and select client");
-				//return 1;
+				MessageBox.Show("Form incomplete: use rent context menu option in movies catalog to fill movie id and select client using combobox");
 			}
-			//get dates in format dd/mm/yy (30/12/2022)
-			//Default date in form is today
-			int dd, mm, yyyy;
-			//set rent date if not null
-			string rent_date = getquery("select ISNULL(due_date,'') from orders where id=" + OrderFormID.Text);
-			if (rent_date != "")
+			//client, movie and rent date must be present
+			if (OrderFormClientLNFNID.Text != "" && OrderFormClientLNFNID.Text != null &&
+				OrderFormMovieID.Text != "" && OrderFormMovieID.Text != null &&
+				OrderFormRentDate.Text != "" && OrderFormRentDate.Text != null)
 			{
-				rent_date = getquery("select convert(varchar, rent_date, 103) from orders where id=" + OrderFormID.Text);
-				dd = int.Parse(rent_date.Split('/')[0]);
-				mm = int.Parse(rent_date.Split('/')[1]);
-				yyyy = int.Parse(rent_date.Split('/')[2]);
-				OrderFormRentDate.SelectedDate = new DateTime(yyyy, mm, dd);
-			}
-			//set due date if not null
-			string due_date = getquery("select ISNULL(due_date,'') from orders where id=" + OrderFormID.Text);
-			if (due_date != "")
-			{
-				due_date = getquery("select convert(varchar, due_date, 103) from orders where id=" + OrderFormID.Text);
-				dd = int.Parse(due_date.Split('/')[0]);
-				mm = int.Parse(due_date.Split('/')[1]);
-				yyyy = int.Parse(due_date.Split('/')[2]);
-				OrderFormDueDate.SelectedDate = new DateTime(yyyy, mm, dd);
-			}
-			//if due date lower than rent date set to latter
-			if (OrderFormDueDate.SelectedDate < OrderFormRentDate.SelectedDate)
-				OrderFormDueDate.SelectedDate = OrderFormRentDate.SelectedDate;
-			//set return date if not null
-			string return_date = getquery("select ISNULL(return_date,'') from orders where id=" + OrderFormID.Text);
-			if (return_date != "")
-			{
-				return_date = getquery("select convert(varchar, return_date, 103) from orders where id=" + OrderFormID.Text);
-				dd = int.Parse(return_date.Split('/')[0]);
-				mm = int.Parse(return_date.Split('/')[1]);
-				yyyy = int.Parse(return_date.Split('/')[2]);
-				OrderFormReturnDate.SelectedDate = new DateTime(yyyy, mm, dd);
-			}
-			//client must be selected
-			if (OrderFormClientLNFNID.Text != "null")
-			{
-				int copies_left = int.Parse(getquery("select left_count from movies where id=" + movie_id));
-				//add mode when copies available
-				if (mode == false && movie_id!=null && client_id != null && copies_left > 0)
+				//get number of copies left available
+				int copies_left = 0;
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 				{
-					//decrement movie copies available when client rents a copy
-					copies_left--;
-
-					//none date set (from due_date and return_date; rent_date always must be set)
-					if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text == "")
-					{
-						//due_date = "null";
-						//return_date = "null";
-						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-						{
-							connection.Open();
-							var sql = @"Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) " +
-								"values(@client_id,@movie_id,@rent_date,@due_date,@return_date)";
-							using (var cmd = new SqlCommand(sql, connection))
-							{
-								cmd.Parameters.AddWithValue("@client_id", client_id);
-								cmd.Parameters.AddWithValue("@movie_id", movie_id);
-								cmd.Parameters.AddWithValue("@rent_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-								cmd.Parameters.AddWithValue("@due_date", "null");
-								cmd.Parameters.AddWithValue("@return_date", "null");
-								MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-							}
-						}
-						//setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
-						//	client_id + "," + movie_id + "," +
-						//	"TODATE(" + rent_date + ",'dd/mm/yyyy')," +
-						//	"null," +
-						//	"null)");
-						//update copies left
-						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-						{
-							connection.Open();
-							var sql = @"update movies set left_count=@left_count" +
-								"where id=@id";
-							using (var cmd = new SqlCommand(sql, connection))
-							{
-								cmd.Parameters.AddWithValue("@id", movie_id);
-								cmd.Parameters.AddWithValue("@left_count", copies_left);
-								//MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-							}
-						}
-						//setquery("update movies set left_count=" + copies_left + "where id=" + movie_id);
-						//refresh grid
-						OrdersGridRefresh();
-					}
-					//only return date set
-					if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text != "")
-					{
-						//due_date="null";
-						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-						{
-							connection.Open();
-							var sql = @"Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) " +
-								"values(@client_id,@movie_id,@rent_date,@due_date,@return_date)";
-							using (var cmd = new SqlCommand(sql, connection))
-							{
-								cmd.Parameters.AddWithValue("@client_id", client_id);
-								cmd.Parameters.AddWithValue("@movie_id", movie_id);
-								cmd.Parameters.AddWithValue("@rent_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-								cmd.Parameters.AddWithValue("@due_date", "null");
-								cmd.Parameters.AddWithValue("@return_date", "TODATE(" + return_date + ", 'dd/mm/yyyy')");
-								MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-							}
-						}
-						//setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
-						//		client_id + "," + movie_id + "," +
-						//		"TODATE(" + rent_date + ",'dd/mm/yyyy')," +
-						//		"null," +
-						//		"TODATE(" + return_date + ",'dd/mm/yyyy'))");
-						//update copies left
-						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-						{
-							connection.Open();
-							var sql = @"update movies set left_count=@left_count" +
-								"where id=@id";
-							using (var cmd = new SqlCommand(sql, connection))
-							{
-								cmd.Parameters.AddWithValue("@id", movie_id);
-								cmd.Parameters.AddWithValue("@left_count", copies_left);
-								//MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-							}
-						}
-						//setquery("update movies set left_count=" + copies_left + "where id=" + movie_id);
-						//refresh grid
-						OrdersGridRefresh();
-					}
-					//due date set
-					if (OrderFormDueDate.Text != "" && OrderFormReturnDate.Text == "")
-					{
-						//return_date = "null";
-						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-						{
-							connection.Open();
-							var sql = @"Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) " +
-								"values(@client_id,@movie_id,@rent_date,@due_date,@return_date)";
-							using (var cmd = new SqlCommand(sql, connection))
-							{
-								cmd.Parameters.AddWithValue("@client_id", client_id);
-								cmd.Parameters.AddWithValue("@movie_id", movie_id);
-								cmd.Parameters.AddWithValue("@rent_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-								cmd.Parameters.AddWithValue("@due_date", "TODATE(" + due_date + ",'dd/mm/yyyy')");
-								cmd.Parameters.AddWithValue("@return_date", "null");
-								MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-							}
-						}
-						//setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
-						//		client_id + "," + movie_id + "," +
-						//		"TODATE(" + rent_date + ",'dd/mm/yyyy')," +
-						//		"TODATE(" + due_date + ",'dd/mm/yyyy')," +
-						//		"null)");
-						//update copies left
-						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-						{
-							connection.Open();
-							var sql = @"update movies set left_count=@left_count" +
-								"where id=@id";
-							using (var cmd = new SqlCommand(sql, connection))
-							{
-								cmd.Parameters.AddWithValue("@id", movie_id);
-								cmd.Parameters.AddWithValue("@left_count", copies_left);
-								//MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-							}
-						}
-						//setquery("update movies set left_count=" + copies_left + "where id=" + movie_id);
-							//refresh grid
-							OrdersGridRefresh();
-					}
-					//all dates set
-					if (OrderFormDueDate.Text != "" && OrderFormReturnDate.Text != "")
+					connection.Open();
+					var sql = @"select left_count from movies where id=@id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@id", movie_id);
+					copies_left = int.Parse(cmd.ExecuteScalar().ToString());
+				}
+				//add (rent) mode if copies available
+				if (mode == false)
+				{
+					if (copies_left > 0)
 					{
 							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 							{
@@ -753,51 +523,40 @@ namespace WPF
 								{
 									cmd.Parameters.AddWithValue("@client_id", client_id);
 									cmd.Parameters.AddWithValue("@movie_id", movie_id);
-									cmd.Parameters.AddWithValue("@rent_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-									cmd.Parameters.AddWithValue("@due_date", "TODATE(" + due_date + ",'dd/mm/yyyy')");
-									cmd.Parameters.AddWithValue("@return_date", "TODATE(" + return_date + ",'dd/mm/yyyy')");
+									cmd.Parameters.AddWithValue("@rent_date", OrderFormRentDate.Text);
+									cmd.Parameters.AddWithValue("@due_date", OrderFormDueDate.Text);
+									cmd.Parameters.AddWithValue("@return_date", OrderFormReturnDate.Text);
 									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+									OrdersGridRefresh();
+									//decrement movie copies available when client rents a copy
+									copies_left--;
 								}
 							}
-						//setquery("Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) values(" +
-						//	client_id + "," + movie_id + "," +
-						//	"TODATE(" + rent_date + ",'dd/mm/yyyy')," +
-						//	"TODATE(" + due_date + ",'dd/mm/yyyy')," +
-						//	"TODATE(" + return_date + ",'dd/mm/yyyy'))");
-						//update copies left
-						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-						{
-							connection.Open();
-							var sql = @"update movies set left_count=@left_count" +
-								"where id=@id";
-							using (var cmd = new SqlCommand(sql, connection))
+							//update copies left
+							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 							{
-								cmd.Parameters.AddWithValue("@id", movie_id);
-								cmd.Parameters.AddWithValue("@left_count", copies_left);
-								//MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+								connection.Open();
+								var sql = @"update movies set left_count=@left_count where id=@id";
+								using (var cmd = new SqlCommand(sql, connection))
+								{
+									cmd.Parameters.AddWithValue("@id", movie_id);
+									cmd.Parameters.AddWithValue("@left_count", copies_left);
+									MoviesGridRefresh();
+								}
 							}
-						}
-						//setquery("update movies set left_count=" + copies_left + "where id=" + movie_id);
-						//refresh grid
-						OrdersGridRefresh();
 					}
-				}
-				//edit mode
-				else if (mode == true && movie_id != null && client_id != null)
+					else MessageBox.Show("No copies left to rent");
+				}//edit mode
+				else if (mode == true)
 				{
 					//get order_id
 					if (OrderFormID.Text != "")
 					{
 						string order_id = OrderFormID.Text;
-						//set dates if checked and submit
-						//none date set
-						if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text == "")
-						{
-							//due_date = "null";
 							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 							{
 								connection.Open();
-								var sql = @"update orders client_id=@client_id, movie_id=@movie_id," +
+								var sql = @"update orders set client_id=@client_id, movie_id=@movie_id," +
 									"rent_date=@rent_date, due_date=@due_date, return_date=@return_date " +
 									"where id=@id";
 								using (var cmd = new SqlCommand(sql, connection))
@@ -805,107 +564,13 @@ namespace WPF
 									cmd.Parameters.AddWithValue("@id", order_id);
 									cmd.Parameters.AddWithValue("@client_id", client_id);
 									cmd.Parameters.AddWithValue("@movie_id", movie_id);
-									cmd.Parameters.AddWithValue("@rent_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-									cmd.Parameters.AddWithValue("@due_date", "null");
-									cmd.Parameters.AddWithValue("@return_date", "null");
+									cmd.Parameters.AddWithValue("@rent_date", OrderFormRentDate.Text);
+									cmd.Parameters.AddWithValue("@due_date", OrderFormDueDate.Text);
+									cmd.Parameters.AddWithValue("@return_date", OrderFormReturnDate.Text);
 									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 								}
 							}
-							//return_date = "null";
-							//setquery("update Orders set " +
-							//		"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-							//		"rent_date=TODATE(" + rent_date + ",'dd/mm/yyyy')," +
-							//		"due_date=null," +
-							//		"return_date=null");
-							//refresh grid
 							OrdersGridRefresh();
-						}
-						//only return date set
-						if (OrderFormDueDate.Text == "" && OrderFormReturnDate.Text != "")
-						{
-							//due_date="null";
-							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-							{
-								connection.Open();
-								var sql = @"update orders client_id=@client_id, movie_id=@movie_id," +
-									"rent_date=@rent_date, due_date=@due_date, return_date=@return_date " +
-									"where id=@id";
-								using (var cmd = new SqlCommand(sql, connection))
-								{
-									cmd.Parameters.AddWithValue("@id", order_id);
-									cmd.Parameters.AddWithValue("@client_id", client_id);
-									cmd.Parameters.AddWithValue("@movie_id", movie_id);
-									cmd.Parameters.AddWithValue("@rent_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-									cmd.Parameters.AddWithValue("@due_date", "null");
-									cmd.Parameters.AddWithValue("@return_date", "TODATE(" + return_date + ",'dd/mm/yyyy')");
-									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-								}
-							}
-							//setquery("update Orders set " +
-							//		"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-							//		"rent_date=TODATE(" + rent_date + ",'dd/mm/yyyy')," +
-							//		"due_date=null," +
-							//		"return_date=TODATE(" + return_date + ",'dd/mm/yyyy')");
-							//refresh grid
-							OrdersGridRefresh();
-						}
-						//only due date set
-						if (OrderFormDueDate.Text != "" && OrderFormReturnDate.Text == "")
-						{
-							//return_date = "null";
-							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-							{
-								connection.Open();
-								var sql = @"update orders client_id=@client_id, movie_id=@movie_id," +
-									"rent_date=@rent_date, due_date=@due_date, return_date=@return_date " +
-									"where id=@id";
-								using (var cmd = new SqlCommand(sql, connection))
-								{
-									cmd.Parameters.AddWithValue("@id", order_id);
-									cmd.Parameters.AddWithValue("@client_id", client_id);
-									cmd.Parameters.AddWithValue("@movie_id", movie_id);
-									cmd.Parameters.AddWithValue("@rent_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-									cmd.Parameters.AddWithValue("@due_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-									cmd.Parameters.AddWithValue("@return_date", "null");
-									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-								}
-							}
-							//setquery("update Orders set " +
-							//		"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-							//		"rent_date=TODATE(" + rent_date + ",'dd/mm/yyyy')," +
-							//		"due_date=TODATE(" + due_date + ",'dd/mm/yyyy')," +
-							//		"return_date=null");
-							//refresh grid
-							OrdersGridRefresh();
-						}
-						//all dates set
-						if (OrderFormDueDate.Text != "" && OrderFormReturnDate.Text != "")
-						{
-							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-							{
-								connection.Open();
-								var sql = @"update orders client_id=@client_id, movie_id=@movie_id," +
-									"rent_date=@rent_date, due_date=@due_date, return_date=@return_date " +
-									"where id=@id";
-								using (var cmd = new SqlCommand(sql, connection))
-								{
-									cmd.Parameters.AddWithValue("@id", order_id);
-									cmd.Parameters.AddWithValue("@client_id", client_id);
-									cmd.Parameters.AddWithValue("@movie_id", movie_id);
-									cmd.Parameters.AddWithValue("@rent_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-									cmd.Parameters.AddWithValue("@due_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-									cmd.Parameters.AddWithValue("@return_date", "TODATE(" + rent_date + ",'dd/mm/yyyy')");
-									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-								}
-							}
-							//setquery("update Orders set" +
-							//		"client_id=" + client_id + ",movie_id=" + movie_id + "," +
-							//		"rent_date=TODATE(" + rent_date + ",'dd/mm/yyyy')," +
-							//		"due_date=TODATE(" + due_date + ",'dd/mm/yyyy')," +
-							//		"return_date=TODATE(" + return_date + ",'dd/mm/yyyy')");
-							//refresh grid
-							OrdersGridRefresh();
-						}
 					}
 					else
 					{
@@ -913,83 +578,94 @@ namespace WPF
 						MessageBox.Show("Form incomplete: order id not set");
 					}
 				}
-				else
-				MessageBox.Show("Submit failed. Movie and client must be set. Copies left must be greater than 0");
 			}
-			else MessageBox.Show("No client selected");
+			else MessageBox.Show("No client, movie or rent date selected");
 		}
 		private void SubmitClient(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (ClientFormPhone.Text.Any(char.IsLetter)) MovieFormAge.Text = "";
+			//phone
+			Regex rg = new Regex(@"^[\+]*?[0-9\-]+$");
+			MatchCollection matched = rg.Matches(ClientFormPhone.Text);
+			if (matched.Count == 0) 
+				ClientFormPhone.Text = "";
+			else
+				ClientFormPhone.Text.Trim();
 
-			//add mode
-			if (mode == false)
-			{
-				if (ClientFormFirstName.Text != "" && ClientFormLastName.Text != "")
-				{
-					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-					{
-						connection.Open();
-						var sql = @"INSERT INTO clients(phone,email,first_name, last_name) " +
-							"VALUES(@phone,@email,@first_name, @last_name)";
-						using (var cmd = new SqlCommand(sql, connection))
-						{
-							cmd.Parameters.AddWithValue("@phone", ClientFormPhone.Text);
-							cmd.Parameters.AddWithValue("@email", ClientFormEmail.Text);
-							cmd.Parameters.AddWithValue("@first_name", AddActorFirstName.Text);
-							cmd.Parameters.AddWithValue("@last_name", AddActorLastName.Text);
-							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-						}
-					}
-					//setquery("Insert into clients (phone,email,first_name,last_name)" +
-					//	"values(" + ClientFormPhone.Text + "," + ClientFormEmail.Text +
-					//	"," + ClientFormFirstName.Text + "," + ClientFormLastName.Text + ")");
-					//refresh grid
-					ClientsGridRefresh();
-					ClientsComboboxRefresh();
-				}
-				else 
-				{
-					MessageBox.Show("First name and last name must be filled");
-					//return 1;
-				}
-			}
-			//edit mode
+			//last name
+			rg = new Regex(@"^[a-zA-Z-\s]+$");
+			matched = rg.Matches(ClientFormLastName.Text);
+			if (matched.Count == 0) 
+				ClientFormLastName.Text = "";
 			else 
+				ClientFormLastName.Text.Trim();
+
+			//first name
+			rg = new Regex(@"^[a-zA-Z-\s]+$");
+			matched = rg.Matches(ClientFormFirstName.Text);
+			if (matched.Count == 0) 
+				ClientFormFirstName.Text = "";
+			else 
+				ClientFormFirstName.Text.Trim();
+
+			//email
+			rg = new Regex(@"[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+");
+			matched = rg.Matches(ClientFormEmail.Text);
+			if (matched.Count == 0)
+				ClientFormEmail.Text = "";
+			else
+				ClientFormEmail.Text.Trim();
+
+			//ensure needed data is set
+			if (ClientFormFirstName.Text != "" && ClientFormLastName.Text != "" &&
+					ClientFormFirstName.Text != null && ClientFormLastName.Text != null) 
 			{
-				if (ClientFormFirstName.Text != "" && ClientFormLastName.Text != "")
+				//add mode
+				if (mode == false)
 				{
-					string client_id = ClientFormID.Text;
-					
+						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+						{
+							connection.Open();
+							var sql = @"INSERT INTO clients(phone,email,first_name, last_name) " +
+								"VALUES(@phone,@email,@first_name, @last_name)";
+							using (var cmd = new SqlCommand(sql, connection))
+							{
+								cmd.Parameters.AddWithValue("@phone", ClientFormPhone.Text);
+								cmd.Parameters.AddWithValue("@email", ClientFormEmail.Text);
+								cmd.Parameters.AddWithValue("@first_name", ClientFormFirstName.Text);
+								cmd.Parameters.AddWithValue("@last_name", ClientFormLastName.Text);
+								MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+								//refresh grid
+								ClientsGridRefresh();
+								ClientsComboboxRefresh();
+							}
+						}
+				}
+				//edit mode
+				else if (ClientFormID.Text != "" && ClientFormID.Text != null)
+				{
 					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 					{
 						connection.Open();
-						var sql = @"update clients set (phone=@phone, email=@email, first_name=@first_name, last_name=@last_name)" +
+						var sql = @"update clients set phone=@phone, email=@email, first_name=@first_name, last_name=@last_name " +
 							"where id=@id";
 						using (var cmd = new SqlCommand(sql, connection))
 						{
-							cmd.Parameters.AddWithValue("@id", client_id);
+							cmd.Parameters.AddWithValue("@id", ClientFormID.Text);
 							cmd.Parameters.AddWithValue("@phone", ClientFormPhone.Text);
 							cmd.Parameters.AddWithValue("@email", ClientFormEmail.Text);
-							cmd.Parameters.AddWithValue("@first_name", AddActorFirstName.Text);
-							cmd.Parameters.AddWithValue("@last_name", AddActorLastName.Text);
+							cmd.Parameters.AddWithValue("@first_name", ClientFormFirstName.Text);
+							cmd.Parameters.AddWithValue("@last_name", ClientFormLastName.Text);
 							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+							//refresh grid
+							ClientsGridRefresh();
+							ClientsComboboxRefresh();
 						}
 					}
-					//setquery("update clients set phone=" + ClientFormPhone.Text + ", email=" + ClientFormEmail.Text +
-					//		",first_name=" + ClientFormFirstName.Text + ",last_name=" + ClientFormLastName.Text + " where id=" + client_id);
-					//refresh grid
-					ClientsGridRefresh();
-					ClientsComboboxRefresh();
 				}
-				else
-				{
-					MessageBox.Show("First name last name and id must be filled. To set id use edit context menu option in clients catalog");
-					//return 1;
-				}
+				else MessageBox.Show("To set id use edit context menu option in clients catalog");
 			}
-			//return 1;
+			else MessageBox.Show("First name and last name must be filled correctly");
 		}
 		private void SubmitMovie(object sender, MouseButtonEventArgs e)
 		{
@@ -1002,12 +678,59 @@ namespace WPF
 			if (MovieFormCopiesTotal.Text.Any(char.IsLetter)) MovieFormCopiesTotal.Text = "1";
 
 			//null on nonexistent data in comboboxes
-			if (MovieFormCountryNameID.Items.Contains(MovieFormCountryNameID.Text) == false) MovieFormCountryNameID.Text = "null";
-			if (MovieFormLangNameID.Items.Contains(MovieFormLangNameID.Text) == false) MovieFormLangNameID.Text = "null";
-			if (MovieFormGenreNameID.Items.Contains(MovieFormGenreNameID.Text) == false) MovieFormGenreNameID.Text = "null";
-			if (MovieFormDirectorLNFNID.Items.Contains(MovieFormDirectorLNFNID.Text) == false) MovieFormDirectorLNFNID.Text = "null";
-			if (MovieFormActorLNFNID.Items.Contains(MovieFormActorLNFNID.Text) == false) MovieFormActorLNFNID.Text = "null";
-			if (MovieFormFormatNameID.Items.Contains(MovieFormFormatNameID.Text) == false) MovieFormFormatNameID.Text = "null";
+			//country
+			bool exists = false;
+			foreach (string item in MovieFormCountryNameID.Items)
+			{
+				exists = item == MovieFormCountryNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) MovieFormCountryNameID.Text = "null";
+
+			//lang
+			exists = false;
+			foreach (string item in MovieFormLangNameID.Items)
+			{
+				exists = item == MovieFormLangNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) MovieFormLangNameID.Text = "null";
+
+			//genre
+			exists = false;
+			foreach (string item in MovieFormGenreNameID.Items)
+			{
+				exists = item == MovieFormGenreNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) MovieFormGenreNameID.Text = "null";
+
+			//director
+			exists = false;
+			foreach (string item in MovieFormDirectorLNFNID.Items)
+			{
+				exists = item == MovieFormDirectorLNFNID.Text;
+				if (exists) break;
+			}
+			if (exists == false) MovieFormDirectorLNFNID.Text = "null";
+
+			//actor
+			exists = false;
+			foreach (string item in MovieFormActorLNFNID.Items)
+			{
+				exists = item == MovieFormActorLNFNID.Text;
+				if (exists) break;
+			}
+			if (exists == false) MovieFormActorLNFNID.Text = "null";
+
+			//format
+			exists = false;
+			foreach (string item in MovieFormFormatNameID.Items)
+			{
+				exists = item == MovieFormFormatNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) MovieFormFormatNameID.Text = "null";
 
 			//get country id from combobox
 			string country_id = "1";
@@ -1123,7 +846,7 @@ namespace WPF
 							"actor_id=@actor_id," +
 							"director_id=@director_id," +
 							"format_id=@format_id," +
-							"genre_id=@genre_id" +
+							"genre_id=@genre_id " +
 							"where id=@id";
 						using (var cmd = new SqlCommand(sql, connection))
 						{
@@ -1133,9 +856,9 @@ namespace WPF
 							cmd.Parameters.AddWithValue("@country_id", country_id);
 							cmd.Parameters.AddWithValue("@duration", duration);
 							cmd.Parameters.AddWithValue("@age", age);
-							cmd.Parameters.AddWithValue("@copies_total", copies_total);
+							cmd.Parameters.AddWithValue("@total_count", copies_total);
 							cmd.Parameters.AddWithValue("@price", price);
-							cmd.Parameters.AddWithValue("@copies_left", copies_left);
+							cmd.Parameters.AddWithValue("@left_count", copies_left);
 							cmd.Parameters.AddWithValue("@plot", plot);
 							cmd.Parameters.AddWithValue("@lang_id", lang_id);
 							cmd.Parameters.AddWithValue("@actor_id", actor_id);
@@ -1145,12 +868,6 @@ namespace WPF
 							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 						}
 					}
-					//setquery("update movies set movie_id=" + movie_id + ",name=" + MovieFormTitle.Text +
-					//	",year=" + year + ",country_id=" + country_id + ",duration=" + duration + ",age=" + age +
-					//	",total_count=" + copies_total + ",price=" + price + ",left_count=" + copies_left +
-					//	",plot=" + plot + ",lang_id=" + lang_id + ",actor_id=" + actor_id + ",director_id=" + director_id +
-					//	",format_id=" + format_id + ")");
-					//refresh grid
 					MoviesGridRefresh();
 				}
 				else
@@ -1184,8 +901,22 @@ namespace WPF
 		}
 		private void MovieItem_delete(object sender, RoutedEventArgs e)
 		{
-			setquery("delete from movies where id="+getmovie_id());
-			MoviesGridRefresh();
+				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+				{
+					connection.Open();
+					var sql = @"delete from movies where id=@id";
+					var cmd = new SqlCommand(sql, connection);
+					cmd.Parameters.AddWithValue("@id", getmovie_id());
+				try
+				{
+					cmd.ExecuteNonQuery();
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.Message);
+				}
+				}
+				MoviesGridRefresh();
 		}
 		private void MovieItem_poster(object sender, RoutedEventArgs e)
 		{
@@ -1218,9 +949,15 @@ namespace WPF
 						WHERE id = @id";
 				var cmd = new SqlCommand(sql, connection);
 				cmd.Parameters.AddWithValue("@id", getclient_id());
-				cmd.ExecuteNonQuery();
+				try
+				{
+					cmd.ExecuteNonQuery();
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.Message);
+				}
 			}
-			//setquery("delete from clients where id=" + getclient_id());
 			ClientsGridRefresh();
 		}
 		//Orders right click menu
@@ -1580,7 +1317,15 @@ namespace WPF
 		private void UpdateActor(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateActorLNFNID.Items.Contains(UpdateActorLNFNID.Text) == false) UpdateActorLNFNID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateActorLNFNID.Items)
+			{
+				exists = item == UpdateActorLNFNID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateActorLNFNID.Text = "null";
+
 			if (UpdateActorLNFNID.Text != "null")
 			{
 				//combobox contains last_name first_name id
@@ -1609,7 +1354,15 @@ namespace WPF
 		private void UpdateDirector(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateDirectorLNFNID.Items.Contains(UpdateDirectorLNFNID.Text) == false) UpdateDirectorLNFNID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateDirectorLNFNID.Items)
+			{
+				exists = item == UpdateDirectorLNFNID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateDirectorLNFNID.Text = "null";
+
 			if (UpdateDirectorLNFNID.Text != "null")
 			{
 				//combobox contains last_name first_name id
@@ -1638,7 +1391,15 @@ namespace WPF
 		private void UpdateCountry(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateCountryNameID.Items.Contains(UpdateCountryNameID.Text) == false) UpdateCountryNameID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateCountryNameID.Items)
+			{
+				exists = item == UpdateCountryNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateCountryNameID.Text = "null";
+
 			if (UpdateCountryNameID.Text != "null")
 			{
 				//combobox contains name id
@@ -1665,7 +1426,15 @@ namespace WPF
 		private void UpdateLang(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateLangNameID.Items.Contains(UpdateLangNameID.Text) == false) UpdateLangNameID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateLangNameID.Items)
+			{
+				exists = item == UpdateLangNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateLangNameID.Text = "null";
+
 			if (UpdateLangNameID.Text != "null")
 			{
 				//combobox contains name id
@@ -1692,7 +1461,15 @@ namespace WPF
 		private void UpdateFormat(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateFormatNameID.Items.Contains(UpdateFormatNameID.Text) == false) UpdateFormatNameID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateFormatNameID.Items)
+			{
+				exists = item == UpdateFormatNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateFormatNameID.Text = "null";
+
 			if (UpdateFormatNameID.Text != "null")
 			{
 				//combobox contains name id
@@ -1719,7 +1496,15 @@ namespace WPF
 		private void UpdateGenre(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateGenreNameID.Items.Contains(UpdateGenreNameID.Text) == false) UpdateGenreNameID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateGenreNameID.Items)
+			{
+				exists = item == UpdateGenreNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateGenreNameID.Text = "null";
+
 			if (UpdateGenreNameID.Text != "null")
 			{
 				//combobox contains name id
@@ -1747,7 +1532,15 @@ namespace WPF
 		private void DeleteActor(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateActorLNFNID.Items.Contains(UpdateActorLNFNID.Text) == false) UpdateActorLNFNID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateActorLNFNID.Items)
+			{
+				exists = item == UpdateActorLNFNID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateActorLNFNID.Text = "null";
+			
 			if (UpdateActorLNFNID.Text != "null")
 			{
 				//combobox contains last_name first_name id
@@ -1760,7 +1553,14 @@ namespace WPF
 						WHERE id = @id";
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@id", actor_id);
-					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					try
+					{
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(ex.Message);
+					}
 				}
 				//setquery("delete from actors where id=" + actor_id + ")");
 				//refresh actors combobox
@@ -1772,7 +1572,15 @@ namespace WPF
 		private void DeleteDirector(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateDirectorLNFNID.Items.Contains(UpdateDirectorLNFNID.Text) == false) UpdateDirectorLNFNID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateDirectorLNFNID.Items)
+			{
+				exists = item == UpdateDirectorLNFNID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateDirectorLNFNID.Text = "null";
+
 			if (UpdateDirectorLNFNID.Text != "null")
 			{
 				//combobox contains last_name first_name id
@@ -1785,7 +1593,14 @@ namespace WPF
 						WHERE id = @id";
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@id", director_id);
-					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					try
+					{
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(ex.Message);
+					}
 				}
 				//setquery("delete from directors where id=" + director_id + ")");
 				//refresh directors combobox
@@ -1797,7 +1612,15 @@ namespace WPF
 		private void DeleteCountry(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateCountryNameID.Items.Contains(UpdateCountryNameID.Text) == false) UpdateCountryNameID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateCountryNameID.Items)
+			{
+				exists = item == UpdateCountryNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateCountryNameID.Text = "null";
+
 			if (UpdateCountryNameID.Text != "null")
 			{
 				//combobox contains name id
@@ -1810,7 +1633,14 @@ namespace WPF
 						WHERE id = @id";
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@id", country_id);
-					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					try
+					{
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(ex.Message);
+					}
 				}
 				//setquery("delete from countries where id=" + country_id + ")");
 				//refresh countries combobox
@@ -1822,7 +1652,15 @@ namespace WPF
 		private void DeleteLang(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateLangNameID.Items.Contains(UpdateLangNameID.Text) == false) UpdateLangNameID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateLangNameID.Items)
+			{
+				exists = item == UpdateLangNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateLangNameID.Text = "null";
+
 			if (UpdateLangNameID.Text != "null")
 			{
 				//combobox contains name id
@@ -1835,7 +1673,14 @@ namespace WPF
 						WHERE id = @id";
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@id", lang_id);
-					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					try
+					{
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(ex.Message);
+					}
 				}
 				//setquery("delete from langs where id=" + lang_id + ")");
 				//refresh langs combobox
@@ -1847,7 +1692,15 @@ namespace WPF
 		private void DeleteFormat(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateFormatNameID.Items.Contains(UpdateFormatNameID.Text) == false) UpdateFormatNameID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateFormatNameID.Items)
+			{
+				exists = item == UpdateFormatNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateFormatNameID.Text = "null";
+
 			if (UpdateFormatNameID.Text != "null")
 			{
 				//combobox contains name id
@@ -1860,7 +1713,14 @@ namespace WPF
 						WHERE id = @id";
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@id", format_id);
-					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					try
+					{
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(ex.Message);
+					}
 				}
 				//setquery("delete from formats where id=" + format_id + ")");
 				//refresh formats combobox
@@ -1872,7 +1732,15 @@ namespace WPF
 		private void DeleteGenre(object sender, MouseButtonEventArgs e)
 		{
 			//remove bad values
-			if (UpdateGenreNameID.Items.Contains(UpdateGenreNameID.Text) == false) UpdateGenreNameID.Text = "null";
+			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			bool exists = false;
+			foreach (string item in UpdateGenreNameID.Items)
+			{
+				exists = item == UpdateGenreNameID.Text;
+				if (exists) break;
+			}
+			if (exists == false) UpdateGenreNameID.Text = "null";
+
 			if (UpdateGenreNameID.Text != "null")
 			{
 				//combobox contains name id
@@ -1885,7 +1753,14 @@ namespace WPF
 						WHERE id = @id";
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@id", genre_id);
-					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					try
+					{
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(ex.Message);
+					}
 				}
 				//setquery("delete from genres where id=" + genre_id + ")");
 				//refresh genres combobox
@@ -1894,6 +1769,5 @@ namespace WPF
 			}
 			else MessageBox.Show("No item selected");
 		}
-
 	}
 }
