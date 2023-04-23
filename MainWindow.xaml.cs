@@ -1052,55 +1052,146 @@ namespace WPF
 		//Filter movies
 		private void FilterMovieTitle(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "title like '%" + FilterMovieTitleText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMoviePrice(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "price like '%" + FilterMoviePriceText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieAge(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "age like '%" + FilterMovieAgeText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieDuration(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "duration like '%" + FilterMovieDurationText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieGenre(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "genre like '%" + FilterMovieGenreText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieYear(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "year like '%" + FilterMovieYearText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieCopiesTotal(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "'copies total' like '%" + FilterMovieCopiesTotalText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieCopiesLeft(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "'copies left' like '%" + FilterMovieCopiesLeftText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieCountry(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "country like '%" + FilterMovieCountryText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieLang(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "language like '%" + FilterMovieLangText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieFormat(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "format like '%" + FilterMovieFormatText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieDirector(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "director like '%" + FilterMovieDirectorText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterMovieActor(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				movies_dt.DefaultView.RowFilter = "'lead actor' like '%" + FilterMovieActorText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		//Filter clients
 		private void FilterClientLastName(object sender, TextChangedEventArgs e)
@@ -1178,7 +1269,6 @@ namespace WPF
 			try
 			{
 				clients_dt.DefaultView.RowFilter = "'first name' like '%" + FilterClientFirstNameText.Text + "%'";
-				//ClientsGridRefresh();
 			}
 			catch (Exception ex)
 			{
@@ -1191,7 +1281,6 @@ namespace WPF
 			try
 			{
 				clients_dt.DefaultView.RowFilter = "'email' like '%" + FilterClientEmailText.Text + "%'";
-				//ClientsGridRefresh();
 			}
 			catch (Exception ex)
 			{
@@ -1204,7 +1293,6 @@ namespace WPF
 			try
 			{
 				clients_dt.DefaultView.RowFilter = "'phone' like '%" + FilterClientPhoneText.Text + "%'";
-				//ClientsGridRefresh();
 			}
 			catch (Exception ex)
 			{
@@ -1214,47 +1302,124 @@ namespace WPF
 		//Filter orders
 		private void FilterOrderMovie(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderMovieText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterOrderLastName(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderLastNameText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterOrderFirstName(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderFirstNameText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterOrderGenre(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderGenreText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterOrderYear(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderYearText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterOrderRentStartDate(object sender, SelectionChangedEventArgs e)
 		{
-			
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderRentStartDateText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterOrderRentStopDate(object sender, SelectionChangedEventArgs e)
 		{
-
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderRentStopDateText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterOrderDueStartDate(object sender, SelectionChangedEventArgs e)
 		{
-			
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderDueStartDateText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterOrderDueStopDate(object sender, SelectionChangedEventArgs e)
 		{
-
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderDueStopDateText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterOrderReturnStartDate(object sender, SelectionChangedEventArgs e)
 		{
-			
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderReturnStartDateText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		private void FilterOrderReturnStopDate(object sender, SelectionChangedEventArgs e)
 		{
-
+			try
+			{
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderReturnStopDateText.Text + "%'";
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		//Mode selectors
 		//add or edit mode; false is add, true is edit.
