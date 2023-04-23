@@ -20,6 +20,7 @@ using Microsoft.Win32;
 using System.IO;
 using System.Windows.Controls.Primitives;
 using System.Text.RegularExpressions;
+using System.Runtime.Remoting.Messaging;
 
 namespace WPF
 {
@@ -64,14 +65,14 @@ namespace WPF
 			getquery(movies_dt,
 					"Select movies.id, movies.name as title, movies.year, movies.duration, movies.age," +
 					"CONCAT(genres.name,' ',genres.id) as genre," +
-					"movies.price,movies.plot," +
+					"movies.price," +
 					"CONCAT(formats.name,' ',formats.id) as format," +
 					"CONCAT(directors.last_name,' ',directors.first_name,' ',directors.id) as director," +
 					"CONCAT(actors.last_name,' ',actors.first_name,' ',actors.id) as 'lead actor'," +
 					"CONCAT(countries.name,' ',countries.id) as country," +
 					"CONCAT(langs.name,' ',langs.id) as language," +
 					"movies.left_count as 'left copies'," +
-					"movies.total_count as 'all copies' " +
+					"movies.total_count as 'all copies',movies.plot " +
 					"from movies " +
 					"join actors on actors.id = movies.actor_id " +
 					"join countries on countries.id = movies.country_id " +
@@ -514,11 +515,13 @@ namespace WPF
 				{
 					if (copies_left > 0)
 					{
+							//new movie order
 							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 							{
 								connection.Open();
 								var sql = @"Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) " +
-									"values(@client_id,@movie_id,@rent_date,@due_date,@return_date)";
+									"values(@client_id,@movie_id," +
+									"@rent_date,@due_date,@return_date)";
 								using (var cmd = new SqlCommand(sql, connection))
 								{
 									cmd.Parameters.AddWithValue("@client_id", client_id);
@@ -531,16 +534,13 @@ namespace WPF
 									//decrement movie copies available when client rents a copy
 									copies_left--;
 								}
-							}
-							//update copies left
-							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-							{
-								connection.Open();
-								var sql = @"update movies set left_count=@left_count where id=@id";
+								//update copies left
+								sql = @"update movies set left_count=@left_count where id=@id";
 								using (var cmd = new SqlCommand(sql, connection))
 								{
 									cmd.Parameters.AddWithValue("@id", movie_id);
 									cmd.Parameters.AddWithValue("@left_count", copies_left);
+									cmd.ExecuteNonQuery();
 									MoviesGridRefresh();
 								}
 							}
@@ -1105,19 +1105,111 @@ namespace WPF
 		//Filter clients
 		private void FilterClientLastName(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				clients_dt.DefaultView.RowFilter = "'last name' like '%" + FilterClientLastNameText.Text + "%'";
+				//ClientsGridRefresh();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+			/*
+			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+			{
+				connection.Open();
+				var sql = @"Select id, last_name as 'last name', first_name as 'first name', phone, email from clients
+							where last_name like '%@last_name%'";// and first_name like '%@first_name%' and phone like '%@phone%' and email like '%@email%'";
+				var cmd = new SqlCommand(sql, connection);
+				cmd.Parameters.AddWithValue("@first_name", FilterClientFirstNameText.Text);
+				cmd.Parameters.AddWithValue("@last_name", FilterClientLastNameText.Text);
+				cmd.Parameters.AddWithValue("@phone", FilterClientPhoneText.Text);
+				cmd.Parameters.AddWithValue("@email", FilterClientEmailText.Text);
+				try
+				{
+					using(SqlDataReader rdr = cmd.ExecuteReader())
+					{
+						//clients_dt.Clear();
+						clients_dt.Load(rdr);
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.Message);
+				}
+			}
+			*/
+			//DataView dataView = clients_dt.DefaultView;
+			//if (!string.IsNullOrEmpty(FilterClientLastNameText.Text))
+			//{
+			//	dataView.RowFilter = "'last name' = " + FilterClientLastNameText.Text;
+			//}
+			//ClientsCatalog.ItemsSource = dataView;
+			/*
+			try
+			{
+				getquery(orders_dt, "Select orders.id,CONCAT(clients.last_name,' ',clients.first_name,' ',clients.id) as client," +
+				"CONCAT(movies.name,' ',movies.id) as movie,movies.year, orders.rent_date as 'rent date', orders.due_date as 'due date', orders.return_date as 'return date' " +
+				"from orders " +
+				"join movies on movies.id=orders.movie_id " +
+				"join clients on clients.id=orders.client_id " +
+				"where clients.last_name like '@FilterClientLastNameText.Text%'");
+
+				DataTable dt = new DataTable();
+				string CommandQuery = "SELECT *,row_number() over (order by ProductId) as DisplayOrder FROM Products";
+				SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["testConnectionString"].ConnectionString);
+				SqlCommand cmd = new SqlCommand(CommandQuery, conn);
+				SqlDataAdapter da = new SqlDataAdapter(cmd);
+				cmd.Connection.Open();
+				da.Fill(dt);
+				DataView dv1 = dt.DefaultView;
+				dv1.RowFilter = " ProductId = 1 or ProductId = 2 or ProductID = 3";
+				DataTable dtNew = dv1.ToTable();
+
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+			*/
 		}
 		private void FilterClientFirstName(object sender, TextChangedEventArgs e)
 		{
+			try
+			{
+				clients_dt.DefaultView.RowFilter = "'first name' like '%" + FilterClientFirstNameText.Text + "%'";
+				//ClientsGridRefresh();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 			
 		}
 		private void FilterClientEmail(object sender, TextChangedEventArgs e)
 		{
+			try
+			{
+				clients_dt.DefaultView.RowFilter = "'email' like '%" + FilterClientEmailText.Text + "%'";
+				//ClientsGridRefresh();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 			
 		}
 		private void FilterClientPhone(object sender, TextChangedEventArgs e)
 		{
-			
+			try
+			{
+				clients_dt.DefaultView.RowFilter = "'phone' like '%" + FilterClientPhoneText.Text + "%'";
+				//ClientsGridRefresh();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 		//Filter orders
 		private void FilterOrderMovie(object sender, TextChangedEventArgs e)
