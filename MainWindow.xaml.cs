@@ -164,13 +164,13 @@ namespace WPF
 		//for sql panel; select getquery or setquery based on select existence
 		public void SQLquery()
 		{
-			if (SQLqueryText.Text != string.Empty)
+			if (SQLqueryString.Text != string.Empty)
 			{
-				if (SQLqueryText.Text.Contains("Select"))
+				if (SQLqueryString.Text.Contains("Select"))
 				{
-					setquery(SQLqueryText.Text);
+					setquery(SQLqueryString.Text);
 				}
-				else getquery(SQLgrid, SQLqueryText.Text);
+				else getquery(SQLgrid, SQLqueryString.Text);
 			}
 		}
 		//refresh datatable to refresh grid items
@@ -1054,7 +1054,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "title like '%" + FilterMovieTitleText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "title like '%" + FilterMovieTitleString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1065,7 +1065,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "price like '%" + FilterMoviePriceText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "price like '%" + FilterMoviePriceString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1076,7 +1076,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "age like '%" + FilterMovieAgeText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "age like '%" + FilterMovieAgeString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1087,7 +1087,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "duration like '%" + FilterMovieDurationText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "duration like '%" + FilterMovieDurationString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1098,7 +1098,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "genre like '%" + FilterMovieGenreText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "genre like '%" + FilterMovieGenreString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1109,7 +1109,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "year like '%" + FilterMovieYearText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "year like '%" + FilterMovieYearString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1120,7 +1120,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "'copies total' like '%" + FilterMovieCopiesTotalText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "'copies total' like '%" + FilterMovieCopiesTotalString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1131,7 +1131,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "'copies left' like '%" + FilterMovieCopiesLeftText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "'copies left' like '%" + FilterMovieCopiesLeftString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1142,7 +1142,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "country like '%" + FilterMovieCountryText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "country like '%" + FilterMovieCountryString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1153,7 +1153,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "language like '%" + FilterMovieLangText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "language like '%" + FilterMovieLangString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1164,7 +1164,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "format like '%" + FilterMovieFormatText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "format like '%" + FilterMovieFormatString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1175,7 +1175,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "director like '%" + FilterMovieDirectorText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "director like '%" + FilterMovieDirectorString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1186,7 +1186,7 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "'lead actor' like '%" + FilterMovieActorText.Text + "%'";
+				movies_dt.DefaultView.RowFilter = "'lead actor' like '%" + FilterMovieActorString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1198,7 +1198,7 @@ namespace WPF
 		{
 			try
 			{
-				clients_dt.DefaultView.RowFilter = "'last name' like '%" + FilterClientLastNameText.Text + "%'";
+				clients_dt.DefaultView.RowFilter = "'last name' like '%" + FilterClientLastNameString.Text + "%'";
 				//ClientsGridRefresh();
 			}
 			catch (Exception ex)
@@ -1212,10 +1212,10 @@ namespace WPF
 				var sql = @"Select id, last_name as 'last name', first_name as 'first name', phone, email from clients
 							where last_name like '%@last_name%'";// and first_name like '%@first_name%' and phone like '%@phone%' and email like '%@email%'";
 				var cmd = new SqlCommand(sql, connection);
-				cmd.Parameters.AddWithValue("@first_name", FilterClientFirstNameText.Text);
-				cmd.Parameters.AddWithValue("@last_name", FilterClientLastNameText.Text);
-				cmd.Parameters.AddWithValue("@phone", FilterClientPhoneText.Text);
-				cmd.Parameters.AddWithValue("@email", FilterClientEmailText.Text);
+				cmd.Parameters.AddWithValue("@first_name", FilterClientFirstNameString.Text);
+				cmd.Parameters.AddWithValue("@last_name", FilterClientLastNameString.Text);
+				cmd.Parameters.AddWithValue("@phone", FilterClientPhoneString.Text);
+				cmd.Parameters.AddWithValue("@email", FilterClientEmailString.Text);
 				try
 				{
 					using(SqlDataReader rdr = cmd.ExecuteReader())
@@ -1231,9 +1231,9 @@ namespace WPF
 			}
 			*/
 			//DataView dataView = clients_dt.DefaultView;
-			//if (!string.IsNullOrEmpty(FilterClientLastNameText.Text))
+			//if (!string.IsNullOrEmpty(FilterClientLastNameString.Text))
 			//{
-			//	dataView.RowFilter = "'last name' = " + FilterClientLastNameText.Text;
+			//	dataView.RowFilter = "'last name' = " + FilterClientLastNameString.Text;
 			//}
 			//ClientsCatalog.ItemsSource = dataView;
 			/*
@@ -1244,7 +1244,7 @@ namespace WPF
 				"from orders " +
 				"join movies on movies.id=orders.movie_id " +
 				"join clients on clients.id=orders.client_id " +
-				"where clients.last_name like '@FilterClientLastNameText.Text%'");
+				"where clients.last_name like '@FilterClientLastNameString.Text%'");
 
 				DataTable dt = new DataTable();
 				string CommandQuery = "SELECT *,row_number() over (order by ProductId) as DisplayOrder FROM Products";
@@ -1268,7 +1268,7 @@ namespace WPF
 		{
 			try
 			{
-				clients_dt.DefaultView.RowFilter = "'first name' like '%" + FilterClientFirstNameText.Text + "%'";
+				clients_dt.DefaultView.RowFilter = "'first name' like '%" + FilterClientFirstNameString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1280,7 +1280,7 @@ namespace WPF
 		{
 			try
 			{
-				clients_dt.DefaultView.RowFilter = "'email' like '%" + FilterClientEmailText.Text + "%'";
+				clients_dt.DefaultView.RowFilter = "'email' like '%" + FilterClientEmailString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1292,7 +1292,7 @@ namespace WPF
 		{
 			try
 			{
-				clients_dt.DefaultView.RowFilter = "'phone' like '%" + FilterClientPhoneText.Text + "%'";
+				clients_dt.DefaultView.RowFilter = "'phone' like '%" + FilterClientPhoneString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1304,7 +1304,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderMovieText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderMovieString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1315,7 +1315,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderLastNameText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderLastNameString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1326,7 +1326,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderFirstNameText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderFirstNameString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1337,7 +1337,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderGenreText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderGenreString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1348,7 +1348,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderYearText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderYearString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1359,7 +1359,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderRentStartDateText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderRentStartDateString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1370,7 +1370,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderRentStopDateText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderRentStopDateString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1381,7 +1381,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderDueStartDateText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderDueStartDateString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1392,7 +1392,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderDueStopDateText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderDueStopDateString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1403,7 +1403,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderReturnStartDateText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderReturnStartDateString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1414,7 +1414,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderReturnStopDateText.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderReturnStopDateString.Text + "%'";
 			}
 			catch (Exception ex)
 			{

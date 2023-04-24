@@ -297,55 +297,55 @@
 						<UniformGrid ToolTip="Type text and press enter to filter movies" Rows="1" VerticalAlignment="Center">
 							<UniformGrid Columns="1">
 								<TextBlock>Title</TextBlock>
-								<TextBox Name="FilterMovieTitleText" TextChanged="FilterMovieTitle"/>
+								<TextBox Name="FilterMovieTitleString" TextChanged="FilterMovieTitle"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Year</TextBlock>
-								<TextBox Name="FilterMovieYearText" TextChanged="FilterMovieYear"/>
+								<TextBox Name="FilterMovieYearString" TextChanged="FilterMovieYear"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Duration</TextBlock>
-								<TextBox Name="FilterMovieDurationText" TextChanged="FilterMovieDuration"/>
+								<TextBox Name="FilterMovieDurationString" TextChanged="FilterMovieDuration"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Genre</TextBlock>
-								<TextBox Name="FilterMovieGenreText" TextChanged="FilterMovieGenre"/>
+								<TextBox Name="FilterMovieGenreString" TextChanged="FilterMovieGenre"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Age rating</TextBlock>
-								<TextBox Name="FilterMovieAgeText" TextChanged="FilterMovieAge"/>
+								<TextBox Name="FilterMovieAgeString" TextChanged="FilterMovieAge"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Price</TextBlock>
-								<TextBox Name="FilterMoivePriceText" TextChanged="FilterMoviePrice"/>
+								<TextBox Name="FilterMoviePriceString" TextChanged="FilterMoviePrice"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Lead actor</TextBlock>
-								<TextBox Name="FilterMovieActorText" TextChanged="FilterMovieActor"/>
+								<TextBox Name="FilterMovieActorString" TextChanged="FilterMovieActor"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Director</TextBlock>
-								<TextBox Name="FilterMovieDirectorText" TextChanged="FilterMovieDirector"/>
+								<TextBox Name="FilterMovieDirectorString" TextChanged="FilterMovieDirector"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Formats</TextBlock>
-								<TextBox Name="FilterMovieFormatText" TextChanged="FilterMovieFormat"/>
+								<TextBox Name="FilterMovieFormatString" TextChanged="FilterMovieFormat"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Languages</TextBlock>
-								<TextBox Name="FilterMovieLangText" TextChanged="FilterMovieLang"/>
+								<TextBox Name="FilterMovieLangString" TextChanged="FilterMovieLang"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Countries</TextBlock>
-								<TextBox Name="FilterMovieCountryText" TextChanged="FilterMovieCountry"/>
+								<TextBox Name="FilterMovieCountryString" TextChanged="FilterMovieCountry"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Copies left</TextBlock>
-								<TextBox Name="FilterMovieCopiesLeftText" TextChanged="FilterMovieCopiesLeft"/>
+								<TextBox Name="FilterMovieCopiesLeftString" TextChanged="FilterMovieCopiesLeft"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Copies total</TextBlock>
-								<TextBox Name="FilterMovieCopiesTotalText" TextChanged="FilterMovieCopiesTotal"/>
+								<TextBox Name="FilterMovieCopiesTotalString" TextChanged="FilterMovieCopiesTotal"/>
 							</UniformGrid>
 						</UniformGrid>
 
@@ -408,19 +408,19 @@
 						<UniformGrid Rows="1" ToolTip="Type text and press enter to filter clients" VerticalAlignment="Center">
 							<UniformGrid Columns="1">
 								<TextBlock>Last Name</TextBlock>
-								<TextBox Name="FilterClientLastNameText" TextChanged="FilterClientLastName"/>
+								<TextBox Name="FilterClientLastNameString" TextChanged="FilterClientLastName"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>First name</TextBlock>
-								<TextBox Name="FilterClientFirstNameText" TextChanged="FilterClientFirstName"/>
+								<TextBox Name="FilterClientFirstNameString" TextChanged="FilterClientFirstName"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>E-mail</TextBlock>
-								<TextBox Name="FilterClientEmailText" TextChanged="FilterClientEmail"/>
+								<TextBox Name="FilterClientEmailString" TextChanged="FilterClientEmail"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Phone</TextBlock>
-								<TextBox Name="FilterClientPhoneText" TextChanged="FilterClientPhone"/>
+								<TextBox Name="FilterClientPhoneString" TextChanged="FilterClientPhone"/>
 							</UniformGrid>
 						</UniformGrid>
 
@@ -479,32 +479,32 @@
 						<UniformGrid Rows="1" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top">
 							<UniformGrid Columns="1">
 								<TextBlock>Movie</TextBlock>
-								<TextBox TextChanged="FilterOrderMovie" Name="FilterOrderMovieText"/>
+								<TextBox TextChanged="FilterOrderMovie" Name="FilterOrderMovieString"/>
 								<TextBlock>Year</TextBlock>
-								<TextBox TextChanged="FilterOrderYear" Name="FilterOrderYearText"/>
+								<TextBox TextChanged="FilterOrderYear" Name="FilterOrderYearString"/>
 								<TextBlock>Genre</TextBlock>
-								<TextBox TextChanged="FilterOrderGenre" Name="FilterOrderGenreText"/>
+								<TextBox TextChanged="FilterOrderGenre" Name="FilterOrderGenreString"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Last Name</TextBlock>
-								<TextBox TextChanged="FilterOrderLastName" Name="FilterOrderLastNameText"/>
+								<TextBox TextChanged="FilterOrderLastName" Name="FilterOrderLastNameString"/>
 								<TextBlock>First Name</TextBlock>
-								<TextBox TextChanged="FilterOrderFirstName" Name="FilterOrderFirstNameText"/>
+								<TextBox TextChanged="FilterOrderFirstName" Name="FilterOrderFirstNameString"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Rent date</TextBlock>
-								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderRentStartDate" Name="FilterOrderRentStartDateText"/>
-								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderRentStopDate" Name="FilterOrderRentStopDateText"/>
+								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderRentStartDate" Name="FilterOrderRentStartDateString"/>
+								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderRentStopDate" Name="FilterOrderRentStopDateString"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Due date</TextBlock>
-								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderDueStartDate" Name="FilterOrderDueStartDateText"/>
-								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderDueStopDate" Name="FilterOrderDueStopDateText"/>
+								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderDueStartDate" Name="FilterOrderDueStartDateString"/>
+								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderDueStopDate" Name="FilterOrderDueStopDateString"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Return date</TextBlock>
-								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderReturnStartDate" Name="FilterOrderReturnStartDateText"/>
-								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderReturnStopDate" Name="FilterOrderReturnStopDateText"/>
+								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderReturnStartDate" Name="FilterOrderReturnStartDateString"/>
+								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderReturnStopDate" Name="FilterOrderReturnStopDateString"/>
 							</UniformGrid>
 						</UniformGrid>
 
@@ -1444,7 +1444,7 @@
 								<ColumnDefinition/>
 								<ColumnDefinition Width="100"/>
 							</Grid.ColumnDefinitions>
-							<TextBox Name="SQLqueryText" Background="#7F800000" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" >
+							<TextBox Name="SQLqueryString" Background="#7F800000" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" >
 							</TextBox>
 							<Grid Grid.Column="1" Background="#7F800000">
 								<Grid.RowDefinitions>
