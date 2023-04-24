@@ -35,6 +35,9 @@
 			<Setter Property="FirstDayOfWeek" Value="Monday"/>
 			<Setter Property="Opacity" Value="0.95"/>
 		</Style>
+		<Style TargetType="DatePickerTextBox">
+			<Setter Property="IsReadOnly" Value="True"></Setter>
+		</Style>
 		<Style TargetType="DataGridColumnHeader">
 			<Setter Property="Padding" Value="5"></Setter>
 		</Style>
@@ -373,11 +376,11 @@
 							<DataGrid.ContextMenu>
 								<ContextMenu>
 									<MenuItem Header="Show plot" Click="MovieItem_plot" />
-									<MenuItem Header="Rent" Click="MovieItem_rent" />
-									<MenuItem Header="Edit" Click="MovieItem_edit" />
+									<MenuItem Header="Fill rent form" Click="MovieItem_rent" />
+									<MenuItem Header="Fill edit form" Click="MovieItem_edit" />
 									<MenuItem Header="Delete" Click="MovieItem_delete" />
-									<MenuItem Header="Load poster to tab" Click="MovieItem_poster" />
-									<MenuItem Header="Load trailer to tab" Click="LoadTrailer" />
+									<MenuItem Header="Load or set poster" Click="LoadPoster" />
+									<MenuItem Header="Load or set trailer" Click="LoadTrailer" />
 								</ContextMenu>
 							</DataGrid.ContextMenu>
 						</DataGrid>
@@ -575,6 +578,12 @@
 								</RadialGradientBrush>
 							</UniformGrid.Background>
 
+							<UniformGrid Columns="1">
+								<TextBlock Name="MovieTrailerID" VerticalAlignment="Center" HorizontalAlignment="Center" >ID</TextBlock>
+								<TextBlock Name="MovieTrailerTitle" VerticalAlignment="Center" HorizontalAlignment="Center" >Title</TextBlock>
+								<TextBlock Name="MovieTrailerYear" VerticalAlignment="Center" HorizontalAlignment="Center" >Year</TextBlock>
+							</UniformGrid>
+
 							<Viewbox>
 								<Button>
 									<Image Source="icons\media\link.png" MouseDown="SetTrailer" Cursor="Hand"/>
@@ -586,17 +595,12 @@
 
 							<Viewbox>
 								<Button>
-									<Image Source="icons\media\delete-link.png" MouseDown="DeleteTrailer" Cursor="Hand"/>
+									<Image Source="icons\media\delete-link.png" MouseDown="RemoveTrailer" Cursor="Hand"/>
 									<Button.Clip>
 										<EllipseGeometry Center="170,170" RadiusX="170" RadiusY="170" />
 									</Button.Clip>
 								</Button>
 							</Viewbox>
-
-							<UniformGrid Rows="2">
-								<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" >Title</TextBox>
-								<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" >Year</TextBox>
-							</UniformGrid>
 
 							<Viewbox>
 								<Button>
@@ -672,6 +676,12 @@
 								</RadialGradientBrush>
 							</UniformGrid.Background>
 
+							<UniformGrid Columns="1">
+								<TextBlock Name="MoviePosterID" VerticalAlignment="Center" HorizontalAlignment="Center" >ID</TextBlock>
+								<TextBlock Name="MoviePosterTitle" VerticalAlignment="Center" HorizontalAlignment="Center">Title</TextBlock>
+								<TextBlock Name="MoviePosterYear" HorizontalAlignment="Center">Year</TextBlock>
+							</UniformGrid>
+
 							<Viewbox>
 								<Button>
 									<Image MouseDown="SetPoster" Cursor="Hand" ToolTip="Set poster" Source="icons\media\link.png"/>
@@ -690,10 +700,6 @@
 								</Button>
 							</Viewbox>
 
-							<UniformGrid Rows="2">
-								<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" >Title</TextBox>
-								<TextBox VerticalAlignment="Center" HorizontalAlignment="Center" >Year</TextBox>
-							</UniformGrid>
 						</UniformGrid>
 
 						<Viewbox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="Uniform">

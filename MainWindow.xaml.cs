@@ -21,6 +21,8 @@ using System.IO;
 using System.Windows.Controls.Primitives;
 using System.Text.RegularExpressions;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Policy;
+using System.Windows.Threading;
 
 namespace WPF
 {
@@ -72,7 +74,13 @@ namespace WPF
 					"CONCAT(countries.name,' ',countries.id) as country," +
 					"CONCAT(langs.name,' ',langs.id) as language," +
 					"movies.left_count as 'left copies'," +
-					"movies.total_count as 'all copies',movies.plot " +
+					"movies.total_count as 'all copies',movies.plot, " +
+					"CASE " +
+					"	WHEN poster_path IS NULL THEN 'no' " +
+					"	WHEN poster_path IS NOT NULL THEN 'yes' END AS poster, " +
+					"CASE " +
+					"	WHEN poster_path IS NULL THEN 'no' " +
+					"	WHEN trailer_path IS NOT NULL THEN 'yes' END AS trailer " +
 					"from movies " +
 					"join actors on actors.id = movies.actor_id " +
 					"join countries on countries.id = movies.country_id " +
@@ -88,7 +96,13 @@ namespace WPF
 		public void OrdersGridRefresh()
 		{
 			getquery(orders_dt, "Select orders.id,CONCAT(clients.last_name,' ',clients.first_name,' ',clients.id) as client," +
-				"CONCAT(movies.name,' ',movies.id) as movie,movies.year, orders.rent_date as 'rent date', orders.due_date as 'due date', orders.return_date as 'return date' " +
+				"CONCAT(movies.name,' ',movies.id) as movie,movies.year, " +
+				"CASE WHEN orders.rent_date IS NULL THEN '' " +
+				"	WHEN orders.rent_date IS NOT NULL THEN orders.rent_date END AS 'rent date', " +
+				"CASE WHEN orders.due_date IS NULL THEN '' " +
+				"	WHEN orders.due_date IS NOT NULL THEN orders.due_date END AS 'due date', " +
+				"CASE WHEN orders.return_date IS NULL THEN '' " +
+				"	WHEN orders.return_date IS NOT NULL THEN orders.return_date END AS 'return date' " +
 				"from orders " +
 				"join movies on movies.id=orders.movie_id " +
 				"join clients on clients.id=orders.client_id");
@@ -279,6 +293,27 @@ namespace WPF
 		{
 			//seek slider init
 			//SeekSlider.Maximum = Trailer.NaturalDuration.TimeSpan.TotalMilliseconds; //null pointer exception
+
+			TotalTime = Trailer.NaturalDuration.TimeSpan;
+
+			// Create a timer that will update the counters and the time slider
+			DispatcherTimer timerVideoTime = new DispatcherTimer();
+			timerVideoTime.Interval = TimeSpan.FromSeconds(1);
+			timerVideoTime.Tick += new EventHandler(timer_Tick);
+			timerVideoTime.Start();
+		}
+		private TimeSpan TotalTime;
+		public void timer_Tick(object sender, EventArgs e)
+		{
+			// Check if the movie calculated its total time
+			if (Trailer.NaturalDuration.TimeSpan.TotalSeconds > 0)
+			{
+				if (TotalTime.TotalSeconds > 0)
+				{
+					// Updating time slider
+					SeekSlider.Value = Trailer.Position.TotalSeconds / TotalTime.TotalSeconds;
+				}
+			}
 		}
 		private void PlayTrailer(object sender, RoutedEventArgs e)
 		{
@@ -302,74 +337,165 @@ namespace WPF
 		//Load existing trailer from database using trailer_path on right click menu
 		private void LoadTrailer(object sender, RoutedEventArgs e)
 		{
-			//get selected item id from selected row
-			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
-			string id = rowview.Row["id"].ToString();
-
-			//Set trailer source from query to uri
-			string query_result = getquery("select trailer_path from movies where id=" + id);
-			if (query_result != null)
+			if (MovieTrailerID.Text != "ID")
 			{
-				string file = query_result;
-				//Trailer file path correctness check
-				if (File.Exists(file))
+				//set movie info in poster panel
+				DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
+				MovieTrailerID.Text = rowview.Row["id"].ToString();
+				MovieTrailerTitle.Text = rowview.Row["title"].ToString();
+				MovieTrailerYear.Text = rowview.Row["year"].ToString();
+
+				//get path to file if value present
+				string exists = rowview.Row["trailer"].ToString();
+				string trailer_path = getquery("select trailer_path from movies where id=" + MovieTrailerID.Text);
+				if (exists == "yes" && File.Exists(trailer_path))
 				{
-					Uri uri = new Uri(query_result);
-					Trailer.Source = uri;
+					//Uri uri = new Uri(trailer_path);
+					//Trailer.Source = uri;
+					Trailer.Source = new Uri(trailer_path);
+					MessageBox.Show("Trailer set in trailer tab");
 				}
-				else
+				else if (exists == "yes" && !File.Exists(trailer_path))
 				{
-					MessageBox.Show("Trailer file not found. Use set trailer function to select trailer file");
-					//Remove bad file path from database
-					DeleteTrailer(null, null);
+					MessageBox.Show("Trailer not found at set location; it's path will be removed. Set new path from trailer tab");
+					//Remove outdated trailer_path
+					RemoveTrailer(null, null);
+					MoviesGridRefresh();
 				}
+				else if (exists == "no") MessageBox.Show("Trailer for this movie is not set. Set new it in trailer tab");
 			}
-			else MessageBox.Show("Trailer file path not set. Trailer_path is null.");
+			else MessageBox.Show("Load trailer from movies catalog");
 		}
 		//Set trailer file path and update database
 		private void SetTrailer(object sender, MouseButtonEventArgs e)
 		{
-			OpenFileDialog op = new OpenFileDialog();
-			op.Title = "Select trailer";
-			if (op.ShowDialog() == true)
+			if (MovieTrailerID.Text != "ID")
 			{
-				Uri uri = new Uri(op.FileName);
-				Trailer.Source = uri;
-				//add trailer to movie in database
-				setquery("update movies set poster=" + uri + " where id=" + getmovie_id());
+				OpenFileDialog op = new OpenFileDialog();
+				op.Title = "Select trailer";
+				if (op.ShowDialog() == true)
+				{
+					//Uri uri = new Uri(op.FileName);
+					//Trailer.Source = uri;
+					Trailer.Source = new Uri(op.FileName);
+					//update trailer_path in database
+					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+					{
+						connection.Open();
+						var sql = @"UPDATE movies SET trailer_path=@trailer_path WHERE id=@id";
+						var cmd = new SqlCommand(sql, connection);
+						cmd.Parameters.AddWithValue("@id", MovieTrailerID.Text);
+						cmd.Parameters.AddWithValue("@trailer_path", op.FileName);
+						string result = cmd.ExecuteNonQuery().ToString();
+						if (result == "1")
+						{
+							MessageBox.Show("Trailer set");
+							MoviesGridRefresh();
+						}
+						else if (result == "0") MessageBox.Show("Failed to set trailer");
+					}
+					//setquery("update movies set trailer_path=" + uri + " where id=" + getmovie_id());
+				}
 			}
+			else MessageBox.Show("Load trailer from movies catalog");
 		}
-		private void DeleteTrailer(object sender, MouseButtonEventArgs e)
+		private void RemoveTrailer(object sender, MouseButtonEventArgs e)
 		{
-			Trailer.Source = null;
-			//update database
-			setquery("update movies set trailer_path=null where id=" + getmovie_id());
+			if (MovieTrailerID.Text != "ID")
+			{
+				Trailer.Source = null;
+				//update database
+				setquery("update movies set trailer_path=null where id=" + MovieTrailerID.Text);
+			}
+			else MessageBox.Show("Load trailer from movies catalog first");
 		}
 		//Poster panel buttons
 		private void RemovePoster(object sender, RoutedEventArgs e)
 		{
-			Poster.Source = null;
-			//remove movie poster from database
-			setquery("update movies set poster_path=null where id=" + getmovie_id());
-			MoviesGridRefresh();
+			if (MoviePosterID.Text != "ID")
+			{
+				Poster.Source = null;
+				//remove movie poster from database
+				setquery("update movies set poster_path=null where id=" + MoviePosterID.Text);
+				MoviesGridRefresh();
+			}
+			else MessageBox.Show("Load poster from movies catalog first");
 		}
 		private void SetPoster(object sender, MouseButtonEventArgs e)
 		{
-			OpenFileDialog op = new OpenFileDialog();
-			op.Title = "Select poster";
-			op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-			  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-			  "Portable Network Graphic (*.png)|*.png";
-			if (op.ShowDialog() == true)
+			if (MoviePosterID.Text != "ID")
 			{
-				//load poster from file path
-				Uri uri = new Uri(op.FileName);
-				BitmapImage img = new BitmapImage(uri);
-				Poster.Source = img;
-				//add poster_path to database
-				setquery("update movies set poster_path=" + op.FileName + " where id=" + getmovie_id());
-				MoviesGridRefresh();
+				OpenFileDialog op = new OpenFileDialog();
+				op.Title = "Select poster";
+				op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+				  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+				  "Portable Network Graphic (*.png)|*.png";
+				if (op.ShowDialog() == true)
+				{
+					//load poster from file path
+					//Uri uri = new Uri(op.FileName);
+					//BitmapImage img = new BitmapImage(uri);
+					//Poster.Source = img;
+					Poster.Source = new BitmapImage(new Uri(op.FileName));
+					//add poster_path to database
+					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+					{
+						connection.Open();
+						var sql = @"UPDATE movies SET poster_path=@poster_path WHERE id=@id";
+						var cmd = new SqlCommand(sql, connection);
+						cmd.Parameters.AddWithValue("@id", MoviePosterID.Text);
+						cmd.Parameters.AddWithValue("@poster_path", op.FileName);
+						string result = cmd.ExecuteNonQuery().ToString();
+						if (result == "1")
+						{
+							MessageBox.Show("Poster set");
+							MoviesGridRefresh();
+						}
+						else if (result == "0") MessageBox.Show("Failed to set poster");
+					}
+					MoviesGridRefresh();
+				}
 			}
+			else MessageBox.Show("Load poster from movies catalog");
+		}
+		//load poster if exists
+		private void LoadPoster(object sender, RoutedEventArgs e)
+		{
+			if (MoviePosterID.Text != "ID")
+			{
+				Poster.Source = null;
+
+				//set movie info in poster panel
+				DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
+				MoviePosterID.Text = rowview.Row["id"].ToString();
+				MoviePosterTitle.Text = rowview.Row["title"].ToString();
+				MoviePosterYear.Text = rowview.Row["year"].ToString();
+
+				//get path to file if value present
+				string poster_path = getquery("select poster_path from movies where id=" + getmovie_id());
+				string exists = rowview.Row["poster"].ToString();
+				//poster set but file not found
+				if (exists == "yes" && File.Exists(poster_path))
+				{
+					//poster_path = "pack://application:,,,/" + poster_path;
+					//Uri uri = new Uri(poster_path);
+					//BitmapImage img = new BitmapImage(uri);
+					//Poster.Source = img;
+					Poster.Source = new BitmapImage(new Uri(poster_path));
+					MessageBox.Show("poster set in poster tab");
+				}
+				//trailer set but file not found
+				else if (exists == "yes" && !File.Exists(poster_path))
+				{
+					MessageBox.Show("Poster not found at it's set location. It's path will be removed. Set new file path from poster tab");
+					//Remove outdated trailer_path
+					RemovePoster(null, null);
+					MoviesGridRefresh();
+				}
+				//no poster path in database
+				else if (exists == "no") MessageBox.Show("Poster for this movie is not set. You can set it in poster tab.");
+			}
+			else MessageBox.Show("Load poster from movies catalog");
 		}
 		//Fills existing movie data into form in admin panel (rent movie option)
 		public void MovieEditRentFillForm() 
@@ -901,31 +1027,37 @@ namespace WPF
 		}
 		private void MovieItem_delete(object sender, RoutedEventArgs e)
 		{
-				using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+			//clear poster and trailer if set
+			if (int.Parse(MovieTrailerID.Text) == getmovie_id())
+			{
+				MovieTrailerID.Text = "ID";
+				MovieTrailerTitle.Text = "Title";
+				MovieTrailerYear.Text = "Year";
+				Trailer.Source = null;
+			}
+			if (int.Parse(MoviePosterID.Text) == getmovie_id())
+			{
+				MoviePosterID.Text = "ID";
+				MoviePosterTitle.Text = "Title";
+				MoviePosterYear.Text = "Year";
+				Poster.Source = null;
+			}
+			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 				{
 					connection.Open();
 					var sql = @"delete from movies where id=@id";
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@id", getmovie_id());
-				try
-				{
-					cmd.ExecuteNonQuery();
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.Message);
-				}
+					try
+					{
+						cmd.ExecuteNonQuery();
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(ex.Message);
+					}
 				}
 				MoviesGridRefresh();
-		}
-		private void MovieItem_poster(object sender, RoutedEventArgs e)
-		{
-			//load poster_path from db
-			string filepath= getquery("select poster from movies where id=" + getmovie_id());
-			//load poster file from poster_path
-			Uri uri = new Uri(filepath);
-			BitmapImage img = new BitmapImage(uri);
-			Poster.Source = img;
 		}
 		private void MovieItem_trailer(object sender, RoutedEventArgs e)
 		{
@@ -1531,7 +1663,7 @@ namespace WPF
 					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 			}
-			setquery("Insert into langs (name) values(" + AddLangName.Text + ")");
+			//setquery("Insert into langs (name) values(" + AddLangName.Text + ")");
 			//refresh langs combobox
 			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
 			ComboboxRefresh(UpdateLangNameID, "select name,id from langs");
