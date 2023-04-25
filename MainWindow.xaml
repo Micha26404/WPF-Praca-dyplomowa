@@ -837,7 +837,7 @@
 											</LinearGradientBrush>
 										</UniformGrid.Background>
 										<UniformGrid Rows="1">
-											<TextBlock ToolTip="Database movie ID" Background="#4C800000">Movie ID</TextBlock>
+											<TextBlock ToolTip="Database movie ID" Background="#4C800000">Edit movie ID</TextBlock>
 											<TextBlock InputScope="Number" Name="MovieFormID"/>
 										</UniformGrid>
 
@@ -990,7 +990,7 @@
 										<Border>
 											<UniformGrid Rows="1">
 												<Border>
-													<TextBlock ToolTip="If empty; new one will be created" Background="#4C800000">Order ID</TextBlock>
+													<TextBlock ToolTip="If empty; new one will be created" Background="#4C800000">Edit order ID</TextBlock>
 												</Border>
 												<Border>
 													<TextBlock Name="OrderFormID" ToolTip="Use edit option from context menu in orders catalog"/>
@@ -1024,34 +1024,34 @@
 										<Border>
 											<UniformGrid Rows="1">
 												<Border>
-													<TextBlock ToolTip="Item taken date dd/mm/yyyy" Background="#4C800000">
+													<TextBlock ToolTip="Defaults to present date" Background="#4C800000">
 													Rent date
 													</TextBlock>
 												</Border>
 												<Border>
-													<DatePicker Name="OrderFormRentDate" ToolTip="Item taken date dd/mm/yyyy"></DatePicker>
+													<DatePicker Name="OrderFormRentDate" ToolTip="Defaults to present date"></DatePicker>
 												</Border>
 											</UniformGrid>
 										</Border>
 										<Border>
 											<UniformGrid Rows="1">
 												<Border>
-													<TextBlock ToolTip="Item return deadline dd/mm/yyyy" Background="#4C800000">Due date</TextBlock>
+													<TextBlock ToolTip="Set return deadline" Background="#4C800000">Due date</TextBlock>
 												</Border>
 												<Border>
-													<DatePicker ToolTip="Item return deadline dd/mm/yyyy"  Name="OrderFormDueDate"></DatePicker>
+													<DatePicker ToolTip="Set return deadline" Name="OrderFormDueDate"></DatePicker>
 												</Border>
 											</UniformGrid>
 										</Border>
 										<Border>
 											<UniformGrid Rows="1">
 												<Border>
-													<TextBlock ToolTip="Item return date dd/mm/yyyy" Background="#4C800000">
+													<TextBlock ToolTip="Actual item return date. Leave empty before rent. Use only in edit mode" Background="#4C800000">
 													Return date
 													</TextBlock>
 												</Border>
 												<Border>
-													<DatePicker Name="OrderFormReturnDate" ToolTip="Item return date dd/mm/yyyy"></DatePicker>
+													<DatePicker Name="OrderFormReturnDate" ToolTip="Actual item return date. Leave empty to rent. Use only in edit mode"></DatePicker>
 												</Border>
 											</UniformGrid>
 										</Border>

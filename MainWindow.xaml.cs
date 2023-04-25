@@ -497,134 +497,20 @@ namespace WPF
 			}
 			else MessageBox.Show("Load poster from movies catalog");
 		}
-		//Fills existing movie data into form in admin panel (rent movie option)
-		public void MovieEditRentFillForm() 
-		{
-			SelectAddMode(null, null);
-			OrderFormMovieID.Text = getmovie_id().ToString();
-			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
-			MovieFormPrice.Text = rowview.Row["price"].ToString();
-			//comboboxes
-		}
-		//Fills existing client data into form in admin panel (edit client option)
-		public void ClientEditFillForm()
-		{
-			SelectEditMode(null, null);
-			ClientFormID.Text = getclient_id().ToString();
-			DataRowView rowview = ClientsCatalog.SelectedItem as DataRowView;
-			ClientFormLastName.Text = rowview.Row["last name"].ToString();
-			ClientFormFirstName.Text = rowview.Row["first name"].ToString();
-			ClientFormEmail.Text = rowview.Row["email"].ToString();
-			ClientFormPhone.Text = rowview.Row["phone"].ToString();
-		}
-		//Fills existing order data into form in admin panel (edit order option)
-		public void OrderEditFillForm()
-		{
-			SelectEditMode(null, null);
-			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
-			//get order id
-			OrderFormID.Text = getorder_id().ToString();
-			
-			//get movie id
-			string movie_id = rowview.Row["movie"].ToString().Split().Last();
-			OrderFormMovieID.Text = movie_id;
-
-			//get client name id
-			string client = rowview.Row["client"].ToString();
-			OrderFormClientLNFNID.Text = client;
-			
-			//get rent date
-			string rent_date = rowview.Row["rent date"].ToString();
-			OrderFormRentDate.Text = rent_date;
-			/*
-			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-			{
-				connection.Open();
-				var sql = @"select convert(varchar, ISNULL(rent_date,CONVERT(datetime,'01/01/1970',103)), 103) from orders where id=@id";
-				var cmd = new SqlCommand(sql, connection);
-				cmd.Parameters.AddWithValue("@id", getorder_id());
-				rent_date = cmd.ExecuteScalar().ToString();
-				int dd = int.Parse(rent_date.Split('/')[0]);
-				int mm = int.Parse(rent_date.Split('/')[1]);
-				int yy = int.Parse(rent_date.Split('/')[2]);
-				//set date if not null
-				if (dd != 1 && mm != 1 && yy != 1970)
-					OrderFormRentDate.SelectedDate = new DateTime(yy, mm, dd);
-			}
-			*/
-			//get due date
-			string due_date = rowview.Row["due date"].ToString();
-			OrderFormDueDate.Text = due_date;
-			/*
-			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-			{
-				connection.Open();
-				var sql = @"select convert(varchar, ISNULL(due_date,CONVERT(datetime,'01/01/1970',103)), 103) from orders where id=@id";
-				var cmd = new SqlCommand(sql, connection);
-				cmd.Parameters.AddWithValue("@id", getorder_id());
-				due_date = cmd.ExecuteScalar().ToString();
-				int dd = int.Parse(due_date.Split('/')[0]);
-				int mm = int.Parse(due_date.Split('/')[1]);
-				int yy = int.Parse(due_date.Split('/')[2]);
-				//set date if not null
-				if (dd != 1 && mm != 1 && yy != 1970)
-					OrderFormDueDate.SelectedDate = new DateTime(yy, mm, dd);
-			}
-			*/
-			//get return date
-			string return_date = rowview.Row["return date"].ToString();
-			OrderFormReturnDate.Text = return_date;
-			/*
-			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-			{
-				connection.Open();
-				var sql = @"select convert(varchar, ISNULL(return_date,CONVERT(datetime,'01/01/1970',103)), 103) from orders where id=@id";
-				var cmd = new SqlCommand(sql, connection);
-				cmd.Parameters.AddWithValue("@id", getorder_id());
-				return_date = cmd.ExecuteScalar().ToString();
-				int dd = int.Parse(return_date.Split('/')[0]);
-				int mm = int.Parse(return_date.Split('/')[1]);
-				int yy = int.Parse(return_date.Split('/')[2]);
-				//set date if not null
-				if (dd != 1 && mm != 1 && yy != 1970)
-					OrderFormReturnDate.SelectedDate = new DateTime(yy, mm, dd);
-			}
-			*/
-		}
 		//Submit Buttons
 		private void SubmitOrder(object sender, MouseButtonEventArgs e)
 		{
-			//check if combobox item exists in collection (in case of value insertion instead of selection)
+			//check if client exists (in case of value insertion instead of selection)
 			bool exists = false;
-			//Console.WriteLine(OrderFormClientLNFNID.Text);
 			foreach (string item in OrderFormClientLNFNID.Items)
 			{
-				//Console.WriteLine(item+" "+ OrderFormClientLNFNID.Text);
 				exists = item == OrderFormClientLNFNID.Text;
 				if (exists) break;
 			}
 			if (exists == false) OrderFormClientLNFNID.Text = "null";
 
-			//get movie_id and client_id
-			string movie_id = null,
-				client_id = null;
-			if (OrderFormMovieID.Text != "" &&
-				OrderFormClientLNFNID.Text != "null")
-			{
-				//split string and get movie id
-				movie_id = OrderFormMovieID.Text;
-				//split string and get client id
-				client_id = OrderFormClientLNFNID.Text.Split(' ').Last();
-			}
-			else
-			{
-				//no movie id or client
-				MessageBox.Show("Form incomplete: use rent context menu option in movies catalog to fill movie id and select client using combobox");
-			}
-			//client, movie and rent date must be present
-			if (OrderFormClientLNFNID.Text != "" && OrderFormClientLNFNID.Text != null &&
-				OrderFormMovieID.Text != "" && OrderFormMovieID.Text != null &&
-				OrderFormRentDate.Text != "" && OrderFormRentDate.Text != null)
+			//Proceed on client and movie set
+			if (OrderFormClientLNFNID.Text != "null" && OrderFormMovieID.Text != "")
 			{
 				//get number of copies left available
 				int copies_left = 0;
@@ -633,15 +519,13 @@ namespace WPF
 					connection.Open();
 					var sql = @"select left_count from movies where id=@id";
 					var cmd = new SqlCommand(sql, connection);
-					cmd.Parameters.AddWithValue("@id", movie_id);
+					cmd.Parameters.AddWithValue("@id", OrderFormMovieID.Text);
 					copies_left = int.Parse(cmd.ExecuteScalar().ToString());
 				}
-				//add (rent) mode if copies available
-				if (mode == false)
+				string movie_id = OrderFormClientLNFNID.Text.Split().Last();
+				//add mode if copies available
+				if (mode == false && copies_left > 0)
 				{
-					if (copies_left > 0)
-					{
-							//new movie order
 							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 							{
 								connection.Open();
@@ -650,8 +534,8 @@ namespace WPF
 									"@rent_date,@due_date,@return_date)";
 								using (var cmd = new SqlCommand(sql, connection))
 								{
-									cmd.Parameters.AddWithValue("@client_id", client_id);
-									cmd.Parameters.AddWithValue("@movie_id", movie_id);
+									cmd.Parameters.AddWithValue("@client_id", movie_id);
+									cmd.Parameters.AddWithValue("@movie_id", OrderFormMovieID.Text);
 									cmd.Parameters.AddWithValue("@rent_date", OrderFormRentDate.Text);
 									cmd.Parameters.AddWithValue("@due_date", OrderFormDueDate.Text);
 									cmd.Parameters.AddWithValue("@return_date", OrderFormReturnDate.Text);
@@ -659,6 +543,7 @@ namespace WPF
 									OrdersGridRefresh();
 									//decrement movie copies available when client rents a copy
 									copies_left--;
+									OrderClearForm();
 								}
 								//update copies left
 								sql = @"update movies set left_count=@left_count where id=@id";
@@ -670,15 +555,12 @@ namespace WPF
 									MoviesGridRefresh();
 								}
 							}
-					}
-					else MessageBox.Show("No copies left to rent");
-				}//edit mode
-				else if (mode == true)
+				}
+				//add mode no copies left
+				else if (mode == false && copies_left <= 0) MessageBox.Show("No copies left to rent");
+				//edit mode
+				else if (mode == true && OrderFormID.Text != "")
 				{
-					//get order_id
-					if (OrderFormID.Text != "")
-					{
-						string order_id = OrderFormID.Text;
 							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 							{
 								connection.Open();
@@ -687,25 +569,18 @@ namespace WPF
 									"where id=@id";
 								using (var cmd = new SqlCommand(sql, connection))
 								{
-									cmd.Parameters.AddWithValue("@id", order_id);
-									cmd.Parameters.AddWithValue("@client_id", client_id);
-									cmd.Parameters.AddWithValue("@movie_id", movie_id);
+									cmd.Parameters.AddWithValue("@id", OrderFormID.Text);
+									cmd.Parameters.AddWithValue("@client_id", OrderFormClientLNFNID.Text);
+									cmd.Parameters.AddWithValue("@movie_id", OrderFormMovieID.Text);
 									cmd.Parameters.AddWithValue("@rent_date", OrderFormRentDate.Text);
 									cmd.Parameters.AddWithValue("@due_date", OrderFormDueDate.Text);
 									cmd.Parameters.AddWithValue("@return_date", OrderFormReturnDate.Text);
 									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+									OrdersGridRefresh();
 								}
 							}
-							OrdersGridRefresh();
-					}
-					else
-					{
-						//needed values are not present. For edit mode order_id is needed
-						MessageBox.Show("Form incomplete: order id not set");
-					}
-				}
-			}
-			else MessageBox.Show("No client, movie or rent date selected");
+				}else if (mode == true && OrderFormID.Text == "") MessageBox.Show("Order id not set. Use edit context menu option in orders catalog");
+			}else MessageBox.Show("Fill client and movie");
 		}
 		private void SubmitClient(object sender, MouseButtonEventArgs e)
 		{
@@ -742,12 +617,8 @@ namespace WPF
 			else
 				ClientFormEmail.Text.Trim();
 
-			//ensure needed data is set
-			if (ClientFormFirstName.Text != "" && ClientFormLastName.Text != "" &&
-					ClientFormFirstName.Text != null && ClientFormLastName.Text != null) 
-			{
-				//add mode
-				if (mode == false)
+				//add mode when names set
+				if (mode == false && ClientFormFirstName.Text != "" && ClientFormLastName.Text != "")
 				{
 						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 						{
@@ -764,11 +635,12 @@ namespace WPF
 								//refresh grid
 								ClientsGridRefresh();
 								ClientsComboboxRefresh();
+								ClientClearForm();
 							}
 						}
-				}
-				//edit mode
-				else if (ClientFormID.Text != "" && ClientFormID.Text != null)
+				} else if (mode == false && ClientFormFirstName.Text == "" && ClientFormLastName.Text == "") MessageBox.Show("First name and last name must be filled correctly");
+			//edit mode
+			else if (mode == true && ClientFormID.Text != "")
 				{
 					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 					{
@@ -789,9 +661,7 @@ namespace WPF
 						}
 					}
 				}
-				else MessageBox.Show("To set id use edit context menu option in clients catalog");
-			}
-			else MessageBox.Show("First name and last name must be filled correctly");
+				else MessageBox.Show("To set client use edit context menu option in clients catalog");
 		}
 		private void SubmitMovie(object sender, MouseButtonEventArgs e)
 		{
@@ -897,13 +767,12 @@ namespace WPF
 			//get genre_id from combobox
 			string genre_id = "1";
 			if (MovieFormFormatNameID.Text != "null")	genre_id = MovieFormGenreNameID.Text.Split(' ').Last();
+			
 			//poster_path and trailer_path must be set in their respective tabs
 			
 			//add mode
-			if (mode == false)
+			if (mode == false && MovieFormTitle.Text != "")
 			{
-				if (MovieFormTitle.Text != null)
-				{
 					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 					{
 						connection.Open();
@@ -926,57 +795,26 @@ namespace WPF
 							cmd.Parameters.AddWithValue("@format_id", format_id);
 							cmd.Parameters.AddWithValue("@genre_id", genre_id);
 							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+							MoviesGridRefresh();
+							MovieClearForm();
 						}
 					}
-					//setquery("Insert into movies (name,year,country_id,duration,age,total_count,price,left_count,plot,lang_id,actor_id,director_id,format_id,genre_id) " +
-					//	"values(" + MovieFormTitle.Text + "," + year + "," + country_id + "," + duration + "," + age + "," + copies_total + "," + 
-					//	price + "," + copies_left + "," + plot + "," + lang_id + "," + actor_id + "," + director_id + "," +
-					//	 format_id + "," + genre_id + ")");
-					//refresh grid
-					MoviesGridRefresh();
-				}
-				else
-				{
-					MessageBox.Show("Movie title not set");
-				}
 			}
+			//add mode no title set
+			else if (mode == false && MovieFormTitle.Text == "") MessageBox.Show("Movie title not set");
 			//edit mode
-			else
+			else if (mode = true && MovieFormID.Text != "")
 			{
-				//get movie_id from combobox
-				string movie_id = null;
-				if (MovieFormFormatNameID.Text != "null")
-				{
-					movie_id = MovieFormID.Text;
-				}
-				else
-				{
-					MessageBox.Show("Movie id not set. Use edit context menu option from movies catalog");
-				}
-				if (MovieFormTitle.Text != null && movie_id != null)
-				{
 					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 					{
 						connection.Open();
-						var sql = @"update movies set " +
-							"name=@name," +
-							"year=@year," +
-							"country_id=@country_id," +
-							"duration=@duration," +
-							"age=@age," +
-							"total_count=@total_count," +
-							"price=@price," +
-							"left_count=@left_count," +
-							"plot=@plot," +
-							"lang_id=@lang_id," +
-							"actor_id=@actor_id," +
-							"director_id=@director_id," +
-							"format_id=@format_id," +
-							"genre_id=@genre_id " +
+						var sql = @"update movies set name=@name,year=@year,country_id=@country_id,duration=@duration,age=@age," +
+							"total_count=@total_count,price=@price,left_count=@left_count,plot=@plot,lang_id=@lang_id," +
+							"actor_id=@actor_id,director_id=@director_id,format_id=@format_id,genre_id=@genre_id " +
 							"where id=@id";
 						using (var cmd = new SqlCommand(sql, connection))
 						{
-							cmd.Parameters.AddWithValue("@id", movie_id);
+							cmd.Parameters.AddWithValue("@id", MovieFormID.Text);
 							cmd.Parameters.AddWithValue("@name", MovieFormTitle.Text);
 							cmd.Parameters.AddWithValue("@year", year);
 							cmd.Parameters.AddWithValue("@country_id", country_id);
@@ -992,15 +830,10 @@ namespace WPF
 							cmd.Parameters.AddWithValue("@format_id", format_id);
 							cmd.Parameters.AddWithValue("@genre_id", genre_id);
 							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+							MoviesGridRefresh();
 						}
 					}
-					MoviesGridRefresh();
-				}
-				else
-				{
-					MessageBox.Show("Movie not set");
-				}
-			}
+			}else MessageBox.Show("Movie id not set. Use edit context menu option from movies catalog");
 		}
 		//Movies right click menu
 		private void MovieItem_plot(object sender, RoutedEventArgs e)
@@ -1009,21 +842,95 @@ namespace WPF
 			string plot = rowview.Row["plot"].ToString();
 			MessageBox.Show(plot);
 		}
+		//Fills existing movie data into form in admin panel (rent movie option)
+		//Clear movie form
+		public void MovieClearForm() 
+		{
+			MovieFormID.Text = null;
+			MovieFormTitle.Text = null;
+			MovieFormYear.Text = null;
+			MovieFormDuration.Text = null;
+			MovieFormAge.Text = null;
+			MovieFormPrice.Text = null;
+			MovieFormCopiesLeft.Text = null;
+			MovieFormCopiesTotal.Text = null;
+			MovieFormPlot.Text = "Initial Premise";
+
+			//comboboxes
+			MovieFormGenreNameID.Text = "null";
+			MovieFormFormatNameID.Text = "null";
+			MovieFormDirectorLNFNID.Text = "null";
+			MovieFormActorLNFNID.Text = "null";
+			MovieFormCountryNameID.Text = "null";
+			MovieFormLangNameID.Text = "null";
+		}
+		//Clear client form
+		public void ClientClearForm()
+		{
+			ClientFormID.Text = null;
+			ClientFormLastName.Text = null;
+			ClientFormFirstName.Text = null;
+			ClientFormEmail.Text = null;
+			ClientFormPhone.Text = null;
+		}
+		//Clear order form
+		public void OrderClearForm()
+		{
+			OrderFormID.Text = null;
+			OrderFormMovieID.Text = null;
+			OrderFormClientLNFNID.Text = null;
+			//dates
+			OrderFormRentDate.Text = null;
+			OrderFormDueDate.Text = null;
+			OrderFormReturnDate.Text = null;
+		}
 		private void MovieItem_rent(object sender, RoutedEventArgs e)
 		{
 			//add mode
 			SelectAddMode(null,null);
 			//autofill form
-			MovieEditRentFillForm();
-			MessageBox.Show("Movie data set. Submit in admin panel.");
+			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
+
+			OrderFormID.Text = null;
+			OrderFormMovieID.Text = rowview.Row["id"].ToString();
+
+			//combobox
+			OrderFormClientLNFNID.Text = null;
+			
+			//dates
+			OrderFormRentDate.Text = null;
+			OrderFormDueDate.Text = null;
+			OrderFormReturnDate.Text = null;
+
+			MessageBox.Show("Movie data set. Submit order in admin panel.");
 		}
 		private void MovieItem_edit(object sender, RoutedEventArgs e)
 		{
 			//edit mode
 			SelectEditMode(null, null);
+			
 			//autofill form
-			MovieEditRentFillForm();
-			MessageBox.Show("Movie data set. Submit in admin panel.");
+			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
+
+			MovieFormID.Text = rowview.Row["id"].ToString();
+			MovieFormTitle.Text = rowview.Row["title"].ToString();
+			MovieFormYear.Text = rowview.Row["year"].ToString();
+			MovieFormDuration.Text = rowview.Row["duration"].ToString();
+			MovieFormAge.Text = rowview.Row["age"].ToString();
+			MovieFormPrice.Text = rowview.Row["price"].ToString();
+			MovieFormCopiesLeft.Text = rowview.Row["left copies"].ToString();
+			MovieFormCopiesTotal.Text = rowview.Row["all copies"].ToString();
+			MovieFormPlot.Text = rowview.Row["plot"].ToString();
+
+			//comboboxes
+			MovieFormGenreNameID.Text = rowview.Row["genre"].ToString();
+			MovieFormFormatNameID.Text = rowview.Row["format"].ToString();
+			MovieFormDirectorLNFNID.Text = rowview.Row["director"].ToString();
+			MovieFormActorLNFNID.Text = rowview.Row["lead actor"].ToString();
+			MovieFormCountryNameID.Text = rowview.Row["country"].ToString();
+			MovieFormLangNameID.Text = rowview.Row["language"].ToString();
+
+			MessageBox.Show("Movie data set. Edit and submit changes in admin panel.");
 		}
 		private void MovieItem_delete(object sender, RoutedEventArgs e)
 		{
@@ -1064,12 +971,20 @@ namespace WPF
 			TrailerInit(null, null);
 		}
 		//Clients right click menu
+		//Fills existing client data into form in admin panel (edit client option)
 		private void ClientItem_edit(object sender, RoutedEventArgs e)
 		{
 			//edit mode
 			SelectEditMode(null, null);
-			//autofill form
-			ClientEditFillForm();
+			
+			//fill form
+			ClientFormID.Text = getclient_id().ToString();
+			DataRowView rowview = ClientsCatalog.SelectedItem as DataRowView;
+			ClientFormLastName.Text = rowview.Row["last name"].ToString();
+			ClientFormFirstName.Text = rowview.Row["first name"].ToString();
+			ClientFormEmail.Text = rowview.Row["email"].ToString();
+			ClientFormPhone.Text = rowview.Row["phone"].ToString();
+
 			MessageBox.Show("Client data set. Submit in admin panel.");
 		}
 		private void ClientItem_delete(object sender, RoutedEventArgs e)
@@ -1160,11 +1075,37 @@ namespace WPF
 				MessageBox.Show("Movie already returned");
 			}
 		}
+		//Fills existing order data into form in admin panel (edit order option)
 		private void OrderItem_edit(object sender, RoutedEventArgs e)
 		{
 			//edit mode
 			SelectEditMode(null, null);
-			OrderEditFillForm();
+			
+			//fill form
+			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
+			//get order id
+			OrderFormID.Text = getorder_id().ToString();
+
+			//get movie id
+			string movie_id = rowview.Row["movie"].ToString().Split().Last();
+			OrderFormMovieID.Text = movie_id;
+
+			//get client name id
+			string client = rowview.Row["client"].ToString();
+			OrderFormClientLNFNID.Text = client;
+
+			//get rent date
+			string rent_date = rowview.Row["rent date"].ToString();
+			OrderFormRentDate.Text = rent_date;
+			
+			//get due date
+			string due_date = rowview.Row["due date"].ToString();
+			OrderFormDueDate.Text = due_date;
+			
+			//get return date
+			string return_date = rowview.Row["return date"].ToString();
+			OrderFormReturnDate.Text = return_date;
+			
 			MessageBox.Show("Order data set. Edit order in admin panel.");
 		}
 		private void OrderItem_delete(object sender, RoutedEventArgs e)
