@@ -1380,51 +1380,30 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderMovieString.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'movie' like '%" + FilterOrderMovieString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message);
 			}
 		}
-		private void FilterOrderLastName(object sender, TextChangedEventArgs e)
+		private void FilterOrderClient(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderLastNameString.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'client' like '%" + FilterOrderClientString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message);
 			}
 		}
-		private void FilterOrderFirstName(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderFirstNameString.Text + "%'";
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message);
-			}
-		}
-		private void FilterOrderGenre(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderGenreString.Text + "%'";
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message);
-			}
-		}
+		
 		private void FilterOrderYear(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderYearString.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'year' like '%" + FilterOrderYearString.Text + "%'";
 			}
 			catch (Exception ex)
 			{
@@ -1435,7 +1414,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderRentStartDateString.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'rent date' >= " + FilterOrderRentStartDateString.Text;
 			}
 			catch (Exception ex)
 			{
@@ -1446,7 +1425,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderRentStopDateString.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'rent date' <= " + FilterOrderRentStopDateString.Text;
 			}
 			catch (Exception ex)
 			{
@@ -1457,7 +1436,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderDueStartDateString.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'due date' >= " + FilterOrderDueStartDateString.Text;
 			}
 			catch (Exception ex)
 			{
@@ -1468,7 +1447,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderDueStopDateString.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'due date' <= " + FilterOrderDueStopDateString.Text;
 			}
 			catch (Exception ex)
 			{
@@ -1479,7 +1458,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderReturnStartDateString.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'return date' >= " + FilterOrderReturnStartDateString.Text;
 			}
 			catch (Exception ex)
 			{
@@ -1490,7 +1469,7 @@ namespace WPF
 		{
 			try
 			{
-				orders_dt.DefaultView.RowFilter = "'phone' like '%" + FilterOrderReturnStopDateString.Text + "%'";
+				orders_dt.DefaultView.RowFilter = "'return date' <= " + FilterOrderReturnStopDateString.Text;
 			}
 			catch (Exception ex)
 			{

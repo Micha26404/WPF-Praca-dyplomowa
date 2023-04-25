@@ -14,8 +14,9 @@
 		<ImageBrush ImageSource="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" Stretch="UniformToFill"/>
 	</Window.Background>
 	<Window.Resources>
-		<Style TargetType="CheckBox">
+		<Style TargetType="ContextMenu">
 			<Setter Property="Foreground" Value="White"></Setter>
+			<Setter Property="Background" Value="DarkRed"></Setter>
 		</Style>
 		<Style TargetType="Border">
 			<Setter Property="BorderThickness" Value="1"></Setter>
@@ -293,7 +294,7 @@
 					</TabItem.Header>
 					<Grid>
 						<Grid.RowDefinitions>
-							<RowDefinition Height="70"/>
+							<RowDefinition Height="80"/>
 							<RowDefinition/>
 						</Grid.RowDefinitions>
 						<!--Movie filter panel-->
@@ -331,15 +332,15 @@
 								<TextBox Name="FilterMovieDirectorString" TextChanged="FilterMovieDirector"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock>Formats</TextBlock>
+								<TextBlock>Format</TextBlock>
 								<TextBox Name="FilterMovieFormatString" TextChanged="FilterMovieFormat"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock>Languages</TextBlock>
+								<TextBlock>Language</TextBlock>
 								<TextBox Name="FilterMovieLangString" TextChanged="FilterMovieLang"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
-								<TextBlock>Countries</TextBlock>
+								<TextBlock>Country</TextBlock>
 								<TextBox Name="FilterMovieCountryString" TextChanged="FilterMovieCountry"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
@@ -491,16 +492,9 @@
 							<UniformGrid Columns="1">
 								<TextBlock>Movie</TextBlock>
 								<TextBox TextChanged="FilterOrderMovie" Name="FilterOrderMovieString"/>
-								<TextBlock>Year</TextBlock>
-								<TextBox TextChanged="FilterOrderYear" Name="FilterOrderYearString"/>
-								<TextBlock>Genre</TextBlock>
-								<TextBox TextChanged="FilterOrderGenre" Name="FilterOrderGenreString"/>
-							</UniformGrid>
-							<UniformGrid Columns="1">
-								<TextBlock>Last Name</TextBlock>
-								<TextBox TextChanged="FilterOrderLastName" Name="FilterOrderLastNameString"/>
-								<TextBlock>First Name</TextBlock>
-								<TextBox TextChanged="FilterOrderFirstName" Name="FilterOrderFirstNameString"/>
+								
+								<TextBlock>Client</TextBlock>
+								<TextBox TextChanged="FilterOrderClient" Name="FilterOrderClientString"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Rent date</TextBlock>
