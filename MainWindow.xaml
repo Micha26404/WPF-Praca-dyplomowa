@@ -554,21 +554,30 @@
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="20"/>
-							<RowDefinition Height="150"/>
+							<RowDefinition Height="auto"/>
 							<RowDefinition/>
 						</Grid.RowDefinitions>
 						<!--Orders filter panel-->
 						<TextBlock Name="OrdersCount"></TextBlock>
-						<UniformGrid Grid.Row="1" Rows="1" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top">
+						<Grid Grid.Row="1" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="auto"/>
+								<ColumnDefinition/>
+								<ColumnDefinition/>
+								<ColumnDefinition/>
+								<ColumnDefinition/>
+							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
 								<TextBlock>Movie</TextBlock>
-								<TextBox TextChanged="FilterOrderMovie" Name="FilterOrderMovieString"/>
 								<TextBlock>Year</TextBlock>
-								<TextBox TextChanged="FilterOrderYear" Name="FilterOrderYearString"/>
 								<TextBlock>Client</TextBlock>
+							</UniformGrid>
+							<UniformGrid  Grid.Column="1" Columns="1">
+								<TextBox TextChanged="FilterOrderMovie" Name="FilterOrderMovieString"/>
+								<TextBox TextChanged="FilterOrderYear" Name="FilterOrderYearString"/>
 								<TextBox TextChanged="FilterOrderClient" Name="FilterOrderClientString"/>
 							</UniformGrid>
-							<UniformGrid Columns="1">
+							<UniformGrid Grid.Column="2" Columns="1">
 								<TextBlock>Rent date</TextBlock>
 								<xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderRentStartDate" Name="FilterOrderRentStartDateString" Foreground="White">
 									<xctk:DateTimePicker.Background>
@@ -578,7 +587,7 @@
 										</RadialGradientBrush>
 									</xctk:DateTimePicker.Background>
 								</xctk:DateTimePicker>
-								<xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderRentStopDate" Name="FilterOrderRentStopDateString">
+								<xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderRentStopDate" Name="FilterOrderRentStopDateString" Foreground="White">
 									<xctk:DateTimePicker.Background>
 										<RadialGradientBrush>
 											<GradientStop Color="Transparent" Offset="1"/>
@@ -587,9 +596,9 @@
 									</xctk:DateTimePicker.Background>
 								</xctk:DateTimePicker>
 							</UniformGrid>
-							<UniformGrid Columns="1">
+							<UniformGrid Grid.Column="3" Columns="1">
 								<TextBlock>Due date</TextBlock>
-								<xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderDueStartDate" Name="FilterOrderDueStartDateString">
+								<xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderDueStartDate" Name="FilterOrderDueStartDateString" Foreground="White">
 									<xctk:DateTimePicker.Background>
 										<RadialGradientBrush>
 											<GradientStop Color="Transparent" Offset="1"/>
@@ -597,7 +606,7 @@
 										</RadialGradientBrush>
 									</xctk:DateTimePicker.Background>
 								</xctk:DateTimePicker>
-								<xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderDueStopDate" Name="FilterOrderDueStopDateString">
+								<xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderDueStopDate" Name="FilterOrderDueStopDateString" Foreground="White">
 									<xctk:DateTimePicker.Background>
 										<RadialGradientBrush>
 											<GradientStop Color="Transparent" Offset="1"/>
@@ -606,9 +615,9 @@
 									</xctk:DateTimePicker.Background>
 								</xctk:DateTimePicker>
 							</UniformGrid>
-							<UniformGrid Columns="1">
+							<UniformGrid Grid.Column="4" Columns="1">
 								<TextBlock>Return date</TextBlock>
-								<xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderReturnStartDate" Name="FilterOrderReturnStartDateString">
+								<xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderReturnStartDate" Name="FilterOrderReturnStartDateString" Foreground="White">
 									<xctk:DateTimePicker.Background>
 										<RadialGradientBrush>
 											<GradientStop Color="Transparent" Offset="1"/>
@@ -616,7 +625,7 @@
 										</RadialGradientBrush>
 									</xctk:DateTimePicker.Background>
 								</xctk:DateTimePicker>
-								<xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderReturnStopDate" Name="FilterOrderReturnStopDateString">
+								<xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderReturnStopDate" Name="FilterOrderReturnStopDateString" Foreground="White">
 									<xctk:DateTimePicker.Background>
 										<RadialGradientBrush>
 											<GradientStop Color="Transparent" Offset="1"/>
@@ -625,7 +634,7 @@
 									</xctk:DateTimePicker.Background>
 								</xctk:DateTimePicker>
 							</UniformGrid>
-						</UniformGrid>
+						</Grid>
 
 						<DataGrid Name="OrdersCatalog" ToolTip="Right click for options" Grid.Row="2" ItemsSource="{Binding}" LoadingRow="OrdersCatalog_LoadingRow">
 							<DataGrid.AlternatingRowBackground>
@@ -1160,7 +1169,7 @@
 													</TextBlock>
 												</Border>
 												<Border>
-													<xctk:DateTimePicker Name="OrderFormRentDate" ToolTip="Defaults to present date">
+													<xctk:DateTimePicker Name="OrderFormRentDate" ToolTip="Defaults to present date" Foreground="White">
 														<xctk:DateTimePicker.Background>
 															<RadialGradientBrush>
 																<GradientStop Color="Transparent" Offset="1"/>
@@ -1177,7 +1186,7 @@
 													<TextBlock ToolTip="Set return deadline" Background="#4C800000">Due date</TextBlock>
 												</Border>
 												<Border>
-													<xctk:DateTimePicker ToolTip="Set return deadline" Name="OrderFormDueDate">
+													<xctk:DateTimePicker ToolTip="Set return deadline" Name="OrderFormDueDate" Foreground="White">
 														<xctk:DateTimePicker.Background>
 															<RadialGradientBrush>
 																<GradientStop Color="Transparent" Offset="1"/>
@@ -1196,7 +1205,7 @@
 													</TextBlock>
 												</Border>
 												<Border>
-													<xctk:DateTimePicker Name="OrderFormReturnDate" ToolTip="Actual item return date. Leave empty to rent. Use only in edit mode">
+													<xctk:DateTimePicker Name="OrderFormReturnDate" ToolTip="Actual item return date. Leave empty to rent. Use only in edit mode" Foreground="White">
 														<xctk:DateTimePicker.Background>
 															<RadialGradientBrush>
 																<GradientStop Color="Transparent" Offset="1"/>
