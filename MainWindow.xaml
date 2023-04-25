@@ -514,10 +514,18 @@
 							</DataGrid.Resources>
 							<DataGrid.ContextMenu>
 								<ContextMenu>
-									<MenuItem Header="Edit" Click="ClientItem_edit" />
+									<MenuItem Header="Edit" Click="ClientItem_edit">
+										<MenuItem.Icon>
+											<Image Source="/icons/edit.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 									<Separator></Separator>
 									<Separator></Separator>
-									<MenuItem Header="Delete" Click="ClientItem_delete" />
+									<MenuItem Header="Delete" Click="ClientItem_delete">
+										<MenuItem.Icon>
+											<Image Source="/icons/minus.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 								</ContextMenu>
 							</DataGrid.ContextMenu>
 						</DataGrid>
@@ -636,12 +644,24 @@
 							</DataGrid.Resources>
 							<DataGrid.ContextMenu>
 								<ContextMenu>
-									<MenuItem Header="Return" Click="OrderItem_return" />
+									<MenuItem Header="Return" Click="OrderItem_return">
+										<MenuItem.Icon>
+											<Image Source="/icons/return.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 									<Separator></Separator>
-									<MenuItem Header="Edit" Click="OrderItem_edit" />
+									<MenuItem Header="Edit" Click="OrderItem_edit">
+										<MenuItem.Icon>
+											<Image Source="/icons/edit.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 									<Separator></Separator>
 									<Separator></Separator>
-									<MenuItem Header="Delete" Click="OrderItem_delete" />
+									<MenuItem Header="Delete" Click="OrderItem_delete">
+										<MenuItem.Icon>
+											<Image Source="/icons/minus.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 								</ContextMenu>
 							</DataGrid.ContextMenu>
 						</DataGrid>
