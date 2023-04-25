@@ -103,15 +103,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="classes\directors.cs" />
-    <Compile Include="classes\actors.cs" />
-    <Compile Include="classes\clients.cs" />
-    <Compile Include="classes\countries.cs" />
-    <Compile Include="classes\formats.cs" />
-    <Compile Include="classes\genres.cs" />
-    <Compile Include="classes\langs.cs" />
-    <Compile Include="classes\movies.cs" />
-    <Compile Include="classes\orders.cs" />
     <Compile Include="WPF_DB_diagram.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -181,7 +172,6 @@
       <DependentUpon>WPF_DB.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="icons\around-the-globe.png" />
     <Resource Include="icons\cinema\add-ticket.png" />
     <Resource Include="icons\cinema\delete-ticket.png" />
     <Resource Include="icons\short.png" />

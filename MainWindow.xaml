@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
 		Loaded="Window_Loaded"
 		Padding="6"
@@ -14,10 +15,39 @@
 		<ImageBrush ImageSource="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" Stretch="UniformToFill"/>
 	</Window.Background>
 	<Window.Resources>
-		<Style TargetType="ContextMenu">
-			<Setter Property="Foreground" Value="White"></Setter>
-			<Setter Property="Background" Value="DarkRed"></Setter>
+		<Style TargetType="{x:Type xctk:MessageBox}">
+			<Setter Property="Background" Value="Maroon" />
+			<Setter Property="BorderBrush" Value="Black" />
+			<Setter Property="CaptionForeground" Value="White" />
+			<Setter Property="WindowBorderBrush" Value="Black" />
+			<Setter Property="WindowBackground" Value="Maroon" />
+			<Setter Property="WindowOpacity" Value="0.9" />
+			<Setter Property="Foreground" Value="White"/>
 		</Style>
+		<Style TargetType="Image">
+			<Setter Property="Stretch" Value="Uniform"></Setter>
+		</Style>
+		<Style x:Key="{x:Type ContextMenu}" TargetType="{x:Type ContextMenu}">
+			<Setter Property="Foreground" Value="White"></Setter>
+			<Setter Property="OverridesDefaultStyle" Value="True"/>
+			<Setter Property="SnapsToDevicePixels" Value="True"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type ContextMenu}">
+						<Border Background="DarkRed" CornerRadius="15, 15, 15, 15" BorderBrush="Black" BorderThickness="1" Opacity="0.9">
+							<StackPanel ClipToBounds="True" Orientation="Vertical" IsItemsHost="True"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<ControlTemplate x:Key="{x:Static MenuItem.TopLevelItemTemplateKey}" TargetType="{x:Type MenuItem}">
+			<Border Name="Border">
+				<Grid>
+					<ContentPresenter ContentSource="Header" RecognizesAccessKey="True"/>
+				</Grid>
+			</Border>
+		</ControlTemplate>
 		<Style TargetType="Border">
 			<Setter Property="BorderThickness" Value="1"></Setter>
 			<Setter Property="BorderBrush" Value="Black"></Setter>
@@ -374,20 +404,47 @@
 									<Setter Property="Foreground" Value="white" />
 								</Style>
 							</DataGrid.Resources>
+							<DataGrid.Background>
+								<ImageBrush Stretch="Uniform"/>
+							</DataGrid.Background>
 							<DataGrid.ContextMenu>
 								<ContextMenu>
-									<MenuItem Header="Show plot" Click="MovieItem_plot" />
+									<MenuItem Header="Show plot" Click="MovieItem_plot">
+										<MenuItem.Icon>
+											<Image Source="/icons/cinema/cinema.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 									<Separator></Separator>
-									<MenuItem Header="Fill rent form" Click="MovieItem_rent" />
+									<MenuItem Header="Fill rent form" Click="MovieItem_rent">
+										<MenuItem.Icon>
+											<Image Source="/icons/add.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 									<Separator></Separator>
-									<MenuItem Header="Fill edit form" Click="MovieItem_edit" />
+									<MenuItem Header="Fill edit form" Click="MovieItem_edit">
+										<MenuItem.Icon>
+											<Image Source="/icons/edit.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 									<Separator></Separator>
-									<MenuItem Header="Load or set poster" Click="LoadPoster" />
+									<MenuItem Header="Load or set poster" Click="LoadPoster">
+										<MenuItem.Icon>
+											<Image Source="/icons/media/easel.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 									<Separator></Separator>
-									<MenuItem Header="Load or set trailer" Click="LoadTrailer" />
+									<MenuItem Header="Load or set trailer" Click="LoadTrailer" >
+										<MenuItem.Icon>
+											<Image Source="/icons/media/preview-pane.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 									<Separator></Separator>
 									<Separator></Separator>
-									<MenuItem Header="Delete" Click="MovieItem_delete" />
+									<MenuItem Header="Delete" Click="MovieItem_delete" >
+										<MenuItem.Icon>
+											<Image Source="/icons/minus.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
 								</ContextMenu>
 							</DataGrid.ContextMenu>
 						</DataGrid>
@@ -499,18 +556,60 @@
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Rent date</TextBlock>
-								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderRentStartDate" Name="FilterOrderRentStartDateString"/>
-								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderRentStopDate" Name="FilterOrderRentStopDateString"/>
+								<xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderRentStartDate" Name="FilterOrderRentStartDateString" Foreground="White">
+									<xctk:DateTimePicker.Background>
+										<RadialGradientBrush>
+											<GradientStop Color="Transparent" Offset="1"/>
+											<GradientStop Color="#4CFF0000" Offset="0"/>
+										</RadialGradientBrush>
+									</xctk:DateTimePicker.Background>
+								</xctk:DateTimePicker>
+								<xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderRentStopDate" Name="FilterOrderRentStopDateString">
+									<xctk:DateTimePicker.Background>
+										<RadialGradientBrush>
+											<GradientStop Color="Transparent" Offset="1"/>
+											<GradientStop Color="#4CFF0000" Offset="0"/>
+										</RadialGradientBrush>
+									</xctk:DateTimePicker.Background>
+								</xctk:DateTimePicker>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Due date</TextBlock>
-								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderDueStartDate" Name="FilterOrderDueStartDateString"/>
-								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderDueStopDate" Name="FilterOrderDueStopDateString"/>
+								<xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderDueStartDate" Name="FilterOrderDueStartDateString">
+									<xctk:DateTimePicker.Background>
+										<RadialGradientBrush>
+											<GradientStop Color="Transparent" Offset="1"/>
+											<GradientStop Color="#4CFF0000" Offset="0"/>
+										</RadialGradientBrush>
+									</xctk:DateTimePicker.Background>
+								</xctk:DateTimePicker>
+								<xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderDueStopDate" Name="FilterOrderDueStopDateString">
+									<xctk:DateTimePicker.Background>
+										<RadialGradientBrush>
+											<GradientStop Color="Transparent" Offset="1"/>
+											<GradientStop Color="#4CFF0000" Offset="0"/>
+										</RadialGradientBrush>
+									</xctk:DateTimePicker.Background>
+								</xctk:DateTimePicker>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Return date</TextBlock>
-								<DatePicker ToolTip="Start date" SelectedDateChanged="FilterOrderReturnStartDate" Name="FilterOrderReturnStartDateString"/>
-								<DatePicker ToolTip="End date" SelectedDateChanged="FilterOrderReturnStopDate" Name="FilterOrderReturnStopDateString"/>
+								<xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderReturnStartDate" Name="FilterOrderReturnStartDateString">
+									<xctk:DateTimePicker.Background>
+										<RadialGradientBrush>
+											<GradientStop Color="Transparent" Offset="1"/>
+											<GradientStop Color="#4CFF0000" Offset="0"/>
+										</RadialGradientBrush>
+									</xctk:DateTimePicker.Background>
+								</xctk:DateTimePicker>
+								<xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderReturnStopDate" Name="FilterOrderReturnStopDateString">
+									<xctk:DateTimePicker.Background>
+										<RadialGradientBrush>
+											<GradientStop Color="Transparent" Offset="1"/>
+											<GradientStop Color="#4CFF0000" Offset="0"/>
+										</RadialGradientBrush>
+									</xctk:DateTimePicker.Background>
+								</xctk:DateTimePicker>
 							</UniformGrid>
 						</UniformGrid>
 
@@ -1035,7 +1134,14 @@
 													</TextBlock>
 												</Border>
 												<Border>
-													<DatePicker Name="OrderFormRentDate" ToolTip="Defaults to present date"></DatePicker>
+													<xctk:DateTimePicker Name="OrderFormRentDate" ToolTip="Defaults to present date">
+														<xctk:DateTimePicker.Background>
+															<RadialGradientBrush>
+																<GradientStop Color="Transparent" Offset="1"/>
+																<GradientStop Color="#4CFF0000" Offset="0"/>
+															</RadialGradientBrush>
+														</xctk:DateTimePicker.Background>
+													</xctk:DateTimePicker>
 												</Border>
 											</UniformGrid>
 										</Border>
@@ -1045,7 +1151,14 @@
 													<TextBlock ToolTip="Set return deadline" Background="#4C800000">Due date</TextBlock>
 												</Border>
 												<Border>
-													<DatePicker ToolTip="Set return deadline" Name="OrderFormDueDate"></DatePicker>
+													<xctk:DateTimePicker ToolTip="Set return deadline" Name="OrderFormDueDate">
+														<xctk:DateTimePicker.Background>
+															<RadialGradientBrush>
+																<GradientStop Color="Transparent" Offset="1"/>
+																<GradientStop Color="#4CFF0000" Offset="0"/>
+															</RadialGradientBrush>
+														</xctk:DateTimePicker.Background>
+													</xctk:DateTimePicker>
 												</Border>
 											</UniformGrid>
 										</Border>
@@ -1057,7 +1170,14 @@
 													</TextBlock>
 												</Border>
 												<Border>
-													<DatePicker Name="OrderFormReturnDate" ToolTip="Actual item return date. Leave empty to rent. Use only in edit mode"></DatePicker>
+													<xctk:DateTimePicker Name="OrderFormReturnDate" ToolTip="Actual item return date. Leave empty to rent. Use only in edit mode">
+														<xctk:DateTimePicker.Background>
+															<RadialGradientBrush>
+																<GradientStop Color="Transparent" Offset="1"/>
+																<GradientStop Color="#4CFF0000" Offset="0"/>
+															</RadialGradientBrush>
+														</xctk:DateTimePicker.Background>
+													</xctk:DateTimePicker>
 												</Border>
 											</UniformGrid>
 										</Border>
@@ -1169,24 +1289,42 @@
 							<ColumnDefinition/>
 							<ColumnDefinition Width="auto"/>
 						</Grid.ColumnDefinitions>
-						<UniformGrid Columns="1" Background="#7F800000" >
+						<UniformGrid Columns="1" Background="#7F800000" Margin="5">
 							<Border>
-								<TextBlock MouseDown="AddActor" Cursor="Hand">Add actor</TextBlock>
+								<UniformGrid Columns="1">
+									<ComboBox Name="DeleteActorLNFNID"></ComboBox>
+									<TextBlock MouseDown="DeleteActor" Cursor="Hand">Delete actor</TextBlock>
+								</UniformGrid>
 							</Border>
 							<Border>
-								<TextBlock MouseDown="AddDirector" Cursor="Hand">Add director</TextBlock>
+								<UniformGrid Columns="1">
+									<ComboBox Name="DeleteDirectorLNFNID"></ComboBox>
+									<TextBlock MouseDown="DeleteDirector" Cursor="Hand">Delete director</TextBlock>
+								</UniformGrid>
 							</Border>
 							<Border>
-								<TextBlock MouseDown="AddCountry" Cursor="Hand">Add country</TextBlock>
+								<UniformGrid Columns="1">
+									<ComboBox Name="DeleteCountryNameID"></ComboBox>
+									<TextBlock MouseDown="DeleteCountry" Cursor="Hand">Delete country</TextBlock>
+								</UniformGrid>
 							</Border>
 							<Border>
-								<TextBlock MouseDown="AddLang" Cursor="Hand">Add Language</TextBlock>
+								<UniformGrid Columns="1">
+									<ComboBox Name="DeleteLangNameID"></ComboBox>
+									<TextBlock MouseDown="DeleteLang" Cursor="Hand">Delete language</TextBlock>
+								</UniformGrid>
 							</Border>
 							<Border>
-								<TextBlock MouseDown="AddFormat" Cursor="Hand">Add Format</TextBlock>
+								<UniformGrid Columns="1">
+									<ComboBox Name="DeleteFormatNameID"></ComboBox>
+									<TextBlock MouseDown="DeleteFormat" Cursor="Hand">Delete format</TextBlock>
+								</UniformGrid>
 							</Border>
 							<Border>
-								<TextBlock MouseDown="AddGenre" Cursor="Hand">Add Genre</TextBlock>
+								<UniformGrid Columns="1">
+									<ComboBox Name="DeleteGenreNameID"></ComboBox>
+									<TextBlock MouseDown="DeleteGenre" Cursor="Hand">Delete genre</TextBlock>
+								</UniformGrid>
 							</Border>
 						</UniformGrid>
 						<UniformGrid  Grid.Column="1" Columns="1" Background="#7F800000" >
@@ -1203,6 +1341,7 @@
 												<TextBlock>Last name</TextBlock>
 												<TextBox Name="AddActorLastName"></TextBox>
 											</UniformGrid>
+											<TextBlock MouseDown="AddActor" Cursor="Hand">Add actor</TextBlock>
 										</UniformGrid>
 									</Border>
 									<Border>
@@ -1236,6 +1375,8 @@
 												<TextBlock>Last name</TextBlock>
 												<TextBox Name="AddDirectorLastName"></TextBox>
 											</UniformGrid>
+											<TextBlock MouseDown="AddDirector" Cursor="Hand">Add director</TextBlock>
+
 										</UniformGrid>
 									</Border>
 									<Border>
@@ -1265,6 +1406,8 @@
 												<TextBlock>Name</TextBlock>
 												<TextBox Name="AddCountryName"></TextBox>
 											</UniformGrid>
+											<TextBlock MouseDown="AddCountry" Cursor="Hand">Add country</TextBlock>
+
 										</UniformGrid>
 									</Border>
 									<Border>
@@ -1290,6 +1433,8 @@
 												<TextBlock>Name</TextBlock>
 												<TextBox Name="AddLangName"></TextBox>
 											</UniformGrid>
+											<TextBlock MouseDown="AddLang" Cursor="Hand">Add Language</TextBlock>
+
 										</UniformGrid>
 									</Border>
 									<Border>
@@ -1315,6 +1460,8 @@
 												<TextBlock>Name</TextBlock>
 												<TextBox Name="AddFormatName"></TextBox>
 											</UniformGrid>
+											<TextBlock MouseDown="AddFormat" Cursor="Hand">Add Format</TextBlock>
+
 										</UniformGrid>
 									</Border>
 									<Border>
@@ -1340,6 +1487,8 @@
 												<TextBlock>Name</TextBlock>
 												<TextBox Name="AddGenreName"></TextBox>
 											</UniformGrid>
+											<TextBlock MouseDown="AddGenre" Cursor="Hand">Add Genre</TextBlock>
+
 										</UniformGrid>
 									</Border>
 									<Border>
@@ -1357,53 +1506,35 @@
 								</UniformGrid>
 							</Border>
 						</UniformGrid>
-						<UniformGrid Grid.Column="2" Columns="1" Background="#7F800000" Margin="10">
+						<UniformGrid Grid.Column="2" Columns="1" Background="#7F800000" Margin="5">
 							<UniformGrid Columns="1" Margin="10">
 								<Border>
 									<TextBlock MouseDown="UpdateActor" Cursor="Hand">Update actor</TextBlock>
-								</Border>
-								<Border>
-									<TextBlock MouseDown="DeleteActor" Cursor="Hand">Delete actor</TextBlock>
 								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
 								<Border>
 									<TextBlock MouseDown="UpdateDirector" Cursor="Hand">Update director</TextBlock>
 								</Border>
-								<Border>
-									<TextBlock MouseDown="DeleteDirector" Cursor="Hand">Delete director</TextBlock>
-								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
 								<Border>
 									<TextBlock MouseDown="UpdateCountry" Cursor="Hand">Update country</TextBlock>
-								</Border>
-								<Border>
-									<TextBlock MouseDown="DeleteCountry" Cursor="Hand">Delete country</TextBlock>
 								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
 								<Border>
 									<TextBlock MouseDown="UpdateLang" Cursor="Hand">Update language</TextBlock>
 								</Border>
-								<Border>
-									<TextBlock MouseDown="DeleteLang" Cursor="Hand">Delete language</TextBlock>
-								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
 								<Border>
 									<TextBlock MouseDown="UpdateFormat" Cursor="Hand">Update format</TextBlock>
 								</Border>
-								<Border>
-									<TextBlock MouseDown="DeleteFormat" Cursor="Hand">Delete format</TextBlock>
-								</Border>
 							</UniformGrid>
 							<UniformGrid Columns="1" Margin="10">
 								<Border>
 									<TextBlock MouseDown="UpdateGenre" Cursor="Hand">Update genre</TextBlock>
-								</Border>
-								<Border>
-									<TextBlock MouseDown="DeleteGenre" Cursor="Hand">Delete genre</TextBlock>
 								</Border>
 							</UniformGrid>
 						</UniformGrid>
