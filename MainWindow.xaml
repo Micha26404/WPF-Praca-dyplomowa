@@ -324,11 +324,13 @@
 					</TabItem.Header>
 					<Grid>
 						<Grid.RowDefinitions>
+							<RowDefinition Height="20"/>
 							<RowDefinition Height="80"/>
 							<RowDefinition/>
 						</Grid.RowDefinitions>
 						<!--Movie filter panel-->
-						<UniformGrid ToolTip="Type text and press enter to filter movies" Rows="1" VerticalAlignment="Center">
+						<TextBlock Name="MoviesCount"></TextBlock>
+						<UniformGrid Grid.Row="1" ToolTip="Type text and press enter to filter movies" Rows="1" VerticalAlignment="Center">
 							<UniformGrid Columns="1">
 								<TextBlock>Title</TextBlock>
 								<TextBox Name="FilterMovieTitleString" TextChanged="FilterMovieTitle"/>
@@ -383,7 +385,7 @@
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Name="MoviesCatalog" ToolTip="Right click for options" Grid.Row="1" ItemsSource="{Binding}">
+						<DataGrid Grid.Row="2" Name="MoviesCatalog" ToolTip="Right click for options" ItemsSource="{Binding}" LoadingRow="MoviesCatalog_LoadingRow">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>
@@ -468,11 +470,13 @@
 					<!--tab contents grid -->
 					<Grid>
 						<Grid.RowDefinitions>
+							<RowDefinition Height="20"/>
 							<RowDefinition Height="50"/>
 							<RowDefinition/>
 						</Grid.RowDefinitions>
 						<!--Client filter panel-->
-						<UniformGrid Rows="1" ToolTip="Type text and press enter to filter clients" VerticalAlignment="Center">
+						<TextBlock Name="ClientsCount"></TextBlock>
+						<UniformGrid Grid.Row="1" Rows="1" ToolTip="Type text and press enter to filter clients" VerticalAlignment="Center">
 							<UniformGrid Columns="1">
 								<TextBlock>Last Name</TextBlock>
 								<TextBox Name="FilterClientLastNameString" TextChanged="FilterClientLastName"/>
@@ -491,7 +495,7 @@
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Name="ClientsCatalog" ToolTip="Right click for options" Grid.Row="1" ItemsSource="{Binding}">
+						<DataGrid Name="ClientsCatalog" ToolTip="Right click for options" Grid.Row="2" ItemsSource="{Binding}" LoadingRow="ClientsCatalog_LoadingRow">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>
@@ -549,11 +553,13 @@
 					<!--tab contents grid -->
 					<Grid>
 						<Grid.RowDefinitions>
+							<RowDefinition Height="20"/>
 							<RowDefinition Height="150"/>
 							<RowDefinition/>
 						</Grid.RowDefinitions>
 						<!--Orders filter panel-->
-						<UniformGrid Rows="1" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top">
+						<TextBlock Name="OrdersCount"></TextBlock>
+						<UniformGrid Grid.Row="1" Rows="1" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top">
 							<UniformGrid Columns="1">
 								<TextBlock>Movie</TextBlock>
 								<TextBox TextChanged="FilterOrderMovie" Name="FilterOrderMovieString"/>
@@ -621,7 +627,7 @@
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Name="OrdersCatalog" ToolTip="Right click for options" Grid.Row="1" ItemsSource="{Binding}">
+						<DataGrid Name="OrdersCatalog" ToolTip="Right click for options" Grid.Row="2" ItemsSource="{Binding}" LoadingRow="OrdersCatalog_LoadingRow">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>

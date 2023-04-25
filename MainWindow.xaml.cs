@@ -101,8 +101,7 @@ namespace WPF
 				"	WHEN orders.rent_date IS NOT NULL THEN orders.rent_date END AS 'rent date', " +
 				"CASE WHEN orders.due_date IS NULL THEN '' " +
 				"	WHEN orders.due_date IS NOT NULL THEN orders.due_date END AS 'due date', " +
-				"CASE WHEN orders.return_date IS NULL THEN '' " +
-				"	WHEN orders.return_date IS NOT NULL THEN orders.return_date END AS 'return date' " +
+				"ISNULL(orders.return_date,'') AS 'return date' " +
 				"from orders " +
 				"join movies on movies.id=orders.movie_id " +
 				"join clients on clients.id=orders.client_id");
@@ -2103,6 +2102,19 @@ namespace WPF
 					ComboboxRefresh(DeleteGenreNameID, "select genres.name,genres.id from genres left outer join movies on genres.id=movies.genre_id where movies.genre_id is null");
 			}
 			else xctk.MessageBox.Show("No item selected");
+		}
+
+		private void MoviesCatalog_LoadingRow(object sender, DataGridRowEventArgs e)
+		{
+			MoviesCount.Text = "Number of items in table: "+ MoviesCatalog.Items.Count.ToString();
+		}
+		private void ClientsCatalog_LoadingRow(object sender, DataGridRowEventArgs e)
+		{
+			ClientsCount.Text = "Number of items in table: " + ClientsCatalog.Items.Count.ToString();
+		}
+		private void OrdersCatalog_LoadingRow(object sender, DataGridRowEventArgs e)
+		{
+			OrdersCount.Text = "Number of items in table: " + OrdersCatalog.Items.Count.ToString();
 		}
 	}
 }
