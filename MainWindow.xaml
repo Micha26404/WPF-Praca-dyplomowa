@@ -376,11 +376,17 @@
 							<DataGrid.ContextMenu>
 								<ContextMenu>
 									<MenuItem Header="Show plot" Click="MovieItem_plot" />
+									<Separator></Separator>
 									<MenuItem Header="Fill rent form" Click="MovieItem_rent" />
+									<Separator></Separator>
 									<MenuItem Header="Fill edit form" Click="MovieItem_edit" />
-									<MenuItem Header="Delete" Click="MovieItem_delete" />
+									<Separator></Separator>
 									<MenuItem Header="Load or set poster" Click="LoadPoster" />
+									<Separator></Separator>
 									<MenuItem Header="Load or set trailer" Click="LoadTrailer" />
+									<Separator></Separator>
+									<Separator></Separator>
+									<MenuItem Header="Delete" Click="MovieItem_delete" />
 								</ContextMenu>
 							</DataGrid.ContextMenu>
 						</DataGrid>
@@ -451,6 +457,8 @@
 							<DataGrid.ContextMenu>
 								<ContextMenu>
 									<MenuItem Header="Edit" Click="ClientItem_edit" />
+									<Separator></Separator>
+									<Separator></Separator>
 									<MenuItem Header="Delete" Click="ClientItem_delete" />
 								</ContextMenu>
 							</DataGrid.ContextMenu>
@@ -535,7 +543,10 @@
 							<DataGrid.ContextMenu>
 								<ContextMenu>
 									<MenuItem Header="Return" Click="OrderItem_return" />
+									<Separator></Separator>
 									<MenuItem Header="Edit" Click="OrderItem_edit" />
+									<Separator></Separator>
+									<Separator></Separator>
 									<MenuItem Header="Delete" Click="OrderItem_delete" />
 								</ContextMenu>
 							</DataGrid.ContextMenu>
