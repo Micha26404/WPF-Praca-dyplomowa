@@ -906,6 +906,7 @@ namespace WPF
 		}
 		private void MovieItem_edit(object sender, RoutedEventArgs e)
 		{
+			MovieClearForm();
 			//edit mode
 			SelectEditMode(null, null);
 			
@@ -974,6 +975,7 @@ namespace WPF
 		//Fills existing client data into form in admin panel (edit client option)
 		private void ClientItem_edit(object sender, RoutedEventArgs e)
 		{
+			ClientClearForm();
 			//edit mode
 			SelectEditMode(null, null);
 			
@@ -1078,6 +1080,7 @@ namespace WPF
 		//Fills existing order data into form in admin panel (edit order option)
 		private void OrderItem_edit(object sender, RoutedEventArgs e)
 		{
+			OrderClearForm();
 			//edit mode
 			SelectEditMode(null, null);
 			
