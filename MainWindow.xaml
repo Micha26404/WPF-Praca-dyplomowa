@@ -492,7 +492,8 @@
 							<UniformGrid Columns="1">
 								<TextBlock>Movie</TextBlock>
 								<TextBox TextChanged="FilterOrderMovie" Name="FilterOrderMovieString"/>
-								
+								<TextBlock>Year</TextBlock>
+								<TextBox TextChanged="FilterOrderYear" Name="FilterOrderYearString"/>
 								<TextBlock>Client</TextBlock>
 								<TextBox TextChanged="FilterOrderClient" Name="FilterOrderClientString"/>
 							</UniformGrid>
