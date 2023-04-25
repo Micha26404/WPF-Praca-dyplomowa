@@ -171,18 +171,18 @@ namespace WPF
 				if (a == 0)
 				{
 					//Not affected
-					xctk.MessageBox.Show("no rows affected");
+					MessageBox.Show("no rows affected");
 				}
 				else
 				{
 					//Affected
-					xctk.MessageBox.Show("rows affected: " + a);
+					MessageBox.Show("rows affected: " + a);
 				}
 			}
 			catch (Exception ex)
 			{
 				//Not affected
-				xctk.MessageBox.Show("no rows affected:\n" + ex.ToString());
+				MessageBox.Show("no rows affected:\n" + ex.ToString());
 			}
 		}
 		//for sql panel; select getquery or setquery based on select existence
@@ -248,7 +248,7 @@ namespace WPF
 
 			sqlDataAdap.Fill(dtRecord);
 			con.Close();
-			return dtRecord.Rows[0].ToString();
+			return dtRecord.Rows[0][0].ToString();
 		}
 		//Combobox items clear and fill (refresh)
 		public void ComboboxRefresh(ComboBox combo, string query)
@@ -304,6 +304,7 @@ namespace WPF
 		{
 			//seek slider init
 			//SeekSlider.Maximum = Trailer.NaturalDuration.TimeSpan.TotalMilliseconds; //null pointer exception
+			Trailer.LoadedBehavior = MediaState.Manual;
 
 			TotalTime = Trailer.NaturalDuration.TimeSpan;
 
@@ -348,34 +349,23 @@ namespace WPF
 		//Load existing trailer from database using trailer_path on right click menu
 		private void LoadTrailer(object sender, RoutedEventArgs e)
 		{
-			if (MovieTrailerID.Text != "ID")
-			{
 				//set movie info in poster panel
 				DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
 				MovieTrailerID.Text = rowview.Row["id"].ToString();
 				MovieTrailerTitle.Text = rowview.Row["title"].ToString();
 				MovieTrailerYear.Text = rowview.Row["year"].ToString();
 
-				//get path to file if value present
-				string exists = rowview.Row["trailer"].ToString();
+				//get path to file
 				string trailer_path = getquery("select trailer_path from movies where id=" + MovieTrailerID.Text);
-				if (exists == "yes" && File.Exists(trailer_path))
+				//try to set if path not empty
+				if (trailer_path != "")
 				{
-					//Uri uri = new Uri(trailer_path);
-					//Trailer.Source = uri;
-					Trailer.Source = new Uri(trailer_path);
-					xctk.MessageBox.Show("Trailer set in trailer tab");
+					Trailer.Source = new Uri(trailer_path, UriKind.Absolute);
+					//Console.WriteLine(Trailer.Source);
+					MessageBox.Show("Trailer set in trailer tab. If empty; file not found. You can remove link in poster tab");
 				}
-				else if (exists == "yes" && !File.Exists(trailer_path))
-				{
-					xctk.MessageBox.Show("Trailer not found at set location; it's path will be removed. Set new path from trailer tab");
-					//Remove outdated trailer_path
-					RemoveTrailer(null, null);
-					MoviesGridRefresh();
-				}
-				else if (exists == "no") xctk.MessageBox.Show("Trailer for this movie is not set. Set new it in trailer tab");
-			}
-			else xctk.MessageBox.Show("Load trailer from movies catalog");
+				//poster not set
+				else if (trailer_path == "") MessageBox.Show("Trailer for this movie is not set. Set it in trailer tab");
 		}
 		//Set trailer file path and update database
 		private void SetTrailer(object sender, MouseButtonEventArgs e)
@@ -386,9 +376,9 @@ namespace WPF
 				op.Title = "Select trailer";
 				if (op.ShowDialog() == true)
 				{
-					//Uri uri = new Uri(op.FileName);
-					//Trailer.Source = uri;
-					Trailer.Source = new Uri(op.FileName);
+					Trailer.Source = new Uri(op.FileName, UriKind.Absolute);
+					//Console.WriteLine(Trailer.Source);
+
 					//update trailer_path in database
 					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 					{
@@ -400,15 +390,14 @@ namespace WPF
 						string result = cmd.ExecuteNonQuery().ToString();
 						if (result == "1")
 						{
-							xctk.MessageBox.Show("Trailer set");
+							MessageBox.Show("Trailer set");
 							MoviesGridRefresh();
 						}
-						else if (result == "0") xctk.MessageBox.Show("Failed to set trailer");
+						else if (result == "0") MessageBox.Show("Failed to set trailer");
 					}
-					//setquery("update movies set trailer_path=" + uri + " where id=" + getmovie_id());
 				}
 			}
-			else xctk.MessageBox.Show("Load trailer from movies catalog");
+			else MessageBox.Show("Load trailer from movies catalog");
 		}
 		private void RemoveTrailer(object sender, MouseButtonEventArgs e)
 		{
@@ -418,7 +407,7 @@ namespace WPF
 				//update database
 				setquery("update movies set trailer_path=null where id=" + MovieTrailerID.Text);
 			}
-			else xctk.MessageBox.Show("Load trailer from movies catalog first");
+			else if (MoviePosterID.Text == "ID") MessageBox.Show("Load trailer from movies catalog first");
 		}
 		//Poster panel buttons
 		private void RemovePoster(object sender, RoutedEventArgs e)
@@ -430,7 +419,7 @@ namespace WPF
 				setquery("update movies set poster_path=null where id=" + MoviePosterID.Text);
 				MoviesGridRefresh();
 			}
-			else xctk.MessageBox.Show("Load poster from movies catalog first");
+			else if (MoviePosterID.Text == "ID") MessageBox.Show("Load poster from movies catalog first");
 		}
 		private void SetPoster(object sender, MouseButtonEventArgs e)
 		{
@@ -443,10 +432,6 @@ namespace WPF
 				  "Portable Network Graphic (*.png)|*.png";
 				if (op.ShowDialog() == true)
 				{
-					//load poster from file path
-					//Uri uri = new Uri(op.FileName);
-					//BitmapImage img = new BitmapImage(uri);
-					//Poster.Source = img;
 					Poster.Source = new BitmapImage(new Uri(op.FileName));
 					//add poster_path to database
 					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
@@ -459,21 +444,19 @@ namespace WPF
 						string result = cmd.ExecuteNonQuery().ToString();
 						if (result == "1")
 						{
-							xctk.MessageBox.Show("Poster set");
+							MessageBox.Show("Poster set");
 							MoviesGridRefresh();
 						}
-						else if (result == "0") xctk.MessageBox.Show("Failed to set poster");
+						else if (result == "0") MessageBox.Show("Failed to set poster");
 					}
 					MoviesGridRefresh();
 				}
 			}
-			else xctk.MessageBox.Show("Load poster from movies catalog");
+			else if (MoviePosterID.Text == "ID") MessageBox.Show("Load poster from movies catalog");
 		}
 		//load poster if exists
 		private void LoadPoster(object sender, RoutedEventArgs e)
 		{
-			if (MoviePosterID.Text != "ID")
-			{
 				Poster.Source = null;
 
 				//set movie info in poster panel
@@ -484,29 +467,13 @@ namespace WPF
 
 				//get path to file if value present
 				string poster_path = getquery("select poster_path from movies where id=" + getmovie_id());
-				string exists = rowview.Row["poster"].ToString();
-				//poster set but file not found
-				if (exists == "yes" && File.Exists(poster_path))
-				{
-					//poster_path = "pack://application:,,,/" + poster_path;
-					//Uri uri = new Uri(poster_path);
-					//BitmapImage img = new BitmapImage(uri);
-					//Poster.Source = img;
-					Poster.Source = new BitmapImage(new Uri(poster_path));
-					xctk.MessageBox.Show("poster set in poster tab");
-				}
-				//trailer set but file not found
-				else if (exists == "yes" && !File.Exists(poster_path))
-				{
-					xctk.MessageBox.Show("Poster not found at it's set location. It's path will be removed. Set new file path from poster tab");
-					//Remove outdated trailer_path
-					RemovePoster(null, null);
-					MoviesGridRefresh();
-				}
-				//no poster path in database
-				else if (exists == "no") xctk.MessageBox.Show("Poster for this movie is not set. You can set it in poster tab.");
+
+			if (poster_path != "")
+			{
+				Poster.Source = new BitmapImage(new Uri(poster_path, UriKind.Absolute));
+				MessageBox.Show("poster set in poster tab. If empty; file not found. You can remove link in poster tab");
 			}
-			else xctk.MessageBox.Show("Load poster from movies catalog");
+			else if (poster_path == "") MessageBox.Show("poster not set; you can set it in poster tab.");
 		}
 		//Submit Buttons
 		private void SubmitOrder(object sender, MouseButtonEventArgs e)
@@ -550,7 +517,7 @@ namespace WPF
 									cmd.Parameters.AddWithValue("@rent_date", OrderFormRentDate.Text);
 									cmd.Parameters.AddWithValue("@due_date", OrderFormDueDate.Text);
 									cmd.Parameters.AddWithValue("@return_date", OrderFormReturnDate.Text);
-									xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 									OrdersGridRefresh();
 									//decrement movie copies available when client rents a copy
 									copies_left--;
@@ -568,7 +535,7 @@ namespace WPF
 							}
 				}
 				//add mode no copies left
-				else if (mode == false && copies_left <= 0) xctk.MessageBox.Show("No copies left to rent");
+				else if (mode == false && copies_left <= 0) MessageBox.Show("No copies left to rent");
 				//edit mode
 				else if (mode == true && OrderFormID.Text != "")
 				{
@@ -586,12 +553,12 @@ namespace WPF
 									cmd.Parameters.AddWithValue("@rent_date", OrderFormRentDate.Text);
 									cmd.Parameters.AddWithValue("@due_date", OrderFormDueDate.Text);
 									cmd.Parameters.AddWithValue("@return_date", OrderFormReturnDate.Text);
-									xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 									OrdersGridRefresh();
 								}
 							}
-				}else if (mode == true && OrderFormID.Text == "") xctk.MessageBox.Show("Order id not set. Use edit context menu option in orders catalog");
-			}else xctk.MessageBox.Show("Fill client and movie");
+				}else if (mode == true && OrderFormID.Text == "") MessageBox.Show("Order id not set. Use edit context menu option in orders catalog");
+			}else MessageBox.Show("Fill client and movie");
 		}
 		private void SubmitClient(object sender, MouseButtonEventArgs e)
 		{
@@ -642,14 +609,14 @@ namespace WPF
 								cmd.Parameters.AddWithValue("@email", ClientFormEmail.Text);
 								cmd.Parameters.AddWithValue("@first_name", ClientFormFirstName.Text);
 								cmd.Parameters.AddWithValue("@last_name", ClientFormLastName.Text);
-								xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+								MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 								//refresh grid
 								ClientsGridRefresh();
 								ClientsComboboxRefresh();
 								ClientClearForm();
 							}
 						}
-				} else if (mode == false && ClientFormFirstName.Text == "" && ClientFormLastName.Text == "") xctk.MessageBox.Show("First name and last name must be filled correctly");
+				} else if (mode == false && ClientFormFirstName.Text == "" && ClientFormLastName.Text == "") MessageBox.Show("First name and last name must be filled correctly");
 			//edit mode
 			else if (mode == true && ClientFormID.Text != "")
 				{
@@ -665,14 +632,14 @@ namespace WPF
 							cmd.Parameters.AddWithValue("@email", ClientFormEmail.Text);
 							cmd.Parameters.AddWithValue("@first_name", ClientFormFirstName.Text);
 							cmd.Parameters.AddWithValue("@last_name", ClientFormLastName.Text);
-							xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 							//refresh grid
 							ClientsGridRefresh();
 							ClientsComboboxRefresh();
 						}
 					}
 				}
-				else xctk.MessageBox.Show("To set client use edit context menu option in clients catalog");
+				else MessageBox.Show("To set client use edit context menu option in clients catalog");
 		}
 		private void SubmitMovie(object sender, MouseButtonEventArgs e)
 		{
@@ -805,14 +772,14 @@ namespace WPF
 							cmd.Parameters.AddWithValue("@director_id", director_id);
 							cmd.Parameters.AddWithValue("@format_id", format_id);
 							cmd.Parameters.AddWithValue("@genre_id", genre_id);
-							xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 							MoviesGridRefresh();
 							MovieClearForm();
 						}
 					}
 			}
 			//add mode no title set
-			else if (mode == false && MovieFormTitle.Text == "") xctk.MessageBox.Show("Movie title not set");
+			else if (mode == false && MovieFormTitle.Text == "") MessageBox.Show("Movie title not set");
 			//edit mode
 			else if (mode = true && MovieFormID.Text != "")
 			{
@@ -840,18 +807,18 @@ namespace WPF
 							cmd.Parameters.AddWithValue("@director_id", director_id);
 							cmd.Parameters.AddWithValue("@format_id", format_id);
 							cmd.Parameters.AddWithValue("@genre_id", genre_id);
-							xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 							MoviesGridRefresh();
 						}
 					}
-			}else xctk.MessageBox.Show("Movie id not set. Use edit context menu option from movies catalog");
+			}else MessageBox.Show("Movie id not set. Use edit context menu option from movies catalog");
 		}
 		//Movies right click menu
 		private void MovieItem_plot(object sender, RoutedEventArgs e)
 		{
 			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
 			string plot = rowview.Row["plot"].ToString();
-			xctk.MessageBox.Show(plot);
+			MessageBox.Show(plot);
 		}
 		//Fills existing movie data into form in admin panel (rent movie option)
 		//Clear movie form
@@ -913,7 +880,7 @@ namespace WPF
 			OrderFormDueDate.Text = null;
 			OrderFormReturnDate.Text = null;
 
-			xctk.MessageBox.Show("Movie data set. Submit order in admin panel.");
+			MessageBox.Show("Movie data set. Submit order in admin panel.");
 		}
 		private void MovieItem_edit(object sender, RoutedEventArgs e)
 		{
@@ -942,7 +909,7 @@ namespace WPF
 			MovieFormCountryNameID.Text = rowview.Row["country"].ToString();
 			MovieFormLangNameID.Text = rowview.Row["language"].ToString();
 
-			//xctk.MessageBox.Show("Movie data set. Edit and submit changes in admin panel.");
+			//MessageBox.Show("Movie data set. Edit and submit changes in admin panel.");
 			xctk. MessageBox.Show("Movie data set. Edit and submit changes in admin panel.");
 		}
 		private void MovieItem_delete(object sender, RoutedEventArgs e)
@@ -974,7 +941,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						xctk.MessageBox.Show(ex.Message);
+						MessageBox.Show(ex.Message);
 					}
 				}
 				MoviesGridRefresh();
@@ -999,7 +966,7 @@ namespace WPF
 			ClientFormEmail.Text = rowview.Row["email"].ToString();
 			ClientFormPhone.Text = rowview.Row["phone"].ToString();
 
-			xctk.MessageBox.Show("Client data set. Submit in admin panel.");
+			MessageBox.Show("Client data set. Submit in admin panel.");
 		}
 		private void ClientItem_delete(object sender, RoutedEventArgs e)
 		{
@@ -1016,7 +983,7 @@ namespace WPF
 				}
 				catch (Exception ex)
 				{
-					xctk.MessageBox.Show(ex.Message);
+					MessageBox.Show(ex.Message);
 				}
 			}
 			ClientsGridRefresh();
@@ -1086,7 +1053,7 @@ namespace WPF
 			}
 			else 
 			{
-				xctk.MessageBox.Show("Movie already returned");
+				MessageBox.Show("Movie already returned");
 			}
 		}
 		//Fills existing order data into form in admin panel (edit order option)
@@ -1121,7 +1088,7 @@ namespace WPF
 			string return_date = rowview.Row["return date"].ToString();
 			OrderFormReturnDate.Text = return_date;
 			
-			xctk.MessageBox.Show("Order data set. Edit order in admin panel.");
+			MessageBox.Show("Order data set. Edit order in admin panel.");
 		}
 		private void OrderItem_delete(object sender, RoutedEventArgs e)
 		{
@@ -1146,7 +1113,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMoviePrice(object sender, TextChangedEventArgs e)
@@ -1157,7 +1124,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieAge(object sender, TextChangedEventArgs e)
@@ -1168,7 +1135,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieDuration(object sender, TextChangedEventArgs e)
@@ -1179,7 +1146,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieGenre(object sender, TextChangedEventArgs e)
@@ -1190,7 +1157,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieYear(object sender, TextChangedEventArgs e)
@@ -1201,7 +1168,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieCopiesTotal(object sender, TextChangedEventArgs e)
@@ -1212,7 +1179,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieCopiesLeft(object sender, TextChangedEventArgs e)
@@ -1223,7 +1190,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieCountry(object sender, TextChangedEventArgs e)
@@ -1234,7 +1201,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieLang(object sender, TextChangedEventArgs e)
@@ -1245,7 +1212,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieFormat(object sender, TextChangedEventArgs e)
@@ -1256,7 +1223,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieDirector(object sender, TextChangedEventArgs e)
@@ -1267,7 +1234,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterMovieActor(object sender, TextChangedEventArgs e)
@@ -1278,7 +1245,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		//Filter clients
@@ -1291,7 +1258,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 			/*
 			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
@@ -1314,7 +1281,7 @@ namespace WPF
 				}
 				catch (Exception ex)
 				{
-					xctk.MessageBox.Show(ex.Message);
+					MessageBox.Show(ex.Message);
 				}
 			}
 			*/
@@ -1348,7 +1315,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 			*/
 		}
@@ -1360,7 +1327,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 			
 		}
@@ -1372,7 +1339,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 			
 		}
@@ -1384,7 +1351,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		//Filter orders
@@ -1396,7 +1363,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterOrderClient(object sender, TextChangedEventArgs e)
@@ -1407,10 +1374,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
-		
 		private void FilterOrderYear(object sender, TextChangedEventArgs e)
 		{
 			try
@@ -1419,7 +1385,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterOrderRentStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1430,7 +1396,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterOrderRentStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1441,7 +1407,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterOrderDueStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1452,7 +1418,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterOrderDueStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1463,7 +1429,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterOrderReturnStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1474,7 +1440,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void FilterOrderReturnStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1485,7 +1451,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				xctk.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message);
 			}
 		}
 		//Mode selectors
@@ -1521,7 +1487,7 @@ namespace WPF
 		}
 		private void ListTables(object sender, MouseButtonEventArgs e)
 		{
-			xctk.MessageBox.Show("Available tables:\n" +
+			MessageBox.Show("Available tables:\n" +
 				"Movies\n" +
 				"Clients\n" +
 				"Orders\n" +
@@ -1543,7 +1509,7 @@ namespace WPF
 				{
 					cmd.Parameters.AddWithValue("@first_name", AddActorFirstName.Text);
 					cmd.Parameters.AddWithValue("@last_name", AddActorLastName.Text);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 			}
 			//setquery("Insert into actors (first_name,last_name) values(" + AddActorFirstName.Text + "," + AddActorLastName.Text +")");
@@ -1562,7 +1528,7 @@ namespace WPF
 				{
 					cmd.Parameters.AddWithValue("@first_name", AddDirectorFirstName.Text);
 					cmd.Parameters.AddWithValue("@last_name", AddDirectorLastName.Text);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 			}
 			//setquery("Insert into directors (first_name,last_name) values(" + AddActorFirstName.Text + "," + AddActorLastName.Text + ")");
@@ -1580,7 +1546,7 @@ namespace WPF
 				using (var cmd = new SqlCommand(sql, connection))
 				{
 					cmd.Parameters.AddWithValue("@name", AddCountryName.Text);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 			}
 			//setquery("Insert into countries (name) values(" + AddCountryName.Text + ")");
@@ -1598,7 +1564,7 @@ namespace WPF
 				using (var cmd = new SqlCommand(sql, connection))
 				{
 					cmd.Parameters.AddWithValue("@name", AddLangName.Text);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 			}
 			//setquery("Insert into langs (name) values(" + AddLangName.Text + ")");
@@ -1616,7 +1582,7 @@ namespace WPF
 				using (var cmd = new SqlCommand(sql, connection))
 				{
 					cmd.Parameters.AddWithValue("@name", AddFormatName.Text);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 			}
 			//setquery("Insert into formats (name) values(" + AddFormatName.Text + ")");
@@ -1634,7 +1600,7 @@ namespace WPF
 				using (var cmd = new SqlCommand(sql, connection))
 				{
 					cmd.Parameters.AddWithValue("@name", AddGenreName.Text);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 			}
 			//setquery("Insert into genres (name) values(" + AddGenreName.Text + ")");
@@ -1671,14 +1637,14 @@ namespace WPF
 					cmd.Parameters.AddWithValue("@last_name", UpdateActorLastName.Text);
 					cmd.Parameters.AddWithValue("@first_name", UpdateActorFirstName.Text);
 					cmd.Parameters.AddWithValue("@id", actor_id);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 				//refresh actors combobox
 				ComboboxRefresh(MovieFormActorLNFNID, "select last_name,first_name,id from actors");
 				ComboboxRefresh(UpdateActorLNFNID, "select last_name,first_name,id from actors");
 				ComboboxRefresh(DeleteActorLNFNID, "select actors.last_name,actors.first_name,actors.id from actors left outer join movies on actors.id=movies.actor_id where movies.actor_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		private void UpdateDirector(object sender, MouseButtonEventArgs e)
 		{
@@ -1707,7 +1673,7 @@ namespace WPF
 					cmd.Parameters.AddWithValue("@last_name", UpdateDirectorLastName.Text);
 					cmd.Parameters.AddWithValue("@first_name", UpdateDirectorFirstName.Text);
 					cmd.Parameters.AddWithValue("@id", director_id);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 				//refresh directors combobox
 				ComboboxRefresh(MovieFormDirectorLNFNID, "select last_name,first_name,id from directors");
@@ -1715,7 +1681,7 @@ namespace WPF
 				ComboboxRefresh(DeleteDirectorLNFNID, "select directors.last_name,directors.first_name,directors.id from directors left outer join movies on directors.id=movies.director_id where movies.director_id is null");
 
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		private void UpdateCountry(object sender, MouseButtonEventArgs e)
 		{
@@ -1743,14 +1709,14 @@ namespace WPF
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@name", UpdateCountryName.Text);
 					cmd.Parameters.AddWithValue("@id", country_id);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 				//refresh countries combobox
 				ComboboxRefresh(MovieFormCountryNameID, "select name,id from countries");
 				ComboboxRefresh(UpdateCountryNameID, "select name,id from countries");
 				ComboboxRefresh(DeleteCountryNameID, "select countries.name,countries.id from countries left outer join movies on countries.id=movies.country_id where movies.country_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		private void UpdateLang(object sender, MouseButtonEventArgs e)
 		{
@@ -1778,7 +1744,7 @@ namespace WPF
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@name", UpdateLangName.Text);
 					cmd.Parameters.AddWithValue("@id", lang_id);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 				//setquery("update langs set name=" + UpdateLangName.Text + "where id=" + lang_id + ")");
 				//refresh langs combobox
@@ -1786,7 +1752,7 @@ namespace WPF
 				ComboboxRefresh(UpdateLangNameID, "select name,id from langs");
 				ComboboxRefresh(DeleteLangNameID, "select langs.name,langs.id from langs left outer join movies on langs.id=movies.lang_id where movies.lang_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		private void UpdateFormat(object sender, MouseButtonEventArgs e)
 		{
@@ -1814,7 +1780,7 @@ namespace WPF
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@name", UpdateFormatName.Text);
 					cmd.Parameters.AddWithValue("@id", format_id);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 				//setquery("update formats set name=" + UpdateFormatName.Text + "where id=" + format_id + ")");
 				//refresh formats combobox
@@ -1822,7 +1788,7 @@ namespace WPF
 				ComboboxRefresh(UpdateFormatNameID, "select name,id from formats");
 				ComboboxRefresh(DeleteFormatNameID, "select formats.name,formats.id from formats left outer join movies on formats.id=movies.format_id where movies.format_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		private void UpdateGenre(object sender, MouseButtonEventArgs e)
 		{
@@ -1850,7 +1816,7 @@ namespace WPF
 					var cmd = new SqlCommand(sql, connection);
 					cmd.Parameters.AddWithValue("@name", UpdateGenreName.Text);
 					cmd.Parameters.AddWithValue("@id", genre_id);
-					xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+					MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 				}
 				//setquery("update genres set name=" + UpdateGenreName.Text + "where id=" + genre_id + ")");
 				//refresh genres combobox
@@ -1858,7 +1824,7 @@ namespace WPF
 				ComboboxRefresh(UpdateGenreNameID, "select name,id from genres");
 				ComboboxRefresh(DeleteGenreNameID, "select genres.name,genres.id from genres left outer join movies on genres.id=movies.genre_id where movies.genre_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		//Existing row Deletion
 		private void DeleteActor(object sender, MouseButtonEventArgs e)
@@ -1887,11 +1853,11 @@ namespace WPF
 					cmd.Parameters.AddWithValue("@id", actor_id);
 					try
 					{
-						xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 					}
 					catch (Exception ex)
 					{
-						xctk.MessageBox.Show(ex.Message);
+						MessageBox.Show(ex.Message);
 					}
 				}
 				//refresh actors combobox
@@ -1899,7 +1865,7 @@ namespace WPF
 				ComboboxRefresh(UpdateActorLNFNID, "select last_name,first_name,id from actors");
 				ComboboxRefresh(DeleteActorLNFNID, "select actors.last_name,actors.first_name,actors.id from actors left outer join movies on actors.id=movies.actor_id where movies.actor_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		private void DeleteDirector(object sender, MouseButtonEventArgs e)
 		{
@@ -1927,11 +1893,11 @@ namespace WPF
 					cmd.Parameters.AddWithValue("@id", director_id);
 					try
 					{
-						xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 					}
 					catch (Exception ex)
 					{
-						xctk.MessageBox.Show(ex.Message);
+						MessageBox.Show(ex.Message);
 					}
 				}
 				//setquery("delete from directors where id=" + director_id + ")");
@@ -1940,7 +1906,7 @@ namespace WPF
 				ComboboxRefresh(UpdateDirectorLNFNID, "select last_name,first_name,id from directors");
 				ComboboxRefresh(DeleteDirectorLNFNID, "select directors.last_name,directors.first_name,directors.id from directors left outer join movies on directors.id=movies.director_id where movies.director_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		private void DeleteCountry(object sender, MouseButtonEventArgs e)
 		{
@@ -1968,11 +1934,11 @@ namespace WPF
 					cmd.Parameters.AddWithValue("@id", country_id);
 					try
 					{
-						xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 					}
 					catch (Exception ex)
 					{
-						xctk.MessageBox.Show(ex.Message);
+						MessageBox.Show(ex.Message);
 					}
 				}
 				//refresh countries combobox
@@ -1980,7 +1946,7 @@ namespace WPF
 				ComboboxRefresh(UpdateCountryNameID, "select name,id from countries");
 				ComboboxRefresh(DeleteCountryNameID, "select countries.name,countries.id from countries left outer join movies on countries.id=movies.country_id where movies.country_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		private void DeleteLang(object sender, MouseButtonEventArgs e)
 		{
@@ -2008,11 +1974,11 @@ namespace WPF
 					cmd.Parameters.AddWithValue("@id", lang_id);
 					try
 					{
-						xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 					}
 					catch (Exception ex)
 					{
-						xctk.MessageBox.Show(ex.Message);
+						MessageBox.Show(ex.Message);
 					}
 				}
 				//refresh langs combobox
@@ -2020,7 +1986,7 @@ namespace WPF
 				ComboboxRefresh(UpdateLangNameID, "select name,id from langs");
 				ComboboxRefresh(DeleteLangNameID, "select langs.name,langs.id from langs left outer join movies on langs.id=movies.lang_id where movies.lang_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		private void DeleteFormat(object sender, MouseButtonEventArgs e)
 		{
@@ -2048,11 +2014,11 @@ namespace WPF
 					cmd.Parameters.AddWithValue("@id", format_id);
 					try
 					{
-						xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+						MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 					}
 					catch (Exception ex)
 					{
-						xctk.MessageBox.Show(ex.Message);
+						MessageBox.Show(ex.Message);
 					}
 				}
 				//setquery("delete from formats where id=" + format_id + ")");
@@ -2061,7 +2027,7 @@ namespace WPF
 				ComboboxRefresh(UpdateFormatNameID, "select name,id from formats");
 				ComboboxRefresh(DeleteFormatNameID, "select formats.name,formats.id from formats left outer join movies on formats.id=movies.format_id where movies.format_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
 		private void DeleteGenre(object sender, MouseButtonEventArgs e)
 		{
@@ -2089,11 +2055,11 @@ namespace WPF
 						cmd.Parameters.AddWithValue("@id", genre_id);
 						try
 						{
-							xctk.MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 						}
 						catch (Exception ex)
 						{
-							xctk.MessageBox.Show(ex.Message);
+							MessageBox.Show(ex.Message);
 						}
 					}
 					//refresh genres combobox
@@ -2101,9 +2067,9 @@ namespace WPF
 					ComboboxRefresh(UpdateGenreNameID, "select name,id from genres");
 					ComboboxRefresh(DeleteGenreNameID, "select genres.name,genres.id from genres left outer join movies on genres.id=movies.genre_id where movies.genre_id is null");
 			}
-			else xctk.MessageBox.Show("No item selected");
+			else MessageBox.Show("No item selected");
 		}
-
+		//row counters
 		private void MoviesCatalog_LoadingRow(object sender, DataGridRowEventArgs e)
 		{
 			MoviesCount.Text = "Number of items in table: "+ MoviesCatalog.Items.Count.ToString();

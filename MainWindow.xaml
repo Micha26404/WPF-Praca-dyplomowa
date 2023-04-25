@@ -326,7 +326,8 @@
 						<Grid.RowDefinitions>
 							<RowDefinition Height="20"/>
 							<RowDefinition Height="80"/>
-							<RowDefinition/>
+							<RowDefinition Height="181*"/>
+							<RowDefinition Height="387*"/>
 						</Grid.RowDefinitions>
 						<!--Movie filter panel-->
 						<TextBlock Name="MoviesCount"></TextBlock>
@@ -385,7 +386,7 @@
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Grid.Row="2" Name="MoviesCatalog" ToolTip="Right click for options" ItemsSource="{Binding}" LoadingRow="MoviesCatalog_LoadingRow">
+						<DataGrid Grid.Row="2" Name="MoviesCatalog" ToolTip="Right click for options" ItemsSource="{Binding}" LoadingRow="MoviesCatalog_LoadingRow" Grid.RowSpan="2">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>
@@ -438,6 +439,13 @@
 									<MenuItem Header="Load or set trailer" Click="LoadTrailer" >
 										<MenuItem.Icon>
 											<Image Source="/icons/media/preview-pane.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
+									<Separator></Separator>
+									<Separator></Separator>
+									<MenuItem Header="Remove poster" Click="RemovePoster">
+										<MenuItem.Icon>
+											<Image Source="/icons/minus.png" Stretch="Uniform"/>
 										</MenuItem.Icon>
 									</MenuItem>
 									<Separator></Separator>
@@ -778,7 +786,7 @@
 
 						<MediaElement Grid.Row="2" Name="Trailer" 
 							LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform" 
-							MediaOpened="TrailerInit" MediaEnded="StopTrailer" Source="/blu-ray.png"/>
+							MediaOpened="TrailerInit" MediaEnded="StopTrailer" ToolTip="Supports only Windows Media Player formats and codecs"/>
 					</Grid>
 				</TabItem>
 
