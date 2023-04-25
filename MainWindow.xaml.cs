@@ -304,7 +304,7 @@ namespace WPF
 		{
 			//seek slider init
 			//SeekSlider.Maximum = Trailer.NaturalDuration.TimeSpan.TotalMilliseconds; //null pointer exception
-			Trailer.LoadedBehavior = MediaState.Manual;
+			//Trailer.LoadedBehavior = MediaState.Manual;
 
 			TotalTime = Trailer.NaturalDuration.TimeSpan;
 
@@ -313,6 +313,8 @@ namespace WPF
 			timerVideoTime.Interval = TimeSpan.FromSeconds(1);
 			timerVideoTime.Tick += new EventHandler(timer_Tick);
 			timerVideoTime.Start();
+			Trailer.Play();
+			Trailer.Pause();
 		}
 		private TimeSpan TotalTime;
 		public void timer_Tick(object sender, EventArgs e)

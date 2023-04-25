@@ -430,20 +430,27 @@
 										</MenuItem.Icon>
 									</MenuItem>
 									<Separator></Separator>
-									<MenuItem Header="Load or set poster" Click="LoadPoster">
-										<MenuItem.Icon>
-											<Image Source="/icons/media/easel.png" Stretch="Uniform"/>
-										</MenuItem.Icon>
-									</MenuItem>
-									<Separator></Separator>
 									<MenuItem Header="Load or set trailer" Click="LoadTrailer" >
 										<MenuItem.Icon>
 											<Image Source="/icons/media/preview-pane.png" Stretch="Uniform"/>
 										</MenuItem.Icon>
 									</MenuItem>
 									<Separator></Separator>
+									<MenuItem Header="Load or set poster" Click="LoadPoster">
+										<MenuItem.Icon>
+											<Image Source="/icons/media/easel.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
+									<Separator></Separator>
 									<Separator></Separator>
 									<MenuItem Header="Remove poster" Click="RemovePoster">
+										<MenuItem.Icon>
+											<Image Source="/icons/minus.png" Stretch="Uniform"/>
+										</MenuItem.Icon>
+									</MenuItem>
+									<Separator></Separator>
+									<Separator></Separator>
+									<MenuItem Header="Remove trailer" Click="RemoveTrailer">
 										<MenuItem.Icon>
 											<Image Source="/icons/minus.png" Stretch="Uniform"/>
 										</MenuItem.Icon>
@@ -784,9 +791,9 @@
 
 						</UniformGrid>
 
-						<MediaElement Grid.Row="2" Name="Trailer" 
-							LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform" 
-							MediaOpened="TrailerInit" MediaEnded="StopTrailer" ToolTip="Supports only Windows Media Player formats and codecs"/>
+						<MediaElement Grid.Row="2" Name="Trailer" Stretch="Uniform" ToolTip="Supports only Windows Media Player formats and codecs"
+							LoadedBehavior="Manual" UnloadedBehavior="Stop" ScrubbingEnabled="True"
+							MediaOpened="TrailerInit" MediaEnded="StopTrailer"/>
 					</Grid>
 				</TabItem>
 
