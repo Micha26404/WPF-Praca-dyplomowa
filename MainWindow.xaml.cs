@@ -553,7 +553,7 @@ namespace WPF
 					{
 						//set due date if not lower than rent date
 						DateTime testRentDate = new DateTime(rentyy, rentmm, rentdd);
-						DateTime testDueDate = new DateTime(test.Day, test.Month, test.Year);
+						DateTime testDueDate = new DateTime(test.Year, test.Month, test.Day);
 						
 						int correct = testDueDate.CompareTo(testRentDate);
 						if (correct >= 0)
