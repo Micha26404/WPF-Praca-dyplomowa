@@ -156,10 +156,10 @@ namespace WPF
 		//nonquery with error feedback
 		public void setquery(string query)
 		{
-			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
-			SqlConnection con = new SqlConnection(strConnection);
 			try
 			{
+				string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
+				SqlConnection con = new SqlConnection(strConnection);
 				if (con.State == ConnectionState.Closed)
 				{
 					con.Open();
@@ -203,55 +203,67 @@ namespace WPF
 		//refresh datatable to refresh grid items
 		public void getquery(DataTable dt, string query)
 		{
-			dt.Clear();
+			try
+			{
+				dt.Clear();
 
-			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
-			SqlConnection con = new SqlConnection(strConnection);
+				string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
+				SqlConnection con = new SqlConnection(strConnection);
 
-			SqlCommand sqlCmd = new SqlCommand();
-			sqlCmd.Connection = con;
-			sqlCmd.CommandType = CommandType.Text;
-			sqlCmd.CommandText = query;
-			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
+				SqlCommand sqlCmd = new SqlCommand();
+				sqlCmd.Connection = con;
+				sqlCmd.CommandType = CommandType.Text;
+				sqlCmd.CommandText = query;
+				SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
 
-			sqlDataAdap.Fill(dt);
-			con.Close();
+				sqlDataAdap.Fill(dt);
+				con.Close();
+			}
+			catch (Exception ex) { MessageBox.Show(ex.Message); }
 		}
 		//query to grid used in sql panel
 		public void getquery(DataGrid grid, string query)
 		{
-			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
-			SqlConnection con = new SqlConnection(strConnection);
+			try 
+			{
+				string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
+				SqlConnection con = new SqlConnection(strConnection);
 
-			SqlCommand sqlCmd = new SqlCommand();
-			sqlCmd.Connection = con;
-			sqlCmd.CommandType = CommandType.Text;
-			sqlCmd.CommandText = query;
-			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
+				SqlCommand sqlCmd = new SqlCommand();
+				sqlCmd.Connection = con;
+				sqlCmd.CommandType = CommandType.Text;
+				sqlCmd.CommandText = query;
+				SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
 
-			DataTable dtRecord = new DataTable();
-			sqlDataAdap.Fill(dtRecord);
-			con.Close();
-			grid.ItemsSource = null;
-			grid.ItemsSource = dtRecord.DefaultView;
+				DataTable dtRecord = new DataTable();
+				sqlDataAdap.Fill(dtRecord);
+				con.Close();
+				grid.ItemsSource = null;
+				grid.ItemsSource = dtRecord.DefaultView;
+			}
+			catch (Exception ex) { MessageBox.Show(ex.Message); }
 		}
 		//old query for single row to string
 		public string getquery(string query)
 		{
-			string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
-			SqlConnection con = new SqlConnection(strConnection);
+			try
+			{
+				string strConnection = Properties.Settings.Default.WPF_DBConnectionString;
+				SqlConnection con = new SqlConnection(strConnection);
 
-			SqlCommand sqlCmd = new SqlCommand();
-			sqlCmd.Connection = con;
-			sqlCmd.CommandType = CommandType.Text;
-			sqlCmd.CommandText = query;
-			SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
+				SqlCommand sqlCmd = new SqlCommand();
+				sqlCmd.Connection = con;
+				sqlCmd.CommandType = CommandType.Text;
+				sqlCmd.CommandText = query;
+				SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
 
-			DataTable dtRecord = new DataTable();
+				DataTable dtRecord = new DataTable();
 
-			sqlDataAdap.Fill(dtRecord);
-			con.Close();
-			return dtRecord.Rows[0][0].ToString();
+				sqlDataAdap.Fill(dtRecord);
+				con.Close();
+				return dtRecord.Rows[0][0].ToString();
+			}
+			catch (Exception ex) { MessageBox.Show(ex.Message); return null; }
 		}
 		//Combobox items clear and fill (refresh)
 		public void ComboboxRefresh(ComboBox combo, string query)
