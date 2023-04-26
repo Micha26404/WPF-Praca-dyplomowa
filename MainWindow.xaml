@@ -870,9 +870,9 @@
 							<ColumnDefinition Width="auto"/>
 						</Grid.ColumnDefinitions>
 						<!--Mode selection panel-->
-						<UniformGrid Columns="1" Width="60" ToolTip="Mode selection">
+						<UniformGrid Columns="1" Width="60" ToolTip="Mode selection" >
 							<Border>
-								<Grid>
+								<Grid Background="#198B0000" MouseDown="SelectAddMode">
 									<TextBlock MouseDown="SelectAddMode">Add mode</TextBlock>
 									<Viewbox VerticalAlignment="Bottom">
 										<Image MouseDown="SelectAddMode" Source="icons/add.png" Cursor="Hand"/>
@@ -895,12 +895,12 @@
 								</UniformGrid>
 							</Border>
 							<Border>
-								<UniformGrid Columns="1" Background="#B28B0000" >
-									<TextBlock MouseDown="SelectEditMode">Edit mode</TextBlock>
-									<Viewbox>
-										<Image MouseDown="SelectEditMode" Source="icons/edit.png" Cursor="Hand"/>
+								<Grid Background="#B28B0000" MouseDown="SelectEditMode">
+									<TextBlock MouseDown="SelectEditMode" VerticalAlignment="Center">Edit mode</TextBlock>
+									<Viewbox VerticalAlignment="Bottom">
+										<Image MouseDown="SelectEditMode"  Source="icons/edit.png" Cursor="Hand"/>
 									</Viewbox>
-								</UniformGrid>
+								</Grid>
 							</Border>
 						</UniformGrid>
 						<!--Current dataset indicator-->
@@ -918,7 +918,7 @@
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Movie form</TextBlock>
 									<Image VerticalAlignment="Top" Source="\icons\cinema\cinema.png">
 										<Image.Clip>
-											<EllipseGeometry Center="25,30" RadiusX="20" RadiusY="20" />
+											<EllipseGeometry Center="24,24" RadiusX="17" RadiusY="17" />
 										</Image.Clip>
 									</Image>
 								</UniformGrid>
@@ -936,7 +936,7 @@
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Client form</TextBlock>
 									<Image VerticalAlignment="Top" Source="icons/user-group-woman-woman.png">
 										<Image.Clip>
-											<EllipseGeometry Center="25,30" RadiusX="20" RadiusY="20" />
+											<EllipseGeometry Center="25,25" RadiusX="20" RadiusY="20" />
 										</Image.Clip>
 									</Image>
 								</UniformGrid>
@@ -954,7 +954,7 @@
 									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Order form</TextBlock>
 									<Image VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
 										<Image.Clip>
-											<EllipseGeometry Center="28,28" RadiusX="25" RadiusY="25" />
+											<EllipseGeometry Center="24,25" RadiusX="20" RadiusY="20" />
 										</Image.Clip>
 									</Image>
 								</UniformGrid>
