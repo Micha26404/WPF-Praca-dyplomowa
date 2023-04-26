@@ -59,6 +59,9 @@ namespace WPF
 			OrdersCatalog.AutoGenerateColumns = true;
 			OrdersCatalog.CanUserAddRows = false;
 			OrdersCatalog.CanUserDeleteRows = false;
+
+			//disable order return date
+			OrderFormReturnDate.IsEnabled = false;
 		}
 		DataTable movies_dt = new DataTable();
 		DataTable clients_dt = new DataTable();
@@ -511,19 +514,18 @@ namespace WPF
 				//add mode if copies available
 				if (mode == false && copies_left > 0)
 				{
-							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 							{
 								connection.Open();
 								var sql = @"Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) " +
 									"values(@client_id,@movie_id," +
-									"@rent_date,@due_date,@return_date)";
+									"@rent_date,@due_date)";
 								using (var cmd = new SqlCommand(sql, connection))
 								{
 									cmd.Parameters.AddWithValue("@client_id", movie_id);
 									cmd.Parameters.AddWithValue("@movie_id", OrderFormMovieID.Text);
 									cmd.Parameters.AddWithValue("@rent_date", OrderFormRentDate.Text);
 									cmd.Parameters.AddWithValue("@due_date", OrderFormDueDate.Text);
-									cmd.Parameters.AddWithValue("@return_date", OrderFormReturnDate.Text);
 									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 									OrdersGridRefresh();
 									//decrement movie copies available when client rents a copy
@@ -881,10 +883,12 @@ namespace WPF
 
 			//combobox
 			OrderFormClientLNFNID.Text = null;
-			
-			//dates
-			OrderFormRentDate.Text = null;
-			OrderFormDueDate.Text = null;
+
+			//set default dates
+			//Console.WriteLine(getquery("select GETDATE()"));
+			//Console.WriteLine(getquery("select GETDATE()+3"));
+			OrderFormRentDate.Text = getquery("select GETDATE()");
+			OrderFormDueDate.Text = getquery("select GETDATE()+3");
 			OrderFormReturnDate.Text = null;
 
 			MessageBox.Show("Movie data set. Submit order in admin panel.");
@@ -1477,6 +1481,9 @@ namespace WPF
 
 			ModeSelected.Background = radialGradient;
 			SubmitPanel.Background = radialGradient;
+
+			//disable order return date
+			OrderFormReturnDate.IsEnabled = false;
 		}
 		private void SelectEditMode(object sender, MouseButtonEventArgs e)
 		{
@@ -1491,6 +1498,9 @@ namespace WPF
 
 			ModeSelected.Background = radialGradient;
 			SubmitPanel.Background = radialGradient;
+
+			//enable order return date
+			OrderFormReturnDate.IsEnabled = true;
 		}
 		private void ListTables(object sender, MouseButtonEventArgs e)
 		{

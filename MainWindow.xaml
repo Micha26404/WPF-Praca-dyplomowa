@@ -1215,7 +1215,7 @@
 										<Border>
 											<UniformGrid Rows="1">
 												<Border>
-													<TextBlock ToolTip="Actual item return date. Leave empty before rent. Use only in edit mode" Background="#4C800000">
+													<TextBlock ToolTip="Actual item return date. Enabled only in edit mode" Background="#4C800000">
 													Return date
 													</TextBlock>
 												</Border>
