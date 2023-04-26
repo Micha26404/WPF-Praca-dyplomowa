@@ -104,7 +104,8 @@ namespace WPF
 				"	WHEN orders.rent_date IS NOT NULL THEN orders.rent_date END AS 'rent date', " +
 				"CASE WHEN orders.due_date IS NULL THEN '' " +
 				"	WHEN orders.due_date IS NOT NULL THEN orders.due_date END AS 'due date', " +
-				"ISNULL(orders.return_date,'') AS 'return date' " +
+				"CASE WHEN orders.return_date IS NOT NULL THEN orders.return_date END AS 'return date'," +
+				"CASE WHEN orders.return_date IS NULL THEN datediff(day,GETDATE(),orders.due_date) END AS 'rent time left' " +
 				"from orders " +
 				"join movies on movies.id=orders.movie_id " +
 				"join clients on clients.id=orders.client_id");
