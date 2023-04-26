@@ -401,7 +401,7 @@ namespace WPF
 			}
 			else MessageBox.Show("Load trailer from movies catalog");
 		}
-		private void RemoveTrailer(object sender, MouseButtonEventArgs e)
+		public void RemoveTrailer(object sender, MouseButtonEventArgs e)
 		{
 			if (MovieTrailerID.Text != "ID")
 			{
@@ -410,6 +410,11 @@ namespace WPF
 				setquery("update movies set trailer_path=null where id=" + MovieTrailerID.Text);
 			}
 			else if (MoviePosterID.Text == "ID") MessageBox.Show("Load trailer from movies catalog first");
+		}
+		//context menu remove trailer
+		private void RemoveTrailer(object sender, RoutedEventArgs e)
+		{
+			RemoveTrailer(null,null);
 		}
 		//Poster panel buttons
 		private void RemovePoster(object sender, RoutedEventArgs e)
