@@ -15,15 +15,6 @@
 		<ImageBrush ImageSource="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" Stretch="UniformToFill"/>
 	</Window.Background>
 	<Window.Resources>
-		<Style TargetType="{x:Type xctk:MessageBox}">
-			<Setter Property="Background" Value="Maroon" />
-			<Setter Property="BorderBrush" Value="Black" />
-			<Setter Property="CaptionForeground" Value="White" />
-			<Setter Property="WindowBorderBrush" Value="Black" />
-			<Setter Property="WindowBackground" Value="Maroon" />
-			<Setter Property="WindowOpacity" Value="0.9" />
-			<Setter Property="Foreground" Value="White"/>
-		</Style>
 		<Style TargetType="Image">
 			<Setter Property="Stretch" Value="Uniform"></Setter>
 		</Style>
@@ -325,13 +316,11 @@
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="20"/>
-							<RowDefinition Height="80"/>
-							<RowDefinition Height="181*"/>
-							<RowDefinition Height="387*"/>
+							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
 						<!--Movie filter panel-->
 						<TextBlock Name="MoviesCount"></TextBlock>
-						<UniformGrid Grid.Row="1" ToolTip="Type text and press enter to filter movies" Rows="1" VerticalAlignment="Center">
+						<UniformGrid Grid.Row="1" ToolTip="Type text and press enter to filter movies" Rows="1" VerticalAlignment="Center" Visibility="Hidden">
 							<UniformGrid Columns="1">
 								<TextBlock>Title</TextBlock>
 								<TextBox Name="FilterMovieTitleString" TextChanged="FilterMovieTitle"/>
@@ -386,7 +375,7 @@
 							</UniformGrid>
 						</UniformGrid>
 
-						<DataGrid Grid.Row="2" Name="MoviesCatalog" ToolTip="Right click for options" ItemsSource="{Binding}" LoadingRow="MoviesCatalog_LoadingRow" Grid.RowSpan="2">
+						<DataGrid Grid.Row="1" Name="MoviesCatalog" ToolTip="Right click for options" ItemsSource="{Binding}" LoadingRow="MoviesCatalog_LoadingRow" Grid.RowSpan="2">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>
@@ -430,7 +419,7 @@
 										</MenuItem.Icon>
 									</MenuItem>
 									<Separator></Separator>
-									<MenuItem Header="Load or set trailer" Click="LoadTrailer" >
+									<MenuItem Header="Load or set trailer" Click="LoadTrailer" Visibility="Collapsed">
 										<MenuItem.Icon>
 											<Image Source="/icons/media/preview-pane.png" Stretch="Uniform"/>
 										</MenuItem.Icon>
@@ -450,7 +439,7 @@
 									</MenuItem>
 									<Separator></Separator>
 									<Separator></Separator>
-									<MenuItem Header="Remove trailer" Click="RemoveTrailer">
+									<MenuItem Header="Remove trailer" Click="RemoveTrailer" Visibility="Collapsed">
 										<MenuItem.Icon>
 											<Image Source="/icons/minus.png" Stretch="Uniform"/>
 										</MenuItem.Icon>
@@ -485,13 +474,12 @@
 					<!--tab contents grid -->
 					<Grid>
 						<Grid.RowDefinitions>
-							<RowDefinition Height="20"/>
-							<RowDefinition Height="50"/>
-							<RowDefinition/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
 						<!--Client filter panel-->
 						<TextBlock Name="ClientsCount"></TextBlock>
-						<UniformGrid Grid.Row="1" Rows="1" ToolTip="Type text and press enter to filter clients" VerticalAlignment="Center">
+						<UniformGrid Grid.Row="1" Rows="1" ToolTip="Type text and press enter to filter clients" VerticalAlignment="Center" Visibility="Hidden">
 							<UniformGrid Columns="1">
 								<TextBlock>Last Name</TextBlock>
 								<TextBox Name="FilterClientLastNameString" TextChanged="FilterClientLastName"/>
@@ -569,12 +557,11 @@
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="20"/>
-							<RowDefinition Height="auto"/>
-							<RowDefinition/>
+							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
 						<!--Orders filter panel-->
 						<TextBlock Name="OrdersCount"></TextBlock>
-						<Grid Grid.Row="1" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top">
+						<Grid Grid.Row="1" ToolTip="Type text and press enter to filter orders" VerticalAlignment="Top" Visibility="Hidden">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="auto"/>
 								<ColumnDefinition/>
@@ -651,7 +638,7 @@
 							</UniformGrid>
 						</Grid>
 
-						<DataGrid Name="OrdersCatalog" ToolTip="Right click for options" Grid.Row="2" ItemsSource="{Binding}" LoadingRow="OrdersCatalog_LoadingRow">
+						<DataGrid Name="OrdersCatalog" ToolTip="Right click for options" Grid.Row="1" ItemsSource="{Binding}" LoadingRow="OrdersCatalog_LoadingRow">
 							<DataGrid.AlternatingRowBackground>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 									<GradientStop Color="#00000000" Offset="0.423"/>
@@ -698,7 +685,7 @@
 					</Grid>
 				</TabItem>
 
-				<TabItem Width="64" Height="auto">
+				<TabItem Width="64" Height="auto" Visibility="Collapsed">
 					<TabItem.Header>
 						<Grid>
 							<Grid.RowDefinitions>
@@ -1198,10 +1185,10 @@
 										<Border>
 											<UniformGrid Rows="1">
 												<Border>
-													<TextBlock ToolTip="Set return deadline" Background="#4C800000">Due date</TextBlock>
+													<TextBlock ToolTip="Set return deadline. Defaults to +3 days" Background="#4C800000">Due date</TextBlock>
 												</Border>
 												<Border>
-													<xctk:DateTimePicker ToolTip="Set return deadline" Name="OrderFormDueDate" Foreground="White">
+													<xctk:DateTimePicker ToolTip="Set return deadline. Defaults to +3 days" Name="OrderFormDueDate" Foreground="White">
 														<xctk:DateTimePicker.Background>
 															<RadialGradientBrush>
 																<GradientStop Color="Transparent" Offset="1"/>
@@ -1215,12 +1202,12 @@
 										<Border>
 											<UniformGrid Rows="1">
 												<Border>
-													<TextBlock ToolTip="Actual item return date. Enabled only in edit mode" Background="#4C800000">
+													<TextBlock ToolTip="Actual item return date. Enabled only in edit mode. Defaults to current day" Background="#4C800000">
 													Return date
 													</TextBlock>
 												</Border>
 												<Border>
-													<xctk:DateTimePicker Name="OrderFormReturnDate" ToolTip="Actual item return date. Leave empty to rent. Use only in edit mode" Foreground="White">
+													<xctk:DateTimePicker Name="OrderFormReturnDate" ToolTip="Actual item return date. Enabled only in edit mode. Defaults to current day" Foreground="White">
 														<xctk:DateTimePicker.Background>
 															<RadialGradientBrush>
 																<GradientStop Color="Transparent" Offset="1"/>
@@ -1342,37 +1329,37 @@
 						<UniformGrid Columns="1" Background="#7F800000" Margin="5">
 							<Border>
 								<UniformGrid Columns="1">
-									<ComboBox Name="DeleteActorLNFNID"></ComboBox>
+									<ComboBox Name="DeleteActorLNFNID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
 									<TextBlock MouseDown="DeleteActor" Cursor="Hand">Delete actor</TextBlock>
 								</UniformGrid>
 							</Border>
 							<Border>
 								<UniformGrid Columns="1">
-									<ComboBox Name="DeleteDirectorLNFNID"></ComboBox>
+									<ComboBox Name="DeleteDirectorLNFNID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
 									<TextBlock MouseDown="DeleteDirector" Cursor="Hand">Delete director</TextBlock>
 								</UniformGrid>
 							</Border>
 							<Border>
 								<UniformGrid Columns="1">
-									<ComboBox Name="DeleteCountryNameID"></ComboBox>
+									<ComboBox Name="DeleteCountryNameID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
 									<TextBlock MouseDown="DeleteCountry" Cursor="Hand">Delete country</TextBlock>
 								</UniformGrid>
 							</Border>
 							<Border>
 								<UniformGrid Columns="1">
-									<ComboBox Name="DeleteLangNameID"></ComboBox>
+									<ComboBox Name="DeleteLangNameID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
 									<TextBlock MouseDown="DeleteLang" Cursor="Hand">Delete language</TextBlock>
 								</UniformGrid>
 							</Border>
 							<Border>
 								<UniformGrid Columns="1">
-									<ComboBox Name="DeleteFormatNameID"></ComboBox>
+									<ComboBox Name="DeleteFormatNameID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
 									<TextBlock MouseDown="DeleteFormat" Cursor="Hand">Delete format</TextBlock>
 								</UniformGrid>
 							</Border>
 							<Border>
 								<UniformGrid Columns="1">
-									<ComboBox Name="DeleteGenreNameID"></ComboBox>
+									<ComboBox Name="DeleteGenreNameID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
 									<TextBlock MouseDown="DeleteGenre" Cursor="Hand">Delete genre</TextBlock>
 								</UniformGrid>
 							</Border>

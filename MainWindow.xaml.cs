@@ -80,10 +80,10 @@ namespace WPF
 					"movies.total_count as 'all copies',movies.plot, " +
 					"CASE " +
 					"	WHEN poster_path IS NULL THEN 'no' " +
-					"	WHEN poster_path IS NOT NULL THEN 'yes' END AS poster, " +
-					"CASE " +
-					"	WHEN poster_path IS NULL THEN 'no' " +
-					"	WHEN trailer_path IS NOT NULL THEN 'yes' END AS trailer " +
+					"	WHEN poster_path IS NOT NULL THEN 'yes' END AS poster " +
+					//"CASE " +
+					//"	WHEN poster_path IS NULL THEN 'no' " +
+					//"	WHEN trailer_path IS NOT NULL THEN 'yes' END AS trailer " +
 					"from movies " +
 					"join actors on actors.id = movies.actor_id " +
 					"join countries on countries.id = movies.country_id " +
@@ -526,58 +526,164 @@ namespace WPF
 				//add mode if copies available
 				if (mode == false && copies_left > 0)
 				{
-					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+					//date creation preparation with default values
+					int rentdd = int.Parse(getquery("select day(GETDATE())"));
+					int rentmm = int.Parse(getquery("select month(GETDATE())"));
+					int rentyy = int.Parse(getquery("select year(GETDATE())"));
+
+					int duedd = int.Parse(getquery("select day(GETDATE()+3)"));
+					int duemm = int.Parse(getquery("select month(GETDATE()+3)"));
+					int dueyy = int.Parse(getquery("select year(GETDATE()+3)"));
+					
+					//var for all date error strings
+					string msg = "";
+
+					//dates validation. Defaults if not valid. Else set correct values
+					DateTime test;
+					if (!DateTime.TryParse(OrderFormRentDate.Text, out test)) msg = "Invalid rent date. Today will be set\n";
+					else
+					{
+						rentdd = test.Day;
+						rentmm = test.Month;
+						rentyy = test.Year;
+					}
+					if (!DateTime.TryParse(OrderFormDueDate.Text, out test)) msg += "Invalid due date. Today +3 days will be set\n";
+					else
+					{
+						//set due date if not lower than rent date
+						DateTime testRentDate = new DateTime(rentyy, rentmm, rentdd);
+						DateTime testDueDate = new DateTime(test.Day, test.Month, test.Year);
+						
+						int correct = testDueDate.CompareTo(testRentDate);
+						if (correct >= 0)
+						{
+							duedd = test.Day;
+							duemm = test.Month;
+							dueyy = test.Year;
+						}
+						else msg += "Due date lower than rent date. Today +3 days will be set\n";
+					}
+					DateTime RentDate = new DateTime(rentyy, rentmm, rentdd);
+					DateTime DueDate = new DateTime(dueyy, duemm, duedd);
+
+					//show all date errors in 1 message
+					if (msg != "") MessageBox.Show(msg);
+					//dates might exceed valid values
+					try 
+					{
+						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+						{
+							connection.Open();
+							var sql = @"Insert into Orders (client_id,movie_id,rent_date,due_date) " +
+								"values(@client_id,@movie_id," +
+								"@rent_date,@due_date)";
+							using (var cmd = new SqlCommand(sql, connection))
 							{
-								connection.Open();
-								var sql = @"Insert into Orders (client_id,movie_id,rent_date,due_date,return_date) " +
-									"values(@client_id,@movie_id," +
-									"@rent_date,@due_date)";
-								using (var cmd = new SqlCommand(sql, connection))
-								{
-									cmd.Parameters.AddWithValue("@client_id", movie_id);
-									cmd.Parameters.AddWithValue("@movie_id", OrderFormMovieID.Text);
-									cmd.Parameters.AddWithValue("@rent_date", OrderFormRentDate.Text);
-									cmd.Parameters.AddWithValue("@due_date", OrderFormDueDate.Text);
-									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-									OrdersGridRefresh();
-									//decrement movie copies available when client rents a copy
-									copies_left--;
-									OrderClearForm();
-								}
-								//update copies left
-								sql = @"update movies set left_count=@left_count where id=@id";
-								using (var cmd = new SqlCommand(sql, connection))
-								{
-									cmd.Parameters.AddWithValue("@id", movie_id);
-									cmd.Parameters.AddWithValue("@left_count", copies_left);
-									cmd.ExecuteNonQuery();
-									MoviesGridRefresh();
-								}
+								cmd.Parameters.AddWithValue("@client_id", movie_id);
+								cmd.Parameters.AddWithValue("@movie_id", OrderFormMovieID.Text);
+								cmd.Parameters.AddWithValue("@rent_date", RentDate);
+								cmd.Parameters.AddWithValue("@due_date", DueDate);
+								MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+								OrdersGridRefresh();
+								//decrement movie copies available when client rents a copy
+								copies_left--;
+								OrderClearForm();
 							}
+							//update copies left
+							sql = @"update movies set left_count=@left_count where id=@id";
+							using (var cmd = new SqlCommand(sql, connection))
+							{
+								cmd.Parameters.AddWithValue("@id", movie_id);
+								cmd.Parameters.AddWithValue("@left_count", copies_left);
+								cmd.ExecuteNonQuery();
+								MoviesGridRefresh();
+							}
+						}
+					}
+					catch (Exception ex ){ MessageBox.Show(ex.Message); }
 				}
 				//add mode no copies left
 				else if (mode == false && copies_left <= 0) MessageBox.Show("No copies left to rent");
 				//edit mode
 				else if (mode == true && OrderFormID.Text != "")
 				{
-							using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+					//date creation preparation with default values
+					int rentdd = int.Parse(getquery("select day(GETDATE())"));
+					int rentmm = int.Parse(getquery("select month(GETDATE())"));
+					int rentyy = int.Parse(getquery("select year(GETDATE())"));
+
+					int duedd = int.Parse(getquery("select day(GETDATE()+3)"));
+					int duemm = int.Parse(getquery("select month(GETDATE()+3)"));
+					int dueyy = int.Parse(getquery("select year(GETDATE()+3)"));
+
+					int returndd = int.Parse(getquery("select day(GETDATE())"));
+					int returnmm = int.Parse(getquery("select month(GETDATE())"));
+					int returnyy = int.Parse(getquery("select year(GETDATE())"));
+
+					//var for all date error strings
+					string msg="";
+
+					//dates validation. Defaults if not valid. Else set correct values
+					DateTime test;
+					if (!DateTime.TryParse(OrderFormRentDate.Text, out test)) msg = "Invalid rent date. Today will be set\n";
+					else
+					{
+						rentdd = test.Day;
+						rentmm = test.Month;
+						rentyy = test.Year;
+					}
+					if (!DateTime.TryParse(OrderFormDueDate.Text, out test)) msg += "Invalid due date. Today +3 days will be set\n";
+					else
+					{
+						//set due date if not lower than rent date
+						DateTime testRentDate = new DateTime(rentyy, rentmm, rentdd);
+						DateTime testDueDate = new DateTime(test.Year, test.Month, test.Day);
+
+						int correct = testDueDate.CompareTo(testRentDate);
+						if (correct >= 0)
+						{
+							duedd = test.Day;
+							duemm = test.Month;
+							dueyy = test.Year;
+						}
+						else msg += "Due date lower than rent date. Today +3 days will be set\n";
+					}
+					if (!DateTime.TryParse(OrderFormReturnDate.Text, out test)) msg += "Invalid due date. Today will be set";
+					else
+					{
+						returndd = test.Day;
+						returnmm = test.Month;
+						returnyy = test.Year;
+					}
+					DateTime RentDate = new DateTime(rentyy, rentmm, rentdd);
+					DateTime DueDate = new DateTime(dueyy, duemm, duedd);
+					DateTime ReturnDate = new DateTime(returnyy, returnmm, returndd);
+
+					//show all date errors in 1 message
+					if (msg != "") MessageBox.Show(msg);
+					//dates might exceed valid values
+					try
+					{
+						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
+						{
+							connection.Open();
+							var sql = @"update orders set client_id=@client_id, movie_id=@movie_id," +
+								"rent_date=@rent_date, due_date=@due_date, return_date=@return_date " +
+								"where id=@id";
+							using (var cmd = new SqlCommand(sql, connection))
 							{
-								connection.Open();
-								var sql = @"update orders set client_id=@client_id, movie_id=@movie_id," +
-									"rent_date=@rent_date, due_date=@due_date, return_date=@return_date " +
-									"where id=@id";
-								using (var cmd = new SqlCommand(sql, connection))
-								{
-									cmd.Parameters.AddWithValue("@id", OrderFormID.Text);
-									cmd.Parameters.AddWithValue("@client_id", OrderFormClientLNFNID.Text);
-									cmd.Parameters.AddWithValue("@movie_id", OrderFormMovieID.Text);
-									cmd.Parameters.AddWithValue("@rent_date", OrderFormRentDate.Text);
-									cmd.Parameters.AddWithValue("@due_date", OrderFormDueDate.Text);
-									cmd.Parameters.AddWithValue("@return_date", OrderFormReturnDate.Text);
-									MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-									OrdersGridRefresh();
-								}
+								cmd.Parameters.AddWithValue("@id", OrderFormID.Text);
+								cmd.Parameters.AddWithValue("@client_id", OrderFormClientLNFNID.Text.Split(' ').Last());
+								cmd.Parameters.AddWithValue("@movie_id", OrderFormMovieID.Text);
+								cmd.Parameters.AddWithValue("@rent_date", RentDate);
+								cmd.Parameters.AddWithValue("@due_date", DueDate);
+								cmd.Parameters.AddWithValue("@return_date", ReturnDate);
+								MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
+								OrdersGridRefresh();
 							}
+						}
+					}
+					catch ( Exception ex ){ MessageBox.Show(ex.Message); }
 				}else if (mode == true && OrderFormID.Text == "") MessageBox.Show("Order id not set. Use edit context menu option in orders catalog");
 			}else MessageBox.Show("Fill client and movie");
 		}
@@ -933,25 +1039,21 @@ namespace WPF
 			MovieFormLangNameID.Text = rowview.Row["language"].ToString();
 
 			//MessageBox.Show("Movie data set. Edit and submit changes in admin panel.");
-			xctk. MessageBox.Show("Movie data set. Edit and submit changes in admin panel.");
+			MessageBox.Show("Movie data set. Edit and submit changes in admin panel.");
 		}
 		private void MovieItem_delete(object sender, RoutedEventArgs e)
 		{
-			//clear poster and trailer if set
-			if (int.Parse(MovieTrailerID.Text) == getmovie_id())
-			{
+			//clear poster and trailer
 				MovieTrailerID.Text = "ID";
 				MovieTrailerTitle.Text = "Title";
 				MovieTrailerYear.Text = "Year";
 				Trailer.Source = null;
-			}
-			if (int.Parse(MoviePosterID.Text) == getmovie_id())
-			{
+			
 				MoviePosterID.Text = "ID";
 				MoviePosterTitle.Text = "Title";
 				MoviePosterYear.Text = "Year";
 				Poster.Source = null;
-			}
+			
 			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 				{
 					connection.Open();
@@ -964,8 +1066,9 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBox.Show(ex.Message);
-					}
+					//MessageBox.Show(ex.Message);
+					MessageBox.Show("Couldn't remove row referenced from other row");
+				}
 				}
 				MoviesGridRefresh();
 		}
@@ -1006,7 +1109,8 @@ namespace WPF
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show(ex.Message);
+					//MessageBox.Show(ex.Message);
+					MessageBox.Show("Couldn't remove row referenced from other row");
 				}
 			}
 			ClientsGridRefresh();
@@ -2110,6 +2214,11 @@ namespace WPF
 		private void OrdersCatalog_LoadingRow(object sender, DataGridRowEventArgs e)
 		{
 			OrdersCount.Text = "Number of items in table: " + OrdersCatalog.Items.Count.ToString();
+		}
+
+		private void OrderFormRentDate_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+
 		}
 	}
 }
