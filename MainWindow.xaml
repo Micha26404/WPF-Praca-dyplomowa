@@ -104,6 +104,7 @@
 		</Style>
 		<Style TargetType="{x:Type TabItem}">
 			<Setter Property="Width" Value="70"></Setter>
+			<Setter Property="Height" Value="auto"></Setter>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type TabItem}">
@@ -311,7 +312,7 @@
 							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="17">Movies</TextBlock>
 							<Image Grid.Row="1" VerticalAlignment="Top" Source="\icons\cinema\cinema.png">
 								<Image.Clip>
-									<EllipseGeometry Center="32,32" RadiusX="25" RadiusY="25" />
+									<EllipseGeometry Center="35,35" RadiusX="25" RadiusY="25" />
 								</Image.Clip>
 							</Image>
 						</Grid>
@@ -469,7 +470,7 @@
 							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="17">Clients</TextBlock>
 							<Image Grid.Row="1" VerticalAlignment="Top" Source="icons/user-group-woman-woman.png">
 								<Image.Clip>
-									<EllipseGeometry Center="32,32" RadiusX="25" RadiusY="25" />
+									<EllipseGeometry Center="35,35" RadiusX="25" RadiusY="25" />
 								</Image.Clip>
 							</Image>
 						</Grid>
@@ -551,7 +552,7 @@
 							<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="17">Orders</TextBlock>
 							<Image Grid.Row="1" VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
 								<Image.Clip>
-									<EllipseGeometry Center="32,32" RadiusX="40" RadiusY="22" />
+									<EllipseGeometry Center="35,35" RadiusX="40" RadiusY="22" />
 								</Image.Clip>
 							</Image>
 						</Grid>
@@ -797,7 +798,7 @@
 							<TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Height="17">Poster</TextBlock>
 							<Image Grid.Row="1" VerticalAlignment="Bottom" Source="icons/media/easel.png">
 								<Image.Clip>
-									<EllipseGeometry Center="32,29" RadiusX="20" RadiusY="18" />
+									<EllipseGeometry Center="35,30" RadiusX="20" RadiusY="20" />
 								</Image.Clip>
 							</Image>
 						</Grid>
