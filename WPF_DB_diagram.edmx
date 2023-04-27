@@ -347,7 +347,7 @@
           <Property Name="due_date" Type="DateTime" Nullable="true" Precision="3" />
           <Property Name="return_date" Type="DateTime" Nullable="true" Precision="3" />
           <NavigationProperty Name="client" Relationship="DBModel.clientsorders" FromRole="orders" ToRole="clients" />
-          <NavigationProperty Name="movy" Relationship="DBModel.FK_moviesorders" FromRole="orders" ToRole="movies" />
+          <NavigationProperty Name="movie" Relationship="DBModel.FK_moviesorders" FromRole="orders" ToRole="movies" />
         </EntityType>
         <EntityType Name="langs">
           <Key>

@@ -79,8 +79,8 @@
 			<Setter Property="VerticalGridLinesBrush" Value="Maroon"></Setter>
 			<Setter Property="Background" Value="Transparent"></Setter>
 			<Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-			<Setter Property="VerticalAlignment" Value="Stretch"></Setter>
 			<Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+			<Setter Property="VerticalAlignment" Value="Stretch"></Setter>
 			<Setter Property="HeadersVisibility" Value="Column"></Setter>
 			<Setter Property="AlternationCount" Value="2"></Setter>
 			<Setter Property="FontSize" Value="16"></Setter>
@@ -103,6 +103,7 @@
 			<Setter Property="BorderBrush" Value="Transparent"/>
 		</Style>
 		<Style TargetType="{x:Type TabItem}">
+			<Setter Property="Width" Value="70"></Setter>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type TabItem}">
@@ -300,7 +301,7 @@
 				<RowDefinition Height="auto"/>
 			</Grid.RowDefinitions>
 			<TabControl Grid.Column="1" Grid.Row="0" Background="Transparent" TabStripPlacement="Left" BorderBrush="Maroon">
-				<TabItem Width="64" Height="auto">
+				<TabItem Height="auto">
 					<TabItem.Header>
 						<Grid>
 							<Grid.RowDefinitions>
@@ -458,7 +459,7 @@
 						</DataGrid>
 					</Grid>
 				</TabItem>
-				<TabItem Width="64" Height="auto">
+				<TabItem Height="auto">
 					<TabItem.Header>
 						<Grid>
 							<Grid.RowDefinitions>
@@ -540,7 +541,7 @@
 						</DataGrid>
 					</Grid>
 				</TabItem>
-				<TabItem Width="64" Height="auto">
+				<TabItem Height="auto">
 					<TabItem.Header>
 						<Grid>
 							<Grid.RowDefinitions>
@@ -786,7 +787,7 @@
 					</Grid>
 				</TabItem>
 
-				<TabItem Width="64" Height="auto">
+				<TabItem Height="auto">
 					<TabItem.Header>
 						<Grid>
 							<Grid.RowDefinitions>
@@ -852,7 +853,7 @@
 					</Grid>
 				</TabItem>
 				<!--Admin panel movies clients orders-->
-				<TabItem Name="AdminPanelTab" Width="64" Height="auto">
+				<TabItem Name="AdminPanelTab" Height="auto">
 					<TabItem.Header>
 						<Grid>
 							<Grid.RowDefinitions>
@@ -1311,7 +1312,7 @@
 					</Grid>
 				</TabItem>
 				<!--Admin panel directors actors formats langs countries-->
-				<TabItem Name="AdminPanelTab2" Width="64" Height="auto">
+				<TabItem Name="AdminPanelTab2" Height="auto">
 					<TabItem.Header>
 						<Grid>
 							<Grid.RowDefinitions>
@@ -1579,7 +1580,7 @@
 						</UniformGrid>
 					</Grid>
 				</TabItem>
-				<TabItem Width="64" Height="100">
+				<TabItem Height="auto">
 					<TabItem.Header>
 						<Grid>
 							<Grid.RowDefinitions>
