@@ -221,6 +221,7 @@
 				</Setter.Value>
 			</Setter>
 			<Setter Property="BorderBrush" Value="DarkRed"></Setter>
+			<Setter Property="BorderThickness" Value="2"></Setter>
 			<Setter Property="SelectionBrush" Value="White"></Setter>
 			<Setter Property="TextWrapping" Value="WrapWithOverflow"></Setter>
 			<Setter Property="AcceptsReturn" Value="True"></Setter>
@@ -798,7 +799,7 @@
 							<TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Height="17">Poster</TextBlock>
 							<Image Grid.Row="1" VerticalAlignment="Bottom" Source="icons/media/easel.png">
 								<Image.Clip>
-									<EllipseGeometry Center="35,30" RadiusX="20" RadiusY="20" />
+									<EllipseGeometry Center="35,30" RadiusX="23" RadiusY="25" />
 								</Image.Clip>
 							</Image>
 						</Grid>
@@ -1058,8 +1059,14 @@
 										</UniformGrid>
 									</UniformGrid>
 									<!--Movie premise-->
-									<TextBox Name="MovieFormPlot" ToolTip="Movie initial plot description" Background="Transparent">Premise unknown
-									</TextBox>
+									<Grid>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="auto"/>
+											<RowDefinition/>
+										</Grid.RowDefinitions>
+										<TextBlock HorizontalAlignment="Stretch">Plot description</TextBlock>
+										<TextBox Grid.Row="1" Name="MovieFormPlot" ToolTip="Movie initial plot description" Background="Transparent"/>
+									</Grid>
 								</UniformGrid>
 							</Border>
 							<!--Client panel-->
@@ -1328,77 +1335,83 @@
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="auto"/>
 							<ColumnDefinition/>
+							<ColumnDefinition/>
 							<ColumnDefinition Width="auto"/>
 						</Grid.ColumnDefinitions>
-						<UniformGrid Columns="1" Background="#7F800000" Margin="5">
-							<Border>
+						<UniformGrid Columns="1" Background="#7F800000">
+							<Border BorderThickness="2">
 								<UniformGrid Columns="1">
 									<ComboBox Name="DeleteActorLNFNID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
-									<TextBlock MouseDown="DeleteActor" Cursor="Hand">Delete actor</TextBlock>
+									<Viewbox Stretch="Uniform">
+										<Button MouseDown="DeleteActor" Cursor="Hand">
+											<TextBlock MouseDown="DeleteActor" Cursor="Hand">Delete actor</TextBlock>
+										</Button>
+									</Viewbox>
 								</UniformGrid>
 							</Border>
-							<Border>
+							<Border BorderThickness="2">
 								<UniformGrid Columns="1">
 									<ComboBox Name="DeleteDirectorLNFNID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
-									<TextBlock MouseDown="DeleteDirector" Cursor="Hand">Delete director</TextBlock>
+									<Viewbox>
+										<Button MouseDown="DeleteDirector" Cursor="Hand">
+											<TextBlock MouseDown="DeleteDirector" Cursor="Hand">Delete director</TextBlock>
+										</Button>
+									</Viewbox>
 								</UniformGrid>
 							</Border>
-							<Border>
+							<Border BorderThickness="2">
 								<UniformGrid Columns="1">
 									<ComboBox Name="DeleteCountryNameID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
-									<TextBlock MouseDown="DeleteCountry" Cursor="Hand">Delete country</TextBlock>
+									<Viewbox>
+										<Button MouseDown="DeleteCountry" Cursor="Hand">
+											<TextBlock MouseDown="DeleteCountry" Cursor="Hand">Delete country</TextBlock>
+										</Button>
+									</Viewbox>
 								</UniformGrid>
 							</Border>
-							<Border>
+							<Border BorderThickness="2">
 								<UniformGrid Columns="1">
 									<ComboBox Name="DeleteLangNameID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
-									<TextBlock MouseDown="DeleteLang" Cursor="Hand">Delete language</TextBlock>
+									<Viewbox>
+										<Button MouseDown="DeleteLang" Cursor="Hand">
+											<TextBlock MouseDown="DeleteLang" Cursor="Hand">Delete language</TextBlock>
+										</Button>
+									</Viewbox>
 								</UniformGrid>
 							</Border>
-							<Border>
+							<Border BorderThickness="2">
 								<UniformGrid Columns="1">
 									<ComboBox Name="DeleteFormatNameID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
-									<TextBlock MouseDown="DeleteFormat" Cursor="Hand">Delete format</TextBlock>
+									<Viewbox>
+										<Button MouseDown="DeleteFormat" Cursor="Hand">
+											<TextBlock MouseDown="DeleteFormat" Cursor="Hand">Delete format</TextBlock>
+										</Button>
+									</Viewbox>
 								</UniformGrid>
 							</Border>
-							<Border>
+							<Border BorderThickness="2">
 								<UniformGrid Columns="1">
 									<ComboBox Name="DeleteGenreNameID" ToolTip="Contains only safe to delete items (unused in records)"></ComboBox>
-									<TextBlock MouseDown="DeleteGenre" Cursor="Hand">Delete genre</TextBlock>
+									<Viewbox>
+										<Button MouseDown="DeleteGenre" Cursor="Hand">
+											<TextBlock MouseDown="DeleteGenre" Cursor="Hand">Delete genre</TextBlock>
+										</Button>
+									</Viewbox>
 								</UniformGrid>
 							</Border>
 						</UniformGrid>
-						<UniformGrid  Grid.Column="1" Columns="1" Background="#7F800000" >
+						<!--Add new atribute-->
+						<UniformGrid  Grid.Column="1" Columns="1" Background="#7F800000">
 							<!--Actors-->
 							<Border>
 								<UniformGrid Grid.Column="1" Rows="1">
 									<Border>
 										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>First name</TextBlock>
+											<TextBlock>Client First name</TextBlock>
 												<TextBox Name="AddActorFirstName"></TextBox>
-											</UniformGrid>
-											<UniformGrid Rows="1">
-												<TextBlock>Last name</TextBlock>
+											<TextBlock>Client last name</TextBlock>
 												<TextBox Name="AddActorLastName"></TextBox>
-											</UniformGrid>
-											<TextBlock MouseDown="AddActor" Cursor="Hand">Add actor</TextBlock>
-										</UniformGrid>
-									</Border>
-									<Border>
-										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>Actor</TextBlock>
-												<ComboBox Name="UpdateActorLNFNID"></ComboBox>
-											</UniformGrid>
-											<UniformGrid Rows="1">
-												<TextBlock>New first name</TextBlock>
-												<TextBox Name="UpdateActorFirstName"></TextBox>
-											</UniformGrid>
-											<UniformGrid Rows="1">
-												<TextBlock>New last name</TextBlock>
-												<TextBox Name="UpdateActorLastName"></TextBox>
-											</UniformGrid>
+												<TextBlock MouseDown="AddActor" Cursor="Hand">Submit new actor</TextBlock>
 										</UniformGrid>
 									</Border>
 								</UniformGrid>
@@ -1408,34 +1421,14 @@
 								<UniformGrid Rows="1">
 									<Border>
 										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>First name</TextBlock>
+												<TextBlock>Director first name</TextBlock>
 												<TextBox Name="AddDirectorFirstName"></TextBox>
-											</UniformGrid>
-											<UniformGrid Rows="1">
-												<TextBlock>Last name</TextBlock>
+											<TextBlock>Director last name</TextBlock>
 												<TextBox Name="AddDirectorLastName"></TextBox>
-											</UniformGrid>
-											<TextBlock MouseDown="AddDirector" Cursor="Hand">Add director</TextBlock>
-
+											<TextBlock MouseDown="AddDirector" Cursor="Hand">Submit new director</TextBlock>
 										</UniformGrid>
 									</Border>
-									<Border>
-										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>Director</TextBlock>
-												<ComboBox Name="UpdateDirectorLNFNID"></ComboBox>
-											</UniformGrid>
-											<UniformGrid Rows="1">
-												<TextBlock>New First name</TextBlock>
-												<TextBox Name="UpdateDirectorFirstName"></TextBox>
-											</UniformGrid>
-											<UniformGrid Rows="1">
-												<TextBlock>New Last name</TextBlock>
-												<TextBox Name="UpdateDirectorLastName"></TextBox>
-											</UniformGrid>
-										</UniformGrid>
-									</Border>
+									
 								</UniformGrid>
 							</Border>
 							<!--Countries-->
@@ -1443,26 +1436,12 @@
 								<UniformGrid Rows="1">
 									<Border>
 										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>Name</TextBlock>
+												<TextBlock>Country name</TextBlock>
 												<TextBox Name="AddCountryName"></TextBox>
-											</UniformGrid>
-											<TextBlock MouseDown="AddCountry" Cursor="Hand">Add country</TextBlock>
-
+											<TextBlock MouseDown="AddCountry" Cursor="Hand">Submit new country</TextBlock>
 										</UniformGrid>
 									</Border>
-									<Border>
-										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>Country</TextBlock>
-												<ComboBox Name="UpdateCountryNameID"></ComboBox>
-											</UniformGrid>
-											<UniformGrid Rows="1">
-												<TextBlock>New name</TextBlock>
-												<TextBox Name="UpdateCountryName"></TextBox>
-											</UniformGrid>
-										</UniformGrid>
-									</Border>
+									
 								</UniformGrid>
 							</Border>
 							<!--Languages-->
@@ -1470,26 +1449,12 @@
 								<UniformGrid Rows="1">
 									<Border>
 										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>Name</TextBlock>
+											<TextBlock>Language name</TextBlock>
 												<TextBox Name="AddLangName"></TextBox>
-											</UniformGrid>
-											<TextBlock MouseDown="AddLang" Cursor="Hand">Add Language</TextBlock>
-
+											<TextBlock MouseDown="AddLang" Cursor="Hand">Submit new language</TextBlock>
 										</UniformGrid>
 									</Border>
-									<Border>
-										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>Language</TextBlock>
-												<ComboBox Name="UpdateLangNameID"></ComboBox>
-											</UniformGrid>
-											<UniformGrid Rows="1">
-												<TextBlock>New name</TextBlock>
-												<TextBox Name="UpdateLangName"></TextBox>
-											</UniformGrid>
-										</UniformGrid>
-									</Border>
+										
 								</UniformGrid>
 							</Border>
 							<!--Formats-->
@@ -1497,26 +1462,12 @@
 								<UniformGrid Rows="1">
 									<Border>
 										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>Name</TextBlock>
+												<TextBlock>Format name</TextBlock>
 												<TextBox Name="AddFormatName"></TextBox>
-											</UniformGrid>
-											<TextBlock MouseDown="AddFormat" Cursor="Hand">Add Format</TextBlock>
-
+											<TextBlock MouseDown="AddFormat" Cursor="Hand">Submit new format</TextBlock>
 										</UniformGrid>
 									</Border>
-									<Border>
-										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>Name</TextBlock>
-												<ComboBox Name="UpdateFormatNameID"></ComboBox>
-											</UniformGrid>
-											<UniformGrid Rows="1">
-												<TextBlock>New name</TextBlock>
-												<TextBox Name="UpdateFormatName"></TextBox>
-											</UniformGrid>
-										</UniformGrid>
-									</Border>
+									
 								</UniformGrid>
 							</Border>
 							<!--Genres-->
@@ -1524,60 +1475,142 @@
 								<UniformGrid Rows="1">
 									<Border>
 										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>Name</TextBlock>
+												<TextBlock>Genre name</TextBlock>
 												<TextBox Name="AddGenreName"></TextBox>
-											</UniformGrid>
-											<TextBlock MouseDown="AddGenre" Cursor="Hand">Add Genre</TextBlock>
-
-										</UniformGrid>
-									</Border>
-									<Border>
-										<UniformGrid Columns="1">
-											<UniformGrid Rows="1">
-												<TextBlock>Name</TextBlock>
-												<ComboBox Name="UpdateGenreNameID"></ComboBox>
-											</UniformGrid>
-											<UniformGrid Rows="1">
-												<TextBlock>New name</TextBlock>
-												<TextBox Name="UpdateGenreName"></TextBox>
-											</UniformGrid>
+											<TextBlock MouseDown="AddGenre" Cursor="Hand">Submit new genre</TextBlock>
 										</UniformGrid>
 									</Border>
 								</UniformGrid>
 							</Border>
 						</UniformGrid>
-						<UniformGrid Grid.Column="2" Columns="1" Background="#7F800000" Margin="5">
-							<UniformGrid Columns="1" Margin="10">
-								<Border>
-									<TextBlock MouseDown="UpdateActor" Cursor="Hand">Update actor</TextBlock>
-								</Border>
-							</UniformGrid>
-							<UniformGrid Columns="1" Margin="10">
-								<Border>
-									<TextBlock MouseDown="UpdateDirector" Cursor="Hand">Update director</TextBlock>
-								</Border>
-							</UniformGrid>
-							<UniformGrid Columns="1" Margin="10">
-								<Border>
-									<TextBlock MouseDown="UpdateCountry" Cursor="Hand">Update country</TextBlock>
-								</Border>
-							</UniformGrid>
-							<UniformGrid Columns="1" Margin="10">
-								<Border>
-									<TextBlock MouseDown="UpdateLang" Cursor="Hand">Update language</TextBlock>
-								</Border>
-							</UniformGrid>
-							<UniformGrid Columns="1" Margin="10">
-								<Border>
-									<TextBlock MouseDown="UpdateFormat" Cursor="Hand">Update format</TextBlock>
-								</Border>
-							</UniformGrid>
-							<UniformGrid Columns="1" Margin="10">
-								<Border>
-									<TextBlock MouseDown="UpdateGenre" Cursor="Hand">Update genre</TextBlock>
-								</Border>
-							</UniformGrid>
+						<!--Update existing atribute-->
+						<UniformGrid  Grid.Column="2" Columns="1" Background="#7F800000">
+							<!--Actors-->
+							<Border>
+								<UniformGrid Columns="1">
+										<ComboBox Name="UpdateActorLNFNID"></ComboBox>
+									<TextBlock>Edit first name</TextBlock>
+											<TextBox Name="UpdateActorFirstName"></TextBox>
+									<TextBlock>Edit last name</TextBlock>
+											<TextBox Name="UpdateActorLastName"></TextBox>
+								</UniformGrid>
+							</Border>
+							<!--Directors-->
+							<Border>
+								<UniformGrid Columns="1">
+									<ComboBox Name="UpdateDirectorLNFNID"></ComboBox>
+									<TextBlock>Edit first name</TextBlock>
+									<TextBox Name="UpdateDirectorFirstName"></TextBox>
+									<TextBlock>Edit last name</TextBlock>
+									<TextBox Name="UpdateDirectorLastName"></TextBox>
+								</UniformGrid>
+							</Border>
+							<!--Countries-->
+							<Border>
+								<UniformGrid Columns="1">
+									<ComboBox Name="UpdateCountryNameID"></ComboBox>
+									<TextBlock>Edit country name</TextBlock>
+									<TextBox Name="UpdateCountryName"></TextBox>
+								</UniformGrid>
+							</Border>
+							<!--Languages-->
+							<Border>
+								<UniformGrid Columns="1">
+									<ComboBox Name="UpdateLangNameID"></ComboBox>
+									<TextBlock>Edit language name</TextBlock>
+									<TextBox Name="UpdateLangName"></TextBox>
+								</UniformGrid>
+							</Border>
+							<!--Formats-->
+							<Border>
+								<UniformGrid Columns="1">
+									<ComboBox Name="UpdateFormatNameID"></ComboBox>
+									<TextBlock>Edit format name</TextBlock>
+									<TextBox Name="UpdateFormatName"></TextBox>
+								</UniformGrid>
+							</Border>
+							<!--Genres-->
+							<Border>
+								<UniformGrid Columns="1">
+									<ComboBox Name="UpdateGenreNameID"></ComboBox>
+									<TextBlock>Edit genre name</TextBlock>
+									<TextBox Name="UpdateGenreName"></TextBox>
+								</UniformGrid>
+							</Border>
+						</UniformGrid>
+						<UniformGrid Grid.Column="3" Columns="1" Background="#7F800000">
+							<Border BorderThickness="2">
+								<Grid>
+									<TextBlock Panel.ZIndex="1" MouseDown="UpdateActor" Cursor="Hand">Update actor</TextBlock>
+									<Viewbox Stretch="Uniform">
+										<Button MouseDown="UpdateActor" Cursor="Hand">
+											<Button.Clip>
+												<EllipseGeometry Center="40,50" RadiusX="60" RadiusY="50"/>
+											</Button.Clip>
+										</Button>
+									</Viewbox>
+								</Grid>
+							</Border>
+							<Border BorderThickness="2">
+								<Grid>
+									<TextBlock Panel.ZIndex="1" MouseDown="UpdateDirector" Cursor="Hand">Update director</TextBlock>
+									<Viewbox Stretch="Uniform">
+										<Button MouseDown="UpdateDirector" Cursor="Hand">
+											<Button.Clip>
+												<EllipseGeometry Center="40,50" RadiusX="60" RadiusY="50"/>
+											</Button.Clip>
+										</Button>
+									</Viewbox>
+								</Grid>
+							</Border>
+							<Border BorderThickness="2">
+								<Grid>
+									<TextBlock Panel.ZIndex="1" MouseDown="UpdateCountry" Cursor="Hand">Update country</TextBlock>
+									<Viewbox Stretch="Uniform">
+										<Button MouseDown="UpdateCountry" Cursor="Hand">
+											<Button.Clip>
+												<EllipseGeometry Center="40,50" RadiusX="60" RadiusY="50"/>
+											</Button.Clip>
+										</Button>
+									</Viewbox>
+								</Grid>
+							</Border>
+							<Border BorderThickness="2">
+								<Grid>
+									<TextBlock Panel.ZIndex="1" MouseDown="UpdateLang" Cursor="Hand">Update language</TextBlock>
+									<Viewbox Stretch="Uniform">
+										<Button MouseDown="UpdateLang" Cursor="Hand">
+											<Button.Clip>
+												<EllipseGeometry Center="40,50" RadiusX="60" RadiusY="50"/>
+											</Button.Clip>
+										</Button>
+									</Viewbox>
+								</Grid>
+							</Border>
+							<Border BorderThickness="2">
+								<Grid>
+									<TextBlock Panel.ZIndex="1" MouseDown="UpdateFormat" Cursor="Hand">Update format</TextBlock>
+									<Viewbox Stretch="Uniform">
+										<Button MouseDown="UpdateFormat" Cursor="Hand">
+											<Button.Clip>
+												<EllipseGeometry Center="40,50" RadiusX="60" RadiusY="50"/>
+											</Button.Clip>
+										</Button>
+									</Viewbox>
+								</Grid>
+							</Border>
+							<Border BorderThickness="2">
+								<Grid>
+									<TextBlock Panel.ZIndex="1" MouseDown="UpdateGenre" Cursor="Hand">Update genre</TextBlock>
+									<Viewbox Stretch="Uniform">
+										<Button MouseDown="UpdateGenre" Cursor="Hand">
+											<Button.Clip>
+												<EllipseGeometry Center="40,50" RadiusX="60" RadiusY="50"/>
+											</Button.Clip>
+										</Button>
+									</Viewbox>
+								</Grid>
+							</Border>
 						</UniformGrid>
 					</Grid>
 				</TabItem>

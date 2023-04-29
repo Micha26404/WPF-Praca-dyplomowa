@@ -62,6 +62,10 @@ namespace WPF
 
 			//disable order return date
 			OrderFormReturnDate.IsEnabled = false;
+
+			MovieClearForm();
+			ClientClearForm();
+			OrderClearForm();
 		}
 		DataTable movies_dt = new DataTable();
 		DataTable clients_dt = new DataTable();
@@ -69,15 +73,16 @@ namespace WPF
 		public void MoviesGridRefresh() {
 			getquery(movies_dt,
 					"Select movies.id, movies.name as title, movies.year, movies.duration, movies.age," +
-					"CONCAT(genres.name,' ',genres.id) as genre," +
+					"CASE WHEN genres.id <> 1 THEN CONCAT(genres.name,' ',genres.id) END AS genre," +
 					"movies.price," +
-					"CONCAT(formats.name,' ',formats.id) as format," +
-					"CONCAT(directors.last_name,' ',directors.first_name,' ',directors.id) as director," +
-					"CONCAT(actors.last_name,' ',actors.first_name,' ',actors.id) as 'lead actor'," +
-					"CONCAT(countries.name,' ',countries.id) as country," +
-					"CONCAT(langs.name,' ',langs.id) as language," +
+					"CASE WHEN formats.id <> 1 THEN CONCAT(formats.name,' ',formats.id) END AS format," +
+					"CASE WHEN directors.id <> 1 THEN CONCAT(directors.last_name,' ',directors.first_name,' ',directors.id) END AS director," +
+					"CASE WHEN actors.id <> 1 THEN CONCAT(actors.last_name,' ',actors.first_name,' ',actors.id) END AS 'lead actor'," +
+					"CASE WHEN countries.id <> 1 THEN CONCAT(countries.name,' ',countries.id) END AS country," +
+					"CASE WHEN langs.id <> 1 THEN CONCAT(langs.name,' ',langs.id) END AS language," +
 					"movies.left_count as 'left copies'," +
-					"movies.total_count as 'all copies',movies.plot, " +
+					"movies.total_count as 'all copies'," +
+					"movies.plot as plot, " +
 					"CASE " +
 					"	WHEN poster_path IS NULL THEN 'no' " +
 					"	WHEN poster_path IS NOT NULL THEN 'yes' END AS poster " +
@@ -285,7 +290,6 @@ namespace WPF
 			con.Close();
 
 			//populate rows
-			combo.Items.Add("null");
 			string row = "";
 			for (int i = 0; i < dtRecord.Rows.Count; i++)
 			{
@@ -508,10 +512,10 @@ namespace WPF
 				exists = item == OrderFormClientLNFNID.Text;
 				if (exists) break;
 			}
-			if (exists == false) OrderFormClientLNFNID.Text = "null";
+			if (exists == false) OrderFormClientLNFNID.Text = "null 1";
 
 			//Proceed on client and movie set
-			if (OrderFormClientLNFNID.Text != "null" && OrderFormMovieID.Text != "")
+			if (OrderFormClientLNFNID.Text != "null 1" && OrderFormMovieID.Text != "")
 			{
 				//get number of copies left available
 				int copies_left = 0;
@@ -640,8 +644,8 @@ namespace WPF
 						DateTime testRentDate = new DateTime(rentyy, rentmm, rentdd);
 						DateTime testDueDate = new DateTime(test.Year, test.Month, test.Day);
 
-						int correct = testDueDate.CompareTo(testRentDate);
-						if (correct >= 0)
+						int later = testDueDate.CompareTo(testRentDate);
+						if (later >= 0)
 						{
 							duedd = test.Day;
 							duemm = test.Month;
@@ -649,12 +653,21 @@ namespace WPF
 						}
 						else msg += "Due date lower than rent date. Today +3 days will be set\n";
 					}
-					if (!DateTime.TryParse(OrderFormReturnDate.Text, out test)) msg += "Invalid due date. Today will be set";
+					if (!DateTime.TryParse(OrderFormReturnDate.Text, out test)) msg += "Invalid return date. Today will be set";
 					else
 					{
-						returndd = test.Day;
-						returnmm = test.Month;
-						returnyy = test.Year;
+						//set due date if not lower than rent date
+						DateTime testDueDate = new DateTime(test.Year, test.Month, test.Day);
+						DateTime testReturnDate = new DateTime(returnyy, returnmm, returndd);
+
+						int later = testDueDate.CompareTo(testReturnDate);
+						if (later >= 0)
+						{
+							returndd = test.Day;
+							returnmm = test.Month;
+							returnyy = test.Year;
+						}
+						else msg += "Return date lower than due date. Today will be set\n";
 					}
 					DateTime RentDate = new DateTime(rentyy, rentmm, rentdd);
 					DateTime DueDate = new DateTime(dueyy, duemm, duedd);
@@ -787,7 +800,7 @@ namespace WPF
 				exists = item == MovieFormCountryNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormCountryNameID.Text = "null";
+			if (exists == false) MovieFormCountryNameID.Text = "empty 1";
 
 			//lang
 			exists = false;
@@ -796,7 +809,7 @@ namespace WPF
 				exists = item == MovieFormLangNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormLangNameID.Text = "null";
+			if (exists == false) MovieFormLangNameID.Text = "empty 1";
 
 			//genre
 			exists = false;
@@ -805,7 +818,7 @@ namespace WPF
 				exists = item == MovieFormGenreNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormGenreNameID.Text = "null";
+			if (exists == false) MovieFormGenreNameID.Text = "empty 1";
 
 			//director
 			exists = false;
@@ -814,7 +827,7 @@ namespace WPF
 				exists = item == MovieFormDirectorLNFNID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormDirectorLNFNID.Text = "null";
+			if (exists == false) MovieFormDirectorLNFNID.Text = "empty 1";
 
 			//actor
 			exists = false;
@@ -823,7 +836,7 @@ namespace WPF
 				exists = item == MovieFormActorLNFNID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormActorLNFNID.Text = "null";
+			if (exists == false) MovieFormActorLNFNID.Text = "empty 1";
 
 			//format
 			exists = false;
@@ -832,11 +845,11 @@ namespace WPF
 				exists = item == MovieFormFormatNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormFormatNameID.Text = "null";
+			if (exists == false) MovieFormFormatNameID.Text = "empty 1";
 
 			//get country id from combobox
 			string country_id = "1";
-			if (MovieFormCountryNameID.Text != "null")	country_id = MovieFormCountryNameID.Text.Split(' ').Last();
+			if (MovieFormCountryNameID.Text != "empty 1")country_id = MovieFormCountryNameID.Text.Split(' ').Last();
 			//get year
 			string year = "0";
 			if (MovieFormYear.Text != "")				year = MovieFormYear.Text;
@@ -856,23 +869,23 @@ namespace WPF
 			string price = "0";
 			if (MovieFormPrice.Text != "")				price = MovieFormPrice.Text;
 			//get plot premise
-			string plot = "Premise unknown";
+			string plot = "";
 			if (MovieFormPlot.Text != "")				plot = MovieFormPlot.Text;
 			//get lang_id from combobox
 			string lang_id = "1";
-			if (MovieFormLangNameID.Text != "null")		lang_id = MovieFormLangNameID.Text.Split(' ').Last();
+			if (MovieFormLangNameID.Text != "empty 1")		lang_id = MovieFormLangNameID.Text.Split(' ').Last();
 			//get actor_id from combobox
 			string actor_id = "1";
-			if (MovieFormActorLNFNID.Text != "null")	actor_id = MovieFormActorLNFNID.Text.Split(' ').Last();
+			if (MovieFormActorLNFNID.Text != "empty 1")	actor_id = MovieFormActorLNFNID.Text.Split(' ').Last();
 			//get director_id from combobox
 			string director_id = "1";
-			if (MovieFormDirectorLNFNID.Text != "null") director_id = MovieFormDirectorLNFNID.Text.Split(' ').Last();
+			if (MovieFormDirectorLNFNID.Text != "empty 1") director_id = MovieFormDirectorLNFNID.Text.Split(' ').Last();
 			//get format_id from combobox
 			string format_id = "1";
-			if (MovieFormFormatNameID.Text != "null")	format_id = MovieFormFormatNameID.Text.Split(' ').Last();
+			if (MovieFormFormatNameID.Text != "empty 1")	format_id = MovieFormFormatNameID.Text.Split(' ').Last();
 			//get genre_id from combobox
 			string genre_id = "1";
-			if (MovieFormFormatNameID.Text != "null")	genre_id = MovieFormGenreNameID.Text.Split(' ').Last();
+			if (MovieFormFormatNameID.Text != "empty 1")	genre_id = MovieFormGenreNameID.Text.Split(' ').Last();
 			
 			//poster_path and trailer_path must be set in their respective tabs
 			
@@ -907,7 +920,7 @@ namespace WPF
 					}
 			}
 			//add mode no title set
-			else if (mode == false && MovieFormTitle.Text == "") MessageBox.Show("Movie title not set");
+			else if (mode == false && MovieFormTitle.Text == "") MessageBox.Show("Fill movie title");
 			//edit mode
 			else if (mode = true && MovieFormID.Text != "")
 			{
@@ -960,15 +973,15 @@ namespace WPF
 			MovieFormPrice.Text = null;
 			MovieFormCopiesLeft.Text = null;
 			MovieFormCopiesTotal.Text = null;
-			MovieFormPlot.Text = "Initial Premise";
+			MovieFormPlot.Text = null;
 
 			//comboboxes
-			MovieFormGenreNameID.Text = "null";
-			MovieFormFormatNameID.Text = "null";
-			MovieFormDirectorLNFNID.Text = "null";
-			MovieFormActorLNFNID.Text = "null";
-			MovieFormCountryNameID.Text = "null";
-			MovieFormLangNameID.Text = "null";
+			MovieFormGenreNameID.Text = "empty 1";
+			MovieFormFormatNameID.Text = "empty 1";
+			MovieFormDirectorLNFNID.Text = "empty 1";
+			MovieFormActorLNFNID.Text = "empty 1";
+			MovieFormCountryNameID.Text = "empty 1";
+			MovieFormLangNameID.Text = "empty 1";
 		}
 		//Clear client form
 		public void ClientClearForm()
@@ -2215,11 +2228,6 @@ namespace WPF
 		private void OrdersCatalog_LoadingRow(object sender, DataGridRowEventArgs e)
 		{
 			OrdersCount.Text = "Number of items in table: " + OrdersCatalog.Items.Count.ToString();
-		}
-
-		private void OrderFormRentDate_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-		{
-
 		}
 	}
 }

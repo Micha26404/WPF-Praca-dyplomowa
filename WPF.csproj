@@ -148,8 +148,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="backgrounds\wp2293437-earth-from-space-wallpapers.jpg" />
-    <Resource Include="backgrounds\wallpapersden.com_milky-way-starry-sky-landscape_2499x1406.jpg" />
     <Resource Include="icons\media\circled-pause.png" />
     <Resource Include="icons\media\circled-play.png" />
     <Resource Include="icons\media\rewind-button-round.png" />
@@ -162,8 +160,6 @@
     <Resource Include="icons\media\delete-link.png" />
     <Resource Include="icons\media\edit-link.png" />
     <Resource Include="icons\media\link.png" />
-    <Resource Include="backgrounds\treeonthelonelyisland.jpg" />
-    <Resource Include="backgrounds\Arizona-storm.jpg" />
     <Resource Include="backgrounds\night-over-sasiq-sivash-lake-vf.jpg" />
     <Resource Include="icons\cinema\cinema.png" />
     <Resource Include="icons\media\easel.png" />
