@@ -72,20 +72,20 @@ namespace WPF
 		DataTable orders_dt = new DataTable();
 		public void MoviesGridRefresh() {
 			getquery(movies_dt,
-					"Select movies.id, movies.name as title, movies.year, movies.duration, movies.age," +
-					"CASE WHEN genres.id <> 1 THEN CONCAT(genres.name,' ',genres.id) END AS genre," +
-					"movies.price," +
-					"CASE WHEN formats.id <> 1 THEN CONCAT(formats.name,' ',formats.id) END AS format," +
-					"CASE WHEN directors.id <> 1 THEN CONCAT(directors.last_name,' ',directors.first_name,' ',directors.id) END AS director," +
-					"CASE WHEN actors.id <> 1 THEN CONCAT(actors.last_name,' ',actors.first_name,' ',actors.id) END AS 'lead actor'," +
-					"CASE WHEN countries.id <> 1 THEN CONCAT(countries.name,' ',countries.id) END AS country," +
-					"CASE WHEN langs.id <> 1 THEN CONCAT(langs.name,' ',langs.id) END AS language," +
-					"movies.left_count as 'left copies'," +
-					"movies.total_count as 'all copies'," +
-					"movies.plot as plot, " +
+					"Select movies.id as ID, movies.name as Title, movies.year as Year, movies.duration as Duration, movies.age as Age," +
+					"CASE WHEN genres.id <> 1 THEN CONCAT(genres.name,' ',genres.id) END AS Genre," +
+					"movies.price as Price," +
+					"CASE WHEN formats.id <> 1 THEN CONCAT(formats.name,' ',formats.id) END AS Format," +
+					"CASE WHEN directors.id <> 1 THEN CONCAT(directors.last_name,' ',directors.first_name,' ',directors.id) END AS Director," +
+					"CASE WHEN actors.id <> 1 THEN CONCAT(actors.last_name,' ',actors.first_name,' ',actors.id) END AS 'Lead actor'," +
+					"CASE WHEN countries.id <> 1 THEN CONCAT(countries.name,' ',countries.id) END AS Country," +
+					"CASE WHEN langs.id <> 1 THEN CONCAT(langs.name,' ',langs.id) END AS Language," +
+					"movies.left_count as 'Left copies'," +
+					"movies.total_count as 'All copies'," +
+					"movies.plot as Plot, " +
 					"CASE " +
-					"	WHEN poster_path IS NULL THEN 'no' " +
-					"	WHEN poster_path IS NOT NULL THEN 'yes' END AS poster " +
+					"	WHEN poster_path IS NULL THEN 'No' " +
+					"	WHEN poster_path IS NOT NULL THEN 'Yes' END AS Poster " +
 					//"CASE " +
 					//"	WHEN poster_path IS NULL THEN 'no' " +
 					//"	WHEN trailer_path IS NOT NULL THEN 'yes' END AS trailer " +
@@ -99,18 +99,16 @@ namespace WPF
 		}
 		public void ClientsGridRefresh()
 		{
-			getquery(clients_dt, "Select id,last_name as 'last name', first_name as 'first name',phone, email from clients");
+			getquery(clients_dt, "Select id as ID,last_name as 'Last name', first_name as 'First name', phone as Phone, email as Email from clients");
 		}
 		public void OrdersGridRefresh()
 		{
-			getquery(orders_dt, "Select orders.id,CONCAT(clients.last_name,' ',clients.first_name,' ',clients.id) as client," +
-				"CONCAT(movies.name,' ',movies.id) as movie,movies.year, " +
-				"CASE WHEN orders.rent_date IS NULL THEN '' " +
-				"	WHEN orders.rent_date IS NOT NULL THEN orders.rent_date END AS 'rent date', " +
-				"CASE WHEN orders.due_date IS NULL THEN '' " +
-				"	WHEN orders.due_date IS NOT NULL THEN orders.due_date END AS 'due date', " +
-				"CASE WHEN orders.return_date IS NOT NULL THEN orders.return_date END AS 'return date'," +
-				"CASE WHEN orders.return_date IS NULL THEN datediff(day,GETDATE(),orders.due_date) END AS 'days left' " +
+			getquery(orders_dt, "Select orders.id as ID,CONCAT(clients.last_name,' ',clients.first_name,' ',clients.id) as Client," +
+				"CONCAT(movies.name,' ',movies.id) as Movie, movies.year as Year, " +
+				"CASE WHEN orders.rent_date IS NOT NULL THEN orders.rent_date END AS 'Rent date', " +
+				"CASE WHEN orders.due_date IS NOT NULL THEN orders.due_date END AS 'Due date', " +
+				"CASE WHEN orders.return_date IS NOT NULL THEN orders.return_date END AS 'Return date'," +
+				"CASE WHEN orders.return_date IS NULL THEN datediff(day,GETDATE(),orders.due_date) END AS 'Days left' " +
 				"from orders " +
 				"join movies on movies.id=orders.movie_id " +
 				"join clients on clients.id=orders.client_id");
