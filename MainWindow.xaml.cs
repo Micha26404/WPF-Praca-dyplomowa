@@ -302,19 +302,19 @@ namespace WPF
 		public int getmovie_id() {
 			//get selected item id from selected row
 			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
-			return int.Parse(rowview.Row["id"].ToString());
+			return int.Parse(rowview.Row["ID"].ToString());
 		}
 		public int getclient_id()
 		{
 			//get selected item id from selected row
 			DataRowView rowview = ClientsCatalog.SelectedItem as DataRowView;
-			return int.Parse(rowview.Row["id"].ToString());
+			return int.Parse(rowview.Row["ID"].ToString());
 		}
 		public int getorder_id()
 		{
 			//get selected item id from selected row
 			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
-			return int.Parse(rowview.Row["id"].ToString());
+			return int.Parse(rowview.Row["ID"].ToString());
 		}
 		//Trailer panel
 		//action on trailer load
@@ -371,9 +371,9 @@ namespace WPF
 		{
 				//set movie info in poster panel
 				DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
-				MovieTrailerID.Text = rowview.Row["id"].ToString();
-				MovieTrailerTitle.Text = rowview.Row["title"].ToString();
-				MovieTrailerYear.Text = rowview.Row["year"].ToString();
+				MovieTrailerID.Text = rowview.Row["ID"].ToString();
+				MovieTrailerTitle.Text = rowview.Row["Title"].ToString();
+				MovieTrailerYear.Text = rowview.Row["Year"].ToString();
 
 				//get path to file
 				string trailer_path = getquery("select trailer_path from movies where id=" + MovieTrailerID.Text);
@@ -426,6 +426,7 @@ namespace WPF
 				Trailer.Source = null;
 				//update database
 				setquery("update movies set trailer_path=null where id=" + MovieTrailerID.Text);
+				MoviesGridRefresh();
 			}
 			else if (MoviePosterID.Text == "ID") MessageBox.Show("Load trailer from movies catalog first");
 		}
@@ -486,9 +487,9 @@ namespace WPF
 
 				//set movie info in poster panel
 				DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
-				MoviePosterID.Text = rowview.Row["id"].ToString();
-				MoviePosterTitle.Text = rowview.Row["title"].ToString();
-				MoviePosterYear.Text = rowview.Row["year"].ToString();
+				MoviePosterID.Text = rowview.Row["ID"].ToString();
+				MoviePosterTitle.Text = rowview.Row["Title"].ToString();
+				MoviePosterYear.Text = rowview.Row["Year"].ToString();
 
 				//get path to file if value present
 				string poster_path = getquery("select poster_path from movies where id=" + getmovie_id());
@@ -697,7 +698,7 @@ namespace WPF
 					}
 					catch ( Exception ex ){ MessageBox.Show(ex.Message); }
 				}else if (mode == true && OrderFormID.Text == "") MessageBox.Show("Order id not set. Use edit context menu option in orders catalog");
-			}else MessageBox.Show("Fill client and movie");
+			}else MessageBox.Show("Select movie to rent in catalog and select client");
 		}
 		private void SubmitClient(object sender, MouseButtonEventArgs e)
 		{
@@ -956,7 +957,7 @@ namespace WPF
 		private void MovieItem_plot(object sender, RoutedEventArgs e)
 		{
 			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
-			string plot = rowview.Row["plot"].ToString();
+			string plot = rowview.Row["Plot"].ToString();
 			MessageBox.Show(plot);
 		}
 		//Fills existing movie data into form in admin panel (rent movie option)
@@ -1009,14 +1010,12 @@ namespace WPF
 			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
 
 			OrderFormID.Text = null;
-			OrderFormMovieID.Text = rowview.Row["id"].ToString();
+			OrderFormMovieID.Text = rowview.Row["ID"].ToString();
 
 			//combobox
 			OrderFormClientLNFNID.Text = null;
 
 			//set default dates
-			//Console.WriteLine(getquery("select GETDATE()"));
-			//Console.WriteLine(getquery("select GETDATE()+3"));
 			OrderFormRentDate.Text = getquery("select GETDATE()");
 			OrderFormDueDate.Text = getquery("select GETDATE()+3");
 			OrderFormReturnDate.Text = null;
@@ -1032,25 +1031,24 @@ namespace WPF
 			//autofill form
 			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
 
-			MovieFormID.Text = rowview.Row["id"].ToString();
-			MovieFormTitle.Text = rowview.Row["title"].ToString();
-			MovieFormYear.Text = rowview.Row["year"].ToString();
-			MovieFormDuration.Text = rowview.Row["duration"].ToString();
-			MovieFormAge.Text = rowview.Row["age"].ToString();
-			MovieFormPrice.Text = rowview.Row["price"].ToString();
-			MovieFormCopiesLeft.Text = rowview.Row["left copies"].ToString();
-			MovieFormCopiesTotal.Text = rowview.Row["all copies"].ToString();
-			MovieFormPlot.Text = rowview.Row["plot"].ToString();
+			MovieFormID.Text = rowview.Row["ID"].ToString();
+			MovieFormTitle.Text = rowview.Row["Title"].ToString();
+			MovieFormYear.Text = rowview.Row["Year"].ToString();
+			MovieFormDuration.Text = rowview.Row["Duration"].ToString();
+			MovieFormAge.Text = rowview.Row["Age"].ToString();
+			MovieFormPrice.Text = rowview.Row["Price"].ToString();
+			MovieFormCopiesLeft.Text = rowview.Row["Left copies"].ToString();
+			MovieFormCopiesTotal.Text = rowview.Row["All copies"].ToString();
+			MovieFormPlot.Text = rowview.Row["Plot"].ToString();
 
 			//comboboxes
-			MovieFormGenreNameID.Text = rowview.Row["genre"].ToString();
-			MovieFormFormatNameID.Text = rowview.Row["format"].ToString();
-			MovieFormDirectorLNFNID.Text = rowview.Row["director"].ToString();
-			MovieFormActorLNFNID.Text = rowview.Row["lead actor"].ToString();
-			MovieFormCountryNameID.Text = rowview.Row["country"].ToString();
-			MovieFormLangNameID.Text = rowview.Row["language"].ToString();
+			MovieFormGenreNameID.Text = rowview.Row["Genre"].ToString();
+			MovieFormFormatNameID.Text = rowview.Row["Format"].ToString();
+			MovieFormDirectorLNFNID.Text = rowview.Row["Director"].ToString();
+			MovieFormActorLNFNID.Text = rowview.Row["Lead actor"].ToString();
+			MovieFormCountryNameID.Text = rowview.Row["Country"].ToString();
+			MovieFormLangNameID.Text = rowview.Row["Language"].ToString();
 
-			//MessageBox.Show("Movie data set. Edit and submit changes in admin panel.");
 			MessageBox.Show("Movie data set. Edit and submit changes in admin panel.");
 		}
 		private void MovieItem_delete(object sender, RoutedEventArgs e)
@@ -1080,7 +1078,7 @@ namespace WPF
 					{
 					//MessageBox.Show(ex.Message);
 					MessageBox.Show("Couldn't remove row referenced from other row");
-				}
+					}
 				}
 				MoviesGridRefresh();
 		}
@@ -1099,10 +1097,10 @@ namespace WPF
 			//fill form
 			ClientFormID.Text = getclient_id().ToString();
 			DataRowView rowview = ClientsCatalog.SelectedItem as DataRowView;
-			ClientFormLastName.Text = rowview.Row["last name"].ToString();
-			ClientFormFirstName.Text = rowview.Row["first name"].ToString();
-			ClientFormEmail.Text = rowview.Row["email"].ToString();
-			ClientFormPhone.Text = rowview.Row["phone"].ToString();
+			ClientFormLastName.Text = rowview.Row["Last name"].ToString();
+			ClientFormFirstName.Text = rowview.Row["First name"].ToString();
+			ClientFormEmail.Text = rowview.Row["Email"].ToString();
+			ClientFormPhone.Text = rowview.Row["Phone"].ToString();
 
 			MessageBox.Show("Client data set. Submit in admin panel.");
 		}
@@ -1133,7 +1131,7 @@ namespace WPF
 			//get selected row
 			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
 			//check null on return date
-			string is_returned = rowview.Row["return date"].ToString();
+			string is_returned = rowview.Row["Return date"].ToString();
 
 			//ensure movie is not returned
 			if (is_returned != null || is_returned != "")
@@ -1208,23 +1206,23 @@ namespace WPF
 			OrderFormID.Text = getorder_id().ToString();
 
 			//get movie id
-			string movie_id = rowview.Row["movie"].ToString().Split().Last();
+			string movie_id = rowview.Row["Movie"].ToString().Split().Last();
 			OrderFormMovieID.Text = movie_id;
 
 			//get client name id
-			string client = rowview.Row["client"].ToString();
+			string client = rowview.Row["Client"].ToString();
 			OrderFormClientLNFNID.Text = client;
 
 			//get rent date
-			string rent_date = rowview.Row["rent date"].ToString();
+			string rent_date = rowview.Row["Rent date"].ToString();
 			OrderFormRentDate.Text = rent_date;
 			
 			//get due date
-			string due_date = rowview.Row["due date"].ToString();
+			string due_date = rowview.Row["Due date"].ToString();
 			OrderFormDueDate.Text = due_date;
 			
 			//get return date
-			string return_date = rowview.Row["return date"].ToString();
+			string return_date = rowview.Row["Return date"].ToString();
 			OrderFormReturnDate.Text = return_date;
 			
 			MessageBox.Show("Order data set. Edit order in admin panel.");
