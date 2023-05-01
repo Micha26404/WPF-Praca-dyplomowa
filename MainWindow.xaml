@@ -991,12 +991,12 @@
 						<!--Mode selection panel-->
 						<UniformGrid Columns="1" Width="60" ToolTip="Mode selection" >
 							<Border>
-								<Grid Background="#198B0000" MouseDown="SelectAddMode">
-									<TextBlock MouseDown="SelectAddMode">Add mode</TextBlock>
-									<Viewbox VerticalAlignment="Bottom">
+								<UniformGrid Columns="1" Background="#198B0000" MouseDown="SelectAddMode">
+									<TextBlock VerticalAlignment="Bottom" MouseDown="SelectAddMode">Add mode</TextBlock>
+									<Viewbox VerticalAlignment="Top">
 										<Image MouseDown="SelectAddMode" Source="icons/add.png" Cursor="Hand"/>
 									</Viewbox>
-								</Grid>
+								</UniformGrid>
 							</Border>
 							<Border>
 								<UniformGrid>
@@ -1014,12 +1014,12 @@
 								</UniformGrid>
 							</Border>
 							<Border>
-								<Grid Background="#B28B0000" MouseDown="SelectEditMode">
-									<TextBlock MouseDown="SelectEditMode" VerticalAlignment="Center">Edit mode</TextBlock>
-									<Viewbox VerticalAlignment="Bottom">
+								<UniformGrid Columns="1" Background="#B28B0000" MouseDown="SelectEditMode">
+									<TextBlock MouseDown="SelectEditMode" VerticalAlignment="Bottom">Edit mode</TextBlock>
+									<Viewbox VerticalAlignment="Top">
 										<Image MouseDown="SelectEditMode"  Source="icons/edit.png" Cursor="Hand"/>
 									</Viewbox>
-								</Grid>
+								</UniformGrid>
 							</Border>
 						</UniformGrid>
 						<!--Current dataset indicator-->
@@ -1415,7 +1415,7 @@
 											<GradientStop Color="Transparent" Offset="0"/>
 										</LinearGradientBrush>
 									</UniformGrid.Background>
-									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" >Submit order</TextBlock>
+									<TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center">Submit order</TextBlock>
 									<Viewbox>
 										<Button MouseDown="SubmitOrder">
 											<Image MouseDown="SubmitOrder" ToolTip="Submit client. Bad values will be replaced with nothing" VerticalAlignment="Top" Source="icons/cinema/two-tickets.png">
