@@ -41,7 +41,7 @@
 		</ControlTemplate>
 		<Style TargetType="Border">
 			<Setter Property="BorderThickness" Value="0.5"></Setter>
-			<Setter Property="BorderBrush" Value="Black"></Setter>
+			<Setter Property="BorderBrush" Value="White"></Setter>
 			<Setter Property="CornerRadius" Value="10"></Setter>
 		</Style>
 		<Style TargetType="Slider">
@@ -97,16 +97,14 @@
 				<Border
                   x:Name="Border" 
                   Grid.ColumnSpan="2"
-                  CornerRadius="0"
+                  CornerRadius="10"
 				  Background="Maroon"
-                  BorderBrush="Red"
                   BorderThickness="1"/>
 				<Border 
                   Grid.Column="0"
-                  CornerRadius="0" 
+                  CornerRadius="10" 
                   Margin="1" 
-                  Background="Maroon" 
-                  BorderBrush="Red"/>
+                  Background="Maroon"/>
 				<Path 
                   x:Name="Arrow"
                   Grid.Column="1"     
@@ -138,13 +136,12 @@
 			<Setter Property="SelectedIndex" Value="0"></Setter>
 			<Setter Property="IsEditable" Value="True"></Setter>
 			<Setter Property="ToolTip" Value="Nonexistent value won't be submitted"></Setter>
-			<Setter Property="Opacity" Value="0.95"/>
 			<Setter Property="UseLayoutRounding" Value="true"/>
 			<Setter Property="OverridesDefaultStyle" Value="true"/>
 			<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
 			<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
 			<Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-			<Setter Property="MinWidth" Value="120"/>
+			<Setter Property="MinWidth" Value="50"/>
 			<Setter Property="MinHeight" Value="20"/>
 			<Setter Property="Foreground" Value="White"/>
 			<Setter Property="Template">
@@ -162,7 +159,6 @@
 							<ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                            Margin="3,3,23,3"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left" />
 							<TextBox x:Name="PART_EditableTextBox"
@@ -170,7 +166,6 @@
                             Template="{StaticResource ComboBoxTextBox}" 
                             HorizontalAlignment="Left" 
                             VerticalAlignment="Center" 
-                            Margin="3,3,23,3"
                             Focusable="True"
 							Background="Maroon"
                             Foreground="White"
@@ -190,9 +185,8 @@
 									<Border 
                                 x:Name="DropDownBorder"
                                 Background="Maroon"
-                                BorderThickness="1"
-                                BorderBrush="Red"/>
-									<ScrollViewer Margin="4,6,4,6" UseLayoutRounding="True">
+                                BorderThickness="1"/>
+									<ScrollViewer UseLayoutRounding="True">
 										<StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
 									</ScrollViewer>
 								</Grid>
@@ -210,7 +204,6 @@
 							</Trigger>
 							<Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="True">
 								<Setter TargetName="DropDownBorder" Property="CornerRadius" Value="10"/>
-								<Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
 							</Trigger>
 							<Trigger Property="IsEditable"  Value="true">
 								<Setter Property="IsTabStop" Value="false"/>
@@ -314,6 +307,7 @@
 			</Style.Triggers>
 		</Style>
 		<Style TargetType="{x:Type TextBlock}">
+			<Setter Property="TextWrapping" Value="WrapWithOverflow"></Setter>
 			<Setter Property="TextAlignment" Value="Center"></Setter>
 			<Setter Property="VerticalAlignment" Value="Center"></Setter>
 			<Setter Property="HorizontalAlignment" Value="Center"></Setter>
@@ -326,29 +320,6 @@
 					</RadialGradientBrush>
 				</Setter.Value>
 			</Setter>
-			<Setter Property="TextWrapping" Value="WrapWithOverflow"></Setter>
-			<Style.Triggers>
-				<Trigger Property="IsMouseOver" Value="True">
-					<Setter Property="Background">
-						<Setter.Value>
-							<RadialGradientBrush>
-								<GradientStop Color="Red" Offset="0.9"/>
-								<GradientStop Color="DarkRed" Offset="1"/>
-							</RadialGradientBrush>
-						</Setter.Value>
-					</Setter>
-				</Trigger>
-				<Trigger Property="IsKeyboardFocusWithin" Value="True">
-					<Setter Property="Background">
-						<Setter.Value>
-							<RadialGradientBrush>
-								<GradientStop Color="Red" Offset="0.9"/>
-								<GradientStop Color="DarkRed" Offset="1"/>
-							</RadialGradientBrush>
-						</Setter.Value>
-					</Setter>
-				</Trigger>
-			</Style.Triggers>
 		</Style>
 		<Style TargetType="TextBox">
 			<Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -365,8 +336,8 @@
 					</RadialGradientBrush>
 				</Setter.Value>
 			</Setter>
-			<Setter Property="BorderBrush" Value="Black"></Setter>
-			<Setter Property="BorderThickness" Value="1"></Setter>
+			<Setter Property="BorderBrush" Value="White"></Setter>
+			<Setter Property="BorderThickness" Value="0.8"></Setter>
 			<Setter Property="SelectionBrush" Value="White"></Setter>
 			<Setter Property="TextWrapping" Value="WrapWithOverflow"></Setter>
 			<Setter Property="AcceptsReturn" Value="True"></Setter>
@@ -1553,7 +1524,7 @@
 						<!--Add new atribute-->
 						<UniformGrid  Grid.Column="1" Columns="1" Background="#7F800000">
 							<!--Actors-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 								<UniformGrid Grid.Column="1" Rows="1">
 									<Border>
 										<UniformGrid Rows="3">
@@ -1572,7 +1543,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Directors-->
-							<Border BorderThickness="2">
+							<Border BorderThickness="1">
 								<UniformGrid Rows="1">
 									<Border>
 										<UniformGrid Rows="3">
@@ -1591,7 +1562,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Countries-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 								<UniformGrid Rows="1">
 									<Border>
 										<UniformGrid Columns="1">
@@ -1608,7 +1579,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Languages-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 								<UniformGrid Rows="1">
 									<Border>
 										<UniformGrid Columns="1">
@@ -1625,7 +1596,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Formats-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 								<UniformGrid Rows="1">
 									<Border>
 										<UniformGrid Columns="1">
@@ -1643,7 +1614,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Genres-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 								<UniformGrid Rows="1">
 									<Border>
 										<UniformGrid Columns="1">
@@ -1663,7 +1634,7 @@
 						<!--Update existing atribute-->
 						<UniformGrid  Grid.Column="2" Columns="1" Background="#7F800000">
 							<!--Actors-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 									<UniformGrid Columns="1">
 									<ComboBox Name="UpdateActorLNFNID"></ComboBox>
 										<UniformGrid Rows="1">
@@ -1677,7 +1648,7 @@
 									</UniformGrid>
 							</Border>
 							<!--Directors-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 								<UniformGrid Columns="1">
 									<ComboBox Name="UpdateDirectorLNFNID"></ComboBox>
 										<UniformGrid Rows="1">
@@ -1691,7 +1662,7 @@
 									</UniformGrid>
 							</Border>
 							<!--Countries-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 								<UniformGrid Columns="1">
 									<ComboBox Name="UpdateCountryNameID"></ComboBox>
 									<TextBlock>New country name</TextBlock>
@@ -1699,7 +1670,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Languages-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 								<UniformGrid Columns="1">
 									<ComboBox Name="UpdateLangNameID"></ComboBox>
 									<TextBlock>New language name</TextBlock>
@@ -1707,7 +1678,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Formats-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 								<UniformGrid Columns="1">
 									<ComboBox Name="UpdateFormatNameID"></ComboBox>
 									<TextBlock>New format name</TextBlock>
@@ -1715,7 +1686,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Genres-->
-								<Border BorderThickness="2">
+								<Border BorderThickness="1">
 								<UniformGrid Columns="1">
 									<ComboBox Name="UpdateGenreNameID"></ComboBox>
 									<TextBlock>New genre name</TextBlock>
