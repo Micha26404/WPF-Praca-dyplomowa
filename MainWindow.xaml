@@ -99,11 +99,13 @@
                   Grid.ColumnSpan="2"
                   CornerRadius="10"
 				  Background="Maroon"
+				  BorderBrush="Black"
                   BorderThickness="1"/>
 				<Border 
                   Grid.Column="0"
                   CornerRadius="10" 
                   Margin="1" 
+				  BorderBrush="Black"
                   Background="Maroon"/>
 				<Path 
                   x:Name="Arrow"
@@ -133,7 +135,6 @@
 			<Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
 		</ControlTemplate>
 		<Style TargetType="ComboBox">
-			<Setter Property="SelectedIndex" Value="0"></Setter>
 			<Setter Property="IsEditable" Value="True"></Setter>
 			<Setter Property="ToolTip" Value="Nonexistent value won't be submitted"></Setter>
 			<Setter Property="UseLayoutRounding" Value="true"/>
@@ -169,6 +170,8 @@
                             Focusable="True"
 							Background="Maroon"
                             Foreground="White"
+							BorderBrush="Black"
+							BorderThickness="1"
                             Visibility="Hidden"
                             IsReadOnly="{TemplateBinding IsReadOnly}"/>
 							<Popup 
@@ -222,6 +225,8 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type ComboBoxItem}">
 						<Border Name="Border"
+								BorderBrush="Black"
+								BorderThickness="1"
                               UseLayoutRounding="True">
 							<ContentPresenter />
 						</Border>

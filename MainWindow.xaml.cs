@@ -799,7 +799,7 @@ namespace WPF
 				exists = item == MovieFormCountryNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormCountryNameID.Text = "empty 1";
+			if (exists == false) MovieFormCountryNameID.Text = "- 1";
 
 			//lang
 			exists = false;
@@ -808,7 +808,7 @@ namespace WPF
 				exists = item == MovieFormLangNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormLangNameID.Text = "empty 1";
+			if (exists == false) MovieFormLangNameID.Text = "- 1";
 
 			//genre
 			exists = false;
@@ -817,7 +817,7 @@ namespace WPF
 				exists = item == MovieFormGenreNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormGenreNameID.Text = "empty 1";
+			if (exists == false) MovieFormGenreNameID.Text = "- 1";
 
 			//director
 			exists = false;
@@ -826,7 +826,7 @@ namespace WPF
 				exists = item == MovieFormDirectorLNFNID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormDirectorLNFNID.Text = "empty 1";
+			if (exists == false) MovieFormDirectorLNFNID.Text = "- 1";
 
 			//actor
 			exists = false;
@@ -835,7 +835,7 @@ namespace WPF
 				exists = item == MovieFormActorLNFNID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormActorLNFNID.Text = "empty 1";
+			if (exists == false) MovieFormActorLNFNID.Text = "- 1";
 
 			//format
 			exists = false;
@@ -844,11 +844,11 @@ namespace WPF
 				exists = item == MovieFormFormatNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) MovieFormFormatNameID.Text = "empty 1";
+			if (exists == false) MovieFormFormatNameID.Text = "- 1";
 
 			//get country id from combobox
 			string country_id = "1";
-			if (MovieFormCountryNameID.Text != "empty 1")country_id = MovieFormCountryNameID.Text.Split(' ').Last();
+			if (MovieFormCountryNameID.Text != "- 1")country_id = MovieFormCountryNameID.Text.Split(' ').Last();
 			//get year
 			string year = "0";
 			if (MovieFormYear.Text != "")				year = MovieFormYear.Text;
@@ -872,19 +872,19 @@ namespace WPF
 			if (MovieFormPlot.Text != "")				plot = MovieFormPlot.Text;
 			//get lang_id from combobox
 			string lang_id = "1";
-			if (MovieFormLangNameID.Text != "empty 1")		lang_id = MovieFormLangNameID.Text.Split(' ').Last();
+			if (MovieFormLangNameID.Text != "- 1")		lang_id = MovieFormLangNameID.Text.Split(' ').Last();
 			//get actor_id from combobox
 			string actor_id = "1";
-			if (MovieFormActorLNFNID.Text != "empty 1")	actor_id = MovieFormActorLNFNID.Text.Split(' ').Last();
+			if (MovieFormActorLNFNID.Text != "- 1")	actor_id = MovieFormActorLNFNID.Text.Split(' ').Last();
 			//get director_id from combobox
 			string director_id = "1";
-			if (MovieFormDirectorLNFNID.Text != "empty 1") director_id = MovieFormDirectorLNFNID.Text.Split(' ').Last();
+			if (MovieFormDirectorLNFNID.Text != "- 1") director_id = MovieFormDirectorLNFNID.Text.Split(' ').Last();
 			//get format_id from combobox
 			string format_id = "1";
-			if (MovieFormFormatNameID.Text != "empty 1")	format_id = MovieFormFormatNameID.Text.Split(' ').Last();
+			if (MovieFormFormatNameID.Text != "- 1")	format_id = MovieFormFormatNameID.Text.Split(' ').Last();
 			//get genre_id from combobox
 			string genre_id = "1";
-			if (MovieFormFormatNameID.Text != "empty 1")	genre_id = MovieFormGenreNameID.Text.Split(' ').Last();
+			if (MovieFormFormatNameID.Text != "- 1")	genre_id = MovieFormGenreNameID.Text.Split(' ').Last();
 			
 			//poster_path and trailer_path must be set in their respective tabs
 			
@@ -975,12 +975,12 @@ namespace WPF
 			MovieFormPlot.Text = null;
 
 			//comboboxes
-			MovieFormGenreNameID.Text = "empty 1";
-			MovieFormFormatNameID.Text = "empty 1";
-			MovieFormDirectorLNFNID.Text = "empty 1";
-			MovieFormActorLNFNID.Text = "empty 1";
-			MovieFormCountryNameID.Text = "empty 1";
-			MovieFormLangNameID.Text = "empty 1";
+			MovieFormGenreNameID.Text = "- 1";
+			MovieFormFormatNameID.Text = "- 1";
+			MovieFormDirectorLNFNID.Text = "- 1";
+			MovieFormActorLNFNID.Text = "- 1";
+			MovieFormCountryNameID.Text = "- 1";
+			MovieFormLangNameID.Text = "- 1";
 		}
 		//Clear client form
 		public void ClientClearForm()
@@ -1763,9 +1763,9 @@ namespace WPF
 				exists = item == UpdateActorLNFNID.Text;
 				if (exists) break;
 			}
-			if (exists == false) UpdateActorLNFNID.Text = "null";
+			if (exists == false) UpdateActorLNFNID.Text = "- 1";
 
-			if (UpdateActorLNFNID.Text != "null")
+			if (UpdateActorLNFNID.Text != "- 1")
 			{
 				//combobox contains last_name first_name id
 				string actor_id = UpdateActorLNFNID.Text.Split(' ').Last();
@@ -1799,9 +1799,9 @@ namespace WPF
 				exists = item == UpdateDirectorLNFNID.Text;
 				if (exists) break;
 			}
-			if (exists == false) UpdateDirectorLNFNID.Text = "null";
+			if (exists == false) UpdateDirectorLNFNID.Text = "- 1";
 
-			if (UpdateDirectorLNFNID.Text != "null")
+			if (UpdateDirectorLNFNID.Text != "- 1")
 			{
 				//combobox contains last_name first_name id
 				string director_id = UpdateDirectorLNFNID.Text.Split(' ').Last();
@@ -1836,9 +1836,9 @@ namespace WPF
 				exists = item == UpdateCountryNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) UpdateCountryNameID.Text = "null";
+			if (exists == false) UpdateCountryNameID.Text = "- 1";
 
-			if (UpdateCountryNameID.Text != "null")
+			if (UpdateCountryNameID.Text != "- 1")
 			{
 				//combobox contains name id
 				string country_id = UpdateCountryNameID.Text.Split(' ').Last();
@@ -1871,9 +1871,9 @@ namespace WPF
 				exists = item == UpdateLangNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) UpdateLangNameID.Text = "null";
+			if (exists == false) UpdateLangNameID.Text = "- 1";
 
-			if (UpdateLangNameID.Text != "null")
+			if (UpdateLangNameID.Text != "- 1")
 			{
 				//combobox contains name id
 				string lang_id = UpdateLangNameID.Text.Split(' ').Last();
@@ -1907,9 +1907,9 @@ namespace WPF
 				exists = item == UpdateFormatNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) UpdateFormatNameID.Text = "null";
+			if (exists == false) UpdateFormatNameID.Text = "- 1";
 
-			if (UpdateFormatNameID.Text != "null")
+			if (UpdateFormatNameID.Text != "- 1")
 			{
 				//combobox contains name id
 				string format_id = UpdateFormatNameID.Text.Split(' ').Last();
@@ -1943,9 +1943,9 @@ namespace WPF
 				exists = item == UpdateGenreNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) UpdateGenreNameID.Text = "null";
+			if (exists == false) UpdateGenreNameID.Text = "- 1";
 
-			if (UpdateGenreNameID.Text != "null")
+			if (UpdateGenreNameID.Text != "- 1")
 			{
 				//combobox contains name id
 				string genre_id = UpdateGenreNameID.Text.Split(' ').Last();
@@ -1980,9 +1980,9 @@ namespace WPF
 				exists = item == DeleteActorLNFNID.Text;
 				if (exists) break;
 			}
-			if (exists == false) DeleteActorLNFNID.Text = "null";
+			if (exists == false) DeleteActorLNFNID.Text = "- 1";
 			
-			if (DeleteActorLNFNID.Text != "null")
+			if (DeleteActorLNFNID.Text != "- 1")
 			{
 				//combobox contains last_name first_name id
 				string actor_id = DeleteActorLNFNID.Text.Split(' ').Last();
@@ -2020,9 +2020,9 @@ namespace WPF
 				exists = item == DeleteDirectorLNFNID.Text;
 				if (exists) break;
 			}
-			if (exists == false) DeleteDirectorLNFNID.Text = "null";
+			if (exists == false) DeleteDirectorLNFNID.Text = "- 1";
 
-			if (DeleteDirectorLNFNID.Text != "null")
+			if (DeleteDirectorLNFNID.Text != "- 1")
 			{
 				//combobox contains last_name first_name id
 				string director_id = DeleteDirectorLNFNID.Text.Split(' ').Last();
@@ -2061,9 +2061,9 @@ namespace WPF
 				exists = item == DeleteCountryNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) DeleteCountryNameID.Text = "null";
+			if (exists == false) DeleteCountryNameID.Text = "- 1";
 
-			if (DeleteCountryNameID.Text != "null")
+			if (DeleteCountryNameID.Text != "- 1")
 			{
 				//combobox contains name id
 				string country_id = DeleteCountryNameID.Text.Split(' ').Last();
@@ -2101,9 +2101,9 @@ namespace WPF
 				exists = item == DeleteLangNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) DeleteLangNameID.Text = "null";
+			if (exists == false) DeleteLangNameID.Text = "- 1";
 
-			if (DeleteLangNameID.Text != "null")
+			if (DeleteLangNameID.Text != "- 1")
 			{
 				//combobox contains name id
 				string lang_id = DeleteLangNameID.Text.Split(' ').Last();
@@ -2141,9 +2141,9 @@ namespace WPF
 				exists = item == DeleteFormatNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) DeleteFormatNameID.Text = "null";
+			if (exists == false) DeleteFormatNameID.Text = "- 1";
 
-			if (DeleteFormatNameID.Text != "null")
+			if (DeleteFormatNameID.Text != "- 1")
 			{
 				//combobox contains name id
 				string format_id = DeleteFormatNameID.Text.Split(' ').Last();
@@ -2182,9 +2182,9 @@ namespace WPF
 				exists = item == DeleteGenreNameID.Text;
 				if (exists) break;
 			}
-			if (exists == false) DeleteGenreNameID.Text = "null";
+			if (exists == false) DeleteGenreNameID.Text = "- 1";
 
-			if (DeleteGenreNameID.Text != "null")
+			if (DeleteGenreNameID.Text != "- 1")
 			{
 				//combobox contains name id
 				string genre_id = DeleteGenreNameID.Text.Split(' ').Last();
