@@ -1597,36 +1597,38 @@ namespace WPF
 		private void SelectAddMode(object sender, MouseButtonEventArgs e)
 		{
 			mode = false;
-			ModeSelected.Text = "add\nmode";
-			ModeSelected.Foreground = Brushes.White;
-			//set radial background
-			RadialGradientBrush radialGradient = new RadialGradientBrush();
-			radialGradient.GradientStops.Add(new GradientStop(Colors.Green, 0.8));
-			radialGradient.GradientStops.Add(new GradientStop(Colors.Transparent, 1.0));
-			radialGradient.Freeze();
+			ModeSelected.Text = "You are now in ADD mode";
+			ModeSelected.Foreground = Brushes.LightGreen;
+            ModeSelected.Background = Brushes.Black;
+            //set radial background
+            RadialGradientBrush radialGradient = new RadialGradientBrush();
+            radialGradient.GradientStops.Add(new GradientStop(Colors.Black, 0.8));
+            radialGradient.GradientStops.Add(new GradientStop(Colors.Transparent, 1.0));
+            radialGradient.Freeze();
 
-			ModeSelected.Background = radialGradient;
-			SubmitPanel.Background = radialGradient;
+            ModeSelected.Background = radialGradient;
+            SubmitPanel.Background = radialGradient;
 
-			//disable order return date
-			OrderFormReturnDate.IsEnabled = false;
+            //disable order return date
+            OrderFormReturnDate.IsEnabled = false;
 		}
 		private void SelectEditMode(object sender, MouseButtonEventArgs e)
 		{
 			mode = true;
-			ModeSelected.Text = "edit\nmode";
+			ModeSelected.Text = "You are now in EDIT mode";
 			ModeSelected.Foreground = Brushes.Yellow;
-			//set radial background
-			RadialGradientBrush radialGradient = new RadialGradientBrush();
-			radialGradient.GradientStops.Add(new GradientStop(Colors.Red, 0.8));
-			radialGradient.GradientStops.Add(new GradientStop(Colors.Transparent, 1.0));
-			radialGradient.Freeze();
+            ModeSelected.Background = Brushes.Black;
+            //set radial background
+            RadialGradientBrush radialGradient = new RadialGradientBrush();
+            radialGradient.GradientStops.Add(new GradientStop(Colors.Black, 0.8));
+            radialGradient.GradientStops.Add(new GradientStop(Colors.Transparent, 1.0));
+            radialGradient.Freeze();
 
-			ModeSelected.Background = radialGradient;
-			SubmitPanel.Background = radialGradient;
+            ModeSelected.Background = radialGradient;
+            SubmitPanel.Background = radialGradient;
 
-			//enable order return date
-			OrderFormReturnDate.IsEnabled = true;
+            //enable order return date
+            OrderFormReturnDate.IsEnabled = true;
 		}
 		private void ListTables(object sender, MouseButtonEventArgs e)
 		{

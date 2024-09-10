@@ -347,6 +347,7 @@
 			<Setter Property="TextWrapping" Value="WrapWithOverflow"></Setter>
 			<Setter Property="AcceptsReturn" Value="True"></Setter>
 			<Setter Property="AcceptsTab" Value="True"></Setter>
+            <!--
 			<Style.Triggers>
 				<Trigger Property="IsMouseOver" Value="True">
 					<Setter Property="Background">
@@ -369,6 +370,7 @@
 					</Setter>
 				</Trigger>
 			</Style.Triggers>
+            -->
 		</Style>
 		<Style TargetType="ListBox">
 			<Setter Property="Foreground" Value="White"></Setter>
@@ -996,34 +998,26 @@
 						<!--Mode selection panel-->
 						<UniformGrid Columns="1" Width="60" ToolTip="Mode selection" >
 							<Border>
-								<UniformGrid Columns="1" Background="#198B0000" MouseDown="SelectAddMode">
-									<TextBlock VerticalAlignment="Bottom" MouseDown="SelectAddMode">Add mode</TextBlock>
-									<Viewbox VerticalAlignment="Top">
-										<Image MouseDown="SelectAddMode" Source="icons/add.png" Cursor="Hand"/>
-									</Viewbox>
-								</UniformGrid>
+                                <UniformGrid Columns="1" Background="Black" MouseDown="SelectAddMode" Cursor="Hand">
+                                    <TextBlock MouseDown="SelectAddMode" Foreground="LightGreen" Background="{x:Null}" VerticalAlignment="Bottom">ADD mode</TextBlock>
+                                    <Button MouseDown="SelectAddMode" VerticalAlignment="Bottom" Foreground="LightGreen"  Background="{x:Null}">
+                                        <Image MouseDown="SelectAddMode" Source="icons/add.png" ToolTip="Click to select ADD mode"/>
+                                    </Button>
+                                </UniformGrid>
 							</Border>
 							<Border>
-								<UniformGrid>
-									<UniformGrid.Background>
-										<RadialGradientBrush SpreadMethod="Pad">
-											<GradientStop Color="DarkRed" Offset="0.9"/>
-											<GradientStop Offset="1" Color="Black"/>
-										</RadialGradientBrush>
-									</UniformGrid.Background>
-									<TextBlock Name="ModeSelected"
-									Text="Select mode
-									Fill form
-									Submit">
+								<UniformGrid Background="Black" ToolTip="Here you can select ADD or EDIT mode">
+                                    <TextBlock IsEnabled="False" Name="ModeSelected" Background="{x:Null}">
+                                        Select mode
 									</TextBlock>
 								</UniformGrid>
 							</Border>
 							<Border>
-								<UniformGrid Columns="1" Background="#B28B0000" MouseDown="SelectEditMode">
-									<TextBlock MouseDown="SelectEditMode" VerticalAlignment="Bottom">Edit mode</TextBlock>
-									<Viewbox VerticalAlignment="Top">
-										<Image MouseDown="SelectEditMode"  Source="icons/edit.png" Cursor="Hand"/>
-									</Viewbox>
+                                <UniformGrid Columns="1" Background="Black" MouseDown="SelectEditMode" Cursor="Hand">
+                                    <Button MouseDown="SelectEditMode" VerticalAlignment="Top" Foreground="Yellow" Background="{x:Null}">
+                                        <Image MouseDown="SelectEditMode" Source="icons/edit.png" ToolTip="Click to select EDIT mode"/>
+                                    </Button>
+                                    <TextBlock MouseDown="SelectEditMode" Foreground="Yellow" Background="{x:Null}" VerticalAlignment="Top">EDIT mode</TextBlock>
 								</UniformGrid>
 							</Border>
 						</UniformGrid>
@@ -1092,7 +1086,7 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 							<!--Movie panel-->
-							<Border>
+                            <Border BorderThickness="1,1,1,1" BorderBrush="Black">
 								<UniformGrid Columns="3">
 									<!--Main form-->
 									<UniformGrid Columns="1">
@@ -1189,7 +1183,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Client panel-->
-							<Border Grid.Row="1">
+                            <Border Grid.Row="1"  BorderBrush="Black" BorderThickness="1,1,1,1">
 								<UniformGrid Columns="1" >
 									<UniformGrid.Background>
 										<LinearGradientBrush EndPoint="1,3" StartPoint="1,2" SpreadMethod="Pad">
@@ -1250,7 +1244,7 @@
 								</UniformGrid>
 							</Border>
 							<!--Order form-->
-							<Border Grid.Row="2">
+                            <Border Grid.Row="2" BorderThickness="1,1,1,1" BorderBrush="Black">
 								<UniformGrid Columns="2">
 									<UniformGrid.Background>
 										<LinearGradientBrush SpreadMethod="Pad" StartPoint="1,0">
@@ -1259,7 +1253,7 @@
 										</LinearGradientBrush>
 									</UniformGrid.Background>
 									<UniformGrid Columns="1">
-										<Border>
+                                        <Border>
 											<UniformGrid Rows="1">
 												<Border>
 													<TextBlock ToolTip="If empty; new one will be created" Background="#4C800000">Edit order ID</TextBlock>
