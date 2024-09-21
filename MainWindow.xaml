@@ -1192,157 +1192,170 @@
 										</LinearGradientBrush>
 									</UniformGrid.Background>
 									<Border>
-										<UniformGrid Rows="1">
-											<Border>
+										<Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Border>
 												<TextBlock ToolTip="Database client ID" Background="#4C800000" Width="NaN">Client ID</TextBlock>
 											</Border>
-											<Border>
+                                            <Border Grid.Column="1">
 												<TextBlock InputScope="Number" Name="ClientFormID"/>
 											</Border>
-										</UniformGrid>
+										</Grid>
 									</Border>
 									<Border>
-										<UniformGrid Rows="1">
-											<Border>
+										<Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Border>
 												<TextBlock Background="#4C800000">First name</TextBlock>
 											</Border>
-											<Border>
+											<Border Grid.Column="1">
 												<TextBox Name="ClientFormFirstName"/>
 											</Border>
-										</UniformGrid>
+										</Grid>
 									</Border>
 									<Border>
-										<UniformGrid Rows="1">
-											<Border>
+										<Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Border>
 												<TextBlock Background="#4C800000">Last name</TextBlock>
 											</Border>
-											<Border>
+											<Border Grid.Column="1">
 												<TextBox Name="ClientFormLastName"/>
 											</Border>
-										</UniformGrid>
+										</Grid>
 									</Border>
 									<Border>
-										<UniformGrid Rows="1">
-											<Border>
+										<Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Border>
 												<TextBlock Background="#4C800000">Phone</TextBlock>
 											</Border>
-											<Border>
+											<Border Grid.Column="1">
 												<TextBox InputScope="Number" Name="ClientFormPhone"/>
 											</Border>
-										</UniformGrid>
+										</Grid>
 									</Border>
 									<Border>
-										<UniformGrid Rows="1">
-											<Border>
+										<Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Border>
 												<TextBlock Background="#4C800000">E-Mail</TextBlock>
 											</Border>
-											<Border>
+											<Border Grid.Column="1">
 												<TextBox Name="ClientFormEmail"/>
 											</Border>
-										</UniformGrid>
+										</Grid>
 									</Border>
 								</UniformGrid>
 							</Border>
 							<!--Order form-->
                             <Border Grid.Row="2" BorderThickness="1,1,1,1" BorderBrush="Black">
-								<UniformGrid Columns="2">
-									<UniformGrid.Background>
+								<UniformGrid Columns="1">
+                                    <UniformGrid.Background>
 										<LinearGradientBrush SpreadMethod="Pad" StartPoint="1,0">
 											<GradientStop Color="Transparent" Offset="1"/>
 											<GradientStop Color="#4CFF0000" Offset="0.493"/>
 										</LinearGradientBrush>
 									</UniformGrid.Background>
-									<UniformGrid Columns="1">
-                                        <Border>
-											<UniformGrid Rows="1">
-												<Border>
-													<TextBlock ToolTip="If empty; new one will be created" Background="#4C800000">Edit order ID</TextBlock>
-												</Border>
-												<Border>
-													<TextBlock Name="OrderFormID" ToolTip="Use edit option from context menu in orders catalog"/>
-												</Border>
-											</UniformGrid>
-										</Border>
-										<Border>
-											<UniformGrid Rows="1">
-												<Border>
-													<TextBlock ToolTip="Select rent context menu option in movies catalog" Background="#4C800000">
-													Movie ID
-													</TextBlock>
-												</Border>
-												<Border>
-													<TextBlock Name="OrderFormMovieID"/>
-												</Border>
-											</UniformGrid>
-										</Border>
-										<Border>
-											<UniformGrid Rows="1">
-												<Border>
-													<TextBlock  ToolTip="Client selection" Background="#4C800000">Client</TextBlock>
-												</Border>
-												<Border>
-													<ComboBox Name="OrderFormClientLNFNID"></ComboBox>
-												</Border>
-											</UniformGrid>
-										</Border>
-									</UniformGrid>
-									<UniformGrid Columns="1">
-										<Border>
-											<UniformGrid Rows="1">
-												<Border>
-													<TextBlock ToolTip="Defaults to present date" Background="#4C800000">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" Grid.Column="0">
+                                            <TextBlock ToolTip="If empty; new one will be created" Background="#4C800000">Edit order ID</TextBlock>
+                                        </Border>
+                                        <Border Grid.Row="1" Grid.Column="1">
+                                            <TextBlock Name="OrderFormID" ToolTip="Use edit option from context menu in orders catalog"/>
+                                        </Border>
+
+                                        <Border Grid.Row="1" Grid.Column="0">
+                                            <TextBlock ToolTip="Select rent context menu option in movies catalog" Background="#4C800000">
+										Movie ID
+                                            </TextBlock>
+                                        </Border>
+                                        <Border Grid.Row="1" Grid.Column="1">
+                                            <TextBlock Name="OrderFormMovieID"/>
+                                        </Border>
+
+                                        <Border Grid.Row="2" Grid.Column="0">
+                                            <TextBlock  ToolTip="Client selection" Background="#4C800000">Client</TextBlock>
+                                        </Border>
+                                        <Border Grid.Row="2" Grid.Column="1">
+                                            <ComboBox Name="OrderFormClientLNFNID"></ComboBox>
+                                        </Border>
+
+                                        <Border Grid.Row="3" Grid.Column="0">
+                                            <TextBlock ToolTip="Defaults to present date" Background="#4C800000">
 													Rent date
-													</TextBlock>
-												</Border>
-												<Border>
-													<xctk:DateTimePicker Name="OrderFormRentDate" ToolTip="Defaults to present date" Foreground="White" BorderBrush="DarkRed">
-														<xctk:DateTimePicker.Background>
-															<RadialGradientBrush>
-																<GradientStop Color="Transparent" Offset="1"/>
-																<GradientStop Color="#4CFF0000" Offset="0"/>
-															</RadialGradientBrush>
-														</xctk:DateTimePicker.Background>
-													</xctk:DateTimePicker>
-												</Border>
-											</UniformGrid>
-										</Border>
-										<Border>
-											<UniformGrid Rows="1">
-												<Border>
-													<TextBlock ToolTip="Set return deadline. Defaults to +3 days" Background="#4C800000">Due date</TextBlock>
-												</Border>
-												<Border>
-													<xctk:DateTimePicker ToolTip="Set return deadline. Defaults to +3 days" Name="OrderFormDueDate" Foreground="White" BorderBrush="DarkRed">
-														<xctk:DateTimePicker.Background>
-															<RadialGradientBrush>
-																<GradientStop Color="Transparent" Offset="1"/>
-																<GradientStop Color="#4CFF0000" Offset="0"/>
-															</RadialGradientBrush>
-														</xctk:DateTimePicker.Background>
-													</xctk:DateTimePicker>
-												</Border>
-											</UniformGrid>
-										</Border>
-										<Border>
-											<UniformGrid Rows="1">
-												<Border>
-													<TextBlock ToolTip="Actual item return date. Enabled only in edit mode. Defaults to current day" Background="#4C800000">
+                                            </TextBlock>
+                                        </Border>
+                                        <Border Grid.Row="3" Grid.Column="1">
+                                            <xctk:DateTimePicker Name="OrderFormRentDate" ToolTip="Defaults to present date" Foreground="White" BorderBrush="DarkRed">
+                                                <xctk:DateTimePicker.Background>
+                                                    <RadialGradientBrush>
+                                                        <GradientStop Color="Transparent" Offset="1"/>
+                                                        <GradientStop Color="#4CFF0000" Offset="0"/>
+                                                    </RadialGradientBrush>
+                                                </xctk:DateTimePicker.Background>
+                                            </xctk:DateTimePicker>
+                                        </Border>
+
+                                        <Border Grid.Row="4" Grid.Column="0">
+                                            <TextBlock ToolTip="Set return deadline. Defaults to +3 days" Background="#4C800000">Due date</TextBlock>
+                                        </Border>
+                                        <Border Grid.Row="4" Grid.Column="1">
+                                            <xctk:DateTimePicker ToolTip="Set return deadline. Defaults to +3 days" Name="OrderFormDueDate" Foreground="White" BorderBrush="DarkRed">
+                                                <xctk:DateTimePicker.Background>
+                                                    <RadialGradientBrush>
+                                                        <GradientStop Color="Transparent" Offset="1"/>
+                                                        <GradientStop Color="#4CFF0000" Offset="0"/>
+                                                    </RadialGradientBrush>
+                                                </xctk:DateTimePicker.Background>
+                                            </xctk:DateTimePicker>
+                                        </Border>
+
+                                        <Border Grid.Row="5" Grid.Column="0">
+                                            <TextBlock ToolTip="Actual item return date. Enabled only in edit mode. Defaults to current day" Background="#4C800000">
 													Return date
-													</TextBlock>
-												</Border>
-												<Border>
-													<xctk:DateTimePicker Name="OrderFormReturnDate" ToolTip="Actual item return date. Enabled only in edit mode. Defaults to current day" Foreground="White" BorderBrush="DarkRed">
-														<xctk:DateTimePicker.Background>
-															<RadialGradientBrush>
-																<GradientStop Color="Transparent" Offset="1"/>
-																<GradientStop Color="#4CFF0000" Offset="0"/>
-															</RadialGradientBrush>
-														</xctk:DateTimePicker.Background>
-													</xctk:DateTimePicker>
-												</Border>
-											</UniformGrid>
-										</Border>
-									</UniformGrid>
+                                            </TextBlock>
+                                        </Border>
+                                        <Border Grid.Row="5" Grid.Column="1">
+                                            <xctk:DateTimePicker Name="OrderFormReturnDate" ToolTip="Actual item return date. Enabled only in edit mode. Defaults to current day" Foreground="White" BorderBrush="DarkRed">
+                                                <xctk:DateTimePicker.Background>
+                                                    <RadialGradientBrush>
+                                                        <GradientStop Color="Transparent" Offset="1"/>
+                                                        <GradientStop Color="#4CFF0000" Offset="0"/>
+                                                    </RadialGradientBrush>
+                                                </xctk:DateTimePicker.Background>
+                                            </xctk:DateTimePicker>
+                                        </Border>
+                                    </Grid>
+
+                                    
 								</UniformGrid>
 							</Border>
 						</Grid>
