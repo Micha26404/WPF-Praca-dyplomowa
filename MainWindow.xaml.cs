@@ -23,6 +23,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using System.Windows.Threading;
 using xctk = Xceed.Wpf.Toolkit;
+using System.Collections;
 
 namespace WPF
 {
@@ -72,33 +73,98 @@ namespace WPF
 		DataTable orders_dt = new DataTable();
 		//Grid Refreshes
 		public void MoviesGridRefresh() {
-			getquery(movies_dt,
-					"Select " +
-					"movies.id as ID, " +
-					"movies.name as Title, movies.year as Year, movies.duration as Duration, movies.age as Age," +
-					"CASE WHEN genres.id <> 1 THEN CONCAT(genres.name,' ',genres.id) END AS Genre," +
-					"movies.price as Price," +
-					"CASE WHEN formats.id <> 1 THEN CONCAT(formats.name,' ',formats.id) END AS Format," +
-					"CASE WHEN directors.id <> 1 THEN CONCAT(directors.last_name,' ',directors.first_name,' ',directors.id) END AS Director," +
-					"CASE WHEN actors.id <> 1 THEN CONCAT(actors.last_name,' ',actors.first_name,' ',actors.id) END AS 'Lead actor'," +
-					"CASE WHEN countries.id <> 1 THEN CONCAT(countries.name,' ',countries.id) END AS Country," +
-					"CASE WHEN langs.id <> 1 THEN CONCAT(langs.name,' ',langs.id) END AS Language," +
-					"movies.left_count as 'Left copies'," +
-					"movies.total_count as 'All copies'" +
-					//"movies.plot as Plot, " +
-					//"CASE " +
-					//"	WHEN poster_path IS NULL THEN 'No' " +
-					//"	WHEN poster_path IS NOT NULL THEN 'Yes' END AS Poster " +
-					//"CASE " +
-					//"	WHEN poster_path IS NULL THEN 'no' " +
-					//"	WHEN trailer_path IS NOT NULL THEN 'yes' END AS trailer " +
-					"from movies " +
-					"join actors on actors.id = movies.actor_id " +
-					"join countries on countries.id = movies.country_id " +
-					"join langs on langs.id = movies.lang_id " +
-					"join directors on directors.id = movies.director_id " +
-					"join formats on formats.id = movies.format_id " +
-					"join genres on genres.id = movies.genre_id");
+			string query = "Select " +
+                    "movies.id as ID, " +
+                    "movies.name as Title, movies.year as Year, movies.duration as Duration, movies.age as Age," +
+                    "CASE WHEN genres.id <> 1 THEN CONCAT(genres.name,' ',genres.id) END AS Genre," +
+                    "movies.price as Price," +
+                    "CASE WHEN formats.id <> 1 THEN CONCAT(formats.name,' ',formats.id) END AS Format," +
+                    "CASE WHEN directors.id <> 1 THEN CONCAT(directors.last_name,' ',directors.first_name,' ',directors.id) END AS Director," +
+                    "CASE WHEN actors.id <> 1 THEN CONCAT(actors.last_name,' ',actors.first_name,' ',actors.id) END AS 'Lead actor'," +
+                    "CASE WHEN countries.id <> 1 THEN CONCAT(countries.name,' ',countries.id) END AS Country," +
+                    "CASE WHEN langs.id <> 1 THEN CONCAT(langs.name,' ',langs.id) END AS Language," +
+                    "movies.left_count as 'Left copies'," +
+                    "movies.total_count as 'All copies'" +
+                    //"movies.plot as Plot, " +
+                    //"CASE " +
+                    //"	WHEN poster_path IS NULL THEN 'No' " +
+                    //"	WHEN poster_path IS NOT NULL THEN 'Yes' END AS Poster " +
+                    //"CASE " +
+                    //"	WHEN poster_path IS NULL THEN 'no' " +
+                    //"	WHEN trailer_path IS NOT NULL THEN 'yes' END AS trailer " +
+                    "from movies " +
+                    "join actors on actors.id = movies.actor_id " +
+                    "join countries on countries.id = movies.country_id " +
+                    "join langs on langs.id = movies.lang_id " +
+                    "join directors on directors.id = movies.director_id " +
+                    "join formats on formats.id = movies.format_id " +
+                    "join genres on genres.id = movies.genre_id";
+            /*
+			//If any filter set
+			if (!FilterMovieTitleString.Equals("") || 
+				!FilterMovieYearString.Equals("") ||
+                !FilterMovieGenreString.Equals("") ||
+                !FilterMovieAgeString.Equals("") ||
+                !FilterMovieActorString.Equals("") ||
+                !FilterMovieDirectorString.Equals("") ||
+                !FilterMovieFormatString.Equals("") ||
+                !FilterMovieLangString.Equals("") ||
+                !FilterMovieCountryString.Equals("")
+                ){}*/
+            
+				//Get list of filters and append to query with ANDs inbetween
+				var Filters = new ArrayList();
+
+				//Filter by Title if filter string not empty
+				if (!FilterMovieTitleString.Text.Equals("")) 
+				{Filters.Add(" movies.name LIKE \'" + FilterMovieTitleString.Text + "%\'");}
+                
+				//Filter by Year if filter string not empty
+                if (!FilterMovieYearString.Text.Equals(""))
+                {Filters.Add(" movies.year LIKE \'" + FilterMovieYearString.Text + "%\'");}
+                
+				//Filter by Genre if filter string not empty
+                if (!FilterMovieGenreString.Text.Equals(""))
+                {Filters.Add(" genres.name LIKE \'" + FilterMovieGenreString.Text + "%\'");}
+                
+				//Filter by Age if filter string not empty
+                if (!FilterMovieAgeString.Text.Equals(""))
+                {Filters.Add(" movies.age LIKE \'" + FilterMovieAgeString.Text + "%\'");}
+                
+				//Filter by Actor if filter string not empty
+                if (!FilterMovieActorString.Text.Equals(""))
+                {Filters.Add(" actors.last_name LIKE \'" + FilterMovieActorString.Text + "%\'");}
+                
+				//Filter by Director if filter string not empty
+                if (!FilterMovieDirectorString.Text.Equals(""))
+                {Filters.Add(" directors.last_name LIKE \'" + FilterMovieDirectorString.Text + "%\'");}
+                
+				//Filter by Format if filter string not empty
+                if (!FilterMovieFormatString.Text.Equals(""))
+                {Filters.Add(" formats.name LIKE \'" + FilterMovieFormatString.Text + "%\'");}
+                
+				//Filter by Lang if filter string not empty
+                if (!FilterMovieLangString.Text.Equals(""))
+                {Filters.Add(" langs.name LIKE \'" + FilterMovieLangString.Text + "%\'");}
+
+				//Filter by Country if filter string not empty
+				if (!FilterMovieCountryString.Text.Equals(""))
+				{ Filters.Add(" countries.name LIKE \'" + FilterMovieCountryString.Text + "%\'"); }
+
+
+            //If filtering enabled add filters to query
+            if (Filters.Count > 0) { query += " WHERE ";
+
+				if (Filters.Count > 1)
+					for (int i = 0; i < Filters.Count; i++)
+					{
+						query += Filters[i];
+						if (i < Filters.Count - 1) { query += " AND "; }
+					}
+				else { query += Filters[0]; }
+            }
+
+            getquery(movies_dt,query);
 		}
 		public void ClientsGridRefresh()
 		{
@@ -230,7 +296,7 @@ namespace WPF
 				sqlDataAdap.Fill(dt);
 				con.Close();
 			}
-			catch (Exception ex) { MessageBar.Text = ex.Message; }
+			catch (Exception ex) { Error.Text=ex.Message; }
         }//refresh datatable to refresh grid items
         public void getquery(DataGrid grid, string query)
 		{
@@ -251,7 +317,7 @@ namespace WPF
 				grid.ItemsSource = null;
 				grid.ItemsSource = dtRecord.DefaultView;
 			}
-			catch (Exception ex) { MessageBar.Text = ex.Message; }
+			catch (Exception ex) { Error.Text=ex.Message; }
         }//query to grid used in sql panel
         public string getquery(string query)
 		{
@@ -272,7 +338,7 @@ namespace WPF
 				con.Close();
 				return dtRecord.Rows[0][0].ToString();
 			}
-			catch (Exception ex) { MessageBar.Text = ex.Message; return null; }
+			catch (Exception ex) { Error.Text=ex.Message; return null; }
         }//old query for single row to string
          
         public void ComboboxRefresh(ComboBox combo, string query)
@@ -609,7 +675,7 @@ namespace WPF
 							}
 						}
 					}
-					catch (Exception ex ){ MessageBar.Text = ex.Message; }
+					catch (Exception ex ){ Error.Text=ex.Message; }
 				}
 				//add mode no copies left
 				else if (edit_mode == false && copies_left <= 0) MessageBox.Show("No copies left to rent");
@@ -701,7 +767,7 @@ namespace WPF
 							}
 						}
 					}
-					catch ( Exception ex ){ MessageBar.Text = ex.Message; }
+					catch ( Exception ex ){ Error.Text=ex.Message; }
 				}else if (edit_mode == true && OrderFormID.Text == "") MessageBox.Show("Order id not set. Use edit context menu option in orders catalog");
 			}else MessageBox.Show("Select movie to rent in catalog and select client");
 		}
@@ -1259,12 +1325,13 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "title like '%" + FilterMovieTitleString.Text + "%'";
+				//movies_dt.DefaultView.RowFilter = "title like '%" + FilterMovieTitleString.Text + "%'";
+				MoviesGridRefresh();
 			}
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
 
             }
 		}
@@ -1272,144 +1339,156 @@ namespace WPF
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "price like '%" + FilterMoviePriceString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "price like '%" + FilterMoviePriceString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieAge(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "age like '%" + FilterMovieAgeString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "age like '%" + FilterMovieAgeString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieDuration(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "duration like '%" + FilterMovieDurationString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "duration like '%" + FilterMovieDurationString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieGenre(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "genre like '%" + FilterMovieGenreString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "genre like '%" + FilterMovieGenreString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieYear(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "year like '%" + FilterMovieYearString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "year like '%" + FilterMovieYearString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieCopiesTotal(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "'copies total' like '%" + FilterMovieCopiesTotalString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "'copies total' like '%" + FilterMovieCopiesTotalString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieCopiesLeft(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "'copies left' like '%" + FilterMovieCopiesLeftString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "'copies left' like '%" + FilterMovieCopiesLeftString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieCountry(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "country like '%" + FilterMovieCountryString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "country like '%" + FilterMovieCountryString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieLang(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "language like '%" + FilterMovieLangString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "language like '%" + FilterMovieLangString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieFormat(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "format like '%" + FilterMovieFormatString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "format like '%" + FilterMovieFormatString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieDirector(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "director like '%" + FilterMovieDirectorString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "director like '%" + FilterMovieDirectorString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterMovieActor(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				movies_dt.DefaultView.RowFilter = "'lead actor' like '%" + FilterMovieActorString.Text + "%'";
-			}
+                //movies_dt.DefaultView.RowFilter = "'lead actor' like '%" + FilterMovieActorString.Text + "%'";
+                MoviesGridRefresh();
+            }
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		
@@ -1424,7 +1503,7 @@ namespace WPF
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
             /*
 			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
@@ -1448,7 +1527,7 @@ namespace WPF
 				catch (Exception ex)
 				{
 					
-					MessageBar.Text = ex.Message;
+					Error.Text=ex.Message;
 				}
 			}
 			*/
@@ -1483,7 +1562,7 @@ namespace WPF
 			catch (Exception ex)
 			{
 				
-				MessageBar.Text = ex.Message;
+				Error.Text=ex.Message;
 			}
 			*/
         }
@@ -1496,7 +1575,7 @@ namespace WPF
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 			
 		}
@@ -1509,7 +1588,7 @@ namespace WPF
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 			
 		}
@@ -1521,7 +1600,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBar.Text = ex.Message;
+				Error.Text=ex.Message;
 			}
 		}
 		//Filter orders
@@ -1534,7 +1613,7 @@ namespace WPF
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterOrderClient(object sender, TextChangedEventArgs e)
@@ -1546,7 +1625,7 @@ namespace WPF
 			catch (Exception ex)
 			{
 				
-                MessageBar.Text = ex.Message;
+                Error.Text=ex.Message;
             }
 		}
 		private void FilterOrderYear(object sender, TextChangedEventArgs e)
@@ -1557,7 +1636,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBar.Text = ex.Message;
+				Error.Text=ex.Message;
 			}
 		}
 		private void FilterOrderRentStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1568,7 +1647,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBar.Text = ex.Message;
+				Error.Text=ex.Message;
 			}
 		}
 		private void FilterOrderRentStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1579,7 +1658,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBar.Text = ex.Message;
+				Error.Text=ex.Message;
 			}
 		}
 		private void FilterOrderDueStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1590,7 +1669,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBar.Text = ex.Message;
+				Error.Text=ex.Message;
 			}
 		}
 		private void FilterOrderDueStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1601,7 +1680,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBar.Text = ex.Message;
+				Error.Text=ex.Message;
 			}
 		}
 		private void FilterOrderReturnStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1612,7 +1691,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBar.Text = ex.Message;
+				Error.Text=ex.Message;
 			}
 		}
 		private void FilterOrderReturnStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1623,7 +1702,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBar.Text = ex.Message;
+				Error.Text=ex.Message;
 			}
 		}
 		//Form Submit Mode Selector
@@ -2035,7 +2114,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBar.Text = ex.Message;
+						Error.Text=ex.Message;
 					}
 				}
 				//refresh actors combobox
@@ -2075,7 +2154,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBar.Text = ex.Message;
+						Error.Text=ex.Message;
 					}
 				}
 				//setquery("delete from directors where id=" + director_id + ")");
@@ -2116,7 +2195,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBar.Text = ex.Message;
+						Error.Text=ex.Message;
 					}
 				}
 				//refresh countries combobox
@@ -2156,7 +2235,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBar.Text = ex.Message;
+						Error.Text=ex.Message;
 					}
 				}
 				//refresh langs combobox
@@ -2196,7 +2275,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBar.Text = ex.Message;
+						Error.Text=ex.Message;
 					}
 				}
 				//setquery("delete from formats where id=" + format_id + ")");
@@ -2237,7 +2316,7 @@ namespace WPF
 						}
 						catch (Exception ex)
 						{
-							MessageBar.Text = ex.Message;
+							Error.Text=ex.Message;
 						}
 					}
 					//refresh genres combobox

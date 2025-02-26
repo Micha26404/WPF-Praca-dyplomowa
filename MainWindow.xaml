@@ -413,6 +413,7 @@
 		</Style>
 	</Window.Resources>
 	<!--end of styles-->
+    
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
@@ -424,6 +425,9 @@
 				<RowDefinition/>
 				<RowDefinition Height="auto"/>
 			</Grid.RowDefinitions>
+            
+            <TextBlock Name="Error" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+            
 			<TabControl Name="Tabs" Grid.Column="1" Grid.Row="0" Background="Transparent" TabStripPlacement="Left" BorderBrush="Maroon">
                 <TabItem Name="MoviesTab" TabIndex="1" Height="auto">
 					<TabItem.Header>
@@ -442,7 +446,7 @@
 					</TabItem.Header>
 					<Grid>
 						<Grid.RowDefinitions>
-							<RowDefinition Height="40"/>
+							<RowDefinition Height="50"/>
 							<RowDefinition Height="*"/>
                             <RowDefinition Height="20"/>
 						</Grid.RowDefinitions>
