@@ -24,6 +24,7 @@ using System.Security.Policy;
 using System.Windows.Threading;
 using xctk = Xceed.Wpf.Toolkit;
 using System.Collections;
+using System.Runtime.Remoting.Channels;
 
 namespace WPF
 {
@@ -36,14 +37,14 @@ namespace WPF
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			//load data to datatables which are sources for datagrids
-			MoviesGridRefresh();
-			ClientsGridRefresh();
-			OrdersGridRefresh();
+			MoviesGridRefresh(null,null);
+			ClientsGridRefresh(null, null);
+			OrdersGridRefresh(null, null);
 			//Fill form comboboxes
 			MoviesComboboxRefresh();
 			ClientsComboboxRefresh();
 
-			//Admin Panel 2 Comboboxes
+			//Attributes Panel Comboboxes
 			AttributesComboboxesRefresh();
 
 			MoviesCatalog.ItemsSource = movies_dt.DefaultView;
@@ -71,8 +72,12 @@ namespace WPF
 		DataTable movies_dt = new DataTable();
 		DataTable clients_dt = new DataTable();
 		DataTable orders_dt = new DataTable();
-		//Grid Refreshes
-		public void MoviesGridRefresh() {
+		void Reset_msg_error(object sender, MouseButtonEventArgs e) {
+			Error.Text = "";
+			MessageBar.Text = "";
+		}
+        //Grid Refreshes
+        public void MoviesGridRefresh(object sender, EventArgs e) {
 			string query = "Select " +
                     "movies.id as ID, " +
                     "movies.name as Title, movies.year as Year, movies.duration as Duration, movies.age as Age," +
@@ -99,57 +104,45 @@ namespace WPF
                     "join directors on directors.id = movies.director_id " +
                     "join formats on formats.id = movies.format_id " +
                     "join genres on genres.id = movies.genre_id";
-            /*
-			//If any filter set
-			if (!FilterMovieTitleString.Equals("") || 
-				!FilterMovieYearString.Equals("") ||
-                !FilterMovieGenreString.Equals("") ||
-                !FilterMovieAgeString.Equals("") ||
-                !FilterMovieActorString.Equals("") ||
-                !FilterMovieDirectorString.Equals("") ||
-                !FilterMovieFormatString.Equals("") ||
-                !FilterMovieLangString.Equals("") ||
-                !FilterMovieCountryString.Equals("")
-                ){}*/
-            
+           
 				//Get list of filters and append to query with ANDs inbetween
 				var Filters = new ArrayList();
 
-				//Filter by Title if filter string not empty
+				//Filter by Title 
 				if (!FilterMovieTitleString.Text.Equals("")) 
-				{Filters.Add(" movies.name LIKE \'" + FilterMovieTitleString.Text + "%\'");}
+				{Filters.Add(" movies.name LIKE \'%" + FilterMovieTitleString.Text + "%\'");}
                 
-				//Filter by Year if filter string not empty
+				//Filter by Year 
                 if (!FilterMovieYearString.Text.Equals(""))
-                {Filters.Add(" movies.year LIKE \'" + FilterMovieYearString.Text + "%\'");}
+                {Filters.Add(" movies.year LIKE \'%" + FilterMovieYearString.Text + "%\'");}
                 
-				//Filter by Genre if filter string not empty
+				//Filter by Genre 
                 if (!FilterMovieGenreString.Text.Equals(""))
-                {Filters.Add(" genres.name LIKE \'" + FilterMovieGenreString.Text + "%\'");}
+                {Filters.Add(" genres.name LIKE \'%" + FilterMovieGenreString.Text + "%\'");}
                 
-				//Filter by Age if filter string not empty
+				//Filter by Age 
                 if (!FilterMovieAgeString.Text.Equals(""))
-                {Filters.Add(" movies.age LIKE \'" + FilterMovieAgeString.Text + "%\'");}
+                {Filters.Add(" movies.age LIKE \'%" + FilterMovieAgeString.Text + "%\'");}
                 
-				//Filter by Actor if filter string not empty
+				//Filter by Actor 
                 if (!FilterMovieActorString.Text.Equals(""))
-                {Filters.Add(" actors.last_name LIKE \'" + FilterMovieActorString.Text + "%\'");}
+                {Filters.Add(" actors.last_name LIKE \'%" + FilterMovieActorString.Text + "%\'");}
                 
-				//Filter by Director if filter string not empty
+				//Filter by Director 
                 if (!FilterMovieDirectorString.Text.Equals(""))
-                {Filters.Add(" directors.last_name LIKE \'" + FilterMovieDirectorString.Text + "%\'");}
+                {Filters.Add(" directors.last_name LIKE \'%" + FilterMovieDirectorString.Text + "%\'");}
                 
-				//Filter by Format if filter string not empty
+				//Filter by Format 
                 if (!FilterMovieFormatString.Text.Equals(""))
-                {Filters.Add(" formats.name LIKE \'" + FilterMovieFormatString.Text + "%\'");}
+                {Filters.Add(" formats.name LIKE \'%" + FilterMovieFormatString.Text + "%\'");}
                 
-				//Filter by Lang if filter string not empty
+				//Filter by Lang 
                 if (!FilterMovieLangString.Text.Equals(""))
-                {Filters.Add(" langs.name LIKE \'" + FilterMovieLangString.Text + "%\'");}
+                {Filters.Add(" langs.name LIKE \'%" + FilterMovieLangString.Text + "%\'");}
 
-				//Filter by Country if filter string not empty
+				//Filter by Country 
 				if (!FilterMovieCountryString.Text.Equals(""))
-				{ Filters.Add(" countries.name LIKE \'" + FilterMovieCountryString.Text + "%\'"); }
+				{ Filters.Add(" countries.name LIKE \'%" + FilterMovieCountryString.Text + "%\'"); }
 
 
             //If filtering enabled add filters to query
@@ -163,31 +156,141 @@ namespace WPF
 					}
 				else { query += Filters[0]; }
             }
+            
+			//query
+			try
+            {
+                getquery(movies_dt, query);
+            }
+            catch (Exception ex)
+            {
 
-            getquery(movies_dt,query);
+                Error.Text = ex.Message;
+            }
 		}
-		public void ClientsGridRefresh()
+		public void ClientsGridRefresh(object sender, EventArgs e)
 		{
-			getquery(clients_dt, "Select " +
+			string query = "Select " +
 				"id as ID," +
-				"last_name as 'Last name', first_name as 'First name', phone as Phone, email as Email from clients");
-		}
-		public void OrdersGridRefresh()
+				"last_name as 'Last name', first_name as 'First name', phone as Phone, email as Email from clients";
+            
+            //Get list of filters and append to query with ANDs inbetween
+            var Filters = new ArrayList();
+
+            //Filter by Last Name 
+            if (!FilterClientLastNameString.Text.Equals(""))
+            { Filters.Add(" clients.last_name LIKE \'%" + FilterClientLastNameString.Text + "%\'"); }
+
+            //Filter by First Name 
+            if (!FilterClientFirstNameString.Text.Equals(""))
+            { Filters.Add(" clients.first_name LIKE \'%" + FilterClientFirstNameString.Text + "%\'"); }
+
+            //Filter by Phone 
+            if (!FilterClientPhoneString.Text.Equals(""))
+            { Filters.Add(" clients.phone LIKE \'%" + FilterClientPhoneString.Text + "%\'"); }
+
+            //Filter by Email 
+            if (!FilterClientEmailString.Text.Equals(""))
+            { Filters.Add(" clients.email LIKE \'%" + FilterClientEmailString.Text + "%\'"); }
+
+            //If filtering enabled add filters to query
+            if (Filters.Count > 0)
+            {
+                query += " WHERE ";
+
+                if (Filters.Count > 1)
+                    for (int i = 0; i < Filters.Count; i++)
+                    {
+                        query += Filters[i];
+                        if (i < Filters.Count - 1) { query += " AND "; }
+                    }
+                else { query += Filters[0]; }
+            }
+
+            //query
+            try
+            {
+                getquery(clients_dt, query);
+            }
+            catch (Exception ex)
+            {
+                Error.Text = ex.Message;
+            }
+        }
+		public void OrdersGridRefresh(object sender, EventArgs e)
 		{
-			getquery(orders_dt, "Select " +
+			string query = "Select " +
 				"orders.id as ID," +
 				"CONCAT(clients.last_name,' ',clients.first_name,' ',clients.id) as Client," +
 				"CONCAT(movies.name,' ',movies.id) as Movie, movies.year as Year, " +
-				"CASE WHEN orders.rent_date IS NOT NULL THEN FORMAT(orders.rent_date,'dd-MMM-yyyy') END AS 'Rent date', " +
-                "CASE WHEN orders.due_date IS NOT NULL THEN FORMAT(orders.due_date,'dd-MMM-yyyy') END AS 'Due date', " +
-                "CASE WHEN orders.return_date IS NOT NULL THEN FORMAT(orders.return_date,'dd-MMM-yyyy') END AS 'Return date'," +
-                "CASE WHEN orders.return_date IS NULL THEN datediff(day,orders.due_date,GETDATE())" +
-                      "WHEN orders.return_date IS NOT NULL THEN datediff(day,orders.rent_date,due_date)" +
+				"CASE WHEN orders.rent_date IS NOT NULL THEN FORMAT(orders.rent_date,'dd-MM-yyyy') END AS 'Rent date', " +
+				"CASE WHEN orders.due_date IS NOT NULL THEN FORMAT(orders.due_date,'dd-MM-yyyy') END AS 'Due date', " +
+				"CASE WHEN orders.return_date IS NOT NULL THEN FORMAT(orders.return_date,'dd-MM-yyyy') END AS 'Return date'," +
+				"CASE WHEN orders.return_date IS NULL THEN datediff(day,orders.due_date,GETDATE())" +
+					  "WHEN orders.return_date IS NOT NULL THEN datediff(day,orders.rent_date,due_date)" +
 					  " END AS 'Days' " +
 				"from orders " +
 				"join movies on movies.id=orders.movie_id " +
-				"join clients on clients.id=orders.client_id");
-		}
+				"join clients on clients.id=orders.client_id";
+
+            //Get list of filters and append to query with ANDs inbetween
+            var Filters = new ArrayList();
+
+            //Filter by Last Name 
+            if (!string.IsNullOrWhiteSpace(FilterOrderClientString.Text))
+            { Filters.Add(" clients.last_name LIKE \'%" + FilterOrderClientString.Text + "%\'"); }
+
+            //Filter by Movie 
+            if (!string.IsNullOrWhiteSpace(FilterOrderMovieString.Text))
+            { Filters.Add(" movies.name LIKE \'%" + FilterOrderMovieString.Text + "%\'"); }
+
+            //Filter by Year 
+            if (!string.IsNullOrWhiteSpace(FilterOrderYearString.Text))
+            { Filters.Add(" movies.year LIKE \'%" + FilterOrderYearString.Text + "%\'"); }
+
+			
+			//dates
+			string date;
+
+			//Filter by Rent Date
+			date = FilterOrderRentDateString.Text;
+            if (!string.IsNullOrWhiteSpace(date))
+			{ Filters.Add(" orders.rent_date >= CONVERT(datetime,\'" + date + "\',105)"); }
+
+            //Filter by Due Date
+            date = FilterOrderDueDateString.Text;
+            if (!string.IsNullOrWhiteSpace(date))
+			{ Filters.Add(" orders.due_date <= CONVERT(datetime,\'" + date + "\',105)"); }
+
+            //Filter by Return Date
+            date = FilterOrderReturnDateString.Text;
+            if (!string.IsNullOrWhiteSpace(date))
+			{ Filters.Add(" orders.return_date <= CONVERT(datetime,\'" + date + "\',105)"); }
+
+			//If filtering enabled add filters to query
+			if (Filters.Count > 0)
+            {
+                query += " WHERE ";
+
+                if (Filters.Count > 1)
+                    for (int i = 0; i < Filters.Count; i++)
+                    {
+                        query += Filters[i];
+                        if (i < Filters.Count - 1) { query += " AND "; }
+                    }
+                else { query += Filters[0]; }
+            }
+
+            //query
+            try
+            {
+                getquery(orders_dt, query);
+            }
+            catch (Exception ex)
+            {
+                Error.Text = ex.Message;
+            }
+        }
 		public void MoviesComboboxRefresh() 
 		{
 			ComboboxRefresh(MovieFormLangNameID, "select name,id from langs");
@@ -482,7 +585,7 @@ namespace WPF
 						if (result == "1")
 						{
 							MessageBox.Show("Trailer set");
-							MoviesGridRefresh();
+							MoviesGridRefresh(null, null);
 						}
 						else if (result == "0") MessageBox.Show("Failed to set trailer");
 					}
@@ -497,7 +600,7 @@ namespace WPF
 				Trailer.Source = null;
 				//update database
 				setquery("update movies set trailer_path=null where id=" + MovieTrailerID.Text);
-				MoviesGridRefresh();
+				MoviesGridRefresh(null, null);
 			}
 			else if (MoviePosterID.Text == "ID") MessageBox.Show("Load trailer from movies catalog first");
 		}
@@ -514,7 +617,7 @@ namespace WPF
 				Poster.Source = null;
 				//remove movie poster from database
 				setquery("update movies set poster_path=null where id=" + MoviePosterID.Text);
-				MoviesGridRefresh();
+				MoviesGridRefresh(null, null);
 			}
 			else if (MoviePosterID.Text == "ID") MessageBox.Show("Load poster from movies catalog first");
 		}
@@ -542,11 +645,11 @@ namespace WPF
 						if (result == "1")
 						{
 							MessageBox.Show("Poster set");
-							MoviesGridRefresh();
+							MoviesGridRefresh(null,null);
 						}
 						else if (result == "0") MessageBox.Show("Failed to set poster");
 					}
-					MoviesGridRefresh();
+					MoviesGridRefresh(null,null);
 				}
 			}
 			else if (MoviePosterID.Text == "ID") MessageBox.Show("Load poster from movies catalog");
@@ -659,7 +762,7 @@ namespace WPF
 								cmd.Parameters.AddWithValue("@rent_date", RentDate);
 								cmd.Parameters.AddWithValue("@due_date", DueDate);
 								MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-								OrdersGridRefresh();
+								OrdersGridRefresh(null, null);
 								//decrement movie copies available when client rents a copy
 								copies_left--;
 								OrderClearForm();
@@ -671,7 +774,7 @@ namespace WPF
 								cmd.Parameters.AddWithValue("@id", movie_id);
 								cmd.Parameters.AddWithValue("@left_count", copies_left);
 								cmd.ExecuteNonQuery();
-								MoviesGridRefresh();
+								MoviesGridRefresh(null, null);
 							}
 						}
 					}
@@ -763,7 +866,7 @@ namespace WPF
 								cmd.Parameters.AddWithValue("@due_date", DueDate);
 								cmd.Parameters.AddWithValue("@return_date", ReturnDate);
 								MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-								OrdersGridRefresh();
+								OrdersGridRefresh(null, null);
 							}
 						}
 					}
@@ -822,7 +925,7 @@ namespace WPF
 								cmd.Parameters.AddWithValue("@last_name", ClientFormLastName.Text);
 								MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 								//refresh grid
-								ClientsGridRefresh();
+								ClientsGridRefresh(null,null);
 								ClientsComboboxRefresh();
 								ClientClearForm();
 							}
@@ -845,7 +948,7 @@ namespace WPF
 							cmd.Parameters.AddWithValue("@last_name", ClientFormLastName.Text);
 							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
 							//refresh grid
-							ClientsGridRefresh();
+							ClientsGridRefresh(null,null);
 							ClientsComboboxRefresh();
 						}
 					}
@@ -984,7 +1087,7 @@ namespace WPF
 							cmd.Parameters.AddWithValue("@format_id", format_id);
 							cmd.Parameters.AddWithValue("@genre_id", genre_id);
 							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-							MoviesGridRefresh();
+							MoviesGridRefresh(null,null);
 							MovieClearForm();
 						}
 					}
@@ -1019,7 +1122,7 @@ namespace WPF
 							cmd.Parameters.AddWithValue("@format_id", format_id);
 							cmd.Parameters.AddWithValue("@genre_id", genre_id);
 							MessageBox.Show("Rows affected: " + cmd.ExecuteNonQuery().ToString());
-							MoviesGridRefresh();
+							MoviesGridRefresh(null,null);
 						}
 					}
 			}else MessageBox.Show("Movie id not set. Use edit context menu option from movies catalog");
@@ -1151,7 +1254,7 @@ namespace WPF
 					MessageBox.Show("Couldn't remove row referenced from other row");
 					}
 				}
-				MoviesGridRefresh();
+				MoviesGridRefresh(null,null);
 		}
 		private void MovieItem_trailer(object sender, RoutedEventArgs e)
 		{
@@ -1197,7 +1300,7 @@ namespace WPF
                     MessageBar.Text = "Couldn't remove row referenced from other row.";
                 }
 			}
-			ClientsGridRefresh();
+			ClientsGridRefresh(null,null);
 		}
 		
 		//OrdersTab
@@ -1262,8 +1365,8 @@ namespace WPF
 					cmd.ExecuteNonQuery();
 				}
 				//setquery("update orders set return_date=GETDATE() where id=" + getorder_id());
-				MoviesGridRefresh();
-				OrdersGridRefresh();
+				MoviesGridRefresh(null, null);
+				OrdersGridRefresh(null, null);
 			}
 			else 
 			{
@@ -1317,394 +1420,9 @@ namespace WPF
 				cmd.ExecuteNonQuery();
 			}
 			//setquery("delete from orders where id=" + getorder_id());
-			OrdersGridRefresh();
+			OrdersGridRefresh(null,null);
 		}
 		
-		//Movies Filtering
-		private void FilterMovieTitle(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				//movies_dt.DefaultView.RowFilter = "title like '%" + FilterMovieTitleString.Text + "%'";
-				MoviesGridRefresh();
-			}
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-
-            }
-		}
-		private void FilterMoviePrice(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "price like '%" + FilterMoviePriceString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieAge(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "age like '%" + FilterMovieAgeString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieDuration(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "duration like '%" + FilterMovieDurationString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieGenre(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "genre like '%" + FilterMovieGenreString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieYear(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "year like '%" + FilterMovieYearString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieCopiesTotal(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "'copies total' like '%" + FilterMovieCopiesTotalString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieCopiesLeft(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "'copies left' like '%" + FilterMovieCopiesLeftString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieCountry(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "country like '%" + FilterMovieCountryString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieLang(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "language like '%" + FilterMovieLangString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieFormat(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "format like '%" + FilterMovieFormatString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieDirector(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "director like '%" + FilterMovieDirectorString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterMovieActor(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-                //movies_dt.DefaultView.RowFilter = "'lead actor' like '%" + FilterMovieActorString.Text + "%'";
-                MoviesGridRefresh();
-            }
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		
-		//Clients Filtering
-		private void FilterClientLastName(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				clients_dt.DefaultView.RowFilter = "'last name' like '%" + FilterClientLastNameString.Text + "%'";
-				//ClientsGridRefresh();
-			}
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-            /*
-			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
-			{
-				connection.Open();
-				var sql = @"Select id, last_name as 'last name', first_name as 'first name', phone, email from clients
-							where last_name like '%@last_name%'";// and first_name like '%@first_name%' and phone like '%@phone%' and email like '%@email%'";
-				var cmd = new SqlCommand(sql, connection);
-				cmd.Parameters.AddWithValue("@first_name", FilterClientFirstNameString.Text);
-				cmd.Parameters.AddWithValue("@last_name", FilterClientLastNameString.Text);
-				cmd.Parameters.AddWithValue("@phone", FilterClientPhoneString.Text);
-				cmd.Parameters.AddWithValue("@email", FilterClientEmailString.Text);
-				try
-				{
-					using(SqlDataReader rdr = cmd.ExecuteReader())
-					{
-						//clients_dt.Clear();
-						clients_dt.Load(rdr);
-					}
-				}
-				catch (Exception ex)
-				{
-					
-					Error.Text=ex.Message;
-				}
-			}
-			*/
-            //DataView dataView = clients_dt.DefaultView;
-            //if (!string.IsNullOrEmpty(FilterClientLastNameString.Text))
-            //{
-            //	dataView.RowFilter = "'last name' = " + FilterClientLastNameString.Text;
-            //}
-            //ClientsCatalog.ItemsSource = dataView;
-            /*
-			try
-			{
-				getquery(orders_dt, "Select orders.id,CONCAT(clients.last_name,' ',clients.first_name,' ',clients.id) as client," +
-				"CONCAT(movies.name,' ',movies.id) as movie,movies.year, orders.rent_date as 'rent date', orders.due_date as 'due date', orders.return_date as 'return date' " +
-				"from orders " +
-				"join movies on movies.id=orders.movie_id " +
-				"join clients on clients.id=orders.client_id " +
-				"where clients.last_name like '@FilterClientLastNameString.Text%'");
-
-				DataTable dt = new DataTable();
-				string CommandQuery = "SELECT *,row_number() over (order by ProductId) as DisplayOrder FROM Products";
-				SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["testConnectionString"].ConnectionString);
-				SqlCommand cmd = new SqlCommand(CommandQuery, conn);
-				SqlDataAdapter da = new SqlDataAdapter(cmd);
-				cmd.Connection.Open();
-				da.Fill(dt);
-				DataView dv1 = dt.DefaultView;
-				dv1.RowFilter = " ProductId = 1 or ProductId = 2 or ProductID = 3";
-				DataTable dtNew = dv1.ToTable();
-
-			}
-			catch (Exception ex)
-			{
-				
-				Error.Text=ex.Message;
-			}
-			*/
-        }
-        private void FilterClientFirstName(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				clients_dt.DefaultView.RowFilter = "'first name' like '%" + FilterClientFirstNameString.Text + "%'";
-			}
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-			
-		}
-		private void FilterClientEmail(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				clients_dt.DefaultView.RowFilter = "'email' like '%" + FilterClientEmailString.Text + "%'";
-			}
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-			
-		}
-		private void FilterClientPhone(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				clients_dt.DefaultView.RowFilter = "'phone' like '%" + FilterClientPhoneString.Text + "%'";
-			}
-			catch (Exception ex)
-			{
-				Error.Text=ex.Message;
-			}
-		}
-		//Filter orders
-		private void FilterOrderMovie(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'movie' like '%" + FilterOrderMovieString.Text + "%'";
-			}
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterOrderClient(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'client' like '%" + FilterOrderClientString.Text + "%'";
-			}
-			catch (Exception ex)
-			{
-				
-                Error.Text=ex.Message;
-            }
-		}
-		private void FilterOrderYear(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'year' like '%" + FilterOrderYearString.Text + "%'";
-			}
-			catch (Exception ex)
-			{
-				Error.Text=ex.Message;
-			}
-		}
-		private void FilterOrderRentStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'rent date' >= " + FilterOrderRentStartDateString.Text;
-			}
-			catch (Exception ex)
-			{
-				Error.Text=ex.Message;
-			}
-		}
-		private void FilterOrderRentStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'rent date' <= " + FilterOrderRentStopDateString.Text;
-			}
-			catch (Exception ex)
-			{
-				Error.Text=ex.Message;
-			}
-		}
-		private void FilterOrderDueStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'due date' >= " + FilterOrderDueStartDateString.Text;
-			}
-			catch (Exception ex)
-			{
-				Error.Text=ex.Message;
-			}
-		}
-		private void FilterOrderDueStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'due date' <= " + FilterOrderDueStopDateString.Text;
-			}
-			catch (Exception ex)
-			{
-				Error.Text=ex.Message;
-			}
-		}
-		private void FilterOrderReturnStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'return date' >= " + FilterOrderReturnStartDateString.Text;
-			}
-			catch (Exception ex)
-			{
-				Error.Text=ex.Message;
-			}
-		}
-		private void FilterOrderReturnStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
-		{
-			try
-			{
-				orders_dt.DefaultView.RowFilter = "'return date' <= " + FilterOrderReturnStopDateString.Text;
-			}
-			catch (Exception ex)
-			{
-				Error.Text=ex.Message;
-			}
-		}
 		//Form Submit Mode Selector
 		bool edit_mode = false;//Selected action mode on submit form. Add on False, overwrite on True
         private void SelectAddMode(object sender, MouseButtonEventArgs e)

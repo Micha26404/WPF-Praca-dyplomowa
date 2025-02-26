@@ -61,7 +61,16 @@
 		<Style TargetType="DatePickerTextBox">
 			<Setter Property="IsReadOnly" Value="True"></Setter>
 		</Style>
-		<Style TargetType="DataGridColumnHeader">
+        <Style TargetType="xctk:DateTimePicker">
+            <Setter Property="Format" Value="Custom"></Setter>
+            <Setter Property="FormatString" Value="dd-MM-yyyy"></Setter>
+            <!--
+            Setter Property="FormatString" Value="dd-MM-yyyy HH:mm"></Setter>
+            <Setter Property="TimeFormat" Value="Custom"></Setter>
+            <Setter Property="TimeFormatString" Value="HH:mm"></Setter>
+            -->
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
 			<Setter Property="Padding" Value="5"></Setter>
 		</Style>
 		<Style TargetType="DataGridCell">
@@ -425,8 +434,8 @@
 				<RowDefinition/>
 				<RowDefinition Height="auto"/>
 			</Grid.RowDefinitions>
-            
-            <TextBlock Name="Error" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+
+            <TextBlock Name="Error" ToolTip="Click to reset message and error" MouseDown="Reset_msg_error" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
             
 			<TabControl Name="Tabs" Grid.Column="1" Grid.Row="0" Background="Transparent" TabStripPlacement="Left" BorderBrush="Maroon">
                 <TabItem Name="MoviesTab" TabIndex="1" Height="auto">
@@ -455,55 +464,55 @@
 						<UniformGrid Grid.Row="0" ToolTip="Type text and press enter to filter movies" Rows="1" VerticalAlignment="Top" Visibility="Visible">
 							<UniformGrid Columns="1">
 								<TextBlock>Title</TextBlock>
-								<TextBox Name="FilterMovieTitleString" TextChanged="FilterMovieTitle"/>
+                                <TextBox Name="FilterMovieTitleString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Year</TextBlock>
-								<TextBox Name="FilterMovieYearString" TextChanged="FilterMovieYear"/>
+                                <TextBox Name="FilterMovieYearString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1" Visibility="Collapsed">
 								<TextBlock>Duration</TextBlock>
-								<TextBox Name="FilterMovieDurationString" TextChanged="FilterMovieDuration"/>
+                                <TextBox Name="FilterMovieDurationString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Genre</TextBlock>
-								<TextBox Name="FilterMovieGenreString" TextChanged="FilterMovieGenre"/>
+                                <TextBox Name="FilterMovieGenreString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Min. Age</TextBlock>
-								<TextBox Name="FilterMovieAgeString" TextChanged="FilterMovieAge"/>
+                                <TextBox Name="FilterMovieAgeString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1" Visibility="Collapsed">
 								<TextBlock>Price</TextBlock>
-								<TextBox Name="FilterMoviePriceString" TextChanged="FilterMoviePrice"/>
+                                <TextBox Name="FilterMoviePriceString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
                                 <TextBlock>Starring</TextBlock>
-								<TextBox Name="FilterMovieActorString" TextChanged="FilterMovieActor"/>
+                                <TextBox Name="FilterMovieActorString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Director</TextBlock>
-								<TextBox Name="FilterMovieDirectorString" TextChanged="FilterMovieDirector"/>
+                                <TextBox Name="FilterMovieDirectorString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Format</TextBlock>
-								<TextBox Name="FilterMovieFormatString" TextChanged="FilterMovieFormat"/>
+                                <TextBox Name="FilterMovieFormatString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Language</TextBlock>
-								<TextBox Name="FilterMovieLangString" TextChanged="FilterMovieLang"/>
+                                <TextBox Name="FilterMovieLangString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Country</TextBlock>
-								<TextBox Name="FilterMovieCountryString" TextChanged="FilterMovieCountry"/>
+                                <TextBox Name="FilterMovieCountryString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1" Visibility="Collapsed">
 								<TextBlock>No. left</TextBlock>
-								<TextBox Name="FilterMovieCopiesLeftString" TextChanged="FilterMovieCopiesLeft"/>
+                                <TextBox Name="FilterMovieCopiesLeftString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1" Visibility="Collapsed">
 								<TextBlock>No. total</TextBlock>
-								<TextBox Name="FilterMovieCopiesTotalString" TextChanged="FilterMovieCopiesTotal"/>
+                                <TextBox Name="FilterMovieCopiesTotalString" TextChanged="MoviesGridRefresh"/>
 							</UniformGrid>
 						</UniformGrid>
 
@@ -606,27 +615,28 @@
 					<!--tab contents grid -->
 					<Grid>
 						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="50"/>
 							<RowDefinition Height="*"/>
+                            <RowDefinition Height="20"/>
 						</Grid.RowDefinitions>
 						<!--Client filter panel-->
                         <TextBlock Grid.Row="2" VerticalAlignment="Bottom" Name="ClientsCount"></TextBlock>
 						<UniformGrid Grid.Row="0" Rows="1" ToolTip="Type text and press enter to filter clients" VerticalAlignment="Top" Visibility="Visible">
 							<UniformGrid Columns="1">
 								<TextBlock>Last Name</TextBlock>
-								<TextBox Name="FilterClientLastNameString" TextChanged="FilterClientLastName"/>
+                                <TextBox Name="FilterClientLastNameString" TextChanged="ClientsGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>First name</TextBlock>
-								<TextBox Name="FilterClientFirstNameString" TextChanged="FilterClientFirstName"/>
+                                <TextBox Name="FilterClientFirstNameString" TextChanged="ClientsGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>E-mail</TextBlock>
-								<TextBox Name="FilterClientEmailString" TextChanged="FilterClientEmail"/>
+                                <TextBox Name="FilterClientEmailString" TextChanged="ClientsGridRefresh"/>
 							</UniformGrid>
 							<UniformGrid Columns="1">
 								<TextBlock>Phone</TextBlock>
-								<TextBox Name="FilterClientPhoneString" TextChanged="FilterClientPhone"/>
+                                <TextBox Name="FilterClientPhoneString" TextChanged="ClientsGridRefresh"/>
 							</UniformGrid>
 						</UniformGrid>
 
@@ -690,6 +700,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="70"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="20"/>
                         </Grid.RowDefinitions>
                         <!--Orders filter panel-->
                         <TextBlock Grid.Row="2" VerticalAlignment="Bottom" Name="OrdersCount"></TextBlock>
@@ -706,14 +717,16 @@
                                 <TextBlock>Year</TextBlock>
                                 <TextBlock>Client</TextBlock>
                             </UniformGrid>
+                            
                             <UniformGrid  Grid.Column="1" Columns="1">
-                                <TextBox TextChanged="FilterOrderMovie" Name="FilterOrderMovieString"/>
-                                <TextBox TextChanged="FilterOrderYear" Name="FilterOrderYearString"/>
-                                <TextBox TextChanged="FilterOrderClient" Name="FilterOrderClientString"/>
+                                <TextBox TextChanged="OrdersGridRefresh" Name="FilterOrderMovieString"/>
+                                <TextBox TextChanged="OrdersGridRefresh" Name="FilterOrderYearString"/>
+                                <TextBox TextChanged="OrdersGridRefresh" Name="FilterOrderClientString"/>
                             </UniformGrid>
+
                             <UniformGrid Grid.Column="2" Columns="1">
-                                <TextBlock>Rent date</TextBlock>
-                                <xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderRentStartDate" Name="FilterOrderRentStartDateString" Foreground="White">
+                                <TextBlock>Rent date (Minimum)</TextBlock>
+                                <xctk:DateTimePicker ToolTip="Equal or Greater date" ValueChanged="OrdersGridRefresh" Name="FilterOrderRentDateString" Foreground="White">
                                     <xctk:DateTimePicker.Background>
                                         <RadialGradientBrush>
                                             <GradientStop Color="Transparent" Offset="1"/>
@@ -721,18 +734,11 @@
                                         </RadialGradientBrush>
                                     </xctk:DateTimePicker.Background>
                                 </xctk:DateTimePicker>
-                                <xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderRentStopDate" Name="FilterOrderRentStopDateString" Foreground="White">
-                                    <xctk:DateTimePicker.Background>
-                                        <RadialGradientBrush>
-                                            <GradientStop Color="Transparent" Offset="1"/>
-                                            <GradientStop Color="#4CFF0000" Offset="0"/>
-                                        </RadialGradientBrush>
-                                    </xctk:DateTimePicker.Background>
-                                </xctk:DateTimePicker>
+                                
                             </UniformGrid>
                             <UniformGrid Grid.Column="3" Columns="1">
-                                <TextBlock>Due date</TextBlock>
-                                <xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderDueStartDate" Name="FilterOrderDueStartDateString" Foreground="White">
+                                <TextBlock>Due date (Maximum)</TextBlock>
+                                <xctk:DateTimePicker ToolTip="Equal or Lesser date" ValueChanged="OrdersGridRefresh" Name="FilterOrderDueDateString" Foreground="White">
                                     <xctk:DateTimePicker.Background>
                                         <RadialGradientBrush>
                                             <GradientStop Color="Transparent" Offset="1"/>
@@ -740,26 +746,12 @@
                                         </RadialGradientBrush>
                                     </xctk:DateTimePicker.Background>
                                 </xctk:DateTimePicker>
-                                <xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderDueStopDate" Name="FilterOrderDueStopDateString" Foreground="White">
-                                    <xctk:DateTimePicker.Background>
-                                        <RadialGradientBrush>
-                                            <GradientStop Color="Transparent" Offset="1"/>
-                                            <GradientStop Color="#4CFF0000" Offset="0"/>
-                                        </RadialGradientBrush>
-                                    </xctk:DateTimePicker.Background>
-                                </xctk:DateTimePicker>
+                                
                             </UniformGrid>
                             <UniformGrid Grid.Column="4" Columns="1">
-                                <TextBlock>Return date</TextBlock>
-                                <xctk:DateTimePicker ToolTip="Start date" ValueChanged="FilterOrderReturnStartDate" Name="FilterOrderReturnStartDateString" Foreground="White">
-                                    <xctk:DateTimePicker.Background>
-                                        <RadialGradientBrush>
-                                            <GradientStop Color="Transparent" Offset="1"/>
-                                            <GradientStop Color="#4CFF0000" Offset="0"/>
-                                        </RadialGradientBrush>
-                                    </xctk:DateTimePicker.Background>
-                                </xctk:DateTimePicker>
-                                <xctk:DateTimePicker ToolTip="End date" ValueChanged="FilterOrderReturnStopDate" Name="FilterOrderReturnStopDateString" Foreground="White">
+                                <TextBlock>Return date (Maximum)</TextBlock>
+                                
+                                <xctk:DateTimePicker ToolTip="Equal or Lesser date" ValueChanged="OrdersGridRefresh" Name="FilterOrderReturnDateString" Foreground="White">
                                     <xctk:DateTimePicker.Background>
                                         <RadialGradientBrush>
                                             <GradientStop Color="Transparent" Offset="1"/>
@@ -2009,7 +2001,7 @@
 						<GradientStop Color="#FF730000" Offset="1"/>
 					</RadialGradientBrush>
 				</UniformGrid.Background>
-                <TextBlock Name="MessageBar">Message bar</TextBlock>
+                <TextBlock Name="MessageBar" ToolTip="Click to reset message and error" MouseDown="Reset_msg_error">Message bar</TextBlock>
 			</UniformGrid>
 		</Grid>
 		<!--right decor -->
