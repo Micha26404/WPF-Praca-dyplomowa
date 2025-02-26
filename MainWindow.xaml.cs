@@ -43,7 +43,7 @@ namespace WPF
 			ClientsComboboxRefresh();
 
 			//Admin Panel 2 Comboboxes
-			Admin2ComboboxesRefresh();
+			AttributesComboboxesRefresh();
 
 			MoviesCatalog.ItemsSource = movies_dt.DefaultView;
 			MoviesCatalog.AutoGenerateColumns = true;
@@ -70,9 +70,12 @@ namespace WPF
 		DataTable movies_dt = new DataTable();
 		DataTable clients_dt = new DataTable();
 		DataTable orders_dt = new DataTable();
+		//Grid Refreshes
 		public void MoviesGridRefresh() {
 			getquery(movies_dt,
-					"Select movies.id as ID, movies.name as Title, movies.year as Year, movies.duration as Duration, movies.age as Age," +
+					"Select " +
+					"movies.id as ID, " +
+					"movies.name as Title, movies.year as Year, movies.duration as Duration, movies.age as Age," +
 					"CASE WHEN genres.id <> 1 THEN CONCAT(genres.name,' ',genres.id) END AS Genre," +
 					"movies.price as Price," +
 					"CASE WHEN formats.id <> 1 THEN CONCAT(formats.name,' ',formats.id) END AS Format," +
@@ -81,11 +84,11 @@ namespace WPF
 					"CASE WHEN countries.id <> 1 THEN CONCAT(countries.name,' ',countries.id) END AS Country," +
 					"CASE WHEN langs.id <> 1 THEN CONCAT(langs.name,' ',langs.id) END AS Language," +
 					"movies.left_count as 'Left copies'," +
-					"movies.total_count as 'All copies'," +
-					"movies.plot as Plot, " +
-					"CASE " +
-					"	WHEN poster_path IS NULL THEN 'No' " +
-					"	WHEN poster_path IS NOT NULL THEN 'Yes' END AS Poster " +
+					"movies.total_count as 'All copies'" +
+					//"movies.plot as Plot, " +
+					//"CASE " +
+					//"	WHEN poster_path IS NULL THEN 'No' " +
+					//"	WHEN poster_path IS NOT NULL THEN 'Yes' END AS Poster " +
 					//"CASE " +
 					//"	WHEN poster_path IS NULL THEN 'no' " +
 					//"	WHEN trailer_path IS NOT NULL THEN 'yes' END AS trailer " +
@@ -99,16 +102,22 @@ namespace WPF
 		}
 		public void ClientsGridRefresh()
 		{
-			getquery(clients_dt, "Select id as ID,last_name as 'Last name', first_name as 'First name', phone as Phone, email as Email from clients");
+			getquery(clients_dt, "Select " +
+				"id as ID," +
+				"last_name as 'Last name', first_name as 'First name', phone as Phone, email as Email from clients");
 		}
 		public void OrdersGridRefresh()
 		{
-			getquery(orders_dt, "Select orders.id as ID,CONCAT(clients.last_name,' ',clients.first_name,' ',clients.id) as Client," +
+			getquery(orders_dt, "Select " +
+				"orders.id as ID," +
+				"CONCAT(clients.last_name,' ',clients.first_name,' ',clients.id) as Client," +
 				"CONCAT(movies.name,' ',movies.id) as Movie, movies.year as Year, " +
-				"CASE WHEN orders.rent_date IS NOT NULL THEN orders.rent_date END AS 'Rent date', " +
-				"CASE WHEN orders.due_date IS NOT NULL THEN orders.due_date END AS 'Due date', " +
-				"CASE WHEN orders.return_date IS NOT NULL THEN orders.return_date END AS 'Return date'," +
-				"CASE WHEN orders.return_date IS NULL THEN datediff(day,GETDATE(),orders.due_date) END AS 'Days left' " +
+				"CASE WHEN orders.rent_date IS NOT NULL THEN FORMAT(orders.rent_date,'dd-MMM-yyyy') END AS 'Rent date', " +
+                "CASE WHEN orders.due_date IS NOT NULL THEN FORMAT(orders.due_date,'dd-MMM-yyyy') END AS 'Due date', " +
+                "CASE WHEN orders.return_date IS NOT NULL THEN FORMAT(orders.return_date,'dd-MMM-yyyy') END AS 'Return date'," +
+                "CASE WHEN orders.return_date IS NULL THEN datediff(day,orders.due_date,GETDATE())" +
+                      "WHEN orders.return_date IS NOT NULL THEN datediff(day,orders.rent_date,due_date)" +
+					  " END AS 'Days' " +
 				"from orders " +
 				"join movies on movies.id=orders.movie_id " +
 				"join clients on clients.id=orders.client_id");
@@ -126,7 +135,7 @@ namespace WPF
 		{
 			ComboboxRefresh(OrderFormClientLNFNID, "select last_name,first_name,id from clients");
 		}
-		public void Admin2ComboboxesRefresh()
+		public void AttributesComboboxesRefresh()
 		{
 			//Actors
 			ComboboxRefresh(DeleteActorLNFNID, "select actors.last_name,actors.first_name,actors.id from actors left outer join movies on actors.id=movies.actor_id where movies.actor_id is null");
@@ -152,13 +161,13 @@ namespace WPF
 			ComboboxRefresh(DeleteGenreNameID, "select genres.name,genres.id from genres left outer join movies on genres.id=movies.genre_id where movies.genre_id is null");
 			ComboboxRefresh(UpdateGenreNameID, "select name,id from genres");
 		}
-		//sql panel submit button
+		
+		//Queries
 		private void QueryExecuteButton_Click(object sender, RoutedEventArgs e)
 		{
 			SQLquery();
-		}
-		//nonquery with error feedback
-		public void setquery(string query)
+        }//sql panel submit button
+        public void setquery(string query)
 		{
 			try
 			{
@@ -191,9 +200,8 @@ namespace WPF
 				//Not affected
 				MessageBox.Show("no rows affected:\n" + ex.ToString());
 			}
-		}
-		//for sql panel; select getquery or setquery based on select existence
-		public void SQLquery()
+        }   //nonquery with error feedback
+        public void SQLquery()
 		{
 			if (SQLqueryString.Text != string.Empty)
 			{
@@ -203,9 +211,8 @@ namespace WPF
 				}
 				else getquery(SQLgrid, SQLqueryString.Text);
 			}
-		}
-		//refresh datatable to refresh grid items
-		public void getquery(DataTable dt, string query)
+        }//for sql panel; select getquery or setquery based on select existence
+        public void getquery(DataTable dt, string query)
 		{
 			try
 			{
@@ -223,10 +230,9 @@ namespace WPF
 				sqlDataAdap.Fill(dt);
 				con.Close();
 			}
-			catch (Exception ex) { MessageBox.Show(ex.Message); }
-		}
-		//query to grid used in sql panel
-		public void getquery(DataGrid grid, string query)
+			catch (Exception ex) { MessageBar.Text = ex.Message; }
+        }//refresh datatable to refresh grid items
+        public void getquery(DataGrid grid, string query)
 		{
 			try 
 			{
@@ -245,10 +251,9 @@ namespace WPF
 				grid.ItemsSource = null;
 				grid.ItemsSource = dtRecord.DefaultView;
 			}
-			catch (Exception ex) { MessageBox.Show(ex.Message); }
-		}
-		//old query for single row to string
-		public string getquery(string query)
+			catch (Exception ex) { MessageBar.Text = ex.Message; }
+        }//query to grid used in sql panel
+        public string getquery(string query)
 		{
 			try
 			{
@@ -267,10 +272,10 @@ namespace WPF
 				con.Close();
 				return dtRecord.Rows[0][0].ToString();
 			}
-			catch (Exception ex) { MessageBox.Show(ex.Message); return null; }
-		}
-		//Combobox items clear and fill (refresh)
-		public void ComboboxRefresh(ComboBox combo, string query)
+			catch (Exception ex) { MessageBar.Text = ex.Message; return null; }
+        }//old query for single row to string
+         
+        public void ComboboxRefresh(ComboBox combo, string query)
 		{
 			combo.Items.Clear();
 
@@ -298,8 +303,9 @@ namespace WPF
 				}
 				combo.Items.Add(row.Trim());
 			}
-		}
-		public int getmovie_id() {
+        }//Combobox items clear and fill (refresh)
+		//ID getters
+        public int getmovie_id() {
 			//get selected item id from selected row
 			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
 			return int.Parse(rowview.Row["ID"].ToString());
@@ -316,8 +322,8 @@ namespace WPF
 			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
 			return int.Parse(rowview.Row["ID"].ToString());
 		}
-		//Trailer panel
-		//action on trailer load
+		
+		//TrailerTab
 		private void TrailerInit(object sender, RoutedEventArgs e)
 		{
 			//seek slider init
@@ -333,8 +339,8 @@ namespace WPF
 			timerVideoTime.Start();
 			Trailer.Play();
 			Trailer.Pause();
-		}
-		private TimeSpan TotalTime;
+        }
+        private TimeSpan TotalTime;
 		public void timer_Tick(object sender, EventArgs e)
 		{
 			// Check if the movie calculated its total time
@@ -366,7 +372,7 @@ namespace WPF
 			TimeSpan ts = new TimeSpan(0, 0, 0, 0, SliderValue);
 			Trailer.Position = ts;
 		}
-		//Load existing trailer from database using trailer_path on right click menu
+		
 		private void LoadTrailer(object sender, RoutedEventArgs e)
 		{
 				//set movie info in poster panel
@@ -386,9 +392,8 @@ namespace WPF
 				}
 				//poster not set
 				else if (trailer_path == "") MessageBox.Show("Trailer for this movie is not set. Set it in trailer tab");
-		}
-		//Set trailer file path and update database
-		private void SetTrailer(object sender, MouseButtonEventArgs e)
+        }//Load existing trailer from database using trailer_path on right click menu
+        private void SetTrailer(object sender, MouseButtonEventArgs e)
 		{
 			if (MovieTrailerID.Text != "ID")
 			{
@@ -418,8 +423,8 @@ namespace WPF
 				}
 			}
 			else MessageBox.Show("Load trailer from movies catalog");
-		}
-		public void RemoveTrailer(object sender, MouseButtonEventArgs e)
+        }//Set trailer file path and update database
+        public void RemoveTrailer(object sender, MouseButtonEventArgs e)
 		{
 			if (MovieTrailerID.Text != "ID")
 			{
@@ -430,13 +435,13 @@ namespace WPF
 			}
 			else if (MoviePosterID.Text == "ID") MessageBox.Show("Load trailer from movies catalog first");
 		}
-		//context menu remove trailer
 		private void RemoveTrailer(object sender, RoutedEventArgs e)
 		{
 			RemoveTrailer(null,null);
-		}
-		//Poster panel buttons
-		private void RemovePoster(object sender, RoutedEventArgs e)
+        }//context menu remove trailer
+
+        //PosterTab
+        private void RemovePoster(object sender, RoutedEventArgs e)
 		{
 			if (MoviePosterID.Text != "ID")
 			{
@@ -480,7 +485,6 @@ namespace WPF
 			}
 			else if (MoviePosterID.Text == "ID") MessageBox.Show("Load poster from movies catalog");
 		}
-		//load poster if exists
 		private void LoadPoster(object sender, RoutedEventArgs e)
 		{
 				Poster.Source = null;
@@ -500,9 +504,10 @@ namespace WPF
 				MessageBox.Show("poster set in poster tab. If empty; file not found. You can remove link in poster tab");
 			}
 			else if (poster_path == "") MessageBox.Show("poster not set; you can set it in poster tab.");
-		}
-		//Submit Buttons
-		private void SubmitOrder(object sender, MouseButtonEventArgs e)
+        }//load poster if exists
+		
+		//FormTab
+        private void SubmitOrder(object sender, MouseButtonEventArgs e)
 		{
 			//check if client exists (in case of value insertion instead of selection)
 			bool exists = false;
@@ -528,7 +533,7 @@ namespace WPF
 				}
 				string movie_id = OrderFormClientLNFNID.Text.Split().Last();
 				//add mode if copies available
-				if (mode == false && copies_left > 0)
+				if (edit_mode == false && copies_left > 0)
 				{
 					//date creation preparation with default values
 					int rentdd = int.Parse(getquery("select day(GETDATE())"));
@@ -604,12 +609,12 @@ namespace WPF
 							}
 						}
 					}
-					catch (Exception ex ){ MessageBox.Show(ex.Message); }
+					catch (Exception ex ){ MessageBar.Text = ex.Message; }
 				}
 				//add mode no copies left
-				else if (mode == false && copies_left <= 0) MessageBox.Show("No copies left to rent");
+				else if (edit_mode == false && copies_left <= 0) MessageBox.Show("No copies left to rent");
 				//edit mode
-				else if (mode == true && OrderFormID.Text != "")
+				else if (edit_mode == true && OrderFormID.Text != "")
 				{
 					//date creation preparation with default values
 					int rentdd = int.Parse(getquery("select day(GETDATE())"));
@@ -696,8 +701,8 @@ namespace WPF
 							}
 						}
 					}
-					catch ( Exception ex ){ MessageBox.Show(ex.Message); }
-				}else if (mode == true && OrderFormID.Text == "") MessageBox.Show("Order id not set. Use edit context menu option in orders catalog");
+					catch ( Exception ex ){ MessageBar.Text = ex.Message; }
+				}else if (edit_mode == true && OrderFormID.Text == "") MessageBox.Show("Order id not set. Use edit context menu option in orders catalog");
 			}else MessageBox.Show("Select movie to rent in catalog and select client");
 		}
 		private void SubmitClient(object sender, MouseButtonEventArgs e)
@@ -736,7 +741,7 @@ namespace WPF
 				ClientFormEmail.Text.Trim();
 
 				//add mode when names set
-				if (mode == false && ClientFormFirstName.Text != "" && ClientFormLastName.Text != "")
+				if (edit_mode == false && ClientFormFirstName.Text != "" && ClientFormLastName.Text != "")
 				{
 						using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 						{
@@ -756,9 +761,9 @@ namespace WPF
 								ClientClearForm();
 							}
 						}
-				} else if (mode == false && ClientFormFirstName.Text == "" && ClientFormLastName.Text == "") MessageBox.Show("First name and last name must be filled correctly");
+				} else if (edit_mode == false && ClientFormFirstName.Text == "" && ClientFormLastName.Text == "") MessageBox.Show("First name and last name must be filled correctly");
 			//edit mode
-			else if (mode == true && ClientFormID.Text != "")
+			else if (edit_mode == true && ClientFormID.Text != "")
 				{
 					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 					{
@@ -889,7 +894,7 @@ namespace WPF
 			//poster_path and trailer_path must be set in their respective tabs
 			
 			//add mode
-			if (mode == false && MovieFormTitle.Text != "")
+			if (edit_mode == false && MovieFormTitle.Text != "")
 			{
 					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 					{
@@ -919,9 +924,9 @@ namespace WPF
 					}
 			}
 			//add mode no title set
-			else if (mode == false && MovieFormTitle.Text == "") MessageBox.Show("Fill movie title");
+			else if (edit_mode == false && MovieFormTitle.Text == "") MessageBox.Show("Fill movie title");
 			//edit mode
-			else if (mode = true && MovieFormID.Text != "")
+			else if (edit_mode = true && MovieFormID.Text != "")
 			{
 					using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 					{
@@ -953,15 +958,8 @@ namespace WPF
 					}
 			}else MessageBox.Show("Movie id not set. Use edit context menu option from movies catalog");
 		}
-		//Movies right click menu
-		private void MovieItem_plot(object sender, RoutedEventArgs e)
-		{
-			DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
-			string plot = rowview.Row["Plot"].ToString();
-			MessageBox.Show(plot);
-		}
-		//Fills existing movie data into form in admin panel (rent movie option)
-		//Clear movie form
+		
+		//Clearing Forms
 		public void MovieClearForm() 
 		{
 			MovieFormID.Text = null;
@@ -981,9 +979,8 @@ namespace WPF
 			MovieFormActorLNFNID.Text = "- 1";
 			MovieFormCountryNameID.Text = "- 1";
 			MovieFormLangNameID.Text = "- 1";
-		}
-		//Clear client form
-		public void ClientClearForm()
+        }
+        public void ClientClearForm()
 		{
 			ClientFormID.Text = null;
 			ClientFormLastName.Text = null;
@@ -991,7 +988,6 @@ namespace WPF
 			ClientFormEmail.Text = null;
 			ClientFormPhone.Text = null;
 		}
-		//Clear order form
 		public void OrderClearForm()
 		{
 			OrderFormID.Text = null;
@@ -1002,8 +998,17 @@ namespace WPF
 			OrderFormDueDate.Text = null;
 			OrderFormReturnDate.Text = null;
 		}
-		private void MovieItem_rent(object sender, RoutedEventArgs e)
+        
+		//MoviesTab right click menu
+        private void MovieItem_plot(object sender, RoutedEventArgs e)//Show Plot
+        {
+            DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
+            string plot = rowview.Row["Plot"].ToString();
+            MessageBox.Show(plot);
+        }
+        private void MovieItem_rent(object sender, RoutedEventArgs e)//Fill Rent Form 
 		{
+			Tabs.SelectedIndex = 5;
 			//add mode
 			SelectAddMode(null,null);
 			//autofill form
@@ -1024,7 +1029,8 @@ namespace WPF
 		}
 		private void MovieItem_edit(object sender, RoutedEventArgs e)
 		{
-			MovieClearForm();
+            Tabs.SelectedIndex = 1;
+            MovieClearForm();
 			//edit mode
 			SelectEditMode(null, null);
 			
@@ -1074,9 +1080,8 @@ namespace WPF
 					{
 						cmd.ExecuteNonQuery();
 					}
-					catch (Exception ex)
+					catch (Exception /*ex*/)
 					{
-					//MessageBox.Show(ex.Message);
 					MessageBox.Show("Couldn't remove row referenced from other row");
 					}
 				}
@@ -1086,11 +1091,13 @@ namespace WPF
 		{
 			TrailerInit(null, null);
 		}
-		//Clients right click menu
+		
+		//ClientsTab right click menu
 		//Fills existing client data into form in admin panel (edit client option)
 		private void ClientItem_edit(object sender, RoutedEventArgs e)
 		{
-			ClientClearForm();
+            Tabs.SelectedIndex = 5;
+            ClientClearForm();
 			//edit mode
 			SelectEditMode(null, null);
 			
@@ -1102,8 +1109,9 @@ namespace WPF
 			ClientFormEmail.Text = rowview.Row["Email"].ToString();
 			ClientFormPhone.Text = rowview.Row["Phone"].ToString();
 
-			MessageBox.Show("Client data set. Submit in admin panel.");
-		}
+			//MessageBox.Show("Client data set. Submit in admin panel.");
+            MessageBar.Text = "Client data set. Submit in admin panel.";
+        }
 		private void ClientItem_delete(object sender, RoutedEventArgs e)
 		{
 			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
@@ -1117,19 +1125,22 @@ namespace WPF
 				{
 					cmd.ExecuteNonQuery();
 				}
-				catch (Exception ex)
+				catch (Exception /*ex*/)
 				{
-					//MessageBox.Show(ex.Message);
-					MessageBox.Show("Couldn't remove row referenced from other row");
-				}
+					//MessageBox.Show("Couldn't remove row referenced from other row.");
+                    MessageBar.Text = "Couldn't remove row referenced from other row.";
+                }
 			}
 			ClientsGridRefresh();
 		}
+		
+		//OrdersTab
 		//Orders right click menu
 		private void OrderItem_return(object sender, RoutedEventArgs e)
 		{
-			//get selected row
-			DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
+            Tabs.SelectedIndex = 5;
+            //get selected row
+            DataRowView rowview = OrdersCatalog.SelectedItem as DataRowView;
 			//check null on return date
 			string is_returned = rowview.Row["Return date"].ToString();
 
@@ -1190,10 +1201,10 @@ namespace WPF
 			}
 			else 
 			{
-				MessageBox.Show("Movie already returned");
-			}
+				//MessageBox.Show("Movie already returned");
+				MessageBar.Text = "Movie already returned";
+            }
 		}
-		//Fills existing order data into form in admin panel (edit order option)
 		private void OrderItem_edit(object sender, RoutedEventArgs e)
 		{
 			OrderClearForm();
@@ -1225,9 +1236,10 @@ namespace WPF
 			string return_date = rowview.Row["Return date"].ToString();
 			OrderFormReturnDate.Text = return_date;
 			
-			MessageBox.Show("Order data set. Edit order in admin panel.");
-		}
-		private void OrderItem_delete(object sender, RoutedEventArgs e)
+			//MessageBar.Text = "Order data set. Edit order in admin panel.";
+            MessageBar.Text = "Order data set. Edit order in admin panel.";
+        }//Fills existing order data into form in admin panel (edit order option)
+        private void OrderItem_delete(object sender, RoutedEventArgs e)
 		{
 			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 			{
@@ -1241,7 +1253,8 @@ namespace WPF
 			//setquery("delete from orders where id=" + getorder_id());
 			OrdersGridRefresh();
 		}
-		//Filter movies
+		
+		//Movies Filtering
 		private void FilterMovieTitle(object sender, TextChangedEventArgs e)
 		{
 			try
@@ -1250,8 +1263,10 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+
+            }
 		}
 		private void FilterMoviePrice(object sender, TextChangedEventArgs e)
 		{
@@ -1261,8 +1276,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieAge(object sender, TextChangedEventArgs e)
 		{
@@ -1272,8 +1288,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieDuration(object sender, TextChangedEventArgs e)
 		{
@@ -1283,8 +1300,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieGenre(object sender, TextChangedEventArgs e)
 		{
@@ -1294,8 +1312,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieYear(object sender, TextChangedEventArgs e)
 		{
@@ -1305,8 +1324,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieCopiesTotal(object sender, TextChangedEventArgs e)
 		{
@@ -1316,8 +1336,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieCopiesLeft(object sender, TextChangedEventArgs e)
 		{
@@ -1327,8 +1348,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieCountry(object sender, TextChangedEventArgs e)
 		{
@@ -1338,8 +1360,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieLang(object sender, TextChangedEventArgs e)
 		{
@@ -1349,8 +1372,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieFormat(object sender, TextChangedEventArgs e)
 		{
@@ -1360,8 +1384,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieDirector(object sender, TextChangedEventArgs e)
 		{
@@ -1371,8 +1396,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterMovieActor(object sender, TextChangedEventArgs e)
 		{
@@ -1382,10 +1408,12 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
-		//Filter clients
+		
+		//Clients Filtering
 		private void FilterClientLastName(object sender, TextChangedEventArgs e)
 		{
 			try
@@ -1395,9 +1423,10 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
-			/*
+				
+                MessageBar.Text = ex.Message;
+            }
+            /*
 			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
 			{
 				connection.Open();
@@ -1418,17 +1447,18 @@ namespace WPF
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show(ex.Message);
+					
+					MessageBar.Text = ex.Message;
 				}
 			}
 			*/
-			//DataView dataView = clients_dt.DefaultView;
-			//if (!string.IsNullOrEmpty(FilterClientLastNameString.Text))
-			//{
-			//	dataView.RowFilter = "'last name' = " + FilterClientLastNameString.Text;
-			//}
-			//ClientsCatalog.ItemsSource = dataView;
-			/*
+            //DataView dataView = clients_dt.DefaultView;
+            //if (!string.IsNullOrEmpty(FilterClientLastNameString.Text))
+            //{
+            //	dataView.RowFilter = "'last name' = " + FilterClientLastNameString.Text;
+            //}
+            //ClientsCatalog.ItemsSource = dataView;
+            /*
 			try
 			{
 				getquery(orders_dt, "Select orders.id,CONCAT(clients.last_name,' ',clients.first_name,' ',clients.id) as client," +
@@ -1452,11 +1482,12 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				
+				MessageBar.Text = ex.Message;
 			}
 			*/
-		}
-		private void FilterClientFirstName(object sender, TextChangedEventArgs e)
+        }
+        private void FilterClientFirstName(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
@@ -1464,8 +1495,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 			
 		}
 		private void FilterClientEmail(object sender, TextChangedEventArgs e)
@@ -1476,8 +1508,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 			
 		}
 		private void FilterClientPhone(object sender, TextChangedEventArgs e)
@@ -1488,7 +1521,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBar.Text = ex.Message;
 			}
 		}
 		//Filter orders
@@ -1500,8 +1533,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterOrderClient(object sender, TextChangedEventArgs e)
 		{
@@ -1511,8 +1545,9 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-			}
+				
+                MessageBar.Text = ex.Message;
+            }
 		}
 		private void FilterOrderYear(object sender, TextChangedEventArgs e)
 		{
@@ -1522,7 +1557,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBar.Text = ex.Message;
 			}
 		}
 		private void FilterOrderRentStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1533,7 +1568,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBar.Text = ex.Message;
 			}
 		}
 		private void FilterOrderRentStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1544,7 +1579,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBar.Text = ex.Message;
 			}
 		}
 		private void FilterOrderDueStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1555,7 +1590,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBar.Text = ex.Message;
 			}
 		}
 		private void FilterOrderDueStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1566,7 +1601,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBar.Text = ex.Message;
 			}
 		}
 		private void FilterOrderReturnStartDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1577,7 +1612,7 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBar.Text = ex.Message;
 			}
 		}
 		private void FilterOrderReturnStopDate(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -1588,15 +1623,14 @@ namespace WPF
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBar.Text = ex.Message;
 			}
 		}
-		//Mode selectors
-		//add or edit mode; false is add, true is edit.
-		bool mode = false;
-		private void SelectAddMode(object sender, MouseButtonEventArgs e)
+		//Form Submit Mode Selector
+		bool edit_mode = false;//Selected action mode on submit form. Add on False, overwrite on True
+        private void SelectAddMode(object sender, MouseButtonEventArgs e)
 		{
-			mode = false;
+			edit_mode = false;
 			ModeSelected.Text = "You are now in ADD mode";
 			ModeSelected.Foreground = Brushes.LightGreen;
             ModeSelected.Background = Brushes.Black;
@@ -1614,7 +1648,7 @@ namespace WPF
 		}
 		private void SelectEditMode(object sender, MouseButtonEventArgs e)
 		{
-			mode = true;
+			edit_mode = true;
 			ModeSelected.Text = "You are now in EDIT mode";
 			ModeSelected.Foreground = Brushes.Yellow;
             ModeSelected.Background = Brushes.Black;
@@ -1642,8 +1676,7 @@ namespace WPF
 				"Countries\n" +
 				"Langs (languages)");
 		}
-		//Admin panel 2
-		//New row adding
+		//AttributePanel
 		private void AddActor(object sender, MouseButtonEventArgs e)
 		{
 			using (var connection = new SqlConnection(Properties.Settings.Default.WPF_DBConnectionString))
@@ -2002,7 +2035,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBox.Show(ex.Message);
+						MessageBar.Text = ex.Message;
 					}
 				}
 				//refresh actors combobox
@@ -2042,7 +2075,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBox.Show(ex.Message);
+						MessageBar.Text = ex.Message;
 					}
 				}
 				//setquery("delete from directors where id=" + director_id + ")");
@@ -2083,7 +2116,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBox.Show(ex.Message);
+						MessageBar.Text = ex.Message;
 					}
 				}
 				//refresh countries combobox
@@ -2123,7 +2156,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBox.Show(ex.Message);
+						MessageBar.Text = ex.Message;
 					}
 				}
 				//refresh langs combobox
@@ -2163,7 +2196,7 @@ namespace WPF
 					}
 					catch (Exception ex)
 					{
-						MessageBox.Show(ex.Message);
+						MessageBar.Text = ex.Message;
 					}
 				}
 				//setquery("delete from formats where id=" + format_id + ")");
@@ -2204,7 +2237,7 @@ namespace WPF
 						}
 						catch (Exception ex)
 						{
-							MessageBox.Show(ex.Message);
+							MessageBar.Text = ex.Message;
 						}
 					}
 					//refresh genres combobox
@@ -2217,15 +2250,15 @@ namespace WPF
 		//row counters
 		private void MoviesCatalog_LoadingRow(object sender, DataGridRowEventArgs e)
 		{
-			MoviesCount.Text = "Number of items in table: "+ MoviesCatalog.Items.Count.ToString();
+			MoviesCount.Text = "Rows: "+ MoviesCatalog.Items.Count.ToString();
 		}
 		private void ClientsCatalog_LoadingRow(object sender, DataGridRowEventArgs e)
 		{
-			ClientsCount.Text = "Number of items in table: " + ClientsCatalog.Items.Count.ToString();
+			ClientsCount.Text = "Rows: " + ClientsCatalog.Items.Count.ToString();
 		}
 		private void OrdersCatalog_LoadingRow(object sender, DataGridRowEventArgs e)
 		{
-			OrdersCount.Text = "Number of items in table: " + OrdersCatalog.Items.Count.ToString();
+			OrdersCount.Text = "Rows: " + OrdersCatalog.Items.Count.ToString();
 		}
 	}
 }
