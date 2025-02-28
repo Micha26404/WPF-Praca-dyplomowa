@@ -1172,7 +1172,8 @@ namespace WPF
         private void MovieItem_plot(object sender, RoutedEventArgs e)//Show Plot
         {
             DataRowView rowview = MoviesCatalog.SelectedItem as DataRowView;
-            string plot = rowview.Row["Plot"].ToString();
+            string id = rowview.Row["ID"].ToString();
+            string plot = getquery("select movies.plot from movies where id="+id);
             MessageBox.Show(plot);
         }
         private void MovieItem_rent(object sender, RoutedEventArgs e)//Fill Rent Form 
